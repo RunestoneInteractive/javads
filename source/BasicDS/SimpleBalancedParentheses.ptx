@@ -64,14 +64,11 @@
             this algorithm is shown in <xref ref="lst-parcheck1"/>.</p>
 <listing xml:id="lst-parcheck1">
   <caption>Solving the Balanced Parentheses Problem</caption>
-<program label="lst-parcheck1" line-numbers="yes" language="java" interactive="activecode"
-         include="prog-stackcode1">
+<program label="lst-parcheck1" line-numbers="yes" language="java" interactive="activecode">
     <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-<xi:include
-   parse="text"
-href="./Stack.java"/>
+<xi:include parse="text" href="./Stack.java"/>
 ^^^^
 public class Parentheses {
     public static boolean parenCheck(String symbolString) {

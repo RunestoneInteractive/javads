@@ -117,9 +117,7 @@ class Stack&lt;T&gt; {
     <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-<xi:include
-   parse="text"
-href="./Stack.java"/>
+<xi:include parse="text" href="./Stack.java"/>
 ^^^^
 public class StackTest {
 
