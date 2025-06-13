@@ -23,7 +23,7 @@
             you can figure it out.</p>
           <listing xml:id="lst_enc">
             <program language="java">
-              <input>
+              <code>
 public class ROT13 {
 
     public static String encrypt(String message) {
@@ -50,7 +50,7 @@ public class ROT13 {
         System.out.println(encrypt("uryybjbeyq");
     }
 }
-</input>
+</code>
 </program>
 </listing>
   <p>The <c>encrypt</c> function illustrates a form of encryption known as the
@@ -77,7 +77,7 @@ public class ROT13 {
             parameter that specifies a key.</p>
           <listing xml:id="lst_dec_key">
             <program language="java">
-  <input>
+  <code>
       public static String decrypt(String message, int key) {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
         String result = "";
@@ -92,7 +92,7 @@ public class ROT13 {
         }
         return result;
     }
-    </input></program>
+    </code></program>
 </listing>
   <p>Even if you keep the number <c>key</c> from everyone except the person you
             are sending the message to, this simple form of encryption is not going
@@ -174,7 +174,7 @@ public class ROT13 {
                 checking for the condition <m>n = 0</m> is a good base case.</p>
               <listing xml:id="lst_pow">
     <program language="java">
-      <input>
+      <code>
     public static int modExp(int x, int n, int p) {
         if (n == 0) {
             return 1;
@@ -186,7 +186,7 @@ public class ROT13 {
         }
         return result;
     }
-</input>
+</code>
 </program>
 </listing>
     <p>Notice that in the above equation both the even and odd cases include a
@@ -256,7 +256,7 @@ public class ROT13 {
                 Euclid's algorithm is shown in <xref ref="lst_gcd1"/>.</p>
               <listing xml:id="lst_gcd1">
                 <program language="java">
-                  <input>
+                  <code>
     public static int gcd(int a, int b) {
         if (b == 0) {
             return a;
@@ -266,7 +266,7 @@ public class ROT13 {
         }
         return gcd(a - b, b);
     }
-                  </input>
+                  </code>
                 </program>
               </listing>
 
@@ -280,14 +280,14 @@ public class ROT13 {
                 shown in Listing&#xA0;<xref ref="lst_gcd2"/>.</p>
               <listing xml:id="lst_gcd2">
                 <program language="java">
-                  <input>
+                  <code>
     public static int gcd(int a, int b) {
         if (b == 0) {
             return a;
         }
         return gcd(b, a % b);
     }
-                  </input>
+                  </code>
                 </program>
               </listing>
 
@@ -316,7 +316,7 @@ public class ROT13 {
                 <xref ref="lst_gcd3"/>.</p>
               <listing xml:id="lst_gcd3">
     <program language="java">
-      <input>
+      <code>
     public static int[] extGcd(int x, int y) {
         if (y == 0) {
             return(new int[] {x, 1, 0});
@@ -328,7 +328,7 @@ public class ROT13 {
             return(new int[] {d, b, a - (x / y) * b});
         }
     }
-        </input>
+        </code>
         </program>
         </listing>
 
@@ -543,7 +543,7 @@ d &amp; = extGcd(45552780, 1471) \\
     </p>
 
     <program language="java">
-      <input>
+      <code>
     public static long[] genKeys(long p, long q) {
         long n = p * q;
         long m = (p - 1) * (q - 1);
@@ -589,7 +589,7 @@ d &amp; = extGcd(45552780, 1471) \\
         }
         return chunksToStr(plainChunks, chunkSize);
     }
- </input>
+ </code>
 </program>
     <p>Here is a jshell session that uses these functions to create public and private keys,
       encrypt, and decrypt as we did in the example above. The array <c>edn</c> contains the
@@ -621,7 +621,7 @@ decrypted ==&gt; "Java and RSA"
               <listing xml:id="lst_chunk">
 
                 <program language="java" line-numbers="yes">
-                  <input>
+                  <code>
 public long[] strToChunks(String msg, int chunkSize) {
     byte[] msgBytes;
     msgBytes = msg.getBytes();
@@ -659,7 +659,7 @@ public String chunksToStr(long[] chunkList, int chunkSize) {
     return new String(byteArr);
 }
 
-                  </input>
+                  </code>
                 </program>
 </listing>
     <p>In <xref ref="lst_chunk"/> we see the procedure for turning

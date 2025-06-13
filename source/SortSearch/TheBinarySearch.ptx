@@ -27,7 +27,7 @@
   <listing xml:id="lst-binarysearch">
 <program label="prog-binarysearch" language="java" line-numbers="yes"
          interactive="activecode">
-    <input>
+    <code>
 public class BinarySearchExample {
 
     public static boolean binarySearch(int[] list, int item) {
@@ -55,7 +55,7 @@ public class BinarySearchExample {
             binarySearch(testList, 13));
     }
 }
-    </input>
+    </code>
   </program>
   </listing>
   <p>Before we move on to the analysis, we should note that this algorithm is
@@ -73,7 +73,7 @@ public class BinarySearchExample {
             <caption>Binary Search<mdash/>Recursive Version</caption>
 <program label="prog-recbinarysearch"  language="java" line-numbers="yes"
          interactive="activecode">
-    <input>
+    <code>
 import java.util.Arrays;
 
 public class RecursiveBinarySearchExample {
@@ -104,7 +104,7 @@ public class RecursiveBinarySearchExample {
             binarySearchRecursive(testList, 13));
     }
 }
-    </input>
+    </code>
   </program>
   </listing>
 </introduction>

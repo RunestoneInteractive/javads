@@ -31,7 +31,7 @@
   <p>We will implement the AVL tree in a class named <c>AVLTree</c> It uses a copy of <c>BinarySearchTree</c> as our starting point, changing <c>TreeNode</c> to <c>AVLTreeNode</c>, which adds an integer <c>balanceFactor</c> property. To begin, we will override the <c>put</c> helper method and write a new <c>updateBalance</c> helper method. These methods are shown in <xref ref="lst-updbal"/>. You will notice that the definition for <c>_put</c> is exactly the same as in simple binary search trees except for the addition of the calls to <c>updateBalance</c> on lines&#xA0;8 and&#xA0;16.</p>
 <listing xml:id="lst-updbal">
 <program label="prog-updbal" language="java" line-numbers="yes">
-    <input>
+    <code>
     void put(K key, V value, AVLTreeNode currentNode) {
         if (key.compareTo(currentNode.key) &lt; 0) {
             if (currentNode.leftChild != null) {
@@ -69,7 +69,7 @@
             }
         }
     }
-</input>
+</code>
   </program>
 </listing>
   <p>The new <c>updateBalance</c> method is where most of the work is done. This
@@ -167,7 +167,7 @@
             this function while looking at <xref ref="i18_id1fig-unbalsimple"/>.</p>
   <listing xml:id="trees_lst-leftrotation">
 <program label="trees_prog-leftrotation" language="java" line-numbers="yes">
-    <input>
+    <code>
     void rotateLeft(AVLTreeNode rotationRoot) {
         AVLTreeNode newRoot = rotationRoot.rightChild;
         rotationRoot.rightChild = newRoot.leftChild;
@@ -191,7 +191,7 @@
         newRoot.balanceFactor = newRoot.balanceFactor + 1 +
             Math.max(rotationRoot.balanceFactor, 0);
     }
-</input>
+</code>
   </program>
   </listing>
   <p>Finally, lines&#xA0;19-22 require some explanation. In
@@ -243,10 +243,10 @@
             corresponds exactly to the statement on lines&#xA0;19&#x2013;20 in
             <xref ref="trees_lst-leftrotation"/>, or:</p>
   <program language="java">
-    <input>
+    <code>
 rotationRoot.balanceFactor = rotationRoot.balanceFactor + 1 -
             Math.min(newRoot.balanceFactor, 0);
-</input>
+</code>
   </program>
   <p>A similar derivation gives us the equation for the updated node D as
             well as the balance factors after a right rotation. We leave these as
@@ -304,7 +304,7 @@ rotationRoot.balanceFactor = rotationRoot.balanceFactor + 1 -
             Rule number 2 is implemented by the <c>else if</c> statement starting on
             line 9.</p>
   <listing xml:id="trees_lst-rebalance"><program language="java" line-numbers="yes">
-    <input>
+    <code>
     void rebalance(AVLTreeNode node) {
         if (node.balanceFactor &lt; 0) {
             if (node.rightChild.balanceFactor &gt; 0) {
@@ -322,7 +322,7 @@ rotationRoot.balanceFactor = rotationRoot.balanceFactor + 1 -
             }
         }
     }
-</input>
+</code>
   </program></listing>
 
   <!--<p>The <xref ref="trees_key-terms"/> provide you the opportunity to rebalance a tree
@@ -345,7 +345,7 @@ rotationRoot.balanceFactor = rotationRoot.balanceFactor + 1 -
 
           <listing xml:id="lst_balanced-example">
             <caption>Example of Inserting into an AVL Tree</caption>
-            <program language="java" interactive="activecode"><input>
+            <program language="java" interactive="activecode"><code>
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./AVLTree.java"/>
@@ -374,7 +374,7 @@ public class AVLTreeExample {
         System.out.println(tree);
     }
 }
-</input></program></listing>
+</code></program></listing>
 
 <p> You can see in the output that the tree is rebalancing to ensure that we do not end up with a right-heavy tree.</p>
 <console><output>

@@ -103,7 +103,7 @@
     </p>
     <listing xml:id="oop_lst-logicgateclass">
 <program label="oop_prog-logicgateclass" language="java" line-numbers="yes">
-        <input>
+        <code>
 abstract class LogicGate {
     public String label;
     public int output;
@@ -125,7 +125,7 @@ abstract class LogicGate {
 
     public abstract int performGateLogic();
 
-}        </input>
+}        </code>
       </program>
     </listing>
 
@@ -161,7 +161,7 @@ abstract class LogicGate {
     </p>
     <listing xml:id="oop_lst-binarygateclass">
 <program label="oop_prog-binarygateclass" language="java" line-numbers="yes">
-        <input>
+        <code>
 abstract class BinaryGate extends LogicGate{
     int pinA;
     int pinB;
@@ -191,7 +191,7 @@ abstract class BinaryGate extends LogicGate{
         this.pinB = pinB;
     }
 }
-        </input>
+        </code>
       </program>
     </listing>
 
@@ -205,7 +205,7 @@ abstract class BinaryGate extends LogicGate{
 
     <listing xml:id="oop_lst-unarygateclass">
 <program label="oop_lst-unarygateclass" language="python">
-        <input>
+        <code>
 abstract class UnaryGate extends LogicGate{
     int pin;
 
@@ -226,7 +226,7 @@ abstract class UnaryGate extends LogicGate{
     public void setPin(int pin) {
         this.pin = pin;
     }
-}        </input>
+}        </code>
       </program>
     </listing>
 
@@ -249,7 +249,7 @@ abstract class UnaryGate extends LogicGate{
     </p>
     <listing xml:id="oop_lst-andgateclass">
 <program label="oop_prog-andgateclass" language="java" line-numbers="yes">
-        <input>
+        <code>
 class AndGate extends BinaryGate {
 
     public AndGate(String label) {
@@ -271,7 +271,7 @@ class AndGate extends BinaryGate {
         }
     }
 }
-        </input>
+        </code>
       </program>
     </listing>
     <p>In line one, we see that this is no longer an <c>abstract</c> class; a <c>LogicGate</c> and <c>BinaryGate</c> are abstract concepts; you can actually build an <c>AndGate</c>.</p>
@@ -284,14 +284,14 @@ class AndGate extends BinaryGate {
       <c>perform_gate_logic</c> method which in turn queries the two input lines.
       Once the values are provided, the correct output is shown.
     </p>
-    <program xml:id="and_example" language="java"><input>
+    <program xml:id="and_example" language="java"><code>
 public class GateExample {
     public static void main(String[] args) {
         AndGate g1 = new AndGate("G1", 1, 0);
         System.out.println(g1.getOutput());
     }
 }
-</input></program>
+</code></program>
     <p>The same development can be done for OR gates and NOT gates. The
       <c>OrGate</c> class will also be a subclass of <c>BinaryGate</c> and the
       <c>NotGate</c> class will extend the <c>UnaryGate</c> class. Both of these
@@ -303,7 +303,7 @@ public class GateExample {
       gate classes and then asking the gate for its output (which will in turn
       need inputs to be provided). For example:</p>
 
-        <program xml:id="or_example" language="java"><input>
+        <program xml:id="or_example" language="java"><code>
 public class GateExample {
     public static void main(String[] args) {
         OrGate g2 = new OrGate("G2", 1, 1);
@@ -316,7 +316,7 @@ public class GateExample {
         System.out.println(g3.getOutput());
     }
 }
-</input></program>
+</code></program>
 
     <p>Now that we have the basic gates working, we can turn our attention to
       building circuits. In order to create a circuit, we need to connect
@@ -355,7 +355,7 @@ public class GateExample {
     </p>
     <listing xml:id="oop_lst-connectorclass" names="lst_connectorclass">
 <program label="oop_lst-connectorclass" names="lst_connectorclass"  language="python">
-        <input>
+        <code>
         class Connector:
             def __init__(self, fgate, tgate):
                 self.from_gate = fgate
@@ -368,13 +368,13 @@ public class GateExample {
 
             def get_to(self):
                 return self.to_gate
-        </input>
+        </code>
       </program>
     </listing>
 
     <listing xml:id="oop_lst-setpin">
 <program label="oop_prog-setpin" language="java">
-        <input>
+        <code>
         def set_next_pin(self, source):
             if self.pin_a == None:
                 self.pin_a = source
@@ -383,7 +383,7 @@ public class GateExample {
                     self.pin_b = source
                 else:
                     raise RuntimeError("Error: NO EMPTY PINS")
-        </input>
+        </code>
       </program>
     </listing>
     <p>In the <c>BinaryGate</c> class, for gates with two possible input lines,
@@ -405,7 +405,7 @@ public class GateExample {
     </p>
     <listing xml:id="oop_lst-newgetpin" names="lst_newgetpin">
 <program label="oop_lst-newgetpin" names="lst_newgetpin"  language="python">
-        <input>
+        <code>
         def get_pin_a(self):
             if self.pin_a == None:
                 return input(
@@ -414,7 +414,7 @@ public class GateExample {
                 )
             else:
                 return self.pin_a.get_from().get_output()
-        </input>
+        </code>
       </program>
     </listing>
     <p>The following fragment constructs the circuit shown earlier in the
@@ -439,7 +439,7 @@ Enter pin B input for gate G2: 1
 
     <p>Try it yourself using ActiveCode 4.</p>
     <program xml:id="complete_cuircuit" interactive="activecode" language="python">
-      <input>
+      <code>
       class LogicGate:
 
           def __init__(self, lbl):
@@ -570,14 +570,14 @@ Enter pin B input for gate G2: 1
           print(g4.get_output())
 
       main()
-      </input>
+      </code>
     </program>
     <exercises>
       <title>Self Check</title>
       <p>Create a two new gate classes, one called NorGate the other called NandGate. NandGates work like AndGates that have a Not attached to the output. NorGates work lake OrGates that have a Not attached to the output.</p>
       <p>Create a series of gates that prove the following equality NOT (( A and B) or (C and D)) is that same as NOT( A and B ) and NOT (C and D). Make sure to use some of your new gates in the simulation.</p>
       <program xml:id="self_check_5" interactive="activecode" language="python">
-        <input>
+        <code>
         class LogicGate:
 
             def __init__(self,n):
@@ -704,7 +704,7 @@ Enter pin B input for gate G2: 1
            print(g1.get_output())
 
         main()
-        </input>
+        </code>
       </program>
     </exercises>
     <!--<video xml:id="logicgates" youtube="brrpvAlzOyM" width="auto" />-->

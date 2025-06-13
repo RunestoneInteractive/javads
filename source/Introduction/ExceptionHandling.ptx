@@ -25,12 +25,12 @@ jshell&gt; int n = 12 / 0;
 <p>The last type of error, known as a <em>logic error</em> or <em>semantic error</em>, denotes a situation where the program executes but gives the wrong result. This can be due to an error in the underlying algorithm or an error in your translation of that algorithm. For example, the following code for computing the area of a rectangle uses correct Java syntax, and the arithmetic will not cause a run-time error, but the logic is wrong; area is length times width, not length plus width:</p>
 
 <program language="java">
-  <input>
+  <code>
 int length = 25;
 int width = 15;
 int area = length + width;
 System.out.println(area);
-</input></program>
+</code></program>
 
 <p>In some cases, logic errors can lead to errors such as trying to divide by zero or trying to access an item in an array where the index of the item is outside the bounds of the array. In this case, the logic error leads to a runtime error that causes the program to terminate. These types of runtime errors are typically called <term>exceptions</term>.</p>
 
@@ -42,7 +42,7 @@ System.out.println(area);
             user for an integer and then tries to access an array element at that index.</p>
 
           <program xml:id="prog_array_access" label="prog_array_access">
-            <input>
+            <code>
 import java.util.Scanner;
 
 class ArrayAccess {
@@ -59,7 +59,7 @@ class ArrayAccess {
         System.out.format("The element is %d.%n", value);
     }
 }
-</input></program>
+</code></program>
 
 <p>If the user enters a value that is less than the array length, the <c>System.out.println()</c> will display the value. However, if they enter a negative number or a number greater than or equal to the array length, the program will report an <c>ArrayIndexOutOfBounds</c>  exception.</p>
 <console>
@@ -74,7 +74,7 @@ Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException:
             and prints a message back to the user in the event that an exception
             occurs. Here is the modified section of the code:</p>
   <program language="java">
-    <input>
+    <code>
 try {
     int value = data[index];
     System.out.format("The element is %d.%n", value);
@@ -84,7 +84,7 @@ catch (Exception ex) {
         data.length);
     }
 }
-    </input></program>
+    </code></program>
   <p>Now, if the user enters a number out of range, the program will catch the exception raised by the array access and will instead print a useful error message. This means that the program will not terminate but instead will continue on to the next statements.</p>
 
   <p>The <c>ex</c> variable is an <c>Exception</c> object, and Java provides methods to allow programmers to extract information about the exception, such as an error message, the <q>stack trace</q> (the sequence of calls that happened when the exception occurred), and other information.</p>
@@ -98,7 +98,7 @@ Index must be from 0 to 6.
     using the <c>throw</c> statement. For example, let's say a method cannot calculate a valid return value if given a negative number. Instead of printing an error message<mdash>which may not be appropriate in a general-purpose library</mdash>it will throw an <c>IllegalArgumentException</c> and let the code that callled the method handle it with a <c>catch</c>:</p>
 
   <program xml:id="intro_throw_exception" language="java">
-    <input>
+    <code>
 public static double doCalculation(double n) {
     if (n &gt; 0) {
         // a complicated calculation goes here
@@ -107,7 +107,7 @@ public static double doCalculation(double n) {
         throw new IllegalArgumentException(n + " cannot be negative.");
     }
   }
-    </input></program>
+    </code></program>
 
 <p>The string in the <c>throw</c> statement will be the message associated with the exception.</p>
 

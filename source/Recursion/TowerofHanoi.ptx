@@ -47,7 +47,7 @@
   <listing xml:id="recursion_lst-recursion_hanoi">
     <caption>Java Code for the Tower of Hanoi</caption>
 <program language="java" line-numbers="yes">
-    <input>
+    <code>
 public static void moveTower(int height, String fromPole,
   String toPole, String withPole) {
     if (height &gt;= 1) {
@@ -57,7 +57,7 @@ public static void moveTower(int height, String fromPole,
     }
 }
 
-</input>
+</code>
   </program></listing>
   <p>Notice that the code in <xref ref="recursion_lst-recursion_hanoi"/> is almost identical to the
             English description. The key to the simplicity of the algorithm is that
@@ -77,17 +77,17 @@ public static void moveTower(int height, String fromPole,
   <listing xml:id="recursion_lst-movedisk">
     <caption>Java Code to Move One Disk</caption>
     <program language="java">
-    <input>
+    <code>
 public static void moveDisk(String fromPole, String toPole) {
     System.out.printf("Moving disk from %s to %s.%n", fromPole, toPole);
 }
-</input>
+</code>
   </program></listing>
   <p>The program in <xref ref="recursion_hanoi"/> provides the entire solution for three disks.</p>
   <listing xml:id="recursion_hanoi">
     <caption>Complete Java Program for Tower of Hanoi</caption>
 <program label="recursion_hanoi" language="java">
-    <input>
+    <code>
 public class TowerOfHanoi {
     public static void moveTower(int height, String fromPole,
       String toPole, String withPole) {
@@ -107,7 +107,7 @@ public class TowerOfHanoi {
         moveTower(3, "A", "B", "C");
     }
 }
-        </input>
+        </code>
   </program>
   </listing>
 

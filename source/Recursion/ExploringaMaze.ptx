@@ -97,7 +97,7 @@
             (Listings <xref ref="recursion_lst-maze-constructor"/>&#x2013;<xref ref="recursion_lst-maze-aux"/>) and the <c>searchFrom</c> method (<xref ref="recursion_lst-maze-search"/>).</p>
   <listing xml:id="recursion_lst-maze-start"><program language="java" line-numbers="yes">
           <caption>The Maze Program Constants and Properties</caption>
-    <input>
+    <code>
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.awt.Color;
@@ -122,7 +122,7 @@ public class Maze {
 
     double xTranslate;
     double yTranslate;
-</input>
+</code>
   </program></listing>
 
   <p>Lines 16-19 specify the dimensions of the maze and the starting point.</p>
@@ -140,7 +140,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
 <p>Next, let's examine the constructor in <xref ref="recursion_lst-maze-constructor"/>. It takes the name of a file as its only parameter.</p>
   <listing xml:id="recursion_lst-maze-constructor"><program language="java" line-numbers="yes">
           <caption>The Maze Class Constructor</caption>
-    <input>
+    <code>
     public Maze(String mazeFileName) {
         File inFile = new File(mazeFileName);
         try (Scanner input = new Scanner(inFile)) {
@@ -173,7 +173,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
             this.mazeList = null;
         }
     }
-</input>
+</code>
   </program></listing>
   <note>
       <title>Java Note</title>
@@ -191,7 +191,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
   <listing xml:id="recursion_lst-maze-draw">
       <caption>The Maze Class Drawing Methods</caption>
       <program language="java" line-numbers="yes">
-    <input>
+    <code>
     public void drawMaze() {
         t.setDelay(0);
         this.habitat.setUpdating(false);
@@ -222,7 +222,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
         }
         t.endFill();
     }
-</input>
+</code>
   </program></listing>
   <p>In line 2, we set the turtle movement delay to zero so that the turtle moves as quickly as possible. Line 3 will not update the drawing every time the turtle moves; this again saves time when running the program.</p>
 
@@ -236,7 +236,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
   <listing xml:id="recursion_lst-maze-update">
       <caption>The Maze Class Moving Methods</caption>
       <program language="java" line-numbers="yes">
-    <input>
+    <code>
     public void updatePosition(int row, int col, String value) {
         moveTurtle(col, row);
         if (value != null) {
@@ -272,7 +272,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
         t.drawDot(0.25);
         t.setColor(saveColor);
     }
-</input>
+</code>
   </program></listing>
   <p>The <c>dropBreadCrumb</c> draws a dot in the given color.</p>
 
@@ -282,7 +282,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
             or the far-right column or the bottom row.</p>
   <listing xml:id="recursion_lst-maze-aux">
       <caption>The Maze Class Auxiliary Methods</caption><program language="java">
-    <input>
+    <code>
     public boolean isExit(int row, int col) {
         return (
             row == 0 ||
@@ -291,7 +291,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
             col == columnsInMaze -1
         );
     }
-</input>
+</code>
   </program></listing>
   <p>Let's examine the code for the search function which we call
             <c>searchFrom</c>. The code is shown in <xref ref="recursion_lst-maze-search"/>. Notice
@@ -301,7 +301,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
   <listing xml:id="recursion_lst-maze-search">
       <caption>The Maze Search Method</caption>
       <program language="java" line-numbers="yes">
-    <input>
+    <code>
     public boolean searchFrom(int startRow, int startColumn) {
         /*
          * try each of the four directions from this point until we find
@@ -353,7 +353,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
     public String getItem(int row, int col) {
         return mazeList.get(row)[col];
     }
-</input>
+</code>
   </program></listing>
   <p>As you look through the algorithm you will see that the first thing the
             code does (line 6) is call <c>updatePosition</c>. This is to help
@@ -382,7 +382,7 @@ items ==&gt; String[11] { "+", " ", " ", "+", "+", "+", "+"}</output></console>
 <listing xml:id="recursion_completemaze">
     <caption>Complete Maze Solver</caption>
 <program label="recursion_completemaze" language="java">
-    <input>
+    <code>
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.awt.Color;
@@ -579,7 +579,7 @@ public class Maze {
         myMaze.t.setHeading(90);
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
   <exercises>

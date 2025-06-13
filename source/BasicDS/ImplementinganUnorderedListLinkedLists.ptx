@@ -37,7 +37,7 @@
     <listing xml:id="basic-ds_lst-nodeclass">
         <caption>The Node Class</caption>
         <program language="java">
-      <input>
+      <code>
 class Node&lt;T&gt; {
 
     private T data;
@@ -68,7 +68,7 @@ class Node&lt;T&gt; {
         return this.data.toString();
     }
 }
-</input>
+</code>
     </program></listing>
     <p>To construct a node, you need to supply the initial data
                 value for the node. Evaluating the assignment statement below will yield
@@ -118,7 +118,7 @@ class Node&lt;T&gt; {
     <listing xml:id="basic-ds_lst-listclass">
         <caption>The UnorderedList Class</caption>
         <program language="java">
-      <input>
+      <code>
 class UnorderedList&lt;T&gt; {
 
     private Node&lt;T&gt; head;
@@ -126,7 +126,7 @@ class UnorderedList&lt;T&gt; {
     public UnorderedList() {
         head = null;
     }
-</input>
+</code>
     </program></listing>
     <p>Initially when we construct a list, there are no items. The assignment
                 statement</p>
@@ -200,13 +200,13 @@ myList.add(54);</pre>
     <listing xml:id="basic-ds_lst-add">
         <caption>Adding a Node to a Linked List</caption>
         <program language="java" line-numbers="yes">
-      <input>
+      <code>
     public void add(T item) {
         Node&lt;T&gt; temp = new Node&lt;T&gt;(item);
         temp.setNext(this.head);
         this.head = temp;
     }
-</input>
+</code>
     </program></listing>
     <figure align="center" xml:id="fig-addtohead">
       <caption>Adding a New Node is a Two-Step Process</caption>
@@ -243,7 +243,7 @@ myList.add(54);</pre>
                 <xref ref="fig-traversal"/> shows this process as it proceeds down the list.</p>
             <listing xml:id="basic-ds_lst-length"><caption>List Size</caption>
                 <program language="java" line-numbers="yes">
-      <input>
+      <code>
     public int size() {
         Node&lt;T&gt; current = this.head;
         int count = 0;
@@ -253,7 +253,7 @@ myList.add(54);</pre>
         }
         return count;
     }
-</input>
+</code>
     </program></listing>
     <figure align="center" xml:id="fig-traversal">
       <caption>Traversing the Linked List from the Head to the End</caption>
@@ -274,7 +274,7 @@ myList.add(54);</pre>
     <listing xml:id="basic-ds_lst-search">
         <caption>Searching a Linked List</caption>
         <program language="java" line-numbers="yes">
-      <input>
+      <code>
     public boolean search(T item) {
         Node&lt;T&gt; current = this.head;
         while (current != null) {
@@ -285,15 +285,15 @@ myList.add(54);</pre>
         }
         return false;
      }
-</input>
+</code>
     </program></listing>
     <p>As an example, consider invoking the <c>search</c> method looking for the
                 item 17.</p>
     <program language="java">
-      <input>
+      <code>
 boolean found = myList.search(17);
 System.out.println(found); // prints true
-</input>
+</code>
     </program>
     <p>Since <c>17</c> is in the list, the traversal process needs to move only to the
                 node containing <c>17</c>. At that point, the condition in line 4 becomes <c>true</c> and
@@ -350,7 +350,7 @@ System.out.println(found); // prints true
     <listing xml:id="basic-ds_lst-remove">
         <caption>Removing an Item from a Linked List</caption>
         <program language="java" line-numbers="yes">
-      <input>
+      <code>
     public void remove(T item) {
         Node&lt;T&gt; current = this.head;
         Node&lt;T&gt; previous = null;
@@ -367,7 +367,7 @@ System.out.println(found); // prints true
             }
         }
     }
-</input>
+</code>
     </program></listing>
     <figure align="center" xml:id="fig-removeinit">
       <caption>Initial Values for the <literal>previous</literal> and <literal>current</literal> References</caption>
@@ -427,7 +427,7 @@ System.out.println(found); // prints true
     <listing xml:id="lst_unorderedlistcomplete">
         <caption>The Node and UnorderedList Classes</caption>
     <program xml:id="unorderedlistcomplete" language="java">
-      <input>
+      <code>
 class UnorderedList&lt;T&gt; {
 
     private Node&lt;T&gt; head;
@@ -528,7 +528,7 @@ class UnorderedList&lt;T&gt; {
         return result;
     }
 }
-        </input>
+        </code>
         </program></listing>
 
     <p><xref ref="lst_unorderedlist_test"/> shows a program to test the <c>UnorderedList</c> class.</p>
@@ -536,7 +536,7 @@ class UnorderedList&lt;T&gt; {
     <listing xml:id="lst_unorderedlist_test">
         <caption>Test of UnorderedList Methods</caption>
         <program xml:id="prog_unorderedlist_test" language="java" interactive="activecode">
-            <input>
+            <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Node.java"/>
@@ -570,7 +570,7 @@ public class TestUnorderedList {
     }
 
 }
-</input></program></listing>
+</code></program></listing>
 
     <p>The remaining methods <c>append</c>, <c>insert</c>, <c>index</c>, and <c>pop</c> are
                 left as exercises. Remember that each of these must take into account

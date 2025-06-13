@@ -26,7 +26,7 @@
             <caption>Sequential Search of an Unordered List</caption>
             <program xml:id="prog-seqsearch" label="prog-seqsearch" language="java"
                      interactive="activecode">
-    <input>
+    <code>
 public class SequentialSearchExample {
 
     public static boolean sequentialSearch(int[] list, int item) {
@@ -49,7 +49,7 @@ public class SequentialSearchExample {
             sequentialSearch(testList, 13));
     }
 }
-    </input>
+    </code>
   </program>
   </listing>
 
@@ -131,7 +131,7 @@ public class SequentialSearchExample {
       <caption>Sequential Search of an Ordered List</caption>
 <program xml:id="prog-seqsearch2" label="prog-seqsearch2" language="java"
          interactive="activecode">
-  <input>
+  <code>
 public class OrderedSequentialSearchExample {
 
     public static boolean orderedSequentialSearch(int[] list, int item) {
@@ -157,7 +157,7 @@ public class OrderedSequentialSearchExample {
             orderedSequentialSearch(testList, 13));
     }
 }
-    </input>
+    </code>
     </program>
   </listing>
     <p><xref ref="sort-search_tbl-seqsearchtable2"/> summarizes these results. Note that in the best

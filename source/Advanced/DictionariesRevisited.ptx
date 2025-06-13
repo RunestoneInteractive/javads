@@ -137,7 +137,7 @@
                 constructor (see <xref ref="lst_headnode"/>), and a <c>key</c> and <c>value</c> field, which are null. We also provide a constructor that lets you initialize the key and value:</p>
               <listing xml:id="lst_headnode">
                 <caption>The <c>SLNode</c> Class</caption>
-                <program language="java"><input>
+                <program language="java"><code>
 class SLNode&lt;K extends Comparable&lt;K&gt;, V&gt; {
     private SLNode&lt;K, V&gt; next;
     private SLNode&lt;K, V&gt; down;
@@ -183,7 +183,7 @@ class SLNode&lt;K extends Comparable&lt;K&gt;, V&gt; {
     }
 }
 
-</input></program></listing>
+</code></program></listing>
 
 <p>The constructor for the entire skip list is shown in <xref ref="lst_constructor"/>, as well as the getters and setters for the <c>head</c> property. When a skip list is
                 created, there are no data and therefore no header nodes. The head of the
@@ -191,7 +191,7 @@ class SLNode&lt;K extends Comparable&lt;K&gt;, V&gt; {
                 structure, the list head refers to the first header node which in turn
                 provides access to a linked list of data nodes as well as access to
                 lower levels.</p>
-              <listing xml:id="lst_constructor"><program language="java"><input>
+              <listing xml:id="lst_constructor"><program language="java"><code>
 class SkipList&lt;K extends Comparable&lt;K&gt;, V&gt; {
     private SLNode&lt;K, V&gt; head;
 
@@ -206,7 +206,7 @@ class SkipList&lt;K extends Comparable&lt;K&gt;, V&gt; {
     public void setHead(SLNode&lt;K, V&gt; head) {
         this.head = head;
     }
-        </input></program></listing>
+        </code></program></listing>
 </introduction>
     <subsubsection xml:id="advanced_searching-a-skip-list">
       <title>Searching a Skip List</title>
@@ -241,7 +241,7 @@ class SkipList&lt;K extends Comparable&lt;K&gt;, V&gt; {
                   <listing xml:id="lst_skiplistsearchcode">
                     <caption>Searching a Skip List</caption>
                     <program language="java" line-numbers="yes">
-                      <input>
+                      <code>
     public V search(K key) {
         SLNode&lt;K, V&gt; current = this.head;
         while (current != null) {
@@ -261,7 +261,7 @@ class SkipList&lt;K extends Comparable&lt;K&gt;, V&gt; {
         }
         return null;
     }
-                      </input>
+                      </code>
                     </program>
                   </listing>
 
@@ -352,7 +352,7 @@ class SkipList&lt;K extends Comparable&lt;K&gt;, V&gt; {
                   <listing xml:id="lst_insert">
                     <caption>Inserting Keys and Values into a SkipList</caption>
                     <program language="java" line-numbers="yes">
-                      <input>
+                      <code>
     public void insert(K key, V value) {
         SLNode&lt;K, V&gt; temp;
         SLNode&lt;K, V&gt; top;
@@ -415,7 +415,7 @@ class SkipList&lt;K extends Comparable&lt;K&gt;, V&gt; {
             }
         }
     }
-                          </input>
+                          </code>
                       </program>
                     </listing>
       <p>We should make one final note about the structure of the skip list. We
@@ -438,7 +438,7 @@ class SkipList&lt;K extends Comparable&lt;K&gt;, V&gt; {
                     sections.</p>
                   <listing xml:id="lst-mapclass">
                     <caption>The <c>Map</c> Class</caption>
-                    <program language="java"><input>
+                    <program language="java"><code>
 class Map&lt;K extends Comparable&lt;K&gt;, V&gt; {
     private SkipList&lt;K, V&gt; collection;
 
@@ -458,7 +458,7 @@ class Map&lt;K extends Comparable&lt;K&gt;, V&gt; {
         return this.collection;
     }
 }
-        </input></program></listing>
+        </code></program></listing>
 
   <p> Here is a diagram of the result of inserting the keys and values shown in <xref ref="fig-mappic"/>:</p>
 

@@ -63,7 +63,7 @@
 <listing xml:id="lst-quick">
   <caption>The Quicksort Program</caption>
 <program label="lst-quick" language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.Arrays;
 
 public class QuickSortExample {
@@ -119,7 +119,7 @@ public class QuickSortExample {
         System.out.println("Final result: " + Arrays.toString(testList));
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 

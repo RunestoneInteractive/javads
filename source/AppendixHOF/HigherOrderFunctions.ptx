@@ -13,7 +13,7 @@
 
 <listing>
   <program language="java" interactive="activecode" label="hof_keep-with-normal-methods">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -67,7 +67,7 @@ public class KeepItems {
         System.out.println("Two-digit numbers: " + twoDigit);
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -75,7 +75,7 @@ public class KeepItems {
 
 <listing>
   <program language="java" label="hof_keep-pseudo-code">
-    <input>
+    <code>
     public static &lt;T&gt; ArrayList&lt;t&gt; keep(ArrayList&lt;t&gt; data,
       «booleanMethod») {
         ArrayList&lt;T&gt; result = new ArrayList&lt;T&gt;();
@@ -96,7 +96,7 @@ public class KeepItems {
 
     ArrayList&lt;Integer&gt; negative = keep(numbers,
         boolean isNegative(n) {return n &lt; 0; });
-    </input>
+    </code>
     </program>
 </listing>
 
@@ -116,7 +116,7 @@ The preceding pseudo-code is just an example. We'll use different notation when 
 
 <listing>
   <program language="java" label="hof_keep-predicate">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -134,7 +134,7 @@ public class KeepItemsFunctional {
         }
         return result;
     }
-</input>
+</code>
 </program>
 </listing>
 
@@ -154,11 +154,11 @@ public class KeepItemsFunctional {
 
 <listing>
   <program language="java" label="hof_even-or-odd">
-    <input>
+    <code>
 boolean isEven(Integer n) {
     return n % 2 == 0;
 }
-    </input>
+    </code>
     </program>
 </listing>
 
@@ -166,11 +166,11 @@ boolean isEven(Integer n) {
 
     <listing>
   <program language="java" label="hof_anonymous-even-or-odd">
-    <input>
+    <code>
 (Integer n) -&gt; {
     return n % 2 == 0;
 }
-    </input>
+    </code>
     </program>
 </listing>
 
@@ -178,7 +178,7 @@ boolean isEven(Integer n) {
 
 <listing>
     <program language="java" label="hof_pass-lambda" line-numbers="yes">
-        <input>
+        <code>
     public static void main(String[] args) {
         Integer[] data = {10, 47, -311, 66, 254, -99, 140};
         ArrayList&lt;Integer&gt; numbers = new ArrayList&lt;Integer&gt;(Arrays.asList(data));
@@ -190,7 +190,7 @@ boolean isEven(Integer n) {
         System.out.println("Even elements: " + evens);
     }
 }
-    </input>
+    </code>
 </program>
 </listing>
 
@@ -201,33 +201,33 @@ boolean isEven(Integer n) {
 
 <listing>
     <program language="java" label="hof_keep-negative">
-        <input>
+        <code>
     Predicate&lt;Integer&gt; isNegative = (Integer n) -&gt; {
         return (n &lt; 0);
     };
     ArrayList&lt;Integer&gt; negatives = keep(numbers, isNegative);
     System.out.println("Negative elements: " + negatives);
-    </input>
+    </code>
 </program>
 </listing>
 
 <p>And we'll do the same for our lambda expression to test if the number is a two-digit number or not:</p>
 <listing>
     <program language="java" label="hof_keep-two-digit">
-        <input>
+        <code>
     Predicate&lt;Integer&gt; isTwoDigits = (Integer n) -&gt; {
         return (Math.abs(n) &gt; 9 &amp;&amp; Math.abs(n) &lt; 100);
     };
     ArrayList&lt;Integer&gt; twoDigits = keep(numbers, isTwoDigits);
     System.out.println("Two-digit elements: " + twoDigits);
-    </input>
+    </code>
 </program>
 </listing>
 
 <p>Here's the entire program:</p>
 <listing>
     <program language="java" interactive="activecode" label="hof_functional-keep">
-        <input>
+        <code>
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -269,7 +269,7 @@ public class FunctionalKeepItems {
         System.out.println("Two-digit elements: " + twoDigits);
     }
 }
-</input>
+</code>
 </program>
 </listing>
 </subsection>

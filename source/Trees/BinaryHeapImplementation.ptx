@@ -55,7 +55,7 @@
                 Since the entire binary heap can be represented by a single list, all
                 the constructor will do is initialize the list.
                 <xref ref="trees_lst-heap1a"/> shows the Java code for the constructor.</p>
-            <listing xml:id="trees_lst-heap1a"><program language="java"><input>
+            <listing xml:id="trees_lst-heap1a"><program language="java"><code>
 import java.util.ArrayList;
 
 class BinaryHeap&lt;T&gt; {
@@ -66,7 +66,7 @@ class BinaryHeap&lt;T&gt; {
     }
     // more code here...
 }
-</input></program></listing>
+</code></program></listing>
 
     <p>The next method we will implement is <c>insert</c>. The easiest, and most
                 efficient, way to add an item to a list is to append the item to
@@ -103,7 +103,7 @@ class BinaryHeap&lt;T&gt; {
 
             <p>First, let's define a couple of convenience methods to make the code more readable, one that compares two items in the heap and another for swapping two items given their indexes:</p>
 
-            <listing xml:id="trees_lst-convenience"><caption>Convenience Methods</caption><program language="java"><input>
+            <listing xml:id="trees_lst-convenience"><caption>Convenience Methods</caption><program language="java"><code>
     private int compareItemsAt(int index1, int index2) {
         return heap.get(index1).compareTo(heap.get(index2));
     }
@@ -113,13 +113,13 @@ class BinaryHeap&lt;T&gt; {
         heap.set(index1, heap.get(index2));
         heap.set(index2, temporary);
     }
-    </input></program></listing>
+    </code></program></listing>
 
     <p>Now the methods for percolating up and inserting:</p>
 
     <listing xml:id="trees_lst-heap-percolate-up">
         <caption>The <c>percolateUp</c> Method</caption>
-        <program language="java" line-numbers="yes"><input>
+        <program language="java" line-numbers="yes"><code>
     private void percolateUp(int index) {
         while ((index &gt; 0) &amp;&amp; (index - 1) / 2 >= 0) {
             int parentIndex = (index - 1) / 2;
@@ -129,7 +129,7 @@ class BinaryHeap&lt;T&gt; {
             index = parentIndex;
         }
     }
-    </input></program></listing>
+    </code></program></listing>
 
         <note>
         <title>Java Note</title>
@@ -137,12 +137,12 @@ class BinaryHeap&lt;T&gt; {
     </note>
 
     <listing xml:id="trees_lst-heap-insert"><caption>The <c>insert</c> Method</caption>
-        <program language="java" line-numbers="yes"><input>
+        <program language="java" line-numbers="yes"><code>
     public void insert(T item) {
         heap.add(item);
         percolateUp(heap.size() - 1);
     }
-    </input></program></listing>
+    </code></program></listing>
 
 
     <p>With the <c>insert</c> method properly defined, we can now look at the <c>delete</c> method. Since the heap property requires that the root of the tree be the smallest item in the tree, finding the minimum item is easy. The hard part of <c>delete</c> is restoring full compliance with the heap structure and heap order properties after the root has been removed. We can restore our heap in two steps.</p>
@@ -163,7 +163,7 @@ class BinaryHeap&lt;T&gt; {
                 <xref ref="trees_lst-heap4"/>.</p>
     <listing xml:id="trees_lst-heap4">
         <caption>The <c>percolateDown</c> and <c>getSmallerChild</c> Methods</caption>
-        <program language="java"><input>
+        <program language="java"><code>
     private void percolateDown(int index) {
         while (2 * index + 1 &lt; heap.size()) {
             int smallerChild = getSmallerChild(index);
@@ -185,13 +185,13 @@ class BinaryHeap&lt;T&gt; {
         }
         return 2 * index + 2;
     }
-                </input></program></listing>
+                </code></program></listing>
     <p>The code for the <c>delete</c> operation is in <xref ref="trees_lst-delete"/>. Note
                 that once again the hard work is handled by a helper function, in this
                 case <c>percolateDown</c>.</p>
             <listing xml:id="trees_lst-delete">
                 <caption>The <c>delete</c> Method</caption>
-            <program language="java"><input>
+            <program language="java"><code>
     public T delete() {
         T result = heap.get(0);
         swapItemsAt(0, heap.size() - 1);
@@ -199,7 +199,7 @@ class BinaryHeap&lt;T&gt; {
         percolateDown(0);
         return result;
     }
-           </input></program></listing>
+           </code></program></listing>
 
     <p>To finish our discussion of binary heaps, we will look at a method to
                 build an entire heap from a list of keys. The first method you might
@@ -215,7 +215,7 @@ class BinaryHeap&lt;T&gt; {
                 However, if we start with an entire list then we can build the whole
                 heap in <m>O(n)</m> operations. <xref ref="trees_lst-heap6"/> shows the code
                 to build the entire heap.</p>
-            <listing xml:id="trees_lst-heap6"><program language="java"><input>
+            <listing xml:id="trees_lst-heap6"><program language="java"><code>
     public void heapify(T[] nonHeap) {
         heap = new ArrayList&gt;T&gt;(); // eliminate old data
 
@@ -232,7 +232,7 @@ class BinaryHeap&lt;T&gt; {
             }
         }
     }
-    </input></program></listing>
+    </code></program></listing>
     <figure align="center" xml:id="fig-buildheap">
       <caption>Building a Heap from the List [9, 6, 5, 2, 3]</caption>
       <image source="Trees/Figures/buildheap.png" width="50%" alt="image"/>
@@ -262,7 +262,7 @@ i = 0  [2, 3, 5, 6, 9]</pre>
 <listing xml:id="lst_completeheap">
     <caption>Complete <c>BinaryHeap</c> Class</caption>
     <program xml:id="completeheap" language="java">
-      <input>
+      <code>
 import java.util.ArrayList;
 
 class BinaryHeap&lt;T extends Comparable&lt;T&gt;&gt; {
@@ -360,13 +360,13 @@ class BinaryHeap&lt;T extends Comparable&lt;T&gt;&gt; {
         return heap.toString();
     }
 }
-        </input>
+        </code>
     </program>
 </listing>
 
 <p>Here is the program we saw in <xref ref="trees_binary-heap-operations"/>:</p>
 <program label="lst-heapOps" language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 <xi:include parse="text" href="./BinaryHeap.java"/>
 ^^^^
@@ -386,7 +386,7 @@ public class BinaryHeapTest {
         System.out.println(myHeap.delete());
     }
 }
-        </input>
+        </code>
   </program>
     <p>The assertion that we can build the heap in <m>O(n)</m> may seem a
                 bit mysterious at first, and a proof is beyond the scope of this book.

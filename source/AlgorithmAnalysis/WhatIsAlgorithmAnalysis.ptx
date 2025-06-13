@@ -23,7 +23,7 @@
             iterates through the <em>n</em> integers, adding each to the accumulator.</p>
   <listing xml:id="lst-sum1">
 <program label="lst-sum1" language="java">
-    <input>
+    <code>
 public class FindSum {
     public static long sumOfN(int n) {
         long theSum = 0;
@@ -37,7 +37,7 @@ public class FindSum {
         System.out.println(sumOfN(10));
     }
 }
-        </input>
+        </code>
   </program>
   </listing>
   <aside>
@@ -48,7 +48,7 @@ public class FindSum {
 
   <listing xml:id="lst-sum2">
 <program label="lst-sum2" language="java">
-    <input>
+    <code>
 public class FindSum2 {
     public static long foo(int tom) {
         long fred = 0;
@@ -63,7 +63,7 @@ public class FindSum2 {
         System.out.println(foo(10));
     }
 }
-        </input>
+        </code>
   </program>
   </listing>
 
@@ -90,7 +90,7 @@ public class FindSum2 {
           <p><xref ref="algorithm-analysis_lst-sum11"/> lets you enter the number you want to sum up to (n). It then invokes the <c>sumOfN</c> method 25 times and calculates the time required for each trial:</p>
 
   <listing xml:id="algorithm-analysis_lst-sum11"><program language="java" line-numbers="yes">
-    <input>
+    <code>
 import java.util.Scanner;
 
 public class Timing {
@@ -118,7 +118,7 @@ public class Timing {
         }
     }
 }
-</input>
+</code>
   </program></listing>
 
   <p><xref ref="algorithm-analysis_lst-sum11"/> shows the original <c>sumOfN</c> function with the timing
@@ -165,12 +165,12 @@ Trial 24: Sum 500000500000: time 0.012447 sec.</pre>
             compute the sum of the first <c>n</c> integers without iterating.</p>
 <listing xml:id="lst-sum3">
 <program label="lst-sum3" language="java">
-    <input>
+    <code>
     public static long sumOfNImproved(long n) {
         long theSum = n * (n + 1) / 2;
         return theSum;
     }
-        </input>
+        </code>
   </program>
 </listing>
 <p>We then change the call in line 23 of <xref ref="algorithm-analysis_lst-sum11"/> to:</p>

@@ -34,10 +34,10 @@
             code like the following:</p>
 
           <program language="java">
-            <input>
+            <code>
 double[] data = {10.3, 4.7, 8.6};
 System.out.println(data);
-</input>
+</code>
 </program>
 
 <p>We get this output showing the reference address after the <c>@</c>:</p>
@@ -129,7 +129,7 @@ The address
 
   <listing xml:id="lst_arraylistinit">
   <program language="java" line-numbers="yes">
-  <input>
+  <code>
 public class MiniArrayList&lt;T&gt; {
 
     static final int DEFAULT_SIZE = 16;
@@ -182,7 +182,7 @@ public class MiniArrayList&lt;T&gt; {
     public int size() {
         return this.lastIndex;
     }
-}  </input>
+}  </code>
   </program>
   </listing>
 
@@ -262,7 +262,7 @@ public class MiniArrayList&lt;T&gt; {
             this, so we will just rely on the array's built-in index operator.</p>
   <listing xml:id="lst_arrindex">
   <program language="java" line-numbers="yes">
-  <input>
+  <code>
     @SuppressWarnings("unchecked")
     public T getItem(int index) {
         if (index >= 0 &amp;&amp; index &lt; this.lastIndex) {
@@ -279,7 +279,7 @@ public class MiniArrayList&lt;T&gt; {
             throw new IndexOutOfBoundsException(index);
         }
     }
-  </input>
+  </code>
   </program>
   </listing>
 
@@ -311,7 +311,7 @@ public class MiniArrayList&lt;T&gt; {
             array, the old value would have been lost forever.</p>
   <listing xml:id="lst_arrlistins">
     <program language="java">
-      <input>
+      <code>
     public void insert(int index, T value) {
         if (index &lt;= 0 &amp;&amp; index &lt;= this.lastIndex) {
             if (this.lastIndex > this.maxSize - 1) {
@@ -326,7 +326,7 @@ public class MiniArrayList&lt;T&gt; {
             throw new IndexOutOfBoundsException(index);
         }
     }
-        </input>
+        </code>
         </program>
   </listing>
   <p>The performance of the insert is <m>O(n)</m>, since in the worst case we
@@ -350,7 +350,7 @@ public class MiniArrayList&lt;T&gt; {
 
           <listing xml:id="lst_test-mini-arraylist">
             <program language="java">
-              <input>
+              <code>
 public class TestMiniArrayList {
 
     public static void main(String[] args) {
@@ -377,7 +377,7 @@ public class TestMiniArrayList {
         list.insert(list.size(), "&lt;--");
         System.out.println(list);
     }
-}              </input>
+}              </code>
             </program>
           </listing>
 <!--

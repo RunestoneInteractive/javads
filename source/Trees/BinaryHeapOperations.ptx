@@ -34,7 +34,7 @@
             heap methods. </p>
 <listing xml:id="lst-heap1">
 <program label="lst-heap1" language="java">
-    <input>
+    <code>
 public class BinaryHeapTest {
     public static void main(String[] args) {
         BinaryHeap&lt;Integer&gt; myHeap = new BinaryHeap&lt;&gt;();
@@ -51,7 +51,7 @@ public class BinaryHeapTest {
         System.out.println(myHeap.delete());
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 

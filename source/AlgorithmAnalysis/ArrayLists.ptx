@@ -77,7 +77,7 @@ Remove last time: 0.0000017 sec</pre>
 
   <listing xml:id="lst_analysis_time_remove">
     <program xml:id="prog_analysis_time_remove" language="java" line-numbers="yes" interactive="activecode">
-      <input>
+      <code>
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -139,7 +139,7 @@ public class RemoveItem {
 
     }
 }
-</input>
+</code>
 </program>
 </listing>
 

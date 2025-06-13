@@ -48,7 +48,7 @@
             root of the tree, we must take special action. The code for the beginning of the
             <c>BinarySearchTree</c> class is shown in <xref ref="trees_lst-bst1"/>.</p>
   <listing xml:id="trees_lst-bst1"><program language="java" line-numbers="yes">
-  <input>
+  <code>
 import java.util.Iterator;
 
 class BinarySearchTree&lt;K extends Comparable&lt;K&gt;,
@@ -70,7 +70,7 @@ class BinarySearchTree&lt;K extends Comparable&lt;K&gt;,
         return root;
     }
 
-  </input></program></listing>
+  </code></program></listing>
 
   <note>
   <title>Java Note</title>
@@ -101,7 +101,7 @@ class BinarySearchTree&lt;K extends Comparable&lt;K&gt;,
 
   <p>We have <term>overloaded</term> the constructor. In lines 16&#x2013;22, the constructor
     is given all the information a <c>TreeNode</c> needs. Sometimes, though, we want to construct a <c>TreeNode</c> without only some of the information. The constructors in lines 8&#x2013;14 call the 5-argument constructor to provide the <q>missing</q> arguments. (Using <c>this</c> as a method name calls the constructor.)</p>
-  <listing xml:id="trees_lst-bst2"><program language="java" line-numbers="yes"><input>
+  <listing xml:id="trees_lst-bst2"><program language="java" line-numbers="yes"><code>
     class TreeNode {
         K key;
         V value;
@@ -192,7 +192,7 @@ class BinarySearchTree&lt;K extends Comparable&lt;K&gt;,
                 "parent: " + parent;
         }
     }
-    </input></program></listing>
+    </code></program></listing>
 
     <note>
     <title>Java Note</title>
@@ -238,7 +238,7 @@ if (condition) {
   <p>One important problem with our implementation of insertion is that duplicate keys are not handled properly. As our tree is implemented, a duplicate key will create a new node with the same key value in the right subtree of the node having the original key. The result of this is that the node with the new key will never be found during a search. A better way to handle the insertion of a duplicate key is for the value associated with the new key to replace the old value. We leave fixing this bug as an exercise for you.</p>
 
   <listing xml:id="trees_lst-put"><caption>The <c>put</c> Method</caption>
-  <program language="java"><input>
+  <program language="java"><code>
    public void put(K key, V value) {
         if (this.root != null) {
             put(key, value, this.root);
@@ -265,7 +265,7 @@ if (condition) {
             }
         }
     }
-  </input></program></listing>
+  </code></program></listing>
 
 <note>
 <title>Java Note</title>
@@ -351,7 +351,7 @@ if (condition) {
             from the <c>TreeNode</c> besides the payload.</p>
   <listing xml:id="trees_lst-get">
   <caption>The <c>get</c> Method</caption>
-  <program language="java"><input>
+  <program language="java"><code>
     public V get(K key) {
         if (this.root != null) {
             TreeNode result = get(key, this.root);
@@ -374,7 +374,7 @@ if (condition) {
             return get(key, currentNode.rightChild);
         }
     }
-</input></program></listing>
+</code></program></listing>
 
     <p>We can use the <c>get</c> helper method when implementing the <c>containsKey</c> method in
     <xref ref="trees_lst-contains"/>;
@@ -383,12 +383,12 @@ if (condition) {
 
   <listing xml:id="trees_lst-contains">
   <caption>The <c>containsKey</c> Method</caption>
-  <program language="java"><input>
+  <program language="java"><code>
     public boolean containsKey(K key) {
         TreeNode result = get(key, this.root);
         return (result != null);
     }
-  </input></program></listing>
+  </code></program></listing>
 </subsection>
 
 <subsection xml:id="display-binary-search-tree">
@@ -399,7 +399,7 @@ if (condition) {
 
     <listing xml:id="lst_tree-to-string">
     <caption>Tree to String</caption>
-    <program language="java"><input>
+    <program language="java"><code>
     public String toString() {
         return stringify(this.root);
     }
@@ -418,11 +418,11 @@ if (condition) {
         }
         return result;
     }
-    </input></program></listing>
+    </code></program></listing>
     <p>At this point we have enough to implement a program to test our tree, shown in <xref ref="lst_bst-example1"/>:</p>
 <listing xml:id="lst_bst-example1">
 <caption>Sample Binary Search Tree Program</caption>
-<program language="java" interactive="activecode"><input>
+<program language="java" interactive="activecode"><code>
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./BinarySearchTree.java"/>
@@ -444,7 +444,7 @@ public class BinarySearchTreeExample {
         System.out.println(tree.get("Brazil")); // null
     }
 }
-</input></program></listing>
+</code></program></listing>
 
 <p>Here is its output:</p>
 <console><output>
@@ -494,7 +494,7 @@ null
 
   <listing xml:id="lst_find-successor">
   <caption>The <c>findSucessor</c> Method</caption>
-  <program language="java" line-numbers="yes"><input>
+  <program language="java" line-numbers="yes"><code>
 TreeNode findSuccessor() {
     TreeNode successor = null;
     if (rightChild != null) {
@@ -511,7 +511,7 @@ TreeNode findSuccessor() {
         }
     }
     return successor;
-  </input></program>
+  </code></program>
   </listing>
 
   <p>Lines 3 and 4 handle the first case (there is a right child) by calling
@@ -521,7 +521,7 @@ TreeNode findSuccessor() {
 
     <listing xml:id="lst_find-minimum-child">
     <program language="java" line-numbers="yes">
-    <input>
+    <code>
 TreeNode findMinimumChild() {
     TreeNode current = this;
     while (current.leftChild != null) {
@@ -529,23 +529,23 @@ TreeNode findMinimumChild() {
     }
     return current;
 }
-    </input></program></listing>
+    </code></program></listing>
 
     <p>Now that we have these methods, we have to modify the <c>BinarySearchTree</c> class. We change the first lines of the class to declare that this class is <c>Iterable</c>:</p>
 
-    <program language="java"><input>
+    <program language="java"><code>
 import java.util.Iterator;
 
 public class BinarySearchTree&lt;K extends Comparable&lt;K&gt;, V extends Comparable&lt;V&gt;&gt;
     implements Iterable&lt;BinarySearchTree&lt;K, V&gt;.TreeNode&gt; {
-</input></program>
+</code></program>
 
 <p>Our next step is to create an <c>Iterator</c> class that Java uses when it starts a <c>for</c> loop. (We can use it ourselves,too.) </p>
 
     <listing xml:id="lst_iterator_class">
     <caption>Initializing an <c>Iterator</c></caption>
     <program language="java" line-numbers="yes">
-    <input>
+    <code>
     class TreeIterator implements Iterator&lt;BinarySearchTree&lt;K, V&gt;.TreeNode&gt; {
         TreeNode iteratorNode;
 
@@ -570,7 +570,7 @@ public class BinarySearchTree&lt;K extends Comparable&lt;K&gt;, V extends Compar
             return result;
         }
     }
-    </input></program></listing>
+    </code></program></listing>
 
     <p>Line 2 creates a <c>TreeNode</c> that keeps track of where we are in the tree.</p>
     <p>The constructor is in lines 4&#x2013;10. It sets the <c>iteratorNode</c> to the first (smallest) element in the tree. If the root doesn't have a left child, then the root must be the smallest element, as everything to the right of the root is larger than the root.  Otherwise, if there is a left child, we must find its minimum child in line 8.</p>
@@ -582,7 +582,7 @@ public class BinarySearchTree&lt;K extends Comparable&lt;K&gt;, V extends Compar
     <listing xml:id="lst_bst-example2">
     <caption>Using the Binary Search Tree</caption>
     <program label="trees_bst_example" language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./BinarySearchTree.java"/>
@@ -619,7 +619,7 @@ public class BinarySearchTreeExample {
 
     }
 }
-    </input></program></listing>
+    </code></program></listing>
 
     <p>In line 18, we must use the fully qualified class name <c>BinarySearchTree.TreeNode</c> because the
     <c>TreeNode</c> class is nested inside the <c>BinarySearchTree</c> class. In line 25, we must also add
@@ -631,7 +631,7 @@ public class BinarySearchTreeExample {
 
   <p>Finally, we turn our attention to the most challenging operation on the binary search tree, the deletion of a key (see <xref ref="trees_lst-remove-key-1"/>). The first task is to find the node to delete by searching the tree. If the tree has more than one node we search using the <c>get</c> method to find the <c>TreeNode</c> that needs to be removed. If the tree only has a single node, that means we are removing the root of the tree, but we still must check to make sure the key of the root matches the key that is to be deleted. In either case, if the key is not found the <c>remove</c> method raises an error.</p>
 
-  <listing xml:id="trees_lst-remove-key-1"><program language="java"><input>
+  <listing xml:id="trees_lst-remove-key-1"><program language="java"><code>
     public TreeNode removeKey(K key) {
         if (size > 1) {
             TreeNode nodeToRemove = get(key, root);
@@ -656,7 +656,7 @@ public class BinarySearchTreeExample {
     void removeNode(TreeNode currentNode) {
         // to be determined...
     }
-</input></program></listing>
+</code></program></listing>
   <p>Once we&#x2019;ve found the node containing the key we want to delete, there
             are three cases that we must consider:</p>
   <p>
@@ -689,7 +689,7 @@ public class BinarySearchTreeExample {
             all that has to happen is to delete the node and remove the reference to this
             node in the parent. The code for this case is shown in <xref ref="trees_lst-remove-case-1"/>.</p>
   <listing xml:id="trees_lst-remove-case-1"><caption>Removing a Leaf Node</caption>
-  <program language="java"><input>
+  <program language="java"><code>
        if (currentNode.isLeaf() {
             if (currentNode == currentNode.parent.leftChild) {
                 currentNode.parent.leftChild = null;
@@ -697,7 +697,7 @@ public class BinarySearchTreeExample {
                 currentNode.parent.rightChild = null;
             }
         }
-  </input></program></listing>
+  </code></program></listing>
 
   <p>The second case is only slightly more complicated. If a node has only a
             single child, then we promote the child to take the place of
@@ -741,7 +741,7 @@ public class BinarySearchTreeExample {
   <listing xml:id="trees_lst-adjust-parent">
     <caption>Adjusting Parent/Child References</caption>
     <program language="java">
-    <input>
+    <code>
     void adjustParent(TreeNode nodeToRemove, TreeNode childOfRemoved) {
         if (nodeToRemove.isLeftChild()) {
             childOfRemoved.parent = nodeToRemove.parent;
@@ -757,11 +757,11 @@ public class BinarySearchTreeExample {
                 childOfRemoved.rightChild);
         }
     }
-    </input></program></listing>
+    </code></program></listing>
 
     <p>We use this method in the portion of <c>removeKey</c> that handles nodes with one child. The code fragment is shown in <xref ref="trees_lst-remove-case-2"/>.</p>
   <listing xml:id="trees_lst-remove-case-2"><caption>Removing a Node with One Child</caption><program language="java">
-  <input>
+  <code>
         else { // case 2: one child only
             if (currentNode.leftChild != null) {
                 adjustParent(currentNode, currentNode.leftChild);
@@ -770,7 +770,7 @@ public class BinarySearchTreeExample {
                 adjustParent(currentNode, currentNode.rightChild);
             }
         }
-  </input></program></listing>
+  </code></program></listing>
 
   <p>The third case is the most difficult case to handle. If a node has two
             children, then it is unlikely that we can simply promote one of them to
@@ -793,21 +793,21 @@ public class BinarySearchTreeExample {
             goes directly to the node we want to splice out and makes the right
             changes. We could call <c>remove</c> recursively, but then we would waste
             time searching again for the key node. The code goes after the code for removing a node with no children.</p>
-  <listing xml:id="trees_lst-remove-key-3"><program language="java"><input>
+  <listing xml:id="trees_lst-remove-key-3"><program language="java"><code>
         } else if (currentNode.hasChildren()) { // case 3: two chilren
             TreeNode successor = currentNode.findSuccessor();
             successor.spliceOut();
             currentNode.key = successor.key;
             currentNode.value = successor.value;
         }
-  </input></program></listing>
+  </code></program></listing>
   <p>The code for splicing out shown below (see <xref ref="trees_lst-splice-out"/>), and it is a method of the <c>TreeNode</c> class. This code makes use
             of the same properties of binary search trees that cause an inorder
             traversal to print out the nodes in the tree from smallest to largest.</p>
 
   <listing xml:id="trees_lst-splice-out">
   <caption>Splicing a Successor into the Correct Location</caption>
-  <program language="java"><input>
+  <program language="java"><code>
     void spliceOut() {
         if (this.isLeaf()) {
             if (this.isLeftChild()) {
@@ -833,7 +833,7 @@ public class BinarySearchTreeExample {
             }
         }
     }
-</input></program></listing>
+</code></program></listing>
 
 </subsection>
 
@@ -844,7 +844,7 @@ public class BinarySearchTreeExample {
   <p>At this point you may want to download the entire file containing the
             full version of the <c>BinarySearchTree</c> and <c>TreeNode</c> classes.</p>
   <program xml:id="completebstcode" language="java">
-    <input>
+    <code>
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -1173,7 +1173,7 @@ public class BinarySearchTree&lt;K extends Comparable&lt;K&gt;, V extends Compar
         }
     }
 }
-        </input>
+        </code>
   </program>
   </subsection>
 </section>

@@ -9,7 +9,7 @@
 <listing xml:id="lst-recstack">
     <caption>Converting an Integer to a String Using a Stack</caption>
 <program label="lst-recstack" language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Stack.java"/>
@@ -42,7 +42,7 @@ public class ConvertViaStack {
         System.out.println(convert(13, 2)); // 1101
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 <p>Each time we go through the first <c>while</c> loop in lines 9&#x2013;16, we push a character on the stack.

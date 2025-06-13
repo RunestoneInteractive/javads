@@ -24,7 +24,7 @@
   <listing xml:id="recursion_lst-sierpinski">
     <caption>Program for Sierpinski Triangle</caption>
 <program label="prog-sierpinski" language="java" line-numbers="yes">
-    <input>
+    <code>
 import java.awt.Color;
 import java.awt.geom.Point2D;
 
@@ -95,7 +95,7 @@ public class SierpinskiTriangles {
         t.hide();
     }
 }
-        </input>
+        </code>
   </program></listing>
 
   <note>

@@ -43,7 +43,7 @@
 <listing xml:id="lst-binconverter">
   <caption>Converting from Decimal to Binary</caption>
 <program label="lst-binconverter" language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Stack.java"/>
@@ -70,7 +70,7 @@ public class DecimalToBinary {
         System.out.println(divideBy2(31)); // expect 11111
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 <p>The algorithm for binary conversion can, with a few changes, be extended to perform
@@ -97,7 +97,7 @@ public class DecimalToBinary {
 <listing xml:id="lst-baseconverter">
   <caption>Converting from Decimal to any Base</caption>
 <program label="prog-baseconverter" language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Stack.java"/>
@@ -129,7 +129,7 @@ public class DecimalToBaseN {
         System.out.println(baseConvert(30, 16)); // expect 1e
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 

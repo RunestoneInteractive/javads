@@ -26,7 +26,7 @@
 <listing xml:id="lst-balcheck">
     <caption>Solving the General Balanced Symbol Problem</caption>
 <program label="lst-balcheck" line-numbers="yes" language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Stack.java"/>
@@ -69,7 +69,7 @@ public class BalancedSymbols {
         System.out.println(balanceCheck("[{()]")); // expect false
         System.out.println(balanceCheck("[{()]]")); // expect false
     }
-}        </input>
+}        </code>
   </program>
 </listing>
 
