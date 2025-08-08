@@ -7,7 +7,7 @@
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 public class Polymorphism {
     public static void main(String[] args) {
         Item item1 = new Item("Cat Food", "CF-909", 7.85);
@@ -18,7 +18,7 @@ public class Polymorphism {
         System.out.println("item 2: " + item2.toString());
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -36,9 +36,9 @@ Note that you can't assign a parent object to a child variable. Every <c>SaleIte
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 SaleItem badNews = new Item("Oops", "X-000", 6.66);
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -87,7 +87,7 @@ Consider <xref ref="oop_lst-polyarray"/>, which sets up an array of <c>Item</c>.
 <listing  xml:id="oop_lst-polyarray">
   <caption>Setting up an Array of Super- and SubClass Items</caption>
   <program language="java">
-    <input>
+    <code>
 public class PolyArray {
     public static void main(String[] args) {
         Item [] foods = {
@@ -102,7 +102,7 @@ public class PolyArray {
 // ...
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -126,7 +126,7 @@ Here's the pseudo-code for what we want to do:
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 for (Item food: foods) {
     System.out.printf("%s: ", food.getName());
     if (food is a sale item) {
@@ -137,7 +137,7 @@ for (Item food: foods) {
         display getPrice();
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -147,9 +147,9 @@ Note that the <c>for</c> loop variable is an <c>Item</c>, because we have told t
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 variable instanceof Class
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -161,7 +161,7 @@ A first try at the code looks like this:
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 for (Item food: foods) {
     System.out.printf("%s: ", food.getName());
     if (food instanceof SaleItem) {
@@ -174,7 +174,7 @@ for (Item food: foods) {
             food.getPrice());
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -200,7 +200,7 @@ What we have to do is use a <em>cast</em> to tell the compiler, <q>yes, we decla
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 for (Item food: foods) {
     System.out.printf("%s: ", food.getName());
     if (food instanceof SaleItem) {
@@ -215,7 +215,7 @@ for (Item food: foods) {
             food.getPrice());
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -237,10 +237,10 @@ Here's a quick summary of inheritance, polymorphism, and dynamic binding.
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 Item myItem = new SaleItem("Tomato Soup", "TS-882",
    1.29, 0.05);
-    </input>
+    </code>
   </program>
 </listing>
       </li>
@@ -251,9 +251,9 @@ Item myItem = new SaleItem("Tomato Soup", "TS-882",
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 System.out.println(myItem.toString());
-    </input>
+    </code>
   </program>
 </listing>
 <p>
@@ -262,9 +262,9 @@ System.out.println(myItem.toString());
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 double saving = myItem.getPrice() * myItem.getDiscount();
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -274,11 +274,11 @@ double saving = myItem.getPrice() * myItem.getDiscount();
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 if (myItem instanceof SaleItem) {
     ...
 }
-    </input>
+    </code>
   </program>
 </listing>
 </li>
@@ -286,12 +286,12 @@ if (myItem instanceof SaleItem) {
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 if (myItem instanceof SaleItem) {
     double saving = myItem.getPrice() *
         ((SaleItem) myItem).getDiscount();
 }
-    </input>
+    </code>
   </program>
 </listing>
 

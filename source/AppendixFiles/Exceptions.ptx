@@ -8,7 +8,7 @@ Consider this program:
 </p>
 <listing xml:id="exceptions_error_program">
 <program language="java" >
-<input>
+<code>
 import java.util.Scanner;
 
 public class ErrorProne {
@@ -29,7 +29,7 @@ public class ErrorProne {
             data[index], divisor, result);
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -95,7 +95,7 @@ Let's enclose the code that could have an error in a <c>try</c> block:
 
 <listing xml:id="exceptions_try_block">
 <program language="java">
-<input>
+<code>
 try {
     System.out.print("Enter index 0-3: ");
     int index = input.nextInt();
@@ -107,7 +107,7 @@ try {
     System.out.printf("quotient of %d and %d is %d\n",
         data[index], divisor, result);
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -118,11 +118,11 @@ and how to handle it.  Let's start with the division by zero, which generated a 
 
 <listing xml:id="exceptions_catch_block">
 <program language="java">
-<input>
+<code>
 catch (ArithmeticException ex) {
     System.out.println("Number to divide by cannot be zero.");
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -140,14 +140,14 @@ You may follow a <c>try</c> block with as many <c>catch</c> blocks as you want. 
 
 <listing xml:id="exceptions_multiple_catch">
 <program language="java">
-<input>
+<code>
 catch (NumberFormatException ex) {
     System.out.println("You must enter digits for numbers.");
 }
 catch (ArrayIndexOutOfBoundsException ex) {
     System.out.printf("Index must be in range 0-%d\n", data.length);
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -207,7 +207,7 @@ If you put a <c>catch</c> for a parent class <em>before</em> a <c>catch</c> for 
 
 <listing xml:id="lst_multiple_catch">
 <program language="java" line-numbers="yes">
-<input>
+<code>
 try {
     int n = 12 / 0;
 }
@@ -217,7 +217,7 @@ catch (Exception ex) {
 catch (ArithmeticException ex) {
     System.out.println("You can't divide by zero.");
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -254,12 +254,12 @@ For example, you could <c>catch</c> <em>only</em> <c>Exception</c> and use one o
 
 <listing xml:id="lst_using_exception_methods">
 <program language="java" line-numbers="yes">
-<input>
+<code>
 catch (Exception ex) {
     System.out.println("An error occurred:");
     System.out.println(ex.toString());
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -277,7 +277,7 @@ Sometimes programs need to take an action whether the code in the <c>try</c> blo
 
 <listing>
 <program language="java">
-<input>
+<code>
 public class FinallyTest {
 
     public static void main(String[] args) {
@@ -298,7 +298,7 @@ public class FinallyTest {
         System.out.println("Does not print if return succeeds");
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -329,7 +329,7 @@ This program will print <c>In the finally clause.</c> even though the <c>return<
 
 <listing xml:id="lst_throw_exception">
 <program language="java" line-numbers="yes">
-<input>
+<code>
 public class ArrayStats {
     public static double average(double[] data)
         throws IllegalArgumentException {
@@ -345,7 +345,7 @@ public class ArrayStats {
         }
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -363,7 +363,7 @@ Here's an example that calls the code (without <c>try</c> and <c>catch</c>) and 
 
 <listing xml:id="lst_try_throw_exception">
 <program language="java" line-numbers="yes">
-<input>
+<code>
 public class TestArrayStats {
     public static void main(String[] args) {
         double[] items = new double[0];
@@ -371,7 +371,7 @@ public class TestArrayStats {
         System.out.println("Average is " + result);
     }
 }
-</input></program></listing>
+</code></program></listing>
 
 <console><output>
 Exception in thread "main"
@@ -386,12 +386,12 @@ Exception in thread "main"
 
 <listing xml:id="lst_throw_multiple_exceptions">
 <program language="java" line-numbers="yes">
-<input>
+<code>
 public static void example(int n) throws IllegalArgumentException,
   ArithmeticException, NumberFormatException {
     // ...code
 }
-</input>
+</code>
 </program>
 </listing>
 </subsection>

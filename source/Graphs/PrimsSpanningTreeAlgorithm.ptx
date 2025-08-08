@@ -83,7 +83,7 @@
 <listing xml:id="lst-prims">
   <caption>Prim's Spanning Tree Algorithm</caption>
   <program language="java">
-    <input>
+    <code>
 import java.util.ArrayList;
 
 public class PrimsAlgorithm&lt;T extends Comparable&lt;T&gt;&gt; {
@@ -114,7 +114,7 @@ public class PrimsAlgorithm&lt;T extends Comparable&lt;T&gt;&gt; {
         }
     }
 }
-</input></program>
+</code></program>
 </listing>
   <p>The following sequence of figures (<xref ref="file_145_id3"/>
             through <xref ref="file_145_id9"/>) shows the algorithm in operation on our sample

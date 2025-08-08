@@ -8,7 +8,7 @@
     <title>The ArrayList Class</title>
     <p>The primary collection we'll be using is the <c>ArrayList</c>. It's not one of the built-in data types, so you have to explicitly import it:</p>
     <console prompt="jshell&gt; ">
-    <input>import java.util.ArrayList;</input>
+    <code>import java.util.ArrayList;</code>
     </console>
     <p>Here, <c>ArrayList</c> is the name of the class. It belongs to the <c>java.util</c> <term>package</term>. Java uses packages to group together related data types.</p>
 
@@ -19,33 +19,33 @@
     </aside>
 
 <console prompt="jshell&gt; ">
-<input>ArrayList&lt;String&gt; animals = new ArrayList&lt;String&gt;();</input>
+<code>ArrayList&lt;String&gt; animals = new ArrayList&lt;String&gt;();</code>
 <output>animals ==> []</output>
 </console>
 
     <p>The <c>add</c> method appends items to the end of the list and returns <c>true</c>. A two-argument version of <c>add</c> lets you give an index position at which to add an element, but it does not return any value. As with arrays, the first element in an <c>ArrayList</c> has index zero.</p>
 
 <console prompt="jshell&gt; ">
-<input>animals.add("ibex");</input>
+<code>animals.add("ibex");</code>
 <output>$5 ==> true
 &#160;</output>
 
-<input>animals.add("capybara");</input>
+<code>animals.add("capybara");</code>
 <output>$6 ==> true
 &#160;</output>
 
-<input>animals.add("bison");</input>
+<code>animals.add("bison");</code>
 <output>$7 ==> true
 &#160;</output>
 
-<input>animals</input>
+<code>animals</code>
 <output>animals ==> [ibex, capybara, bison]
 &#160;</output>
 
-<input>animals.add(1, "giraffe");</input>
+<code>animals.add(1, "giraffe");</code>
 <output>
 &#160;</output>
-<input>animals</input>
+<code>animals</code>
 <output>animals ==> [ibex, giraffe, capybara, bison]
 &#160;</output>
 </console>
@@ -95,7 +95,7 @@
     <title>Wrapper Classes</title>
     <p>Let's say we wanted an <c>ArrayList</c> with floating point values. If we try something like the following, we get an error:</p>
 <console prompt="jshell&gt; ">
-<input>ArrayList&lt;double&gt; prices = new ArrayList&lt;double&gt;();</input>
+<code>ArrayList&lt;double&gt; prices = new ArrayList&lt;double&gt;();</code>
 <output>|  Error:
 |  unexpected type
 |    required: reference
@@ -135,22 +135,22 @@
 <p>It is possible to use explicit methods to wrap and unwrap primitives (also referred to as <term>box</term> and <term>unbox</term>):</p>
 
 <console prompt="jshell&gt; ">
-<input>Integer objectAge = Integer.valueOf(37);</input>
+<code>Integer objectAge = Integer.valueOf(37);</code>
 <output>objectAge ==&gt; 37
 &#160;</output>
 
-<input>int primitiveAge = objectAge.intValue();</input>
+<code>int primitiveAge = objectAge.intValue();</code>
 <output>primitiveAge ==&gt; 37</output>
 </console>
 
 <p>However, modern versions of the Java compiler will automatically <q>auto-box</q> and <q>auto-unbox</q> values:</p>
 
 <console prompt="jshell&gt; ">
-<input>Integer objectAge = 37;</input>
+<code>Integer objectAge = 37;</code>
 <output>objectAge ==> 37
 &#160;</output>
 
-<input>int primitiveAge = objectAge;</input>
+<code>int primitiveAge = objectAge;</code>
 <output>primitiveAge ==> 37</output>
 </console>
 </subsection>
@@ -168,14 +168,14 @@
     </p>
 
     <program language="java">
-    <input>
+    <code>
 import java.util.ArrayList;
 ArrayList&lt;Double&gt; discount_rates = new ArrayList&lt;&gt;();
 discount_rates.add(0.03);
 discount_rates.add(0.07);
 discount_rates.add(0.105);
 discount_rates.add(0.15);
-</input>
+</code>
 </program>
 
     <p>Notice that the second set of angle brackets in the second line is empty. Java will implicitly use the same data type as on the left hand side of the assignment, which saves you some typing.</p>
@@ -183,7 +183,7 @@ discount_rates.add(0.15);
     <p>Still, this code is verbose; there must be a better way. Here is a <em>slightly</em> better way to do it.</p>
 
 <program language="java" line-numbers="yes">
-<input>
+<code>
 import java.util.ArrayList;
 import java.util.Arrays; // notice the "s" at the end!!
 
@@ -192,7 +192,7 @@ ArrayList&lt;Double&gt; discount_rates = new ArrayList&lt;&gt;(
         new Double[] {0.03, 0.07, 0.105, 0.15}
     )
 )
-</input>
+</code>
 </program>
 
 <p>You need to <c>import</c> the <c>Arrays</c> class (line 2). Reading from the <q>inside out</q>, line 6 creates a new array of <c>Double</c> on the fly; this avoids needing a temporary variable. Line 5 converts it to a <c>List</c> (another one of Java's collections), and that becomes the argument to the <c>ArrayList</c> constructor on line 4.</p>
@@ -233,7 +233,7 @@ ArrayList&lt;Double&gt; discount_rates = new ArrayList&lt;&gt;(
 
         <p>We would use this code:</p>
         <program language="java" line-numbers="yes">
-            <input>
+            <code>
 import java.util.HashMap;
 
 public class HashMapExample {
@@ -249,7 +249,7 @@ public class HashMapExample {
         System.out.println(cityInfo);
     }
 }
-            </input>
+            </code>
         </program>
         <p>Line 7 creates the HashMap, where we put the data types for the key and value inside angle brackets. The data types must be reference types, which is why we are using <c>Integer</c> (the objecct wrapper for <c>int</c>).</p>
 
@@ -266,12 +266,12 @@ public class HashMapExample {
 
         <p>You can, then, iterate through a HashMap with code like this, which uses the <c>keySet()</c> method to return a collection of all the HashMap's keys:</p>
 
-        <program language="java"><input>
+        <program language="java"><code>
 for (String key: cityInfo.keySet()) {
     System.out.format("Key %s has value %,d.%n",
         key, cityInfo.get(key));
 }
-        </input></program>
+        </code></program>
 
         <p>That produces this output:</p>
         <console><output>

@@ -71,7 +71,7 @@
             The static method is particularly elegant because our base case is
             simply to check if the tree exists. If the tree parameter is <c>null</c>,
             then the function returns without taking any action.</p>
-          <listing xml:id="trees_lst-preorder1"><program language="java"><input>
+          <listing xml:id="trees_lst-preorder1"><program language="java"><code>
 public static void preorder(BinaryTree&lt;String&gt; tree) {
     if (tree != null) {
         System.out.println(tree.getRootValue());
@@ -79,7 +79,7 @@ public static void preorder(BinaryTree&lt;String&gt; tree) {
         preorder(tree.getRightChild());
     }
 }
-</input></program></listing>
+</code></program></listing>
 
   <p>We can also implement <c>preorder</c> as a method of the <c>BinaryTree</c>
             class. The code for implementing <c>preorder</c> as an internal method is
@@ -89,7 +89,7 @@ public static void preorder(BinaryTree&lt;String&gt; tree) {
             access the fields. However, we also need to modify the base case. The
             internal method must check for the existence of the left and the right
             children <em>before</em> making the recursive call to <c>preorder</c>.</p>
-  <listing xml:id="trees_lst-preorder2"><program language="java"><input>
+  <listing xml:id="trees_lst-preorder2"><program language="java"><code>
 public void preorder() {
     System.out.println(this.key);
     if (this.leftChild != null) {
@@ -99,7 +99,7 @@ public void preorder() {
         this.rightChild.preorder();
     }
 }
-</input></program></listing>
+</code></program></listing>
   <p>Which of these two ways to implement <c>preorder</c> is best? The answer is
             that implementing <c>preorder</c> as an external method is probably
             better in this case. The reason is that you very rarely want to just
@@ -113,7 +113,7 @@ public void preorder() {
   <p>The algorithm for the <c>postorder</c> traversal, shown in
             <xref ref="trees_lst-postorder1"/>, is nearly identical to <c>preorder</c> except that
             we move the call to print to the end of the function.</p>
-          <listing xml:id="trees_lst-postorder1"><program language="java"><input>
+          <listing xml:id="trees_lst-postorder1"><program language="java"><code>
 public static void postorder(BinaryTree&lt;String&gt; tree) {
     if (tree != null) {
         postorder(tree.getLeftChild());
@@ -121,7 +121,7 @@ public static void postorder(BinaryTree&lt;String&gt; tree) {
         System.out.println(tree.getKeyValue());
     }
 }
-</input></program></listing>
+</code></program></listing>
 
   <p>We have already seen a common use for the postorder traversal, namely
             evaluating a parse tree. Look back at <xref ref="trees_parse-tree"/> again.
@@ -131,7 +131,7 @@ public static void postorder(BinaryTree&lt;String&gt; tree) {
             Assuming our binary tree is going to store only expression tree data,
             we rewrite the evaluation function, but model it even more closely on
             the postorder code in <xref ref="trees_lst-postorder1"/>.</p>
-  <listing xml:id="trees_lst-postordereval"><program language="java"><input>
+  <listing xml:id="trees_lst-postordereval"><program language="java"><code>
     public static Double postorderEvaluate(BinaryTree&gt;String&gt; tree) {
         Double leftValue = null;
         Double rightValue = null;
@@ -157,7 +157,7 @@ public static void postorder(BinaryTree&lt;String&gt; tree) {
             return null;
         }
     }
-    </input></program></listing>
+    </code></program></listing>
 
   <p>Notice that the form in <xref ref="trees_lst-postorder1"/> is the same as the form
             in <xref ref="trees_lst-postordereval"/>, except that instead of printing the key at
@@ -172,7 +172,7 @@ public static void postorder(BinaryTree&lt;String&gt; tree) {
             traversal functions we are simply changing the position of the <c>System.out.println</c>
             call with respect to the two recursive function calls.</p>
   <listing xml:id="trees_lst-inorder1"><program language="java">
-    <input>
+    <code>
     public static void inorder(BinaryTree&lt;String&gt; tree) {
         if (tree != null) {
             inorder(tree.leftChild);
@@ -180,7 +180,7 @@ public static void postorder(BinaryTree&lt;String&gt; tree) {
             inorder(tree.rightChild);
         }
     }
-</input>
+</code>
   </program></listing>
   <p>If we perform an inorder traversal of a parse tree, we get our
             original expression back without any parentheses. Let's modify the
@@ -191,7 +191,7 @@ public static void postorder(BinaryTree&lt;String&gt; tree) {
             <em>after</em> the recursive call to the right subtree. The modified code is
             shown in <xref ref="trees_lst-printexp"/>.</p>
   <listing xml:id="trees_lst-printexp"><program language="java">
-    <input>
+    <code>
     public static String expressionToString(BinaryTree&lt;String&gt; tree) {
         String result = "";
         if (tree != null) {
@@ -201,7 +201,7 @@ public static void postorder(BinaryTree&lt;String&gt; tree) {
         }
         return result;
     }
-</input>
+</code>
   </program></listing>
   <p>Notice that the <c>expressionToString</c> method as we have implemented it puts
             parentheses around each number. While not incorrect, the parentheses are

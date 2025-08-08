@@ -162,7 +162,7 @@
             in <xref ref="lst-buildparse"/>.</p>
 <listing xml:id="lst-buildparse">
 <program label="prog-buildparse" language="java" line-numbers="yes">
-    <input>
+    <code>
 class ParseTreeBuilder {
     /*
      * Given a fully-parenthesized expression, return its
@@ -213,7 +213,7 @@ class ParseTreeBuilder {
         }
     }
 }
-</input>
+</code>
   </program>
 </listing>
   <p>The four rules for building a parse tree are coded as the first four
@@ -257,7 +257,7 @@ class ParseTreeBuilder {
             the results from recursively evaluating the left and right children (lines&#xA0;6&#x2013;9) We do this in the <c>apply</c> method (lines&#xA0;15&#x2013;30), which we have made into a separate method so that the flow of <c>evaluate</c>is easier to read.</p>
   <listing xml:id="trees_lst-eval">
 <program label="trees_prog-eval" language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Stack.java"/>
@@ -302,7 +302,7 @@ public class ParseTreeExample {
         System.out.println(evaluate(parseTree));
     }
 }
-</input>
+</code>
   </program>
   </listing>
 

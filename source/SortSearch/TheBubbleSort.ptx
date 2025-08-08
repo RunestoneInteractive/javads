@@ -49,7 +49,7 @@ list[j] = temp;</pre>
 <listing xml:id="lst-bubble">
   <caption>The Bubble Sort Implementation</caption>
 <program label="prog-bubble" language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.Arrays;
 
 public class BubbleSortExample {
@@ -80,7 +80,7 @@ public class BubbleSortExample {
         System.out.println("Final result: " + Arrays.toString(testList));
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 
@@ -143,7 +143,7 @@ public class BubbleSortExample {
 <listing xml:id="lst-shortbubble">
 <program label="lst-shortbubble" language="java" line-numbers="yes"
          interactive="activecode">
-    <input>
+    <code>
 import java.util.Arrays;
 
 public class ShortBubbleExample {
@@ -178,7 +178,7 @@ public class ShortBubbleExample {
         System.out.println("Final result: " + Arrays.toString(testList));
     }
 }
-</input></program></listing>
+</code></program></listing>
 
 <note>
   <title>Java Note</title>

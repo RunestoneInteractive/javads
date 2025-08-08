@@ -64,7 +64,7 @@
 <listing xml:id="lst-rectostr">
   <caption>Recursively Converting from Integer to String</caption>
 <program label="prg-rectostr"  language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 public class RecursiveBaseConversion {
     public static String convert(int n, int base) {
         String [] digitStrings = {"0", "1", "2", "3", "4", "5",
@@ -82,7 +82,7 @@ public class RecursiveBaseConversion {
         System.out.println(convert(1066, 16));  // 42A
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
   <p>Notice that in line 5 we check for the base case where <c>n</c>
@@ -112,7 +112,7 @@ public class RecursiveBaseConversion {
     <exercise>
     <p>Write a method that takes a string as a parameter and returns a new string that is the reverse of the old string. Use this as your starting point.</p>
     <program xml:id="recursion_sc_1" language="java" interactive="activecode">
-      <input>
+      <code>
 public class ReverseString {
     public static String reverse(String s) {
         // your code here
@@ -134,7 +134,7 @@ public class ReverseString {
         testEqual(reverse(""), "");
     }
 }
-        </input>
+        </code>
     </program>
   </exercise>
   <exercise>
@@ -170,7 +170,7 @@ public class ReverseString {
     <p>Here is a starting point for your program. Hint: the <c>Character.isLetter(ch)</c> method returns <c>true</c> if its argument is a letter, <c>false</c> otherwise.  <c>Character.toLowerCase(ch)</c> converts letters to their lower case versions, leaving non-letters unchanged.</p>
 
     <program xml:id="recursion_sc_2" language="java" interactive="activecode">
-      <input>
+      <code>
 public class RecursivePalindromes {
 
     /*
@@ -204,7 +204,7 @@ public class RecursivePalindromes {
             isPalindrome(lettersOnly("Madam, I'm Adam.")), true);
     }
 }
-        </input>
+        </code>
     </program>
   </exercise>
   </exercises>

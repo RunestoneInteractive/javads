@@ -29,7 +29,7 @@
                 array element to <c>-</c>. <xref ref="lst-ana-1"/> shows this method.</p>
 <listing xml:id = "lst-ana-1">
     <program  label="lst-ana-1" language="java" interactive="activecode">
-      <input>
+      <code>
 public class Anagrams1 {
 
     public static boolean anagramSolution1(String s1, String s2) {
@@ -67,7 +67,7 @@ public class Anagrams1 {
         System.out.println(anagramSolution1("abcd", "dcda"));  // expected: false
     }
 }
-  </input></program>
+  </code></program>
 </listing>
 
     <p>To analyze this algorithm, we need to note that each of the <em>n</em>
@@ -90,7 +90,7 @@ public class Anagrams1 {
     <p>Another solution to the anagram problem will make use of the fact that even though <c>s1</c> and <c>s2</c> are different, they are anagrams only if they consist of exactly the same characters. So if we begin by sorting each string alphabetically from a to z, we will end up with the same string if the original two strings are anagrams. <xref ref="lst-ana-2"/> shows this solution. Again, in Java we can use a <c>sort</c> method on arrays by converting each string to an array at the start.</p>
   <listing xml:id="lst-ana-2">
 <program language="java" label="lst-ana-2" interactive="activecode">
-      <input>
+      <code>
 import java.util.Arrays; // note the "s" at the end!
 
 public class Anagrams2 {
@@ -121,7 +121,7 @@ public class Anagrams2 {
         System.out.println(anagramSolution2("abcd", "dcda"));  // expected: false
     }
 }
-        </input>
+        </code>
     </program>
   </listing>
 
@@ -171,7 +171,7 @@ public class Anagrams2 {
                 as integers, and Java allows us to evaluate an expression like <c>'c'&#160;-&#160;'a'</c>, which evaluates to 2. <xref ref="lst-ana-4"/> shows this solution.</p>
 <listing xml:id="lst-ana-4">
 <program label="lst-ana-4" language="java" interactive="activecode">
-      <input>
+      <code>
 import java.util.Arrays;
 
 public class Anagrams4 {
@@ -208,7 +208,7 @@ public class Anagrams4 {
         System.out.println(anagramSolution4("abcd", "dcda"));  // expected: false
     }
 }
-        </input>
+        </code>
     </program>
 </listing>
 
@@ -224,14 +224,14 @@ public class Anagrams4 {
           <p>Q-4: Given the following code fragment, what is its Big O running time? (Presume that variable
             <c>n</c> has been declared elsewhere in the program.)</p>
           <program language="java">
-            <input>
+            <code>
 int test = 0;
 for (int i = 0; i &lt; n; i++) {
    for (int j = 0; j &lt; n; j++) {
       test = test + i * j;
    }
 }
-</input>
+</code>
           </program>
         </statement>
         <choices>
@@ -274,7 +274,7 @@ for (int i = 0; i &lt; n; i++) {
           <p>Q-5: Given the following code fragment what is its Big O running time? (Presume that <c>n</c> has been
             declared elsewhere in the program.)</p>
           <program language="java">
-            <input>
+            <code>
 int test = 0;
 for (int i = 0; i &lt; n; i++) {
    test = test + i;
@@ -283,7 +283,7 @@ for (int i = 0; i &lt; n; i++) {
 for (int j = 0; j &lt; n; j++) {
    test = test - 1;
 }
-</input>
+</code>
           </program>
         </statement>
         <choices>
@@ -325,13 +325,13 @@ for (int j = 0; j &lt; n; j++) {
         <statement>
           <p>Q-6: Given the following code fragment what is its Big O running time? (Presume <c>n</c> has been declared elsewhere in the program.)</p>
           <program language="java">
-            <input>
+            <code>
 int i = n;
 while (i &gt; 0) {
    int k = 2 + 2;
    i = i / 2;
 }
-</input>
+</code>
           </program>
         </statement>
         <choices>

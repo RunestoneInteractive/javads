@@ -126,7 +126,7 @@
             shown in <xref ref="algorithm-analysis_lst-dummycode"/>. Although this program does not really do
             anything, it is instructive to see how we can take actual code and
             analyze performance.</p>
-          <listing xml:id="algorithm-analysis_lst-dummycode"><program language="java"><input>
+          <listing xml:id="algorithm-analysis_lst-dummycode"><program language="java"><code>
         int a = 5;
         int b = 6;
         int c = 10;
@@ -144,7 +144,7 @@
             int v = b * b;
         }
         int d = 33;
-        </input></program></listing>
+        </code></program></listing>
 
   <p>The number of assignment operations is the sum of four terms. The first
             term is the constant 4, representing the four assignment statements at

@@ -37,11 +37,11 @@
             While we could use a <c>String</c> to represent the vertex color, we will instead use a Java <c>enum</c> class. An <c>enum</c> is <q>is a special data type that enables for a variable to be a set of predefined constants</q> (as defined in the <url href="https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html">Java Tutorials</url>.  The code for this class, which goes into a file named <c>VertexColor.java</c>, follows:</p>
           <listing xml:id="lst_vertex-color">
             <caption>The <c>VertexColor</c> Enumeration</caption>
-            <program language="java"><input>
+            <program language="java"><code>
 enum VertexColor {
     WHITE, GRAY, BLACK
 }
-</input></program></listing>
+</code></program></listing>
 
 
   <p>The breadth-first search algorithm shown in <xref ref="graphs_lst-wordbucket-bfs"/> below uses the
@@ -49,7 +49,7 @@ enum VertexColor {
             a crucial point as we will see, to decide which vertex to explore next.</p>
 
           <listing xml:id="graphs_lst-wordbucket-bfs"><caption>Breadth-First Search</caption>
-            <program language="java" line-numbers="yes"><input>
+            <program language="java" line-numbers="yes"><code>
       public void bfs(Vertex&lt;T&gt; start) {
         start.color = VertexColor.GRAY;
         start.distance = 0;
@@ -71,7 +71,7 @@ enum VertexColor {
             current.color = VertexColor.BLACK;
         }
     }
-    </input></program></listing>
+    </code></program></listing>
 
 
   <p>BFS begins at the starting vertex <c>start</c> and paints it gray to
@@ -146,7 +146,7 @@ enum VertexColor {
             the shortest word ladder from any word back to FOOL.
             The method below (<xref ref="graphs_lst-wordbucket3"/>) shows
             how to follow the predecessor links to print out the word ladder.</p>
-          <listing xml:id="graphs_lst-wordbucket3"><program language="java"><input>
+          <listing xml:id="graphs_lst-wordbucket3"><program language="java"><code>
     public static void traverse(Vertex&lt;String&gt; start) {
         Vertex&lt;String&gt; current = start;
         while (current != null) {
@@ -154,12 +154,12 @@ enum VertexColor {
             current = current.previous;
         }
     }
-    </input></program></listing>
+    </code></program></listing>
 
     <p><xref ref="graphs_lst-word-ladder-driver"/> shows a <c>main</c> method for testing the preceding code:</p>
     <listing xml:id="graphs_lst-word-ladder-driver">
       <program language="java">
-        <input>
+        <code>
     public static void main(String[] args) {
         WordLadder ladder = new WordLadder();
         Graph&lt;String&gt; wordGraph = ladder.buildGraph("wordlist.txt");
@@ -174,7 +174,7 @@ enum VertexColor {
         wordGraph.bfs(wordGraph.getVertex(endWord));
         traverse(wordGraph.getVertex(startWord));
     }
-  </input>
+  </code>
 </program>
 </listing>
 <p>With this output (using the full word list):</p>

@@ -39,7 +39,7 @@
     <title>A Basic implementation of the MSDie class</title>
     <p>Lets start with a really simple implementation of the MSDie class, and we'll improve it one step at a time.   We want to make our die a bit flexible so the constructor will allow us to specify the number of sides.</p>
     <program xml:id="msdie_initial" interactive="activecode" language="python">
-      <input>
+      <code>
 import random
 
 class MSDie:
@@ -67,12 +67,12 @@ for i in range(5):
 
 d_list = [MSDie(6), MSDie(20)]
 print(d_list)
-        </input>
+        </code>
     </program>
     <p>This is a nice starting point.  In fact, for some assignments this might be all you need.  We have a class, we can construct a die, and roll it, and print out the current value.  Sort of&#x2026; It would be nicer if we could just <c>print(my_die)</c> and have the value of the die show up without having to know about the instance variable called <c>current_value</c>.</p>
     <p>Lets fix up the representation to make printing and interacting with the die a bit more convenient.  For this we will implement the <c>__str__</c> and <c>__repr__</c> magic methods.</p>
     <program xml:id="msdie_initial1" interactive="activecode" language="python">
-      <input>
+      <code>
 import random
 
 class MSDie:
@@ -107,7 +107,7 @@ for i in range(5):
 
 d_list = [MSDie(6), MSDie(20)]
 print(d_list)
-        </input>
+        </code>
     </program>
     <p>Notice that when we print a list of objects, the repr is used to display those objects.  Having a good repr makes it easier to debug with simple print statements.</p>
   </subsection>

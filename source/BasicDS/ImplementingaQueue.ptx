@@ -15,7 +15,7 @@
   <listing xml:id="basic-ds_lst-queuecode">
     <caption>Implementation of a Queue</caption>
     <program xml:id="basic-ds_prog-queuecode" language="java">
-      <input>
+      <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -92,14 +92,14 @@ class Queue&lt;T&gt; {
     }
 }
 
-</input></program></listing>
+</code></program></listing>
   <p><xref ref="lst-queuetest"/> shows the <c>Queue</c> class in
             action as we perform the sequence of operations from
             <xref ref="basic-ds_the-queue-abstract-data-type"/>.</p>
           <listing xml:id="lst-queuetest">
             <caption>Example Queue Operations</caption>
             <program xml:id="prog-queuetest" language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Queue.java"/>
@@ -135,7 +135,7 @@ public class QueueTest {
 
     }
 }
-      </input></program></listing>
+      </code></program></listing>
 
   <exercises>
     <title>Self Check</title>

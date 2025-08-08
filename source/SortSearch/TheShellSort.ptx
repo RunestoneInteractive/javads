@@ -59,7 +59,7 @@
 <listing xml:id="lst-shell">
   <caption>The Shell Sort</caption>
 <program label="lst-shell" language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.Arrays;
 
 public class ShellSortExample {
@@ -95,7 +95,7 @@ public class ShellSortExample {
         System.out.println("Final result: " + Arrays.toString(testList));
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 

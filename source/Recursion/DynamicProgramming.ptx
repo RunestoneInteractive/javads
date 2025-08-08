@@ -67,7 +67,7 @@ min
   <listing xml:id="lst-change1">
       <caption>Recursive Algorithm for Making Change</caption>
 <program label="lst-change1"  language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 
 public class ChangeExample1 {
@@ -98,7 +98,7 @@ public class ChangeExample1 {
         System.out.println("Min # of coins: " + makeChange1(coinValues, 63));
     }
 }
-</input>
+</code>
   </program>
   </listing>
   <p>The trouble with the algorithm in <xref ref="lst-change1"/> is that it is
@@ -133,7 +133,7 @@ public class ChangeExample1 {
 <listing xml:id="lst-change2">
     <caption>Recursive Algorithm for Change with Table Lookup</caption>
 <program label="lst-change2" language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 
 public class ChangeExample2 {
@@ -169,7 +169,7 @@ public class ChangeExample2 {
             makeChange2(coinValues, 63, new int[64]));
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
   <p>Notice that in line&#xA0;10 we have added a test to see if our table
@@ -236,7 +236,7 @@ public class ChangeExample2 {
   <listing xml:id="recursion_list-dpcoins">
       <caption>Making Change with Dynamic Progamming</caption>
       <program language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 
 public class ChangeExample3 {
@@ -269,7 +269,7 @@ public class ChangeExample3 {
             makeChange3(coinValues, 63, new int[64]));
     }
 }
-</input>
+</code>
   </program></listing>
   <p>Note that <c>makeChange3</c> is not a recursive function, even though we
             started with a recursive solution to this problem. It is
@@ -309,7 +309,7 @@ public class ChangeExample3 {
 <listing xml:id="lst-dpremember">
     <caption>Making Change and Printing Coin Values</caption>
 <program label="lst-dpremember"  language="java" line-numbers="yes" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 
 public class ChangeExample4 {
@@ -361,7 +361,7 @@ public class ChangeExample4 {
         printCoins(coinsUsed, 63);
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 </section>

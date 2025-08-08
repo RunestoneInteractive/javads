@@ -20,7 +20,7 @@
 
   <listing xml:id="oop_lst-concrete-shape">
     <program language="java">
-      <input>
+      <code>
 public class Shape {
     private double x;
     private double y;
@@ -59,7 +59,7 @@ public class Shape {
     }
 }
 
-      </input>
+      </code>
     </program>
   </listing>
 
@@ -76,7 +76,7 @@ public class Shape {
 
   <listing xml:id="oop_lst-abstract-shape">
     <program language="java">
-      <input>
+      <code>
 public abstract class Shape {
     private double x;
     private double y;
@@ -91,7 +91,7 @@ public abstract class Shape {
         return String.format("(%.1f, %.1f)", this.x, this.y);
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -104,7 +104,7 @@ public abstract class Shape {
 <listing xml:id="oop_lst-circle-class">
   <caption>The <c>Circle</c> Class</caption>
   <program language="java" line-numbers="yes">
-    <input>
+    <code>
 public class Circle extends Shape {
     private double radius;
 
@@ -138,7 +138,7 @@ public class Circle extends Shape {
             this.radius);
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -159,7 +159,7 @@ public class Circle extends Shape {
 
 <listing xml:id="oop_lst-shape-example">
   <program language="java">
-    <input>
+    <code>
 public class ShapeExample {
     public static void main(String[] args) {
         Shape[] shapeList = {
@@ -172,7 +172,7 @@ public class ShapeExample {
         }
     }
 }
-</input>
+</code>
 </program>
 </listing>
 </note>
@@ -213,20 +213,20 @@ public class ElectricCargoBicycle extends ElectricBicycle, CargoBicycle {
 
   <listing xml:id="oop_lst-electrified">
     <program language="java">
-      <input>
+      <code>
 interface Electrified {
     public int getChargeCapacity();
     public double getCurrentCharge();
     public void setCurrentCharge(double charge);
 }
-</input>
+</code>
 </program>
 </listing>
 
 <p>Let's look at the <c>Bicycle</c> class in <xref ref="oop_lst-bicycle-class"/>:</p>
 <listing xml:id="oop_lst-bicycle-class">
   <program>
-    <input>
+    <code>
 class Bicycle {
     private double frameSize;
     private int nGears;
@@ -254,7 +254,7 @@ class Bicycle {
         this.currentGear = Math.min(this.nGears, Math.max(currentGear, 1));
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -262,7 +262,7 @@ class Bicycle {
 
 <listing xml:id="oop_lst-electricBicycle">
   <program language="java" line-numbers="yes">
-    <input>
+    <code>
 class ElectricBicycle extends Bicycle implements Electrified {
     private int chargeCapacity;
     private double currentCharge;
@@ -285,7 +285,7 @@ class ElectricBicycle extends Bicycle implements Electrified {
         this.currentCharge = Math.max(0, Math.min(charge, chargeCapacity));
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -295,7 +295,7 @@ class ElectricBicycle extends Bicycle implements Electrified {
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 class ElectricCargoBicycle extends CargoBicycle implements Electrified {
     private int chargeCapacity;
     private double currentCharge;
@@ -320,7 +320,7 @@ class ElectricCargoBicycle extends CargoBicycle implements Electrified {
         this.currentCharge = Math.max(0, Math.min(charge, chargeCapacity));
     }
 }
-</input>
+</code>
 </program>
 </listing>
 <p><xref ref="oop_fig-interface-uml"/> shows the relationship among these classes.</p>

@@ -28,7 +28,7 @@
   <p>In Java, we can implement the scheme we have just described by using a HashMap. The labels on the buckets we have just described are the keys in our HashMap. The value stored for each key is a list of words that fit that label (thus, the bucket key POP_ would have POPE and POPS as its value). Once we have the HashMap built, we can create the graph. We start our graph by creating a vertex for each word in the graph. Then we create edges between all the vertices we find for words found under the same key in the HashMap. <xref ref="graphs_lst-wordbucket1"/> shows the Java code required to build the graph from a file containing one word per line.</p>
 
   <listing xml:id="graphs_lst-wordbucket1"><caption>Building the Graph</caption>
-    <program language="java" line-numbers="yes"><input>
+    <program language="java" line-numbers="yes"><code>
       public Graph&lt;String&gt; buildGraph(String fileName) {
         Graph&lt;String&gt; wordGraph = new Graph&lt;String&gt;();
         HashMap&lt;String, Set&lt;String&gt;&gt; buckets = new HashMap&lt;&gt;();
@@ -68,7 +68,7 @@
         }
         return wordGraph;
     }
-    </input></program></listing>
+    </code></program></listing>
 
     <p>Let's look at the preceding code in a bit more detail. First, building the buckets:</p>
     <p>

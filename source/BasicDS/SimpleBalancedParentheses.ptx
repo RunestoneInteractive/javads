@@ -64,14 +64,11 @@
             this algorithm is shown in <xref ref="lst-parcheck1"/>.</p>
 <listing xml:id="lst-parcheck1">
   <caption>Solving the Balanced Parentheses Problem</caption>
-<program label="lst-parcheck1" line-numbers="yes" language="java" interactive="activecode"
-         include="prog-stackcode1">
-    <input>
+<program label="lst-parcheck1" line-numbers="yes" language="java" interactive="activecode">
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-<xi:include
-   parse="text"
-href="./Stack.java"/>
+<xi:include parse="text" href="./Stack.java"/>
 ^^^^
 public class Parentheses {
     public static boolean parenCheck(String symbolString) {
@@ -104,7 +101,7 @@ public class Parentheses {
     }
 }
 
-        </input>
+        </code>
   </program>
 </listing>
   <p>This method, <c>parenCheck</c>, assumes that a <c>Stack</c> class is available and returns a boolean result as to whether the string of parentheses is balanced. If the current symbol is <c>(</c>, then it is pushed on the stack (lines 8&#x2013;9). Note also in line 14 that <c>pop</c> removes a symbol from the stack. The returned value is not used since we know it must be an opening symbol seen earlier. If the stack becomes empty before we reach the end of the <c>symbolString</c>, then there are too many closing parentheses and the string is not balanced, so we immediately return <c>false</c> (line 12). If a symbol is not an open or close parenthesis, we ignore it (lines 16&#x2013;18), which allows more latitude in user input. At the end (line 21), the string represents a correctly balanced sequence of parentheses as long as the stack has been completely cleaned off.</p>

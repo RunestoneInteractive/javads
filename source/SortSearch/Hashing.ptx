@@ -206,7 +206,7 @@ $3 ==> 116
     </figure>
     <listing xml:id="sort-search_lst-hashfunction1">
       <caption>String Hashing method</caption>
-      <program language="java"><input>
+      <program language="java"><code>
 public static int hashString(String str, int tableSize) {
     int sum = 0;
     for (int i = 0; i &lt; str.length(); i++) {
@@ -214,7 +214,7 @@ public static int hashString(String str, int tableSize) {
     }
     return sum % tableSize;
 }
-</input></program></listing>
+</code></program></listing>
 
     <p>It is interesting to note that when using this hash method, anagrams
                 will always be given the same hash value. To remedy this, we could use
@@ -489,7 +489,7 @@ public static int hashString(String str, int tableSize) {
     <listing xml:id="sort-search_lst-hashtablecodeconstructor">
       <caption>HashTable constructor</caption>
       <program xml:id="sort-search_prog-hashtablecodeconstructor" language="java">
-<input>class HashTable {
+<code>class HashTable {
     int size;
     Integer[] slots;
     String[] data;
@@ -501,7 +501,7 @@ public static int hashString(String str, int tableSize) {
     }
     // more code here...
 }
-</input>
+</code>
 </program></listing>
 
 <p>We also implement a <c>toString</c> method that shows the slots and their values (if any):</p>
@@ -509,7 +509,7 @@ public static int hashString(String str, int tableSize) {
 <listing xml:id="sort-search_lst-hashtabletostring">
   <caption>HashTable <c>toString</c> method</caption>
   <program xml:id="sort-search_prog-hashtabletostring" language="java">
-    <input>
+    <code>
     public String toString() {
         String result = "{\n";
         for (int i = 0; i &lt; slots.length; i++) {
@@ -522,7 +522,7 @@ public static int hashString(String str, int tableSize) {
         result = result + "}";
         return result;
     }
-    </input></program></listing>
+    </code></program></listing>
     <p>Now we move on to the proess of inserting an entry into the HashTable. In <xref ref="sort-search_lst-hashtablecodestore"/>, <c>hashFunction</c> implements
                 the simple remainder method. The collision
                 resolution technique is linear probing with a <q>plus 1</q> rehash value.
@@ -535,7 +535,7 @@ public static int hashString(String str, int tableSize) {
     <listing xml:id="sort-search_lst-hashtablecodestore">
       <caption>The <c>put</c> method</caption>
       <program xml:id="sort-search_prog-hashtablecodestore" language="java" line-numbers="yes">
-        <input>
+        <code>
     public void put(Integer key, String value) {
         int hashSlot = hashFunction(key, slots.length);
         if (slots[hashSlot] == null) {
@@ -561,7 +561,7 @@ public static int hashString(String str, int tableSize) {
     private int rehash(int oldHash, int size) {
         return (oldHash + 1) % size;
     }
-    </input></program></listing>
+    </code></program></listing>
     <note>
       <title>Java Note</title>
       <p>The <c>hashFunction</c> and <c>rehash</c> methods have been declared <c>private</c>; nobody outside of <c>HashTable</c> should need to call them.</p>
@@ -578,7 +578,7 @@ public static int hashString(String str, int tableSize) {
     <listing xml:id="sort-search_lst-hashtablecodesearch">
       <caption>Retrieving a Value from a HashTable</caption>
       <program language="java" line-numbers="yes">
-      <input>
+      <code>
     public String get(Integer key) {
         int startSlot = hashFunction(key, slots.length);
         int position = startSlot;
@@ -595,7 +595,7 @@ public static int hashString(String str, int tableSize) {
         }
         return null;
     }
-</input>
+</code>
     </program></listing>
     <p><xref ref="sort-search_lst-hashtabletest"/> shows the <c>HashTable</c> class in action. First we
                 will create a hash table and store some items with integer keys (US postal codes) and
@@ -605,7 +605,7 @@ public static int hashString(String str, int tableSize) {
                 <caption>Testing the <c>HashTable</c> Implementation</caption>
     <program language="java"
              interactive="activecode">
-      <input>
+      <code>
 <xi:include parse="text" href="HashTable.java"/>
 ^^^^
 public class HashTableTest{
@@ -636,14 +636,14 @@ public class HashTableTest{
 }
 
 
-</input>
+</code>
     </program>
   </listing>
     <p>The complete hash table example can be found in <xref ref="sort-search_lst-hashtablecomplete"/>.</p>
     <listing xml:id="sort-search_lst-hashtablecomplete">
       <caption>Complete <c>HashTable</c> Code</caption>
     <program xml:id="sort-search_prog-hashtablecomplete" language="java">
-      <input>
+      <code>
 class HashTable {
     int size;
     Integer[] slots;
@@ -713,7 +713,7 @@ class HashTable {
         return null;
     }
 }
-        </input>
+        </code>
     </program>
   </listing>
 

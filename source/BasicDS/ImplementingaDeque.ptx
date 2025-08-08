@@ -9,7 +9,7 @@
   <listing xml:id="lst-dequecode">
       <caption>Implementation of a Deque</caption>
 <program label="lst-dequecode"  language="java">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -115,7 +115,7 @@ class Deque&lt;T&gt; {
     }
 }
 
-</input>
+</code>
   </program>
   </listing>
 
@@ -125,7 +125,7 @@ class Deque&lt;T&gt; {
         <listing xml:id="lst_deqtest">
             <caption>Test of Deque Operation</caption>
   <program xml:id="deqtest" language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Deque.java"/>
@@ -172,7 +172,7 @@ public class DequeTest {
 
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 

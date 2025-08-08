@@ -46,7 +46,7 @@
 <listing xml:id="lst-insertion">
   <caption>The Insertion Sort</caption>
 <program label="lst-insertion" language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.Arrays;
 
 public class InsertionSortExample {
@@ -71,7 +71,7 @@ public class InsertionSortExample {
         System.out.println("Final result: " + Arrays.toString(testList));
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 
