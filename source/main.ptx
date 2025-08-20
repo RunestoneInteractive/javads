@@ -63,8 +63,7 @@
     <p>The Java version of this book was constructed by J. David Eisenberg for the Computer Science 76 course at
       Evergreen Valley College in San Jose, CA. Any mistakes in the book are entirely his.</p>
 
-    <p>Testing</p>
-
+    
     </acknowledgement>
 
     </frontmatter>
@@ -82,6 +81,7 @@
       <xi:include href="./AppendixUML/toctree.ptx"/>
       <xi:include href="./AppendixHOF/toctree.ptx"/>
       <index>
+      <title>Index</title>
         <index-list/>
       </index>
     </backmatter>

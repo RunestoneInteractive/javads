@@ -8,7 +8,7 @@
     <title>The ArrayList Class</title>
     <p>The primary collection we'll be using is the <c>ArrayList</c>. It's not one of the built-in data types, so you have to explicitly import it:</p>
     <console prompt="jshell&gt; ">
-    <code>import java.util.ArrayList;</code>
+    <input>import java.util.ArrayList;</input>
     </console>
     <p>Here, <c>ArrayList</c> is the name of the class. It belongs to the <c>java.util</c> <term>package</term>. Java uses packages to group together related data types.</p>
 
@@ -19,33 +19,33 @@
     </aside>
 
 <console prompt="jshell&gt; ">
-<code>ArrayList&lt;String&gt; animals = new ArrayList&lt;String&gt;();</code>
+<input>ArrayList&lt;String&gt; animals = new ArrayList&lt;String&gt;();</input>
 <output>animals ==> []</output>
 </console>
 
     <p>The <c>add</c> method appends items to the end of the list and returns <c>true</c>. A two-argument version of <c>add</c> lets you give an index position at which to add an element, but it does not return any value. As with arrays, the first element in an <c>ArrayList</c> has index zero.</p>
 
 <console prompt="jshell&gt; ">
-<code>animals.add("ibex");</code>
+<input>animals.add("ibex");</input>
 <output>$5 ==> true
 &#160;</output>
 
-<code>animals.add("capybara");</code>
+<input>animals.add("capybara");</input>
 <output>$6 ==> true
 &#160;</output>
 
-<code>animals.add("bison");</code>
+<input>animals.add("bison");</input>
 <output>$7 ==> true
 &#160;</output>
 
-<code>animals</code>
+<input>animals</input>
 <output>animals ==> [ibex, capybara, bison]
 &#160;</output>
 
-<code>animals.add(1, "giraffe");</code>
+<input>animals.add(1, "giraffe");</input>
 <output>
 &#160;</output>
-<code>animals</code>
+<input>animals</input>
 <output>animals ==> [ibex, giraffe, capybara, bison]
 &#160;</output>
 </console>
@@ -95,7 +95,7 @@
     <title>Wrapper Classes</title>
     <p>Let's say we wanted an <c>ArrayList</c> with floating point values. If we try something like the following, we get an error:</p>
 <console prompt="jshell&gt; ">
-<code>ArrayList&lt;double&gt; prices = new ArrayList&lt;double&gt;();</code>
+<input>ArrayList&lt;double&gt; prices = new ArrayList&lt;double&gt;();</input>
 <output>|  Error:
 |  unexpected type
 |    required: reference
@@ -135,22 +135,22 @@
 <p>It is possible to use explicit methods to wrap and unwrap primitives (also referred to as <term>box</term> and <term>unbox</term>):</p>
 
 <console prompt="jshell&gt; ">
-<code>Integer objectAge = Integer.valueOf(37);</code>
+<input>Integer objectAge = Integer.valueOf(37);</input>
 <output>objectAge ==&gt; 37
 &#160;</output>
 
-<code>int primitiveAge = objectAge.intValue();</code>
+<input>int primitiveAge = objectAge.intValue();</input>
 <output>primitiveAge ==&gt; 37</output>
 </console>
 
 <p>However, modern versions of the Java compiler will automatically <q>auto-box</q> and <q>auto-unbox</q> values:</p>
 
 <console prompt="jshell&gt; ">
-<code>Integer objectAge = 37;</code>
+<input>Integer objectAge = 37;</input>
 <output>objectAge ==> 37
 &#160;</output>
 
-<code>int primitiveAge = objectAge;</code>
+<input>int primitiveAge = objectAge;</input>
 <output>primitiveAge ==> 37</output>
 </console>
 </subsection>

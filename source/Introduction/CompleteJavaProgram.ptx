@@ -42,13 +42,16 @@ public class ExampleProgram {
     <p>Most Integrated Development Environments are set up so that you can compile and run your Java programs with the click of a button or a menu choice. It is also possible to run a Java program from the command line. Here is an example of running the preceding program from a Linux shell where the <c>$</c> is the command line input prompt:
     </p>
 
+<listing>
+<title>Running ExampleProgram.java</title>
 <console prompt="$ ">
-<code>javac ExampleProgram.java</code>
-<code>java ExampleProgram</code>
+<input>javac ExampleProgram.java</input>
+<input>java ExampleProgram</input>
 <output>Java works!</output>
-<code>ls</code>
+<input>ls</input>
 <output>ExampleProgram.class  ExampleProgram.java</output>
 </console>
+</listing>
 
 <p>The <c>javac</c> command invokes the Java compiler. It translates the source code into <term>bytecode</term>, a form which the Java runtime system can execute.  Since there are no errors in the program, the command does not give any output (<q>no news is good news</q>).</p>
 
