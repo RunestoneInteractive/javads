@@ -27,9 +27,7 @@
       element to <c>-</c>. <xref ref="lst-ana-1" /> shows this method.</p>
     <listing xml:id="lst-ana-1">
       <program label="lst-ana-1" language="java" interactive="activecode">
-        <code>
-          <xi:include parse="text" href="samplecode/Anagram1.kt" />
-        </code>
+        <code><xi:include parse="text" href="samplecode/Anagram1.kt" /></code>
       </program>
     </listing>
 
@@ -60,9 +58,7 @@
       converted the strings to lists. </p>
     <listing xml:id="lst-ana-2">
       <program language="java" label="lst-ana-2" interactive="activecode">
-        <code>
-          <xi:include parse="text" href="samplecode/Anagram2.kt" />
-        </code>
+        <code><xi:include parse="text" href="samplecode/Anagram2.kt" /></code>
       </program>
     </listing>
 
@@ -80,7 +76,7 @@
       possibilities. For the anagram detection problem, we can simply generate a list of all
       possible strings using the characters from <c>s1</c> and then see if <c>s2</c> occurs.
       However, there is a problem with this approach. When generating all possible strings from
-      <c></c>s1</c>, there are <em>n</em> possible first characters, <m>n - 1</m> possible characters for
+      <c>s1</c>, there are <em>n</em> possible first characters, <m>n - 1</m> possible characters for
       the second position, <m>n - 2</m> for the third, and so on. The total number of candidate
       strings is <m>n \cdot (n - 1) \cdot (n - 2) \cdot ... \cdot 3 \cdot 2 \cdot 1</m>, which is <m>
       n!</m>. Although some of the strings may be duplicates, the program cannot know this ahead of
@@ -100,57 +96,23 @@
       each character occurs. Since there are 26 possible characters, we can use a list of 26
       counters, one for each possible character. Each time we see a particular character, we will
       increment the counter at that position. In the end, if the two lists of counters are
-      identical, the strings must be anagrams. We will take advantage of the fact that <c>char</c>
-      variables in Java are stored as integers, and Java allows us to evaluate an expression like <c>
-      'c'&#160;-&#160;'a'</c>, which evaluates to 2. <xref ref="lst-ana-4" /> shows this solution.</p>
+      identical, the strings must be anagrams. We will take advantage of the fact that <c>Char</c>
+      variables in Kotlin may be subtracted. For letters of the alphabet that are both lower case,
+      this evaluates to the distance between them. For example,
+      <c>'c'&#160;-&#160;'a'</c> evaluates to 2. <xref ref="lst-ana-4" /> shows this solution.</p>
     <listing xml:id="lst-ana-4">
       <program label="lst-ana-4" language="java" interactive="activecode">
-        <input>
-          import java.util.Arrays;
-
-          public class Anagrams4 {
-
-          public static boolean anagramSolution4(String s1, String s2) {
-          int[] count1 = new int[26]; // initialized to all zeros
-          int[] count2 = new int[26];
-
-          for (int i = 0; i &lt; s1.length(); i++) {
-          int index = s1.charAt(i) - 'a';
-          count1[index] = count1[index] + 1;
-          }
-
-          for (int i = 0; i &lt; s2.length(); i++) {
-          int index = s2.charAt(i) - 'a';
-          count2[index] = count2[index] + 1;
-          }
-
-          int j = 0;
-          boolean isAnagram = true;
-          while (j &lt; 26 &amp;&amp; isAnagram) {
-          if (count1[j] == count2[j]) {
-          j = j + 1;
-          } else {
-          isAnagram = false;
-          }
-          }
-          return isAnagram;
-          }
-
-          public static void main(String[] args) {
-          System.out.println(anagramSolution4("taster", "treats")); // expected: true
-          System.out.println(anagramSolution4("abcd", "dcab")); // expected: true
-          System.out.println(anagramSolution4("abcd", "dcda")); // expected: false
-          }
-          }
-        </input>
+        <code><xi:include parse="text" href="samplecode/Anagram4.kt" /></code>
       </program>
     </listing>
 
-    <p>Again, the solution has a number of iterations. However, unlike the first solution, none of
-      them are nested. The first two iterations used to count the characters are both based on <em>n</em>.
-      The third iteration, comparing the two lists of counts, always takes 26 steps since there are
-      26 possible characters in the strings. Adding it all up gives us <m>T(n)=2n+26</m> steps. That
-      is <m>O(n)</m>. We have found a linear order of magnitude algorithm for solving this problem.</p>
+    <p>Again, the solution has a number of iterations. However, unlike the first
+    solution, none of them are nested. The first two iterations used to count
+    the characters are both based on <em>n</em> (the string length). The third
+    iteration, comparing the two lists of counts, always takes 26 steps since
+    there are 26 possible characters in the strings. Adding it all up gives us
+    <m>T(n)=2n+26</m> steps. That is <m>O(n)</m>. We have found a linear order
+    of magnitude algorithm for solving this problem.</p>
 
     <p>Before leaving this example, we need to say something about space requirements. Although the
       last solution was able to run in linear time, it could only do so by using additional storage
