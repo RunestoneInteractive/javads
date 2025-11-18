@@ -39,9 +39,7 @@
 
   <listing xml:id="lst-sum2">
     <program label="lst-sum2" language="java">
-      <input>
-        <xi:include parse="text" href="samplecode/FindSum2.kt" />
-      </input>
+      <input><xi:include parse="text" href="samplecode/FindSum2.kt" /></input>
     </program>
   </listing>
 
