@@ -33,7 +33,7 @@
 
     <p>To analyze this algorithm, we need to note that each of the <em>n</em> characters in <c>s1</c>
       will cause an iteration through up to <em>n</em> characters in the list from <c>s2</c>. Each
-      of the <em>n</em> positions in the <c>s2</c> array will be visited once to match a character
+      of the <em>n</em> positions in the <c>s2</c> list will be visited once to match a character
       from <c>s1</c>. The number of visits then becomes the sum of the integers from 1 to <em>n</em>.
       We stated earlier that this can be written as</p>
     <md>
@@ -131,14 +131,7 @@
           <p>Q-4: Given the following code fragment, what is its Big O running time? (Presume that
             variable <c>n</c> has been declared elsewhere in the program.)</p>
           <program language="java">
-            <input>
-              int test = 0;
-              for (int i = 0; i &lt; n; i++) {
-              for (int j = 0; j &lt; n; j++) {
-              test = test + i * j;
-              }
-              }
-</input>
+            <code><xi:include parse="text" href="samplecode/AnagramSelf1.kt" /></code>
           </program>
         </statement>
         <choices>
@@ -183,16 +176,7 @@
           <p>Q-5: Given the following code fragment what is its Big O running time? (Presume that <c>
             n</c> has been declared elsewhere in the program.)</p>
           <program language="java">
-            <input>
-              int test = 0;
-              for (int i = 0; i &lt; n; i++) {
-              test = test + i;
-              }
-
-              for (int j = 0; j &lt; n; j++) {
-              test = test - 1;
-              }
-</input>
+            <code><xi:include parse="text" href="samplecode/AnagramSelf2.kt" /></code>
           </program>
         </statement>
         <choices>
@@ -236,13 +220,7 @@
           <p>Q-6: Given the following code fragment what is its Big O running time? (Presume <c>n</c>
             has been declared elsewhere in the program.)</p>
           <program language="java">
-            <input>
-              int i = n;
-              while (i &gt; 0) {
-              int k = 2 + 2;
-              i = i / 2;
-              }
-</input>
+            <code><xi:include parse="text" href="samplecode/AnagramSelf3.kt" /></code>
           </program>
         </statement>
         <choices>
