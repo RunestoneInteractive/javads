@@ -1,236 +1,181 @@
 <?xml version="1.0"?>
-<section xml:id="algorithm-analysis_an-anagram-detection-example">
+<section xmlns:xi="http://www.w3.org/2001/XInclude"
+  xml:id="algorithm-analysis_an-anagram-detection-example">
   <title>An Anagram Detection Example</title>
   <introduction>
-  <p>A good example problem for showing algorithms with different orders of
-            magnitude is the classic anagram detection problem for strings. One
-            string is an <term>anagram</term> of another if the second is simply a rearrangement
-            of the first. For example, <c>heart</c> and <c>earth</c> are anagrams. The
-            strings <c>taster</c> and <c>treats</c> are anagrams as well. For the sake
-            of simplicity, we will assume that the two strings in question are of
-            equal length and that they are made up of symbols from the set of 26
-            lowercase alphabetic characters. Our goal is to write a boolean function
-            that will take two strings and return whether they are anagrams.</p>
-        </introduction>
+    <p>A good example problem for showing algorithms with different orders of magnitude is the
+      classic anagram detection problem for strings. One string is an <term>anagram</term> of
+      another if the second is simply a rearrangement of the first. For example, <c>heart</c> and <c>
+      earth</c> are anagrams. The strings <c>taster</c> and <c>treats</c> are anagrams as well. For
+      the sake of simplicity, we will assume that the two strings in question are of equal length
+      and that they are made up of symbols from the set of 26 lowercase alphabetic characters. Our
+      goal is to write a boolean function that will take two strings and return whether they are
+      anagrams.</p>
+  </introduction>
   <subsection xml:id="algorithm-analysis_solution-1-anagram-detection-checking-off">
     <title>Solution 1: Anagram Detection Checking Off</title>
-    <p>Our first solution to the anagram problem will check the lengths of the
-                strings and then check to see that each character in the first string actually
-                occurs in the second. If it is possible to check off each character, then
-                the two strings must be anagrams. <term>Checking off</term> a character will be
-                accomplished by setting an element to <c>-</c> if it is found (it's not a letter,
-                so it won't ever match letters in the first string).</p>
-              <p>
-                However, since strings in Java are immutable, the first step in the
-                process will be to convert the second string to an array of characters with the data type <c>char</c>. The <c>char</c> data type stores exactly one character, and we can use <c>==</c> to compare them directly (unlike Strings).</p>
-              <p>We will get each character
-                from the first string by using the <c>charAt()</c> method and check it against the characters in
-                the array formed from the second string. If a letter is found, we check it off by setting the
-                array element to <c>-</c>. <xref ref="lst-ana-1"/> shows this method.</p>
-<listing xml:id = "lst-ana-1">
-    <program  label="lst-ana-1" language="java" interactive="activecode">
-      <input>
-public class Anagrams1 {
+    <p>Our first solution to the anagram problem will check the lengths of the strings and then
+      check to see that each character in the first string actually occurs in the second. If it is
+      possible to check off each character, then the two strings must be anagrams. <term>Checking
+        off</term> a character will be accomplished by setting an element to <c>-</c> if it is found
+      (it's not a letter, so it won't ever match letters in the first string).</p>
+    <p> However, since strings in Kotlin are immutable, the first step in the process will be to
+      convert the second string to a list of characters with the data type <c>Char</c>. The <c>Char</c>
+      data type stores exactly one character, and we can modify them as we like.</p>
+    <p>We will get each character from the first string and check it against the characters in the
+      list formed from the second string. If a letter is found, we check it off by setting the list
+      element to <c>-</c>. <xref ref="lst-ana-1" /> shows this method.</p>
+    <listing xml:id="lst-ana-1">
+      <program label="lst-ana-1" language="java" interactive="activecode">
+        <code>
+          <xi:include parse="text" href="samplecode/Anagram1.kt" />
+        </code>
+      </program>
+    </listing>
 
-    public static boolean anagramSolution1(String s1, String s2) {
-        boolean isAnagram = true;
-
-        if (s1.length() != s2.length()) {
-            isAnagram = false;
-        } else {
-            int pos1 = 0;
-            char[] s2Array = s2.toCharArray();
-            while (pos1 &lt; s1.length() &amp;&amp; isAnagram) {
-                int pos2 = 0;
-                boolean found = false;
-                while (pos2 &lt; s2.length() &amp;&amp; !found) {
-                    if (s1.charAt(pos1) == s2Array[pos2]) {
-                        found = true;
-                    } else {
-                        pos2 = pos2 + 1;
-                    }
-                }
-                if (found) {
-                    s2Array[pos2] = '-';
-                } else {
-                    isAnagram = false;
-                }
-                pos1 = pos1 + 1;
-            }
-        }
-        return isAnagram;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(anagramSolution1("taster", "treats")); // expected: true
-        System.out.println(anagramSolution1("abcd", "dcab")); // expected: true
-        System.out.println(anagramSolution1("abcd", "dcda"));  // expected: false
-    }
-}
-  </input></program>
-</listing>
-
-    <p>To analyze this algorithm, we need to note that each of the <em>n</em>
-                characters in <c>s1</c> will cause an iteration through up to <em>n</em>
-                characters in the list from <c>s2</c>. Each of the <em>n</em> positions in the
-                <c>s2</c> array will be visited once to match a character from <c>s1</c>. The number
-                of visits then becomes the sum of the integers from 1 to <em>n</em>. We stated
-                earlier that this can be written as</p>
-              <md><mrow>\sum_{i=1}^{n} i &amp;= \frac {n(n+1)}{2}</mrow>
-                <mrow>&amp;= \frac {1}{2}n^{2} + \frac {1}{2}n</mrow></md>
-    <p>As <m>n</m> gets large, the <m>n^{2}</m> term will dominate the
-                <m>n</m> term and the <m>\frac {1}{2}</m> can be ignored.
-                Therefore, this solution is <m>O(n^{2})</m>.</p>
-              <p>This is a worst-case analysis, and it happens when the strings are anagrams<mdash/>the algorithm has to compare every pair of characters. If the words are not anagrams, the algorithm will exit before all the comparisons are done (as soon as a mismatch is found).</p>
+    <p>To analyze this algorithm, we need to note that each of the <em>n</em> characters in <c>s1</c>
+      will cause an iteration through up to <em>n</em> characters in the list from <c>s2</c>. Each
+      of the <em>n</em> positions in the <c>s2</c> array will be visited once to match a character
+      from <c>s1</c>. The number of visits then becomes the sum of the integers from 1 to <em>n</em>.
+      We stated earlier that this can be written as</p>
+    <md>
+      <mrow>\sum_{i=1}^{n} i &amp;= \frac {n(n+1)}{2}</mrow>
+      <mrow>&amp;= \frac {1}{2}n^{2} + \frac {1}{2}n</mrow>
+    </md>
+    <p>As <m>n</m> gets large, the <m>n^{2}</m> term will dominate the <m>n</m> term and the <m>\frac
+      {1}{2}</m> can be ignored. Therefore, this solution is <m>O(n^{2})</m>.</p>
+    <p>This is a worst-case analysis, and it happens when the strings are anagrams<mdash />the
+      algorithm has to compare every pair of characters. If the words are not anagrams, the
+      algorithm will exit before all the comparisons are done (as soon as a mismatch is found).</p>
   </subsection>
 
   <subsection xml:id="algorithm-analysis_anagram-detection-solution-2-sort-and-compare">
     <title>Anagram Detection Solution 2: Sort and Compare</title>
 
-    <p>Another solution to the anagram problem will make use of the fact that even though <c>s1</c> and <c>s2</c> are different, they are anagrams only if they consist of exactly the same characters. So if we begin by sorting each string alphabetically from a to z, we will end up with the same string if the original two strings are anagrams. <xref ref="lst-ana-2"/> shows this solution. Again, in Java we can use a <c>sort</c> method on arrays by converting each string to an array at the start.</p>
-  <listing xml:id="lst-ana-2">
-<program language="java" label="lst-ana-2" interactive="activecode">
-      <input>
-import java.util.Arrays; // note the "s" at the end!
+    <p>Another solution to the anagram problem will make use of the fact that even though <c>s1</c>
+      and <c>s2</c> are different, they are anagrams only if they consist of exactly the same
+      characters. So if we begin by sorting each string alphabetically from a to z, we will end up
+      with the same string if the original two strings are anagrams. <xref ref="lst-ana-2" /> shows
+      this solution. In Kotlin we can use the built-in <c>sort</c> function on lists, after we have
+      converted the strings to lists. </p>
+    <listing xml:id="lst-ana-2">
+      <program language="java" label="lst-ana-2" interactive="activecode">
+        <code>
+          <xi:include parse="text" href="samplecode/Anagram2.kt" />
+        </code>
+      </program>
+    </listing>
 
-public class Anagrams2 {
-
-    public static boolean anagramSolution2(String s1, String s2) {
-        char[] s1Array = s1.toCharArray();
-        char[] s2Array = s2.toCharArray();
-
-        Arrays.sort(s1Array);
-        Arrays.sort(s2Array);
-
-        int pos = 0;
-        boolean matches = true;
-
-        while (pos &lt; s1.length() &amp;&amp; matches) {
-            if (s1Array[pos] == s2Array[pos]) {
-                pos = pos + 1;
-            } else {
-                matches = false;
-            }
-        }
-        return matches;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(anagramSolution2("taster", "treats")); // expected: true
-        System.out.println(anagramSolution2("abcd", "dcab")); // expected: true
-        System.out.println(anagramSolution2("abcd", "dcda"));  // expected: false
-    }
-}
-        </input>
-    </program>
-  </listing>
-
-    <p>At first glance you may be tempted to think that this algorithm is
-                <m>O(n)</m>, since there is one simple iteration to compare the <em>n</em>
-                characters after the sorting process. However, the two calls to the
-                Java <c>sort</c> method are not without their own cost. As we will see in
-                Chapter 5, sorting is typically either <m>O(n^{2})</m> or
-                <m>O(n\log n)</m>, so the sorting operations dominate the iteration.
-                In the end, this algorithm will have the same order of magnitude as that
-                of the sorting process.</p>
+    <p>At first glance you may be tempted to think that this algorithm is <m>O(n)</m>, since there
+      is one simple iteration to compare the <em>n</em> characters after the sorting process.
+      However, the two calls to the Kotlin <c>sort</c> function are not without their own cost. As we
+      will see in Chapter 5, sorting is typically either <m>O(n^{2})</m> or <m>O(n\log n)</m>, so
+      the sorting operations dominate the iteration. In the end, this algorithm will have the same
+      order of magnitude as that of the sorting process.</p>
   </subsection>
 
   <subsection xml:id="algorithm-analysis_anagram-detection-solution-3-brute-force">
     <title>Anagram Detection Solution 3: Brute Force</title>
-    <p>A <term>brute force</term> technique for solving a problem typically tries to
-                exhaust all possibilities. For the anagram detection problem, we can
-                simply generate a list of all possible strings using the characters from
-                <c>s1</c> and then see if <c>s2</c> occurs. However, there is a problem
-                with this approach. When generating all possible strings from <c>s1</c>,
-                there are <em>n</em> possible first characters, <m>n - 1</m> possible
-                characters for the second position, <m>n - 2</m> for the third, and so
-                on. The total number of candidate strings is
-                <m>n \cdot (n - 1) \cdot (n - 2) \cdot ... \cdot 3 \cdot 2 \cdot 1</m>,
-                which is <m>n!</m>. Although some
-                of the strings may be duplicates, the program cannot know this ahead of
-                time and so it will still generate <m>n!</m> different strings.</p>
-    <p>It turns out that <m>n!</m> grows even faster than <m>2^{n}</m> as
-                <em>n</em> gets large. In fact, if <c>s1</c> were 20 characters long, there would
-                be <m>20! = 2,432,902,008,176,640,000</m> possible candidate strings.
-                If we processed one possibility every second, it would still take us
-                77,146,816,596 years to go through the entire list. This is probably not
-                going to be a good solution.</p>
+    <p>A <term>brute force</term> technique for solving a problem typically tries to exhaust all
+      possibilities. For the anagram detection problem, we can simply generate a list of all
+      possible strings using the characters from <c>s1</c> and then see if <c>s2</c> occurs.
+      However, there is a problem with this approach. When generating all possible strings from
+      <c></c>s1</c>, there are <em>n</em> possible first characters, <m>n - 1</m> possible characters for
+      the second position, <m>n - 2</m> for the third, and so on. The total number of candidate
+      strings is <m>n \cdot (n - 1) \cdot (n - 2) \cdot ... \cdot 3 \cdot 2 \cdot 1</m>, which is <m>
+      n!</m>. Although some of the strings may be duplicates, the program cannot know this ahead of
+      time and so it will still generate <m>n!</m> different strings.</p>
+    <p>It turns out that <m>n!</m> grows even faster than <m>2^{n}</m> as <em>n</em> gets large. In
+      fact, if <c>s1</c> were 20 characters long, there would be <m>20! = 2,432,902,008,176,640,000</m>
+      possible candidate strings. If we processed one possibility every second, it would still take
+      us 77,146,816,596 years to go through the entire list. This is probably not going to be a good
+      solution.</p>
   </subsection>
 
   <subsection xml:id="algorithm-analysis_anagram-detection-solution-4-count-and-compare">
     <title>Anagram Detection Solution 4: Count and Compare</title>
-    <p>Our final solution to the anagram problem takes advantage of the fact
-                that any two anagrams will have the same number of a's, the same number
-                of b's, the same number of c's, and so on. In order to decide whether
-                two strings are anagrams, we will first count the number of times each
-                character occurs. Since there are 26 possible characters, we can use an
-                array of 26 counters, one for each possible character. Each time we see a
-                particular character, we will increment the counter at that position. In
-                the end, if the two lists of counters are identical, the strings must be
-                anagrams. We will take advantage of the fact that <c>char</c> variables in Java are stored
-                as integers, and Java allows us to evaluate an expression like <c>'c'&#160;-&#160;'a'</c>, which evaluates to 2. <xref ref="lst-ana-4"/> shows this solution.</p>
-<listing xml:id="lst-ana-4">
-<program label="lst-ana-4" language="java" interactive="activecode">
-      <input>
-import java.util.Arrays;
+    <p>Our final solution to the anagram problem takes advantage of the fact that any two anagrams
+      will have the same number of a's, the same number of b's, the same number of c's, and so on.
+      In order to decide whether two strings are anagrams, we will first count the number of times
+      each character occurs. Since there are 26 possible characters, we can use a list of 26
+      counters, one for each possible character. Each time we see a particular character, we will
+      increment the counter at that position. In the end, if the two lists of counters are
+      identical, the strings must be anagrams. We will take advantage of the fact that <c>char</c>
+      variables in Java are stored as integers, and Java allows us to evaluate an expression like <c>
+      'c'&#160;-&#160;'a'</c>, which evaluates to 2. <xref ref="lst-ana-4" /> shows this solution.</p>
+    <listing xml:id="lst-ana-4">
+      <program label="lst-ana-4" language="java" interactive="activecode">
+        <input>
+          import java.util.Arrays;
 
-public class Anagrams4 {
+          public class Anagrams4 {
 
-    public static boolean anagramSolution4(String s1, String s2) {
-        int[] count1 = new int[26]; // initialized to all zeros
-        int[] count2 = new int[26];
+          public static boolean anagramSolution4(String s1, String s2) {
+          int[] count1 = new int[26]; // initialized to all zeros
+          int[] count2 = new int[26];
 
-        for (int i = 0; i &lt; s1.length(); i++) {
-            int index = s1.charAt(i) - 'a';
-            count1[index] = count1[index] + 1;
-        }
+          for (int i = 0; i &lt; s1.length(); i++) {
+          int index = s1.charAt(i) - 'a';
+          count1[index] = count1[index] + 1;
+          }
 
-        for (int i = 0; i &lt; s2.length(); i++) {
-            int index = s2.charAt(i) - 'a';
-            count2[index] = count2[index] + 1;
-        }
+          for (int i = 0; i &lt; s2.length(); i++) {
+          int index = s2.charAt(i) - 'a';
+          count2[index] = count2[index] + 1;
+          }
 
-        int j = 0;
-        boolean isAnagram = true;
-        while (j &lt; 26 &amp;&amp; isAnagram) {
-            if (count1[j] == count2[j]) {
-                j = j + 1;
-            } else {
-                isAnagram = false;
-            }
-        }
-        return isAnagram;
-    }
+          int j = 0;
+          boolean isAnagram = true;
+          while (j &lt; 26 &amp;&amp; isAnagram) {
+          if (count1[j] == count2[j]) {
+          j = j + 1;
+          } else {
+          isAnagram = false;
+          }
+          }
+          return isAnagram;
+          }
 
-    public static void main(String[] args) {
-        System.out.println(anagramSolution4("taster", "treats")); // expected: true
-        System.out.println(anagramSolution4("abcd", "dcab")); // expected: true
-        System.out.println(anagramSolution4("abcd", "dcda"));  // expected: false
-    }
-}
+          public static void main(String[] args) {
+          System.out.println(anagramSolution4("taster", "treats")); // expected: true
+          System.out.println(anagramSolution4("abcd", "dcab")); // expected: true
+          System.out.println(anagramSolution4("abcd", "dcda")); // expected: false
+          }
+          }
         </input>
-    </program>
-</listing>
+      </program>
+    </listing>
 
-    <p>Again, the solution has a number of iterations. However, unlike the first solution, none of them are nested. The first two iterations used to count the characters are both based on <em>n</em>. The third iteration, comparing the two lists of counts, always takes 26 steps since there are 26 possible characters in the strings. Adding it all up gives us <m>T(n)=2n+26</m> steps. That is <m>O(n)</m>. We have found a linear order of magnitude algorithm for solving this problem.</p>
+    <p>Again, the solution has a number of iterations. However, unlike the first solution, none of
+      them are nested. The first two iterations used to count the characters are both based on <em>n</em>.
+      The third iteration, comparing the two lists of counts, always takes 26 steps since there are
+      26 possible characters in the strings. Adding it all up gives us <m>T(n)=2n+26</m> steps. That
+      is <m>O(n)</m>. We have found a linear order of magnitude algorithm for solving this problem.</p>
 
-    <p>Before leaving this example, we need to say something about space requirements. Although the last solution was able to run in linear time, it could only do so by using additional storage to keep the two lists of character counts. In other words, this algorithm sacrificed space in order to gain time.</p>
+    <p>Before leaving this example, we need to say something about space requirements. Although the
+      last solution was able to run in linear time, it could only do so by using additional storage
+      to keep the two lists of character counts. In other words, this algorithm sacrificed space in
+      order to gain time.</p>
 
-    <p>This is a common occurrence. On many occasions you will need to make decisions between time and space trade-offs. In this case, the amount of extra space is not significant. However, if the underlying alphabet had millions of characters, there would be more concern. As a computer scientist, when given a choice of algorithms, it will be up to you to determine the best use of computing resources given a particular problem.</p>
+    <p>This is a common occurrence. On many occasions you will need to make decisions between time
+      and space trade-offs. In this case, the amount of extra space is not significant. However, if
+      the underlying alphabet had millions of characters, there would be more concern. As a computer
+      scientist, when given a choice of algorithms, it will be up to you to determine the best use
+      of computing resources given a particular problem.</p>
     <exercises>
       <title>Self Check</title>
       <exercise label="analysis_1">
         <statement>
-          <p>Q-4: Given the following code fragment, what is its Big O running time? (Presume that variable
-            <c>n</c> has been declared elsewhere in the program.)</p>
+          <p>Q-4: Given the following code fragment, what is its Big O running time? (Presume that
+            variable <c>n</c> has been declared elsewhere in the program.)</p>
           <program language="java">
             <input>
-int test = 0;
-for (int i = 0; i &lt; n; i++) {
-   for (int j = 0; j &lt; n; j++) {
-      test = test + i * j;
-   }
-}
+              int test = 0;
+              for (int i = 0; i &lt; n; i++) {
+              for (int j = 0; j &lt; n; j++) {
+              test = test + i * j;
+              }
+              }
 </input>
           </program>
         </statement>
@@ -240,7 +185,8 @@ for (int i = 0; i &lt; n; i++) {
               <p>O(n)</p>
             </statement>
             <feedback>
-              <p>In an example like this you want to count the nested loops. especially the loops that are dependent on the same variable, in this case, n.</p>
+              <p>In an example like this you want to count the nested loops. especially the loops
+                that are dependent on the same variable, in this case, n.</p>
             </feedback>
           </choice>
           <choice correct="yes">
@@ -264,25 +210,26 @@ for (int i = 0; i &lt; n; i++) {
               <p>O(n^3)</p>
             </statement>
             <feedback>
-              <p>In an example like this you want to count the nested loops. especially the loops that are dependent on the same variable, in this case, n.</p>
+              <p>In an example like this you want to count the nested loops. especially the loops
+                that are dependent on the same variable, in this case, n.</p>
             </feedback>
           </choice>
         </choices>
       </exercise>
       <exercise label="analysis_2">
         <statement>
-          <p>Q-5: Given the following code fragment what is its Big O running time? (Presume that <c>n</c> has been
-            declared elsewhere in the program.)</p>
+          <p>Q-5: Given the following code fragment what is its Big O running time? (Presume that <c>
+            n</c> has been declared elsewhere in the program.)</p>
           <program language="java">
             <input>
-int test = 0;
-for (int i = 0; i &lt; n; i++) {
-   test = test + i;
-}
+              int test = 0;
+              for (int i = 0; i &lt; n; i++) {
+              test = test + i;
+              }
 
-for (int j = 0; j &lt; n; j++) {
-   test = test - 1;
-}
+              for (int j = 0; j &lt; n; j++) {
+              test = test - 1;
+              }
 </input>
           </program>
         </statement>
@@ -292,7 +239,8 @@ for (int j = 0; j &lt; n; j++) {
               <p>O(n)</p>
             </statement>
             <feedback>
-              <p>Even though there are two loops they are not nested.  You might think of this as O(2n) but we can ignore the constant 2.</p>
+              <p>Even though there are two loops they are not nested. You might think of this as
+                O(2n) but we can ignore the constant 2.</p>
             </feedback>
           </choice>
           <choice>
@@ -323,14 +271,15 @@ for (int j = 0; j &lt; n; j++) {
       </exercise>
       <exercise label="analysis_3">
         <statement>
-          <p>Q-6: Given the following code fragment what is its Big O running time? (Presume <c>n</c> has been declared elsewhere in the program.)</p>
+          <p>Q-6: Given the following code fragment what is its Big O running time? (Presume <c>n</c>
+            has been declared elsewhere in the program.)</p>
           <program language="java">
             <input>
-int i = n;
-while (i &gt; 0) {
-   int k = 2 + 2;
-   i = i / 2;
-}
+              int i = n;
+              while (i &gt; 0) {
+              int k = 2 + 2;
+              i = i / 2;
+              }
 </input>
           </program>
         </statement>
@@ -340,7 +289,9 @@ while (i &gt; 0) {
               <p>O(n)</p>
             </statement>
             <feedback>
-              <p>Look carefully at the loop variable i.  Notice that the value of i is cut in half each time through the loop.  This is a big hint that the performance is better than O(n)</p>
+              <p>Look carefully at the loop variable i. Notice that the value of i is cut in half
+                each time through the loop. This is a big hint that the performance is better than
+                O(n)</p>
             </feedback>
           </choice>
           <choice>
@@ -356,7 +307,8 @@ while (i &gt; 0) {
               <p>O(log n)</p>
             </statement>
             <feedback>
-              <p>The value of i is cut in half each time through the loop so it will only take log n iterations.</p>
+              <p>The value of i is cut in half each time through the loop so it will only take log n
+                iterations.</p>
             </feedback>
           </choice>
           <choice>
