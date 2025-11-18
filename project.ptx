@@ -9,6 +9,7 @@
     <!-- To build this target, run `pretext build web` -->
     <target name="web">
       <stringparam key="html.css.extra" value="external/custom-styles.css"/>
+      <stringparam key="debug.rs.dev" value="yes"/>
       <format>html</format>
       <source>source/main.ptx</source>
       <publication>publication/publication.ptx</publication>
@@ -18,7 +19,7 @@
       <format>html</format>
       <source>source/main.ptx</source>
       <publication>publication/publication-academy.ptx</publication>
-      <output-dir>published/javads</output-dir>
+      <output-dir>published/kotlinds</output-dir>
     </target>
 
     <target name="print" pdf-method="xelatex">
@@ -37,7 +38,7 @@
       <format>html</format>
       <source>source/main.ptx</source>
       <publication>publication/publication-academy.ptx</publication>
-      <output-dir>published/javads</output-dir>
+      <output-dir>published/kotlinds</output-dir>
     </target>
     <target name="subset">
       <!-- Usage: to build starting at XMLID, -->

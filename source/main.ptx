@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pretext xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en-US">
   <xi:include href="./bookinfo.ptx"/>
-  <book xml:id="javads" permid="jat">
-    <title>Problem Solving with Algorithms and Data Structures using Java</title>
+  <book xml:id="kotlinds" permid="jat">
+    <title>Problem Solving with Algorithms and Data Structures using Kotlin</title>
     <subtitle>The Interactive Edition</subtitle>
     <frontmatter>
     <titlepage>
@@ -20,6 +20,10 @@
      <author>
      <personname>J. David Eisenberg</personname>
      <institution>Evergreen Valley College</institution>
+   </author>
+     <author>
+     <personname>David R. Musicant</personname>
+     <institution>Carleton College</institution>
    </author>
     </titlepage>
     <xi:include href="./FrontMatter/preface.ptx"/>
