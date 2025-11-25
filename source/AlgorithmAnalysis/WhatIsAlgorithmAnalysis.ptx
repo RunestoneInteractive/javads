@@ -22,7 +22,7 @@
     algorithm uses the idea of an accumulator variable that is initialized to 0. The solution then
     iterates through the <em>n</em> integers, adding each to the accumulator.</p>
   <listing xml:id="lst-sum1">
-    <program label="lst-sum1" language="java">
+    <program label="lst-sum1" language="kotlin" interactive="activecode">
       <input><xi:include parse="text" href="samplecode/FindSum.kt" /></input>
     </program>
   </listing>

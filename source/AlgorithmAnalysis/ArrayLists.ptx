@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
 <section xml:id="algorithm-analysis_arraylists">
-  <title>ArrayLists</title>
-  <p>The designers of Java had many choices to make when they implemented
-            the ArrayList data structure. Each of these choices could have an impact on
+  <title>MutableLists</title>
+  <p>The designers of Kotlin's lists had many choices to make when they implemented
+            them. Each of these choices could have an impact on
             how fast list operations perform. To help them make the right choices
-            they looked at the ways that people would most commonly use the ArrayList (which we shall
-            call <q>list</q> for short)
-            data structure, and they optimized their implementation of a list so that
+            they looked at the ways that people would most commonly use a list, and they optimized their implementation of a list so that
             the most common operations were very fast. Of course they also tried to
             make the less common operations fast, but when a trade-off had to be made
             the performance of a less common operation was often sacrificed in favor
@@ -15,30 +13,26 @@
             Both of these operations take the same amount of time no matter how
             large the list becomes. When an operation like this is independent of
             the size of the list, it is <m>O(1)</m>.</p>
-  <p>Another very common programming task is to grow an ArrayList by using the <c>add</c> method, which
+  <p>Another very common programming task is to grow a MutableList by using the <c>add</c> method, which
     is <m>O(n)</m>, but in a very special way that we will examine in <xref ref="advanced_java-arraylists-revisited"/>.
   </p>
 
-  <p>Here is a table of common ArrayList operations and their Big O efficiency:</p>
+  <p>Here is a table of common MutableList operations and their Big O efficiency:</p>
     <table xml:id="algorithm-analysis_tbl-listbigo">
     <tabular>
       <title>
-        Big O Efficiency of ArrayList Operations
+        Big O Efficiency of MutableList Operations
       </title>
       <row header="yes">
         <cell>Operation</cell>
         <cell>Big O Efficiency</cell>
       </row>
       <row>
-        <cell><c>get(index)</c></cell>
+        <cell>index <c>[]</c></cell>
         <cell>O(1)</cell>
       </row>
       <row>
-        <cell><c>set(index)</c></cell>
-        <cell>O(1)</cell>
-      </row>
-      <row>
-  <cell><c>add n items</c></cell>
+      <cell><c>add n items</c></cell>
         <cell>O(n)</cell>
       </row>
       <row>
@@ -52,11 +46,17 @@
     </tabular>
   </table>
   <p>
-    Let's examine the <c>remove</c> method a bit more closely.  The <m>O(n)</m> is a <em>worst-case</em> number. When we remove the first number in an ArrayList, all the remaining numbers have to be moved left one position.  If we remove the last number in an ArrayList, that is a <em>best-case</em> situation, and is <m>O(1)</m>, as no elements need to be moved.
+    Let's examine the <c>remove</c> method a bit more closely.  The <m>O(n)</m>
+    is a <em>worst-case</em> number. When we remove the first element in an
+    MutableList, all the remaining elements have to be moved left one position.  If
+    we remove the last element in a MutableList, that is a <em>best-case</em>
+    situation, and is <m>O(1)</m>, as no elements need to be moved.
   </p>
 
   <p>
-    Here's the results of a program that removes the first item from an ArrayList 1000 times and compares that time to the time required to remove the last item 1000 times.
+    Here's the results of a program that removes the first item from an
+    MutableList 1000 times and compares that time to the time required to remove
+    the last item 1000 times.
   </p>
 
 <pre>2,000,000 items
