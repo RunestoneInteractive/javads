@@ -45,7 +45,7 @@ If you want to find the maximum temperature and minimum temperature across the w
 
 <listing xml:id="lst_file_create_handle">
 <program language="java">
-<input>
+<code>
 import java.util.Scanner;
 import java.io.File; // this is a new import
 
@@ -56,7 +56,7 @@ public class FileInfo {
         String pathName = input.nextLine();
         
         File f = new File(pathName);
-</input>
+</code>
 </program>
 </listing>
 
@@ -66,7 +66,7 @@ The variable <c>f</c> is what, in other programming languages, is called a <em>f
 
 <listing xml:id="lst_file_show_metadata">
 <program language="java">
-<input>
+<code>
         System.out.println("File exists: " + f.exists());
         System.out.println("File size:   " + f.length());
         System.out.println("Readable:    " + f.canRead());
@@ -77,7 +77,7 @@ The variable <c>f</c> is what, in other programming languages, is called a <em>f
         System.out.println("Hidden file: " + f.isHidden());
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -102,7 +102,7 @@ The variable <c>f</c> is what, in other programming languages, is called a <em>f
 
 <listing xml:id="lst_file_checked_exception_error">
 <program language="java">
-<input>
+<code>
 import java.util.Scanner;
 import java.io.File;
 
@@ -114,7 +114,7 @@ public class LineCount {
         Scanner input = new Scanner(f);
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -140,7 +140,7 @@ This will require you to import <c>java.io.FileNotFoundException</c> and set up 
 
 <listing xml:id="lst_file_catch_file_not_found">
 <program language="java">
-<input>
+<code>
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -159,7 +159,7 @@ public class Klima {
         }
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -169,7 +169,7 @@ public class Klima {
 
 <listing xml:id="lst_file_read_text_file">
 <program language="java" line-numbers="yes">
-<input>
+<code>
             while (input.hasNextLine()) {
                 String oneLine = input.nextLine();
                 System.out.println(oneLine);
@@ -177,7 +177,7 @@ public class Klima {
             }
             System.out.println("# of lines: " + lineCount);
             input.close();
-</input>
+</code>
 </program>
 </listing>
 
@@ -195,7 +195,7 @@ Let's replace the line-counting code with this code for finding the maximum and 
 
 <listing xml:id="lst_file_find_min_max">
 <program language="java" line-numbers="yes">
-<input>
+<code>
 double max = Double.MIN_VALUE
 double min = Double.MAX_VALUE;
 String[] items = oneLine.split(";");
@@ -209,7 +209,7 @@ if (items.length == 4) {
         min = dayMin;
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -219,10 +219,10 @@ if (items.length == 4) {
 
 <listing xml:id="lst_split_example">
 <program language="java" line-numbers="yes">
-<input>
+<code>
 String s = "sister-in-law";
 String[] parts = s.split("-");
-</input>
+</code>
 </program>
 </listing>
 
@@ -240,7 +240,7 @@ The <c>parts</c> array will be <c>{"sister", "in", "law"}</c>.
 
 <listing xml:id="lst_file_try_number_format">
 <program language="java" line-numbers="yes">
-<input>
+<code>
 try {
     double dayMax = Double.parseDouble(items[2]);
     double dayMin = Double.parseDouble(items[3]);
@@ -249,7 +249,7 @@ catch (NumberFormatException ex) {
     System.out.println("Ignoring non-numeric data "
         + ex.getMessage());
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -270,7 +270,7 @@ catch (NumberFormatException ex) {
 
 <listing xml:id="lst_file_create_printwriter">
 <program language="java">
-<input>
+<code>
 File f = new File("output.txt");
 try {
     PrintWriter output = new PrintWriter(f);
@@ -279,7 +279,7 @@ try {
 catch (FileNotFoundException ex) {
     System.out.println("Unable to open output file.");
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -306,7 +306,7 @@ Just like <c>System.out</c>, the <c>PrintWriter</c> object <c>output</c> we have
 
 <listing xml:id="lst_unclosed_printwriter">
 <program language="java">
-<input>
+<code>
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -325,7 +325,7 @@ public class PartialWrite {
         }
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -345,7 +345,7 @@ If you uncomment the <c>output.close();</c> line and run the program again, the 
 
 <listing xml:id="lst_file_try_with_resources">
 <program language="java" line-numbers="yes">
-<input>
+<code>
 File outFile = new File("output_path.txt");
 try (PrintWriter outWriter = new PrintWriter(outFile)) {
     outWriter.println("Example of try with resources.");
@@ -353,7 +353,7 @@ try (PrintWriter outWriter = new PrintWriter(outFile)) {
 catch (FileNotFoundException ex) {
     System.out.println("Error: " + ex.getMessage);
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -367,7 +367,7 @@ catch (FileNotFoundException ex) {
 
 <listing xml:id="file_multiple_resources">
 <program language="java">
-<input>
+<code>
 File inFile = new File("input_path.txt");
 File outFile = new File("output_path.txt");
 try (
@@ -379,7 +379,7 @@ try (
 catch (Exception ex) {
     // error handling...
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -509,11 +509,11 @@ Hint: You can use the <c>replaceAll</c> method in the <c>String</c> class to get
 
 <listing>
 <program language="java" line-numbers="yes">
-<input>
+<code>
 String original = "abracadabra";
 String result = original.replaceAll("ab", "");
 // result will be "racadra"
-</input>
+</code>
 </program>
 </listing>
 

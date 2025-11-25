@@ -27,7 +27,7 @@
 <listing xml:id="lst-palchecker">
     <caption>Implementation of Palindrome Checker</caption>
 <program label="prog-palchecker" language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Deque.java"/>
@@ -60,7 +60,7 @@ public class Palindrome {
             isPalindrome("deed"));
     }
 }
-</input></program></listing>
+</code></program></listing>
 
 <note>
 <p>If you want to have a double quote appear in a double-quoted string, you must <term>escape</term> it by using the backslash before the internal double quotes.</p>

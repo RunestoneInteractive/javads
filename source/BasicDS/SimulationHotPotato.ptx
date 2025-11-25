@@ -48,7 +48,7 @@
 <listing  xml:id="lst-josephussim">
   <caption>Hot Potato Simulation</caption>
   <program language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Queue.java"/>
@@ -81,7 +81,7 @@ public class HotPotatoSimulation {
         System.out.println("Last person is " + lastPerson + ".");
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
   <p>Note that in this example the value of the counting constant is greater

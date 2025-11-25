@@ -7,7 +7,7 @@
 
   <listing xml:id="oop_lst-searchInt">
     <program language="java">
-      <input>
+      <code>
 public int search(Integer[] arr, Integer target) {
     int index = 0;
     while (index &lt; arr.length &amp;&amp;
@@ -17,7 +17,7 @@ public int search(Integer[] arr, Integer target) {
     return (index != arr.length) ? index : -1;
 }
 
-      </input>
+      </code>
     </program>
   </listing>
 
@@ -25,7 +25,7 @@ public int search(Integer[] arr, Integer target) {
 
     <listing xml:id="oop_lst-searchString">
     <program language="java">
-      <input>
+      <code>
 public int search(String[] arr, String target) {
     int index = 0;
     while (index &lt; arr.length &amp;&amp;
@@ -34,7 +34,7 @@ public int search(String[] arr, String target) {
     }
     return (index != arr.length) ? index : -1;
 }
-      </input>
+      </code>
     </program>
   </listing>
 
@@ -43,7 +43,7 @@ public int search(String[] arr, String target) {
   <listing xml:id="oop_lst-generic-searcher">
     <caption>The <c>Searcher</c> class</caption>
     <program language="java">
-      <input>
+      <code>
       class Searcher&lt;T&gt; {
         public int search(T[] arr, T target) {
             int index = 0;
@@ -53,7 +53,7 @@ public int search(String[] arr, String target) {
             return (index != arr.length) ? index : -1;
         }
       }
-      </input>
+      </code>
     </program>
   </listing>
 
@@ -62,7 +62,7 @@ public int search(String[] arr, String target) {
   <listing xml:id="oop_lst-generic-main">
     <caption>Using the <c>Searcher</c> class</caption>
     <program language="java" interactive="activecode">
-      <input>
+      <code>
       class Searcher&lt;T&gt; {
         public int search(T[] arr, T target) {
             int index = 0;
@@ -86,7 +86,7 @@ public class SearcherTest {
         System.out.println("elk found at index " + found);
       }
   }
-      </input>
+      </code>
     </program>
   </listing>
 
@@ -113,7 +113,7 @@ public class SearcherTest {
 
   <listing xml:id="lst_generic-method">
     <program language="java" interactive="activecode" line-numbers="yes">
-      <input>
+      <code>
 public class GenericSearchMethod {
 
     public static &lt;T&gt; int search(T[] arr, T target) {
@@ -134,7 +134,7 @@ public class GenericSearchMethod {
         System.out.println("elk found at index " + found);
     }
 }
-</input>
+</code>
 </program>
 </listing>
 

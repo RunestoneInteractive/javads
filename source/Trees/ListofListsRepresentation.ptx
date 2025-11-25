@@ -49,13 +49,13 @@
 <!--
 <listing xml:id="lst-treelist1">
 <program label="lst-treelist1"  interactive="activecode" language="python">
-    <input>
+    <code>
 my_tree = ["a", ["b", ["d", [], []], ["e", [], []]], ["c", ["f", [], []], []]]
 print(my_tree)
 print("left subtree = ", my_tree[1])
 print("root = ", my_tree[0])
 print("right subtree = ", my_tree[2])
-        </input>
+        </code>
   </program>
 </listing>
   <p>Let's formalize this definition of the tree data structure by providing
@@ -115,7 +115,7 @@ def get_right_child(root):
             structure resulting from this set of calls.</p>
 <listing xml:id="lst-bintreetry">
 <program label="lst-bintreetry"  interactive="activecode" language="python">
-    <input>
+    <code>
 def make_binary_tree(root):
     return [root, [], []]
 
@@ -167,7 +167,7 @@ print(a_tree)
 insert_left(left_child, 11)
 print(a_tree)
 print(get_right_child(get_right_child(a_tree)))
-        </input>
+        </code>
   </program>
 </listing>
   <exercises>
@@ -176,13 +176,13 @@ print(get_right_child(get_right_child(a_tree)))
       <statement>
         <p>Q-3: Given the following statments:</p>
         <program language="python">
-          <input>
+          <code>
 x = make_binary_tree("a")
 insert_left(x, "b")
 insert_right(x, "c")
 insert_right(get_right_child(x), "d")
 insert_left(get_right_child(get_right_child(x)), "e")
-</input>
+</code>
         </program>
         <p>Which of the answers is the correct representation of the tree?</p>
       </statement>
@@ -227,7 +227,7 @@ insert_left(get_right_child(get_right_child(x)), "e")
         <image source="Trees/Figures/tree_ex.png" width="50%"/>
       </statement>
       <program xml:id="mctree_2_editor" interactive="activecode" language="python">
-        <input>
+        <code>
 from test import testEqual
 
 def build_tree():
@@ -237,7 +237,7 @@ ttree = build_tree()
 testEqual(get_root_val(get_right_child(ttree)), "c")
 testEqual(get_root_val(get_right_child(get_left_child(ttree))), "d")
 testEqual(get_root_val(get_right_child(get_right_child(ttree))), "f")
-        </input>
+        </code>
       </program>
     </exercise>
   </exercises>

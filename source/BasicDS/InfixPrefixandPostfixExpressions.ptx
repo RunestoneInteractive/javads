@@ -312,7 +312,7 @@
   <listing xml:id="lst-intopost">
     <caption>Converting Infix Expressions to Postfix Expressions</caption>
 <program label="prog-intopost" line-numbers="yes" language="java" interactive="activecode">
-      <input>
+      <code>
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -388,7 +388,7 @@ public class ConvertToPostfix {
         System.out.println(expr + " --&gt; " + infixToPostfix(expr));
     }
 }
-        </input>
+        </code>
     </program>
   </listing>
 
@@ -468,7 +468,7 @@ public class ConvertToPostfix {
   <listing xml:id="lst-postfixeval">
     <caption>Postfix Evaluation</caption>
 <program label="prog-postfixeval"  xml:id="prog-postfixeval" language="java" interactive="activecode">
-      <input>
+      <code>
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -517,7 +517,7 @@ public class PostfixEvaluator {
         System.out.println(postfixEval("7 8 + 3 2 + /"));
     }
 }
-        </input>
+        </code>
     </program>
   </listing>
     <p>It is important to note that in both the postfix conversion and the

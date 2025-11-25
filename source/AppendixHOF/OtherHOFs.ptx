@@ -22,7 +22,7 @@
 
 <listing>
     <program language="java" label="hof_map-function" line-numbers="yes">
-        <input>
+        <code>
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Function;
@@ -38,7 +38,7 @@ public class FunctionalMapping {
         }
         return result;
     }
-</input>
+</code>
 </program>
 </listing>
 
@@ -48,7 +48,7 @@ public class FunctionalMapping {
 
 <listing>
     <program language="java" label="hof_map-usage" interactive="activecode">
-        <input>
+        <code>
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Function;
@@ -86,7 +86,7 @@ public class FunctionalMapping {
         System.out.println("Word lengths: " + lengths);
     }
 }
-        </input>
+        </code>
     </program>
 </listing>
 </subsection>
@@ -100,7 +100,7 @@ public class FunctionalMapping {
 
 <listing>
     <program language="java" label="hof_ordinary-sum" interactive="activecode">
-        <input>
+        <code>
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -124,7 +124,7 @@ public class SumArrayList {
     }
 }
 
-    </input>
+    </code>
 </program>
 </listing>
 
@@ -138,7 +138,7 @@ public class SumArrayList {
 
 <listing>
     <program language="java" label="hof_functional-reduce" line-numbers="yes">
-    <input>
+    <code>
     public static &lt;T, R&gt; R reduce(ArrayList&lt;T&gt; data, R start,
         BiFunction&lt;R, T, R&gt; f) {
         R result = start;
@@ -148,7 +148,7 @@ public class SumArrayList {
         }
         return result;
     }
-    </input>
+    </code>
     </program>
 </listing>
 
@@ -163,7 +163,7 @@ second parameter, and returns a result type. This is, indeed, what happens in li
 
 <listing>
     <program language="java" label="hof_sum-lambda">
-        <input>
+        <code>
         BiFunction&lt;Integer, Integer, Integer&gt; reduceSum =
           (Integer result, Integer n)  -&gt; {
             result += n;
@@ -172,7 +172,7 @@ second parameter, and returns a result type. This is, indeed, what happens in li
 
         // using the preceding lambda:
         Integer sum = reduce(numbers, 0, reduceSum);
-        </input>
+        </code>
     </program>
 </listing>
 
@@ -181,7 +181,7 @@ second parameter, and returns a result type. This is, indeed, what happens in li
 
 <listing>
     <program language="java" label="hof_reduce-lambda" interactive="activecode">
-        <input>
+        <code>
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.BiFunction;
@@ -221,7 +221,7 @@ public class FunctionalReduce {
         System.out.println("product: " + product);
     }
 }
-        </input>
+        </code>
     </program>
 </listing>
 </subsection>

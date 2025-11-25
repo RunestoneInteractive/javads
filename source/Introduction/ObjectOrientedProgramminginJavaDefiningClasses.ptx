@@ -45,12 +45,12 @@
 }</pre>
 
 <p>provides the framework for us to define the class. We normally start off by specifying the class's properties. These are declared inside the class, but not inside any method.</p>
-      <program language="java"><input>
+      <program language="java"><code>
 class Fraction {
     int numerator;
     int denominator;
 }
-</input></program>
+</code></program>
 
 <p>If you do not initialize properties, the default values will be 0 for <c>int</c>, 0.0 for <c>double</c>, <c>false</c> for <c>boolean</c>, and <c>null</c> for reference types such as <c>String</c>.</p>
 
@@ -60,7 +60,7 @@ class Fraction {
 
     <listing xml:id="introduction_listing-frac-constructor">
 <program label="introduction_frac-onstructor" language="java" line-numbers="yes">
-        <input>
+        <code>
 class Fraction {
     int numerator;
     int denominator;
@@ -70,7 +70,7 @@ class Fraction {
         this.denominator = denominator;
     }
 }
-        </input>
+        </code>
       </program>
     </listing>
     <p>In line 5, you see that we have named the constructor parameters the same as the properties. That is why, on lines&#xa0;6&#xa0;and&#xa0;7, we use the keyword <c>this</c> to <term>qualify</term> the variables on the left hand side of the assignment. You can think of <c>this</c> as meaning <q>the object currently under consideration</q>.  Thus, <c>this.numerator&#160;=&#160;numerator;</c> means <q>assign the <c>numerator</c> parameter to the <c>numerator</c> property of the object currently being constructed</q>.</p>
@@ -95,14 +95,14 @@ class Fraction {
     <title>Printing a Fraction</title>
     <p>The next thing we need to do is implement the behavior that the data type requires. To begin, consider what happens when we try to print a <c>Fraction</c> object in this program:</p>
 
-    <program language="java"><input>
+    <program language="java"><code>
 public class FractionTest {
     public static void main(String[] args) {
         Fraction myFraction = new Fraction(3, 5);
         System.out.println(myFraction);
     }
 }
-    </input></program>
+    </code></program>
 
 <note>
   <p>
@@ -130,11 +130,11 @@ public class FractionTest {
 
     <listing xml:id="introduction_lst-toString">
 <program label="introduction_prog-toString" language="java">
-        <input>
+        <code>
 public String toString() {
   return String.format("%d/%d", this.numerator, this.denominator);
 }
-        </input>
+        </code>
       </program>
     </listing>
 
@@ -156,14 +156,14 @@ public String toString() {
     </p>
  <listing xml:id="introduction_lst-addmethod">
 <program label="introduction_prog-addmethod" language="java" line-numbers="yes">
-        <input>
+        <code>
 public Fraction add(Fraction other) {
     int newNumerator = this.numerator * other.denominator +
           this.denominator * other.numerator;
     int newDenominator = this.denominator * other.denominator;
     return new Fraction(newNumerator, newDenominator);
 }
-        </input>
+        </code>
       </program>
     </listing>
 
@@ -212,7 +212,7 @@ System.out.println(f3);
     </p>
     <listing xml:id="gcd_cl" >
     <program label="gcd_cl" language="java">
-      <input>
+      <code>
 public int gcd(int m, int n) {
     while (m % n != 0) {
         int saveM = m;
@@ -221,7 +221,7 @@ public int gcd(int m, int n) {
     }
     return n;
 }
-      </input>
+      </code>
     </program>
     </listing>
 
@@ -234,7 +234,7 @@ public int gcd(int m, int n) {
     </p>
     <listing xml:id="introduction_lst-newaddmethod">
 <program label="introduction_prog-newaddmethod" language="java">
-        <input>
+        <code>
 public Fraction add(Fraction other) {
     int newNumerator = this.numerator * other.denominator +
             this.denominator * other.numerator;
@@ -245,7 +245,7 @@ public Fraction add(Fraction other) {
     return new Fraction(newNumerator / common,
         newDenominator / common);
 }
-        </input>
+        </code>
       </program>
     </listing>
 
@@ -264,14 +264,14 @@ public Fraction add(Fraction other) {
       include in our example <c>FractionTest</c> class will allow two fractions to
       compare themselves to one another. Consider this code:</p>
 
-    <program language="java"><input>
+    <program language="java"><code>
 Fraction f4 = new Fraction(3, 5);
 Fraction f5 = f4;
 Fraction f6 = new Fraction(3, 5);
 
 System.out.println(f4 == f5);
 System.out.println(f4 == f6);
-</input></program>
+</code></program>
 
 <p>The assignment <c>f5 = f4</c> copies the <em>reference</em> for <c>f4</c> into <c>f5</c>; we now have two references to the same object in memory. <c>f6</c>, on the other hand, refers to a completely different area of memory, as depicted in <xref ref="fig-fraction3"/>. When we do the comparison <c>f4&#160;==&#160;f5</c>, the <c>==</c> operator does a <term>shallow equality</term> comparison: it only checks to see that the references are the same, and evaluates as <c>true</c>. The shallow comparison <c>f4&#160;==&#160;f6</c> will evaluate as <c>false</c> because the references are not the same.
     </p>
@@ -291,14 +291,14 @@ System.out.println(f4 == f6);
     </p>
     <listing xml:id="introduction_lst-cmpmethod">
 <program label="introduction_prog-cmpmethod" language="java">
-        <input>
+        <code>
 public boolean equals(Fraction other) {
     int product1 = this.numerator * other.denominator;
     int product2 = this.denominator * other.numerator;
 
     return product1 == product2;
 }
-</input></program>
+</code></program>
 
     </listing>
     <p>If we now evaluate <c>f4.equals(f6)</c> in our <c>FractionTest</c> program, the <c>equals()</c> method will do a deep equality comparison and evalute as <c>true</c>.</p>
@@ -309,20 +309,20 @@ public boolean equals(Fraction other) {
     <p>Perhaps you found the way we added fractions: <c>f1.add(f2)</c> to be a bit strange. As it currently stands, <c>add</c> is an <term>instance method</term>; we need to invoke <c>add</c> on an instance of the <c>Fraction</c> class (in our example, that is <c>f1</c>).
     </p>
     <p>What if you wanted a more <q>conventional</q> way of adding fractions, such as this code fragment:</p>
-    <program language="java"><input>
+    <program language="java"><code>
 Fraction f7 = new Fraction(1, 2);
 Fraction f8 = new Fraction(1, 3);
 Fraction f9 = add(f7, f8);
 System.out.println(f9);
-</input></program>
+</code></program>
 
 <p>We want this new <c>add</c> method to also belong to the <c>Fraction</c> class, but not require an instance to use it. We can do this by making a <c>static</c> method<mdash/>it belongs to the class as a whole, not to any particular instance:</p>
 
-<program language="java"><input>
+<program language="java"><code>
 public static Fraction add(Fraction fracA, Fraction fracB) {
     return fracA.add(fracB);
 }
-</input></program>
+</code></program>
 
 <p>To save duplication of code, we will have this new <c>add</c> method invoke the instance <c>add</c> method with <c>fracA</c> as the instance and <c>fracB</c> as the argument.</p>
 
@@ -332,12 +332,12 @@ public static Fraction add(Fraction fracA, Fraction fracB) {
 
 <p>We can now complete our <c>FractionTest</c> program with one additional change: because our two-argument <c>add</c> method belongs to the class, we must prefix it with the class name:</p>
 
-    <program language="java"><input>
+    <program language="java"><code>
 Fraction f7 = new Fraction(1, 2);
 Fraction f8 = new Fraction(1, 3);
 Fraction f9 = Fraction.add(f7, f8);
 System.out.println(f9);
-</input></program>
+</code></program>
 
   </subsection>
   <subsection xml:id="introduction_object_summary">
@@ -348,7 +348,7 @@ System.out.println(f9);
     </p>
     <listing xml:id="lst-fractioncode">
 <program label="prog-fractioncode" language="java" interactive="activecode">
-      <input>
+      <code>
 class Fraction {
 
     int numerator;
@@ -419,7 +419,7 @@ public class FractionTest {
         System.out.println(f9);
     }
 }
-      </input>
+      </code>
     </program>
     </listing>
 

@@ -73,7 +73,7 @@ $2 ==&gt; -1</pre>
               <listing xml:id="lst_simplematcher">
                 <caption>Simple Match</caption>
                 <program language="java">
-                  <input>
+                  <code>
 public static int simpleMatcher(String pattern, String text) {
     int i = 0;
     int j = 0;
@@ -97,7 +97,7 @@ public static int simpleMatcher(String pattern, String text) {
     }
     return result;
 }
-                  </input>
+                  </code>
                 </program>
               </listing>
 
@@ -254,7 +254,7 @@ public static int simpleMatcher(String pattern, String text) {
               <listing xml:id="lst_mismatchedlinks">
                 <caption>The <c>mismatchedLinks</c> Method</caption>
                 <program language="java">
-                  <input>
+                  <code>
 public class MismatchedLinks {
     public static HashMap&lt;Integer, Integer&gt; mismatchedLinks(String pattern) {
         String aug_pattern = "0" + pattern;
@@ -276,7 +276,7 @@ public class MismatchedLinks {
         HashMap&lt;Integer, Integer&gt; result = mismatchedLinks("ACATA");
         System.out.println(result);
     }
-}                  </input>
+}                  </code>
                 </program>
               </listing>
 

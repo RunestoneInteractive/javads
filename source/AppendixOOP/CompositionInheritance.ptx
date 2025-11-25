@@ -16,12 +16,12 @@ Composition happens when an object is made up of other objects. For example, in 
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 public class Deck {
     private Card[] cards;
     ...
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -89,7 +89,7 @@ Back to the toaster. <xref ref="oop_subpart-constructors"/> shows the constructo
 <listing xml:id="oop_subpart-constructors">
     <caption>Constructors for <c>PowerSupply</c> and <c>Dial</c></caption>
   <program language="java">
-    <input>
+    <code>
 public PowerSupply(int voltage) {
     if (voltage == 220) {
         this.voltage = voltage;
@@ -107,7 +107,7 @@ public Dial(int minValue, int maxValue) {
     // new dials are always set to lowest value
     this.dialValue = minValue;
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -117,7 +117,7 @@ Now, look at how the <c>Toaster</c> class starts, with line numbers for referenc
 
 <listing>
   <program language="java" line-numbers="yes">
-    <input>
+    <code>
 class Toaster {
     private int nSlots;
     private int nSlices;
@@ -132,7 +132,7 @@ class Toaster {
     }
     // ...
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -155,7 +155,7 @@ Although a real-life toaster is composed of parts, all of the controls are on th
 <listing>
     <caption>Methods for Access to Composed Classes</caption>
   <program language="java">
-    <input>
+    <code>
 public boolean isTurnedOn() {
     return this.power.isTurnedOn();
 }
@@ -171,7 +171,7 @@ public double getDialValue() {
 public void setDialValue(double dialValue) {
     this.darkness.setDialValue(dialValue);
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -179,7 +179,7 @@ public void setDialValue(double dialValue) {
 
 <listing>
   <program language="java">
-    <input>
+    <code>
 public class ToasterTest {
     public static void main(String[] args) {
         Toaster euroFour = new Toaster(4, 220);
@@ -191,7 +191,7 @@ public class ToasterTest {
         System.out.println(euroFour);
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -290,7 +290,7 @@ There are no setters for the <c>name</c> and <c>sku</c> attributes; once an item
 
 <listing xml:id="oop_lst-item-class">
   <program language="java">
-    <input>
+    <code>
 public class Item {
     private String name;
     private String sku;
@@ -333,7 +333,7 @@ public class Item {
             this.price == other.price);
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -344,7 +344,7 @@ public class Item {
 <listing xml:id="oop_lst-sale-item-start">
     <caption>Incorrect Code for <c>SaleItem</c> Constructor</caption>
   <program language="java">
-    <input>
+    <code>
 public class SaleItem extends Item {
     private double discount; // as a decimal
 
@@ -357,7 +357,7 @@ public class SaleItem extends Item {
            Math.min(discount, 1.00));
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -368,7 +368,7 @@ But that won't work, because <c>name</c>, <c>price</c>, and <c>sku</c> are <c>pr
 <listing xml:id="oop_lst-using-super-constructor">
     <caption>Using <c>super</c> in a Constructor</caption>
   <program language="java">
-    <input>
+    <code>
 public class SaleItem extends Item {
     private double discount; // as a decimal
 
@@ -379,7 +379,7 @@ public class SaleItem extends Item {
            Math.min(discount, 1.00));
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -393,7 +393,7 @@ Here's the rest of the <c>SaleItem</c> code:
 
 <listing xml:id="oop_lst-saleItem-part-two">
   <program language="java">
-    <input>
+    <code>
     public double getDiscount() {
         return this.discount;
     }
@@ -421,7 +421,7 @@ Here's the rest of the <c>SaleItem</c> code:
             this.discount == other.discount);
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -436,7 +436,7 @@ Again, because <c>name</c>, <c>sku</c>, and <c>price</c> are <c>private</c> to t
 <listing xml:id="oop_lst-test-item">
     <caption>Testing the <c>Item</c> and <c>SaleItem</c> Classes</caption>
   <program language="java">
-    <input>
+    <code>
 public class ItemTest {
 
     public static void main(String[] args) {
@@ -458,7 +458,7 @@ public class ItemTest {
             markerTotal);
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -495,7 +495,7 @@ Part of making a program beautiful is getting rid of unnecessary duplication. In
 
 <listing xml:id="oop_lst-super-eliminates-duplication">
   <program language="java">
-    <input>
+    <code>
 public double purchase(int quantity) {
     return super.purchase(quantity) *
         (1 - discount / 100.0);
@@ -511,7 +511,7 @@ public boolean equals(SaleItem other) {
     return (super.equals(other) &amp;&amp;
         this.discount == other.discount);
 }
-    </input>
+    </code>
   </program>
 </listing>
 

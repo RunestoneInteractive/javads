@@ -18,7 +18,7 @@
             variable. The <c>getNeighbor</c> method returns the weight of the edge from
             this vertex to the vertex passed as a parameter.</p>
         <listing xml:id="graphs_lst-vertex"><caption>The <c>Vertex</c> Class</caption>
-            <program language="java" line-numbers="yes"><input>
+            <program language="java" line-numbers="yes"><code>
 import java.util.HashMap;
 import java.util.Set;
 
@@ -91,7 +91,7 @@ class Vertex&lt;T extends Comparable&lt;T&gt;&gt;
     }
 
 }
-        </input></program></listing>
+        </code></program></listing>
 
         <note>
             <title>Java Notes</title>
@@ -114,7 +114,7 @@ class Vertex&lt;T extends Comparable&lt;T&gt;&gt;
             objects in a particular graph. Together, the two methods allow you to
             iterate over the vertices in a graph by name, or by the objects
             themselves.</p>
-  <listing xml:id="graphs_lst-graph"><program language="java" line-numbers="yes"><input>
+  <listing xml:id="graphs_lst-graph"><program language="java" line-numbers="yes"><code>
 import java.util.HashMap;
 import java.util.Set;
 
@@ -162,7 +162,7 @@ class Graph&lt;T&gt; {
         return this.vertices.keySet();
     }
 }
-          </input></program></listing>
+          </code></program></listing>
   <p>Using the <c>Graph</c> and <c>Vertex</c> classes just defined, the following
             program creates the graph in <xref ref="graphs_vocabularyand-definitions"/>. First we
             create six vertices numbered 0 through 5. Then we display the vertex
@@ -173,7 +173,7 @@ class Graph&lt;T&gt; {
             at the end of this session against the graph shown in <xref ref="graphs_vocabularyand-definitions"/>.</p>
   <listing xml:id="lst_test-graph-class">
       <caption>Testing the <c>Graph</c> Class</caption>
-      <program language="java" interactive="activecode"><input>
+      <program language="java" interactive="activecode"><code>
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Set;
@@ -206,7 +206,7 @@ public class TestGraph {
         }
     }
 }
-              </input></program></listing>
+              </code></program></listing>
   <p>Here is its output:</p>
   <console><output>
 0 connected to: 5, 1

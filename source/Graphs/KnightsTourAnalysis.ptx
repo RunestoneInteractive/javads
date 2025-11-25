@@ -84,7 +84,7 @@
   <listing xml:id="graphs_lst-avail">
     <caption>The <c>orderByAvail</c> Method</caption>
     <program language="java" line-numbers="yes">
-    <input>
+    <code>
     public static ArrayList&lt;Vertex&lt;Integer&gt;&gt; orderByAvail(
       Vertex&lt;Integer&gt; start) {
         ArrayList&lt;CountAndVertex&lt;Integer&gt;&gt; sortList = new ArrayList&lt;&gt;();
@@ -106,7 +106,7 @@
         }
         return resultList;
     }
-</input>
+</code>
   </program></listing>
 
   <p>The preceding method has to keep track of a vertex and its count of unvisited neighbors as a pair of values. Since Java doesn't allow us to make an array with heterogeneous types, we need to create a class for this pair; <xref ref="lst_knight-count-and-vertex"/> shows the code for this <c>CountAndVertex</c> class. Its <c>compareTo</c> method uses subtraction to return a negative value when <c>this.count</c> is less than <c>other.count</c>, zero when they are equal, and a positive number when <c>this.count</c> is greater than <c>other.count</c>.</p>
@@ -114,7 +114,7 @@
   <listing xml:id="lst_knight-count-and-vertex">
     <caption>The <c>CountAndVertex</c> Class</caption>
     <program language="java" line-numbers="yes">
-      <input>
+      <code>
 class CountAndVertex&lt;T extends Comparable&lt;T&gt;&gt;
     implements Comparable&lt;CountAndVertex&lt;T&gt;&gt; {
     int count;
@@ -129,7 +129,7 @@ class CountAndVertex&lt;T extends Comparable&lt;T&gt;&gt;
         return (this.count - other.count);
     }
 }
-      </input>
+      </code>
     </program>
   </listing>
 </section>

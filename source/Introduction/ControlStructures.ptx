@@ -5,7 +5,7 @@
 
   <p>Selection statements allow programmers to ask questions and then, based on the result, perform different actions. Most programming languages provide two versions of this useful construct: the <c>if...else</c> and the <c>if</c>. The following code fragment is an example of a binary selection using the <c>if...else</c> statement.</p>
 
-  <program language="java"><input>
+  <program language="java"><code>
 Scanner input = new Scanner(System.in);
 System.out.print("Enter a number: ");
 double n = input.nextDouble();
@@ -14,7 +14,7 @@ if (n >= 0) {
     System.out.println(Math.sqrt(n));
 } else {
     System.out.println("Number can not be negative.");
-}</input></program>
+}</code></program>
 
   <p>In this example, the value of variable <c>n</c> is checked to see if it is greater than or equal to zero. If it is, the program prints the square root of the number.  If it is not, the statement performs the <c>else</c> clause and tells the user that the number cannot be negative.</p>
 
@@ -23,7 +23,7 @@ if (n >= 0) {
   <p>Selection constructs, as with any control construct, can be nested so that the result of one question helps decide whether to ask the next. For example, assume that <c>score</c> is a variable holding a reference to a score for a computer science test.</p>
 
   <program language="java" line-numbers="yes">
-    <input>
+    <code>
 String grade;
 
 if (score >= 90) {
@@ -45,13 +45,13 @@ if (score >= 90) {
 }
 
 System.out.println("The grade is " + grade + ".");
-      </input>
+      </code>
     </program>
   <p>This fragment will classify a value called <c>score</c> by printing the letter grade earned. If the score is greater than or equal to 90, the variable <c>grade</c> will be assigned <c>"A"</c>. If it is not (<c>else</c>), the next question is asked. If the score is greater than or equal to 80, then it must be between 80 and 89 since the answer to the first question was false. In this case, the grade becomes <c>"B"</c> is printed. You can see that using correct indentation pattern helps to make sense of the association between <c>if</c> and <c>else</c>.</p>
 
   <p>The drawback of this indentation is that the code tends to march off the page to the right, which does not help readability. We can, however, consider the block in lines 6-18 as a single statement, and use the <q>omit braces</q> shortcut. Similarly, we can eliminate braces around the statement in lines 8-17 and so on. We can then follow the <c>else</c> immediately by an <c>if</c> with the resulting code:</p>
 
-  <program language="java"><input>
+  <program language="java"><code>
 String grade;
 
 if (score >= 90) {
@@ -67,23 +67,23 @@ if (score >= 90) {
 }
 
 System.out.println("The grade is " + grade + ".");
-      </input></program>
+      </code></program>
 
   <p>Note that the final <c>else</c> is still necessary to provide the default case if all other conditions fail.</p>
 
   <p>The <c>else</c> clause is not required in Java; an <c>if</c> without an <c>else</c> is called a single-way selection construct. In a single-way selection, if the condition is true, an action is performed. When the condition is false, processing simply continues on to the next statement after the <c>if</c>. For example, the following fragment will first check to see if the value of a variable <c>n</c> is negative. If so, then it is modified by the absolute value function. Regardless, the next action is to compute the square root.</p>
-  <program language="java"><input>
+  <program language="java"><code>
 if (n &lt; 0) {
     n = Math.abs(n);
 }
 
 System.out.println(Math.sqrt(n));
 
-      </input></program>
+      </code></program>
 
   <p>For iteration, Java provides a standard <c>while</c> statement and two varieties of the <c>for</c> statement. The <c>while</c> statement repeats a body of code as long as a condition evaluates to <c>true</c>. Generally, we use a <c>while</c> loop for <term>indeterminate loops</term>, where we do not know how many times the loop has to iterate. Consider this program, where we ask the user repeatedly enter numbers they want to sum, entering zero when they are finished. In this case, we have no idea how many times the user will enter numbers before finishing:</p>
   <program language="java">
-      <input>
+      <code>
 import java.util.Scanner;
 
 class SumNumbers {
@@ -104,7 +104,7 @@ class SumNumbers {
         System.out.format("The sum is %.3f%n", sum);
     }
 }
-      </input>
+      </code>
   </program>
 
   <p>The condition on the <c>while</c> statement is evaluated at the start of each repetition. If the condition evaluates to <c>true</c>, the body of the statement will execute. While Java does not require you to indent the body of the loop, we strongly suggest you do so to make your code more readable.</p>
@@ -113,7 +113,7 @@ class SumNumbers {
 
   <listing xml:id="while-not-negative" label="while-not-negative">
     <caption>Example of while loop</caption>
-  <program language="java"><input>
+  <program language="java"><code>
 int index = 0;
 double sum = 0.0;
 double [] data...; // code to initialize array
@@ -122,7 +122,7 @@ while ((index &lt; data.length) &amp;&amp; (data[index] &gt;= 0.0) {
    sum = sum + data[index];
    index = index + 1;
 }
-</input></program>
+</code></program>
 </listing>
 
 <p>The compound condition would cause the body of the statement to be executed only in the case where both parts of the condition are satisfied. The value of the variable <c>index</c> would need to be less than the array length (to avoid <q>falling off the edge of the earth</q>), and the value array element at the current index would need to be greater than or equal to zero.</p>
@@ -131,32 +131,32 @@ while ((index &lt; data.length) &amp;&amp; (data[index] &gt;= 0.0) {
 
 <p>The first version of the <c>for</c> statement combines the elements of this <c>while</c> loop:</p>
 
-<program language="java"><input>
+<program language="java"><code>
 initialization;
 while (condition) {
     loop body;
     action; // update variable used in condition
 }
-</input></program>
+</code></program>
 
 <p>Into a single statement of this form:</p>
 
-<program language="java"><input>
+<program language="java"><code>
 for (initialization; condition; action) {
       loop body;
 }
-</input></program>
+</code></program>
 
 <p>Here is a program fragment that does the same thing as <xref ref="while-not-negative"/>, but uses a <c>for</c> loop to sum all the items up to, but not including, the first negative value in an array:</p>
 
  <listing xml:id="for-not-negative" label="for-not-negative">
     <caption>Example of for loop</caption>
-<program language="java"><input>
+<program language="java"><code>
 double sum = 0.0;
 for (int index = 0; (index &lt; data.length) &amp;&amp; (data[index] &gt;= 0.0); index++) {
     sum = sum + data[index];
 }
-</input></program>
+</code></program>
 </listing>
 
 <aside>
@@ -167,12 +167,12 @@ for (int index = 0; (index &lt; data.length) &amp;&amp; (data[index] &gt;= 0.0);
 
 <p>If you want to access every element in the collection but do not need to use the index as a part of the calculation, you can use the <term>extended <c>for</c></term> loop. The following example adds up all the items in the <c>data</c> array:</p>
 
-<program language="java"><input>
+<program language="java"><code>
 double sum = 0.0;
 for (double item: data) {
     sum = sum + item;
 }
-</input></program>
+</code></program>
 
 <p>The loop will assign each item in the <c>data</c> array to the loop variable <c>item</c>, one after another, and you can use that value in the loop body. You may use any variable name you wish; we used <c>item</c> here because it is a meaningful name.</p>
 

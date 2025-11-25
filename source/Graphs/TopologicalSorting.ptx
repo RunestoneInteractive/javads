@@ -63,7 +63,7 @@
   <p><xref ref="lst_graph-pancakes"/> gives the corresponding code for this example:</p>
   <listing xml:id="lst_graph-pancakes">
     <program language="java" line-numbers="yes" interactive="activecode">
-      <input>
+      <code>
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -101,7 +101,7 @@ public class Pancakes {
         }
    }
 }
-</input></program></listing>
+</code></program></listing>
 
 <note>
   <title>Java Note</title>
@@ -110,7 +110,7 @@ public class Pancakes {
 
 <listing xml:id="lst_comparators">
   <program language="java">
-    <input>
+    <code>
 static class ByDiscoveryTime implements Comparator&lt;Vertex&gt; {
     public int compare(Vertex a, Vertex b) {
         return a.discoveryTime - b.discoveryTime;
@@ -122,7 +122,7 @@ static class ByClosingTime implements Comparator&lt;Vertex&gt; {
         return a.closingTime - b.closingTime;
     }
 }
-</input>
+</code>
 </program>
 </listing>
 

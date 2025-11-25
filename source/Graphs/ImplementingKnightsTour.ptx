@@ -28,7 +28,7 @@
             indicating that we have found a successful tour. If the path is not long
             enough, we continue to explore one level deeper by choosing a new vertex
             to explore and calling <c>knightTour</c> recursively for that vertex.</p>
-          <listing xml:id="graphs_lst-knight"><program language="java" line-numbers="yes"><input>
+          <listing xml:id="graphs_lst-knight"><program language="java" line-numbers="yes"><code>
     public static boolean knightTour(int currentDepth,
         ArrayList&lt;Vertex&lt;Integer&gt;&gt; path,
         Vertex&lt;Integer&gt; vertex, int nodesInPath) {
@@ -60,7 +60,7 @@
         }
         return done;
     }
-    </input></program></listing>
+    </code></program></listing>
 
   <p>DFS also uses colors to keep track of which vertices in the graph have
             been visited. Unvisited vertices are colored white, and visited vertices

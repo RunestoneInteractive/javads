@@ -43,7 +43,7 @@
   <caption>Merge Sort with Debug Output</caption>
 <program label="prog-mergesort" language="java" line-numbers="yes"
          interactive="activecode">
-    <input>
+    <code>
 import java.util.Arrays;
 
 public class MergeSortExample {
@@ -108,7 +108,7 @@ public class MergeSortExample {
         System.out.println("Final result: " + Arrays.toString(testList));
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
   <p>Once the <c>mergeSort</c> method is invoked on the left half and the

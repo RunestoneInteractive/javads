@@ -24,7 +24,7 @@
 <listing xml:id="lst-stackcode1">
   <caption>Implementing a Stack class using Java ArrayLists</caption>
 <program xml:id="prog-stackcode1" label="prog-stackcode1" language="java" line-numbers="yes">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -101,7 +101,7 @@ class Stack&lt;T&gt; {
         }
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 
@@ -114,7 +114,7 @@ class Stack&lt;T&gt; {
 <listing xml:id="lst-stacktest">
   <caption>Program to Test the Stack Class</caption>
   <program xml:id="prog-stacktest" language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include
@@ -145,7 +145,7 @@ public class StackTest {
         System.out.println("Current stack is: " + s);
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
   <p>It is important to note that we could have chosen to implement the stack
@@ -157,7 +157,7 @@ public class StackTest {
 <listing xml:id="lst-stackcode2">
   <caption>Alternative Implementation of the Stack class</caption>
 <program label="lst-stackcode2" language="java">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -235,7 +235,7 @@ public class Stack&lt;T&gt; {
     }
 }
 
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -247,14 +247,14 @@ public class Stack&lt;T&gt; {
       <statement>
         <p>Given the following sequence of stack operations, what is the top item on the stack when the sequence is complete?</p>
         <program language="java">
-          <input>
+          <code>
 Stack&lt;String&gt; m = new Stack&lt;&gt;();
 m.push("x");
 m.push("y");
 m.pop();
 m.push("z");
 m.peek();
-</input>
+</code>
         </program>
       </statement>
       <choices>
@@ -296,7 +296,7 @@ m.peek();
       <statement>
         <p>Given the following sequence of stack operations, what is the top item on the stack when the sequence is complete?</p>
         <program language="java">
-          <input>
+          <code>
 Stack&lt;String&gt; m = new Stack&lt;&gt;();
 m.push("x");
 m.push("y");
@@ -305,7 +305,7 @@ while (!m.isEmpty()) {
    m.pop();
    m.pop();
 }
-</input>
+</code>
         </program>
       </statement>
       <choices>
@@ -347,7 +347,7 @@ while (!m.isEmpty()) {
                 characters in that string.</p>
     <program xml:id="stack_stringrev" language="java" interactive="activecode"
              include="prog-stackcode1">
-      <input>
+      <code>
 public class StringReverser {
 
     public static String reverseString(String str) {
@@ -369,7 +369,7 @@ public class StringReverser {
         testEqual(reverseString("1234567890"), "0987654321");
     }
 }
-      </input>
+      </code>
     </program>
   </exercises>
   <!--<video xml:id="stack1_video" youtube="fZtLSM7k_54" width="auto"/>-->

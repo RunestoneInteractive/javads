@@ -106,7 +106,7 @@
               <listing xml:id="lst_simple_quant">
               <caption>Simple Quantization</caption>
               <program language="java">
-                <input>
+                <code>
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -151,7 +151,7 @@ public class SimpleQuantize {
         } while (!filename.equals(""));
     }
 }
-</input>
+</code>
 </program>
 </listing>
 
@@ -165,7 +165,7 @@ public class SimpleQuantize {
 <listing xml:id="lst_image-component">
   <caption>The <c>ImageComponent</c> Class</caption>
   <program language="java" line-numbers="yes">
-    <input>
+    <code>
 import java.awt.Graphics;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -204,7 +204,7 @@ class ImageComponent extends JComponent {
         return this.image;
     }
 }
-    </input>
+    </code>
   </program>
 </listing>
 
@@ -349,7 +349,7 @@ class ImageComponent extends JComponent {
               <listing xml:id="lst_octreeQuant">
                 <caption>Octree Quantizing</caption>
                 <program language="java" line-numbers="yes">
-                  <input>
+                  <code>
     public static void octreeQuant(BufferedImage img) {
         int w = img.getWidth();
         int h = img.getHeight();
@@ -381,7 +381,7 @@ class ImageComponent extends JComponent {
             }
         }
     }
-</input>
+</code>
 </program>
 </listing>
 
@@ -397,7 +397,7 @@ class ImageComponent extends JComponent {
               <listing xml:id="lst_octreedef">
                 <caption>The <c>Octree</c> Class</caption>
                 <program language="java" line-numbers="yes">
-                  <input>
+                  <code>
 import java.util.ArrayList;
 
 public class Octree {
@@ -454,7 +454,7 @@ public class Octree {
         return minCube;
     }
 }
-</input>
+</code>
       </program>
     </listing>
 
@@ -524,7 +524,7 @@ public class Octree {
               <listing xml:id="lst_otnodedef">
                 <caption>Defining an OTNode</caption>
                 <program language="java">
-                  <input>
+                  <code>
     public class OTNode {
         public int red;
         public int green;
@@ -548,7 +548,7 @@ public class Octree {
             this.oTree = outer;
             this.children = new OTNode[8];
         }
-    </input>
+    </code>
   </program>
     </listing>
 
@@ -569,7 +569,7 @@ public class Octree {
               <listing xml:id="lst_otninsert">
                 <caption>Insert into OCtree</caption>
                 <program language="java" line-numbers="yes">
-                  <input>
+                  <code>
         public void insert(int r, int g, int b, int level, Octree outer) {
             if (level &lt; oTree.maxLevel) {
                 int index = computeIndex(r, g, b, level);
@@ -596,7 +596,7 @@ public class Octree {
             int bBits = (b &gt;&gt; nShift) &amp; 0x01;
             return rBits | gBits | bBits;
         }
-                  </input>
+                  </code>
                 </program>
               </listing>
 
@@ -638,7 +638,7 @@ public class Octree {
               <listing xml:id="lst_otnfind">
                 <caption>The <c>find</c> Method</caption>
                 <program language="java" line-numbers="yes">
-                  <input>
+                  <code>
 public int[] find(int r, int g, int b, int level) {
     if (level &lt; this.oTree.maxLevel) {
         int index = computeIndex(r, g, b, level);
@@ -658,7 +658,7 @@ public int[] find(int r, int g, int b, int level) {
             this.green / this.count, this.blue / this.count};
     }
 }
-                  </input>
+                  </code>
                 </program>
     </listing>
 
@@ -709,7 +709,7 @@ public int[] find(int r, int g, int b, int level) {
         <listing xml:id="lst_otmerge">
           <caption>The <c>merge</c> method</caption>
           <program language="java" line-numbers="yes">
-            <input>
+            <code>
         public void merge() {
             for (OTNode child: this.children) {
                 if (child != null) {
@@ -733,7 +733,7 @@ public int[] find(int r, int g, int b, int level) {
                 this.children[i] = null;
             }
         }
-      </input>
+      </code>
     </program>
   </listing>
 

@@ -83,7 +83,7 @@ Remove last time:   2.008027ms</pre>
   <listing xml:id="lst_analysis_time_remove">
     <program xml:id="prog_analysis_time_remove" language="kotlin" line-numbers="yes"
       interactive="activecode">
-      <input><xi:include parse="text" href="samplecode/RemoveItem.kt" /></input>
+      <code><xi:include parse="text" href="samplecode/RemoveItem.kt" /></code>
     </program>
   </listing>
 

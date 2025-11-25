@@ -35,13 +35,13 @@ $3 ==> 0
             one class to inherit all the properties and methods of another class by using
             the <c>extends</c> keyword. Here is the start of the class and the constructor:</p>
 
-        <program language="java" line-numbers="yes"><input>
+        <program language="java" line-numbers="yes"><code>
 class OrderedList&lt;T extends Comparable&lt;T&gt;&gt; extends UnorderedList&lt;T&gt; {
     public OrderedList() {
         super();
     }
 }
-</input></program>
+</code></program>
 
 <p>The first line looks very different from what you normally see in Java inheritance, as detailed in <xref ref="oop_inheritance_polymorphism"/>. Let's unpack it. Since we're using generics, we need to put a <c>&lt;T&gt;</c> on the child class <c>OrderedList</c> and the parent class <c>UnorderedList</c>. We also need to tell Java that it can only allow types that have a <c>compareTo</c> method. That's what <c>extends Comparable&lt;T&gt;</c> does for us.</p>
 
@@ -53,7 +53,7 @@ class OrderedList&lt;T extends Comparable&lt;T&gt;&gt; extends UnorderedList&lt;
     <caption>Testing <c>OrderedList</c> Methods</caption>
 <program xml:id="basicds_prog-test-ordered-list" language="java" line-numbers="yes"
   interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 <xi:include parse="text" href="./Node.java"/>
@@ -74,7 +74,7 @@ public class TestOrderedList {
         System.out.println("Is 300 in the list? " + myList.search(300));
     }
 }
-</input></program></listing>
+</code></program></listing>
 
 <p>With this output:</p>
 <console><output>
@@ -128,7 +128,7 @@ Is 300 in the list? false
           <listing xml:id="basic-ds_lst-orderadd">
               <caption>The <c>add</c> Method for an <c>OrderedList</c></caption>
               <program language="java" xml:id="basic-ds_prog-orderadd" line-numbers="yes">
-                  <input>
+                  <code>
     public void add(T item) {
         Node&lt;T&gt; current = this.getHead();
         Node&lt;T&gt; previous = null;
@@ -148,7 +148,7 @@ Is 300 in the list? false
             previous.setNext(itemNode);
         }
     }
-    </input></program>
+    </code></program>
 </listing>
 
 <p>Once we recompile the <c>OrderedList</c> and run our test program (<xref ref="basicds_lst-test-ordered-list"/>) again, we get the correct results:</p>
@@ -202,7 +202,7 @@ Is 300 in the list? false
   <listing xml:id="basic-ds_lst-ordersearch">
       <caption>The <c>search</c> Method for an <c>OrderedList</c></caption>
       <program language="java" line-numbers="yes">
-          <input>
+          <code>
     public boolean search(T item) {
         Node&lt;T&gt; current = this.getHead();
         while (current != null) {
@@ -216,7 +216,7 @@ Is 300 in the list? false
         }
         return false;
     }
-    </input></program></listing>
+    </code></program></listing>
 
     <p>The <c>OrderedList</c> class with methods discussed thus far is in <xref ref="basicds_complete-orderedList"/> along with documentation of its methods.
             We leave the remaining methods as exercises. You should carefully
@@ -225,7 +225,7 @@ Is 300 in the list? false
         <listing xml:id="basicds_complete-orderedList">
             <caption>The Complete <c>OrderedList</c> Class</caption>
             <program xml:id="orderedlistclass" language="java">
-    <input>
+    <code>
 class OrderedList&lt;T extends Comparable&lt;T&gt;&gt; extends UnorderedList&lt;T&gt; {
 
     // No extra properties in this class; they are inherited from
@@ -281,7 +281,7 @@ class OrderedList&lt;T extends Comparable&lt;T&gt;&gt; extends UnorderedList&lt;
         return false;
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 </introduction>

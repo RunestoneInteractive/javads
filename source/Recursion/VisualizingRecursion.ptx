@@ -34,7 +34,7 @@
 <listing xml:id="lst-turtle-spiral">
   <caption>Drawing a Recursive Spiral using <c>Turtle</c></caption>
 <program label="prog-turtle-spiral" language="java" line-numbers="yes">
-    <input>
+    <code>
 public class TurtleSpiral {
     public static void main(String[] args)
     {
@@ -56,7 +56,7 @@ public class TurtleSpiral {
     }
 
 }
-        </input>
+        </code>
   </program>
 </listing>
 
@@ -105,7 +105,7 @@ public class TurtleSpiral {
             getting too small.</p>
   <listing xml:id="recursion_lst-fractree"><program language="java" line-numbers="yes">
       <caption>Fractal Tree Code</caption>
-    <input>
+    <code>
     public static void drawTree(int branchLen, Turtle t) {
         if (branchLen &gt; 5) {
             t.forward(branchLen);
@@ -117,7 +117,7 @@ public class TurtleSpiral {
             t.backward(branchLen);
         }
     }
-</input>
+</code>
   </program></listing>
   <p>The complete program for this tree example is shown in <xref ref="lst-complete-tree"/>.  Before you run
             the code think about how you expect to see the tree take shape. Look at
@@ -127,7 +127,7 @@ public class TurtleSpiral {
 <listing xml:id="lst-complete-tree">
   <caption>Recursively Drawing a Tree</caption>
 <program label="prog-complete-tree" language="java" line-numbers="yes">
-    <input>
+    <code>
 import java.awt.Color;
 
 public class FractalTree {
@@ -159,7 +159,7 @@ public class FractalTree {
         }
     }
 }
-        </input>
+        </code>
   </program>
 </listing>
 

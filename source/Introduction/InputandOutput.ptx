@@ -14,7 +14,7 @@
           <listing xml:id="input-output-age" label="input-output-age">
             <caption>Age in Days Program</caption>
             <program language="java" line-numbers="yes">
-              <input>
+              <code>
 import java.util.Scanner;
 
 class AgeInDays {
@@ -30,7 +30,7 @@ class AgeInDays {
             + days + ".");
     }
 }
-</input></program></listing>
+</code></program></listing>
 
 <p>Any <c>import</c> statements that your program does should come at the beginning of the file.
   In line 6, the left-hand side of the assignment declares a <c>Scanner</c> object named <c>input</c>.
@@ -87,7 +87,7 @@ Your age in days is approximately 9855.</output>
     <p>While we can use <c>System.out.println()</c> for output, it often gives us output that is less than pleasing, as in <xref ref="io_discount_program"/>.</p>
 
     <listing xml:id="io_discount_program">
-      <program language="java" line-numbers="yes"><input>import java.util.Scanner;
+      <program language="java" line-numbers="yes"><code>import java.util.Scanner;
 
 class Discount {
 
@@ -102,7 +102,7 @@ class Discount {
         double newPrice = price * (1.0 - DISCOUNT_RATE);
         System.out.println("Your new price is $" + newPrice + ".");
     }
-}</input>
+}</code>
 </program>
 </listing>
 
@@ -121,7 +121,7 @@ Your new price is $12.011125.</output>
 
     <listing xml:id="io_age-and-name">
       <caption>Name and Age</caption>
-      <program language="java" line-numbers="yes"><input>import java.util.Scanner;
+      <program language="java" line-numbers="yes"><code>import java.util.Scanner;
 
 class AgeAndName {
 
@@ -138,7 +138,7 @@ class AgeAndName {
         System.out.format("You are about %d days old, %s.%n",
             days, name);
     }
-}</input></program></listing>
+}</code></program></listing>
 
 
 <p>Let's examine lines 15 and 16. The first argument to <c>format()</c> is the format string. The <c>%d</c> and <c>%s</c> are <term>format specifiers</term>; you can think of them as placeholders for values.  The <c>%d</c> specifier says that the placeholder will be filled in by a decimal integer value; <c>%s</c> is a placeholder for a String value.</p>
@@ -257,7 +257,7 @@ You are about 10585 days old, Kim.
 
     <listing xml:id="io_format-examples">
       <caption>Examples of Formatted Output</caption>
-      <program interactive="activecode" language="java" line-numbers="yes"><input>
+      <program interactive="activecode" language="java" line-numbers="yes"><code>
 public class FormatExamples {
 
     public static void main(String[] args) {
@@ -290,7 +290,7 @@ public class FormatExamples {
         System.out.format("|%10.7f|%n", value);
     }
 }
-</input></program></listing>
+</code></program></listing>
 
 <p>The width given in the example is the <em>minimum</em> space allocated for the output. If output requires more space, as in the last line, it will use more.</p>
 

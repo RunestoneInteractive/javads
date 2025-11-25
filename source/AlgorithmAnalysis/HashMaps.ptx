@@ -70,7 +70,7 @@
             <c>list.contains(number)</c> and <c>map.containsKey(number)</c>. </p>
   <listing xml:id="algorithm-analysis_lst-listvdict">
     <program language="java" interactive="activecode">
-    <input>
+    <code>
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -109,7 +109,7 @@ public class ListVsMap {
         }
     }
 }
-</input>
+</code>
   </program></listing>
   <p><xref ref="i10_id2fig-listvdict"/> summarizes the results of running
             <xref ref="algorithm-analysis_lst-listvdict"/>. You can see that the dictionary is consistently

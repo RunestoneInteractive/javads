@@ -12,14 +12,14 @@
   <p>Here's the minimal prototypical Java program:</p>
 
 <program interactive="activecode" language="java" line-numbers="yes">
-<input>
+<code>
 public class ExampleProgram {
 
     public static void main(String[] args) {
         System.out.println("Java works!");
     }
 }
-</input>
+</code>
 </program>
 
 <p>Let's go through this line by line.</p>
@@ -43,10 +43,10 @@ public class ExampleProgram {
     </p>
 
 <console prompt="$ ">
-<input>javac ExampleProgram.java</input>
-<input>java ExampleProgram</input>
+<code>javac ExampleProgram.java</code>
+<code>java ExampleProgram</code>
 <output>Java works!</output>
-<input>ls</input>
+<code>ls</code>
 <output>ExampleProgram.class  ExampleProgram.java</output>
 </console>
 
