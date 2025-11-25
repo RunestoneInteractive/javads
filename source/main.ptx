@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pretext xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en-US">
   <xi:include href="./bookinfo.ptx"/>
-  <book xml:id="kotlinds" permid="jat">
+  <book xml:id="kotlinds">
     <title>Problem Solving with Algorithms and Data Structures using Kotlin</title>
     <subtitle>The Interactive Edition</subtitle>
     <frontmatter>
