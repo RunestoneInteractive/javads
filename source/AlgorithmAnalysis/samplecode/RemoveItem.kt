@@ -1,46 +1,39 @@
-fun timeRemove(len: Int, removeFirst: Boolean): Double {
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration
+import kotlin.time.measureTime
+
+
+fun timeRemove(len: Int, removeFirst: Boolean): Duration {
     val N_TRIALS = 25
     val N_IGNORE = 20 // let system stabilize
-    var totalTime = 0
-
-    val list = MutableList<Int>(len, { 0 })
+    var totalTime = 10.milliseconds
 
     for (trial in 0 ..< N_TRIALS) {
-        val start = list.count()
-        for (i in start downTo len) {
-            list.add(i)
-        }
+        val list = MutableList<Int>(len, { it })
         System.gc()
 
-        // long startTime = System.nanoTime();
-        for (count in 0 ..< 1000) {
-            if (removeFirst) {
-                list.remove(0)
-            } else {
-                list.remove(list.count() - 1)
+        val timeTaken = measureTime {
+            for (count in 0 ..< 1000) {
+                if (removeFirst) {
+                    list.removeAt(0)
+                } else {
+                    list.removeAt(list.count() - 1)
+                }
             }
         }
 
         if (trial >= N_IGNORE) {
-            // totalTime = totalTime + (System.nanoTime() - startTime);
+            totalTime = totalTime + timeTaken
         }
     }
-    return (totalTime / (N_TRIALS - N_IGNORE)) / 1.0E9
+    return (totalTime / (N_TRIALS - N_IGNORE))
 }
 
 fun main() {
-    println("2,000,000 items")
-    printf("Remove first time: %.7f sec%n", timeRemove(2_000_000, true))
-    printf("Remove last time: %.7f sec%n", timeRemove(2_000_000, false))
-    println()
-
-    println("1,000,000 items")
-    printf("Remove first time: %.7f sec%n", timeRemove(1_000_000, true))
-    printf("Remove last time: %.7f sec%n", timeRemove(1_000_000, false))
-    println()
-
-    println("100,000 items")
-    printf("Remove first time: %.7f sec%n", timeRemove(100_000, true))
-    printf("Remove last time: %.7f sec%n", timeRemove(100_000, false))
-    println()
+    for (itemCount in listOf(400_000, 200_000, 100_000)) {
+        println("$itemCount items")
+        println("Remove first time:  ${timeRemove(itemCount, true)}")
+        println("Remove last time:   ${timeRemove(itemCount, false)}")
+        println()
+    }
 }

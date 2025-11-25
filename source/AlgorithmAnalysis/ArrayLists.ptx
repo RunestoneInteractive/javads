@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
-<section xml:id="algorithm-analysis_arraylists">
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="algorithm-analysis_arraylists">
   <title>MutableLists</title>
   <p>The designers of Kotlin's lists had many choices to make when they implemented
-            them. Each of these choices could have an impact on
-            how fast list operations perform. To help them make the right choices
-            they looked at the ways that people would most commonly use a list, and they optimized their implementation of a list so that
-            the most common operations were very fast. Of course they also tried to
-            make the less common operations fast, but when a trade-off had to be made
-            the performance of a less common operation was often sacrificed in favor
-            of the more common operation.</p>
-  <p>Two common operations are indexing and assigning to an index position.
-            Both of these operations take the same amount of time no matter how
-            large the list becomes. When an operation like this is independent of
-            the size of the list, it is <m>O(1)</m>.</p>
-  <p>Another very common programming task is to grow a MutableList by using the <c>add</c> method, which
-    is <m>O(n)</m>, but in a very special way that we will examine in <xref ref="advanced_java-arraylists-revisited"/>.
-  </p>
+    them. Each of these choices could have an impact on
+    how fast list operations perform. To help them make the right choices
+    they looked at the ways that people would most commonly use a list, and they optimized their
+    implementation of a list so that
+    the most common operations were very fast. Of course they also tried to
+    make the less common operations fast, but when a trade-off had to be made
+    the performance of a less common operation was often sacrificed in favor
+    of the more common operation.</p>
+  <p>Two common operations are indexing and assigning to an index position. Both of these operations
+    take the same amount of time no matter how large the list becomes. When an operation like this
+    is independent of the size of the list, it is <m>O(1)</m>.</p>
+  <p>Another very common programming task is to grow a MutableList by using the <c>add</c> method,
+    which is <m>O(n)</m>, but in a very special way that we will examine in <xref
+      ref="advanced_java-arraylists-revisited" />. </p>
 
   <p>Here is a table of common MutableList operations and their Big O efficiency:</p>
-    <table xml:id="algorithm-analysis_tbl-listbigo">
+  <table xml:id="algorithm-analysis_tbl-listbigo">
     <tabular>
       <title>
         Big O Efficiency of MutableList Operations
@@ -32,26 +32,29 @@
         <cell>O(1)</cell>
       </row>
       <row>
-      <cell><c>add n items</c></cell>
+        <cell>
+          <c>add n items</c>
+        </cell>
         <cell>O(n)</cell>
       </row>
       <row>
-        <cell><c>remove(index)</c></cell>
+        <cell>
+          <c>remove(index)</c>
+        </cell>
         <cell>O(n)</cell>
       </row>
       <row>
-        <cell><c>indexOf()</c></cell>
+        <cell>
+          <c>indexOf()</c>
+        </cell>
         <cell>O(n)</cell>
       </row>
     </tabular>
   </table>
-  <p>
-    Let's examine the <c>remove</c> method a bit more closely.  The <m>O(n)</m>
-    is a <em>worst-case</em> number. When we remove the first element in an
-    MutableList, all the remaining elements have to be moved left one position.  If
-    we remove the last element in a MutableList, that is a <em>best-case</em>
-    situation, and is <m>O(1)</m>, as no elements need to be moved.
-  </p>
+  <p> Let's examine the <c>remove</c> method a bit more closely. The <m>O(n)</m> is a <em>worst-case</em>
+    number. When we remove the first element in an MutableList, all the remaining elements have to
+    be moved left one position. If we remove the last element in a MutableList, that is a <em>
+    best-case</em> situation, and is <m>O(1)</m>, as no elements need to be moved. </p>
 
   <p>
     Here's the results of a program that removes the first item from an
@@ -59,103 +62,56 @@
     the last item 1000 times.
   </p>
 
-<pre>2,000,000 items
-Remove first time: 0.3152410 sec
-Remove last time: 0.0000029 sec
+  <pre>400000 items
+Remove first time:  58.523178ms
+Remove last time:   2.014451ms
 
-1,000,000 items
-Remove first time: 0.0858035 sec
-Remove last time: 0.0000022 sec
+200000 items
+Remove first time:  32.113901ms
+Remove last time:   2.012129ms
 
-100,000 items
-Remove first time: 0.0055089 sec
-Remove last time: 0.0000017 sec</pre>
+100000 items
+Remove first time:  16.178345ms
+Remove last time:   2.008027ms</pre>
 
-<p>As you see, the worst case time is proportional to the size of the list; the best case time is relatively unchanged.</p>
+  <p>As you see, the worst case time is proportional to the size of the list; the best case time is
+    relatively unchanged.</p>
 
-<p><xref ref="lst_analysis_time_remove"/> is the program that we used, and there are some important things to note:</p>
+  <p><xref ref="lst_analysis_time_remove" /> is the program that we used, and there are some
+    important things to note:</p>
 
   <listing xml:id="lst_analysis_time_remove">
-    <program xml:id="prog_analysis_time_remove" language="java" line-numbers="yes" interactive="activecode">
-      <input>
-import java.util.Scanner;
-import java.util.ArrayList;
-
-public class RemoveItem {
-
-
-    public static double timeRemove(int len, boolean removeFirst) {
-        final int N_TRIALS = 25;
-        final int N_IGNORE = 20; // let system stabilize
-        long totalTime = 0;
-
-        ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;(len);
-
-        for (int trial = 0; trial &lt; N_TRIALS; trial++) {
-            int start = list.size();
-            for (int i = start; i &lt; len; i++) {
-                list.add(i);
-            }
-            System.gc();
-
-            long startTime = System.nanoTime();
-            for (int count = 0; count &lt; 1000; count++) {
-                if (removeFirst) {
-                    list.remove(0);
-                } else {
-                    list.remove(list.size() - 1);
-                }
-            }
-
-            if (trial &gt;= N_IGNORE) {
-               totalTime = totalTime + (System.nanoTime() - startTime);
-            }
-
-        }
-        return (totalTime / (N_TRIALS - N_IGNORE)) / 1.0E9;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("2,000,000 items");
-        System.out.printf("Remove first time: %.7f sec%n",
-            timeRemove(2_000_000, true));
-        System.out.printf("Remove last time: %.7f sec%n",
-            timeRemove(2_000_000, false));
-        System.out.println();
-
-        System.out.println("1,000,000 items");
-        System.out.printf("Remove first time: %.7f sec%n",
-            timeRemove(1_000_000, true));
-        System.out.printf("Remove last time: %.7f sec%n",
-            timeRemove(1_000_000, false));
-        System.out.println();
-
-        System.out.println("100,000 items");
-        System.out.printf("Remove first time: %.7f sec%n",
-            timeRemove(100_000, true));
-        System.out.printf("Remove last time: %.7f sec%n",
-            timeRemove(100_000, false));
-        System.out.println();
-
-    }
-}
-</input>
-</program>
-</listing>
+    <program xml:id="prog_analysis_time_remove" language="kotlin" line-numbers="yes"
+      interactive="activecode">
+      <input><xi:include parse="text" href="samplecode/RemoveItem.kt" /></input>
+    </program>
+  </listing>
 
 
-<p>
-  In lines 8 and 9, we will run each test 25 times and average only the last 5 (in line 35), giving the cache time to stabilize as we saw in <xref ref="algorithm-analysis_lst-sum11"/>.
-</p>
+  <p> In line 13, we will run each test 25 times and average only the last 5 (in line 26), giving
+    the cache time to stabilize as we saw in <xref ref="algorithm-analysis_lst-sum11" />. </p>
 
-<p>
-  We allocate the ArrayList once before the trials, in line 12. This will be an empty list, so we have to fill it in lines 15-18. This has to be done at every trial, because each trial removes 1000 items.
-</p>
+  <p>
+    We allocate the MutableList once before the trials, in line 11, initializing each value to be
+    the same as its index (so location 0 has a 0 in it, location 1 has a 1 in it, and so on).
+    We need to reinitialize the list at every trial, because each trial removes
+    1000 items.
+  </p>
 
-<p>
-  Line 19 introduces a very important concept. When Java allocates and re-allocates memory, it is possible to have an area of memory that is no longer referred to.  The Java Virtual Machine periodically goes through memory and collects these unused areas so they can be re-used. This process is called <term>garbage collection</term>, and it can take a fair amount of time. We don't want this to happen while we are in our timing loop, so we call <c>System.gc()</c> to explicitly invoke garbage collection. This is not a sure-fire cure; the documentation for <c>gc</c> says: <q>There is no guarantee that this effort will recycle any particular number of unused objects, reclaim any particular amount of space, or complete at any particular time, if at all, before the method returns or ever.</q> Nonetheless, calling <c>System.gc()</c> is our best effort to avoid garbage collection at inopportune times.
-</p>
+  <p> Line 14 introduces a very important concept. When Kotlin allocates and re-allocates memory, it
+    is possible to have an area of memory that is no longer referred to. The runtime environment
+    periodically goes through memory and collects these unused areas so they can be re-used. This
+    process is called <term>garbage collection</term>, and it can take a fair amount of time. We
+    don't want this to happen while we are in our timing loop, so we call <c>System.gc()</c> to
+    explicitly invoke garbage collection. This is not a sure-fire cure; the documentation for <c>gc</c>
+    says: <q>There is no guarantee that this effort will recycle any particular number of unused
+    objects, reclaim any particular amount of space, or complete at any particular time, if at all,
+    before the method returns or ever.</q> Nonetheless, calling <c>System.gc()</c> is our best
+    effort to avoid garbage collection at inopportune times. </p>
 
-<p>Finally, because the inner loop repeats a thousand times, it is also important to point out that the list is decreasing in size by one each time through the loop. But even in the shortest list of 100,000 elements, this only reduces the overall size by <m>1\%</m> (and only <m>0.05\%</m> in the case of the 2,000,000 element list).</p>
+  <p>Finally, because the inner loop repeats a thousand times, it is also important to point out
+    that the list is decreasing in size by one each time through the loop. But even in the shortest
+    list of 100,000 elements, this only reduces the overall size by <m>1\%</m> (and only <m>0.25\%</m>
+    in the case of the 400,000 element list).</p>
 
 </section>
