@@ -10,7 +10,7 @@
             by starting with <m>0</m> and adding each number in the array.</p>
 <listing  xml:id="lst-itsum">
   <caption>Iterative Summation</caption>
-  <program language="kotlin" interactive="activecode">
+  <program language="java" interactive="activecode">
     <code>
 public class SumWithLoop {
     public static int arraySum(int [] numArray) {

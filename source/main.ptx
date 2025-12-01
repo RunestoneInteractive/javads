@@ -5,7 +5,7 @@
     <title>Problem Solving with Algorithms and Data Structures using Kotlin</title>
     <subtitle>The Interactive Edition</subtitle>
     <frontmatter>
-    <titlepage>
+    <bibinfo>
     <author>
      <personname>Bradley N. Miller</personname>
      <institution>Runestone Academy</institution>
@@ -28,8 +28,7 @@
     </titlepage>
     <xi:include href="./FrontMatter/preface.ptx"/>
     <xi:include href="./FrontMatter/older_preface.ptx"/>
-    <colophon>
-    <p>The paper version of the Python version of this book is available through Franklin Beedle &amp; Associates. We are greatful to them for their vision in allowing us to publish an interactive edition online for free.</p>
+    <p>The paper version of the Python version of this book is available through Franklin Beedle &amp; Associates. We are grateful to them for their vision in allowing us to publish an interactive edition online for free.</p>
        <copyright>
        <holder>Franklin Beedle &amp; Associates</holder>
        <year>2023</year>
@@ -37,8 +36,9 @@
      <minilicense>
       The online version of this work is made available under the Creative Commons Attribution, Share Alike, Non-Commercial license.<image source="by-nc-sa.png" width="20%" description="CC-BY-NC_SA" />
       </minilicense>
-
-    </colophon>
+    </bibinfo>
+    <xi:include href="./FrontMatter/preface.ptx"/>
+    <xi:include href="./FrontMatter/older_preface.ptx"/>
     <acknowledgement>
     <p>
     There are many people who have helped us to complete this book.
@@ -70,6 +70,7 @@
     <p>The Java version of this book was constructed by J. David Eisenberg for the Computer Science 76 course at
       Evergreen Valley College in San Jose, CA. Any mistakes in the book are entirely his.</p>
 
+    
     </acknowledgement>
 
     </frontmatter>
@@ -87,6 +88,7 @@
       <xi:include href="./AppendixUML/toctree.ptx"/>
       <xi:include href="./AppendixHOF/toctree.ptx"/>
       <index>
+      <title>Index</title>
         <index-list/>
       </index>
     </backmatter>

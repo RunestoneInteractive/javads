@@ -138,7 +138,7 @@
     <caption>Plot of Common Big O Functions</caption>
     <image source="AlgorithmAnalysis/Figures/newplot.png" width="50%" />
   </figure>
-  <p>As a final example, suppose that we have the fragment of Java code shown in <xref
+  <p>As a final example, suppose that we have the fragment of Kotlin code shown in <xref
       ref="algorithm-analysis_lst-dummycode" />. Although this program does not really do anything,
     it is instructive to see how we can take actual code and analyze performance.</p>
   <listing xml:id="algorithm-analysis_lst-dummycode">

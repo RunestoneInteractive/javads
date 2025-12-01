@@ -26,7 +26,7 @@
       list formed from the second string. If a letter is found, we check it off by setting the list
       element to <c>-</c>. <xref ref="lst-ana-1" /> shows this method.</p>
     <listing xml:id="lst-ana-1">
-      <program label="lst-ana-1" language="java" interactive="activecode">
+      <program label="lst-ana-1" language="kotlin" interactive="activecode">
         <code><xi:include parse="text" href="samplecode/Anagram1.kt" /></code>
       </program>
     </listing>
@@ -57,7 +57,7 @@
       this solution. In Kotlin we can use the built-in <c>sort</c> function on lists, after we have
       converted the strings to lists. </p>
     <listing xml:id="lst-ana-2">
-      <program language="java" label="lst-ana-2" interactive="activecode">
+      <program language="kotlin" label="lst-ana-2" interactive="activecode">
         <code><xi:include parse="text" href="samplecode/Anagram2.kt" /></code>
       </program>
     </listing>
@@ -101,7 +101,7 @@
       this evaluates to the distance between them. For example,
       <c>'c'&#160;-&#160;'a'</c> evaluates to 2. <xref ref="lst-ana-4" /> shows this solution.</p>
     <listing xml:id="lst-ana-4">
-      <program label="lst-ana-4" language="java" interactive="activecode">
+      <program label="lst-ana-4" language="kotlin" interactive="activecode">
         <code><xi:include parse="text" href="samplecode/Anagram4.kt" /></code>
       </program>
     </listing>
@@ -130,7 +130,7 @@
         <statement>
           <p>Q-4: Given the following code fragment, what is its Big O running time? (Presume that
             variable <c>n</c> has been declared elsewhere in the program.)</p>
-          <program language="java">
+          <program language="kotlin">
             <code><xi:include parse="text" href="samplecode/AnagramSelf1.kt" /></code>
           </program>
         </statement>
@@ -175,7 +175,7 @@
         <statement>
           <p>Q-5: Given the following code fragment what is its Big O running time? (Presume that <c>
             n</c> has been declared elsewhere in the program.)</p>
-          <program language="java">
+          <program language="kotlin">
             <code><xi:include parse="text" href="samplecode/AnagramSelf2.kt" /></code>
           </program>
         </statement>
@@ -219,7 +219,7 @@
         <statement>
           <p>Q-6: Given the following code fragment what is its Big O running time? (Presume <c>n</c>
             has been declared elsewhere in the program.)</p>
-          <program language="java">
+          <program language="kotlin">
             <code><xi:include parse="text" href="samplecode/AnagramSelf3.kt" /></code>
           </program>
         </statement>

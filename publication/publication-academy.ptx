@@ -5,10 +5,10 @@
         <directories external="../assets" generated="../generated-assets" />
     </source>
     <html>
-        <platform host="runestone" />
-        <knowl exercise-inline="no" example="no" listing="no" />
-        <css theme="default-modern" />
-        <tableofcontents focused="yes" />
-        <search variant="reference" />
+    <platform host="runestone" />
+    <knowl exercise-inline="no" example="no" listing="no" />
+    <css theme="salem"/>
+    <tableofcontents focused="yes" />
+    <search variant="reference"/>
     </html>
 </publication>
