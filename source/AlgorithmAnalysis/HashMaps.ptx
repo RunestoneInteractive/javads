@@ -1,24 +1,12 @@
 <?xml version="1.0"?>
-<section xml:id="algorithm-analysis_hashmaps">
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="algorithm-analysis_hashmaps">
   <title>HashMaps</title>
-  <p>The second major Java data structure is the HashMap. As you
-            probably recall, HashMaps differ from ArrayLists in that you can access
-            items in a HashMap (also called a <q>map</q> for short) by a key rather than a position. Later in this
-            book you will see that there are many ways to implement a HashMap.
-            The thing that is most important to notice right now is that the <c>get</c> and <c>put</c> methods on a HashMap are <m>O(1)</m>. Another
-            important HashMap operation is the <c>containsKey</c> operation. Checking to
-            see whether a key is in the HashMap or not is also <m>O(1)</m>.
-            The efficiency of common HashMap operations is summarized in
-            <xref ref="algorithm-analysis_tbl-hashmapbigo"/>. One important side note on dictionary performance
-            is that the efficiencies we provide in the table are for average
-            performance. In some rare cases the <c>contains</c>, <c>get</c>, and <c>set</c>
-            operations can degenerate into <m>O(n)</m> performance, but we will
-            get into that in Chapter 8 when we talk about the different ways
-            that a dictionary could be implemented.</p>
+  <p>TODO: mutableMapOf creates a LinkedHashMap, which is an improved HashMap that maintains a doubly linked list of entries. Fix this section and also the previous one on lists to somehow be consistent about these implementation issues.</p>
+  <p>The second major Kotlin data structure is the HashMap. Maps, sometimes known as dictionaries, differ from lists in that you can access items in a map by a key rather than a position. Later in this book you will see that there are many ways to implement a map. The thing that is most important to notice right now is that the <c>get</c> and <c>put</c> operations on a HashMap are <m>O(1)</m>. Another important HashMap operation is the <c>containsKey</c> operation. Checking to see whether a key is in the HashMap or not is also <m>O(1)</m>. The efficiency of common HashMap operations is summarized in <xref ref="algorithm-analysis_tbl-hashmapbigo" />. One important side note on HashMap performance is that the efficiencies we provide in the table are for average performance. In some rare cases the <c>contains</c>, <c>get</c>, and <c>set</c> operations can degenerate into <m>O(n)</m> performance, but we will get into that in <xref ref="advanced_dictionaries-revisited-skip-lists"/> when we talk about the different ways that a map could be implemented.</p>
   <table xml:id="algorithm-analysis_tbl-hashmapbigo">
-      <title>
-        Big O Efficiency of Java HashMap Operations
-      </title>
+    <title>
+      Big O Efficiency of Kotlin HashMap Operations
+    </title>
     <tabular>
       <row header="yes">
         <cell>Operation</cell>
@@ -29,7 +17,9 @@
         <cell>O(n)</cell>
       </row>
       <row>
-        <cell><c>get</c></cell>
+        <cell>
+          <c>get</c>
+        </cell>
         <cell>O(1)</cell>
       </row>
       <row>
@@ -37,11 +27,15 @@
         <cell>O(1)</cell>
       </row>
       <row>
-        <cell><c>remove</c></cell>
+        <cell>
+          <c>remove</c>
+        </cell>
         <cell>O(1)</cell>
       </row>
       <row>
-        <cell><c>containsKey</c></cell>
+        <cell>
+          <c>containsKey</c>
+        </cell>
         <cell>O(1)</cell>
       </row>
       <row>
@@ -51,79 +45,22 @@
     </tabular>
   </table>
 
-  <p>For our last performance experiment, we will compare the performance of
-    the <c>contains</c> method for ArrayLists and the <c>containsKey</c> operation for HashMaps. In the process we
-            will confirm that the operation for ArrayLists is <m>O(n)</m> and
-            the operation for HashMaps is <m>O(1)</m>. The experiment
-            we will use to compare the two is as follows: we'll make a list with a range
-            of numbers in it, then we will pick numbers at random and check to see
-            if the numbers are in the list. If our performance tables are correct,
-            the bigger the list, the longer it should take to determine if any one
-            number is contained in the list.</p>
+  <p>For our last performance experiment, we will compare the performance of the <c>contains</c> method for MutableLists and the <c>containsKey</c> operation for HashMaps. In the process we will confirm that the operation for MutableLists is <m>O(n)</m> and the operation for HashMaps is <m>O(1)</m>. The experiment we will use to compare the two is as follows: we'll make a list with a range of numbers in it, then we will pick numbers at random and check to see if the numbers are in the list. If our performance tables are correct, the bigger the list, the longer it should take to determine if any one number is contained in the list.</p>
   <p>We will repeat the same experiment for a HashMap that contains
-            numbers as the keys. In this experiment we should see that determining
-            whether or not a number is in the HashMap is not only much faster,
-            but the time it takes to check should remain constant even as the
-            HashMap grows larger.</p>
-  <p><xref ref="algorithm-analysis_lst-listvdict"/> implements this comparison. Notice that we are
-            performing exactly the same operation, even though they have different names:
-            <c>list.contains(number)</c> and <c>map.containsKey(number)</c>. </p>
+    numbers as the keys. In this experiment we should see that determining
+    whether or not a number is in the HashMap is not only much faster,
+    but the time it takes to check should remain constant even as the
+    HashMap grows larger.</p>
+  <p><xref ref="algorithm-analysis_lst-listvdict" /> implements this comparison. Notice that we are performing exactly the same operation, even though they have different names: <c>list.contains(number)</c> and <c>map.containsKey(number)</c>. (Note: this program takes a while to run, and may time out if you run it within the interactive textbook.)</p>
   <listing xml:id="algorithm-analysis_lst-listvdict">
-    <program language="java" interactive="activecode">
-    <code>
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-
-public class ListVsMap {
-
-    public static void main(String[] args) {
-
-        System.out.println("size      list       map");
-        for (int size = 10_000; size &lt; 1_000_001; size += 20_000) {
-            ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;(size);
-            HashMap&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();
-
-            for (int key = 0; key &lt; size; key++) {
-                list.add(key);
-                map.put(key, key); // key and value are the same
-            }
-            System.gc();
-            Random generator = new Random();
-
-            long startListTime = System.nanoTime();
-            for (int i = 0; i &lt; 1000; i++) {
-                int lookFor = generator.nextInt(size);
-                boolean found = list.contains(lookFor);
-            }
-            long elapsedListTime = System.nanoTime() - startListTime;
-
-            long startMapTime = System.nanoTime();
-            for (int i = 0; i &lt; 1000; i++) {
-                Integer lookFor = generator.nextInt(size);
-                boolean found = map.containsKey(lookFor);
-            }
-            long elapsedMapTime = System.nanoTime() - startMapTime;
-            System.out.printf("%8d %9.7f %9.7f%n",
-                size, elapsedListTime / 1.0E9, elapsedMapTime / 1.0E9);
-        }
-    }
-}
-</code>
-  </program></listing>
-  <p><xref ref="i10_id2fig-listvdict"/> summarizes the results of running
-            <xref ref="algorithm-analysis_lst-listvdict"/>. You can see that the dictionary is consistently
-            faster. For the smallest size of 10,000 elements, a HashMap is
-            58.2 times faster than an ArrayList. For the largest size of 990,000
-            elements the HashMap is 3,972 times faster! You can also see that
-            the time it takes for the <c>contains</c> method on the ArrayList grows linearly
-            with the size of the list. This verifies the assertion that the <c>contains</c>
-            method on a list is <m>O(n)</m>. It can also be seen that the time
-            for the <c>containsKey</c> method on a HashMap is constant even as the
-            dictionary size grows.</p>
+    <program language="kotlin" interactive="activecode">
+        <code><xi:include parse="text" href="samplecode/ListVsMap.kt" /></code>
+    </program>
+  </listing>
+  <p><xref ref="i10_id2fig-listvdict" /> summarizes the results of running <xref ref="algorithm-analysis_lst-listvdict" />. You can see that the map is consistently faster. For the smallest size of 10,000 elements, a HashMap is roughly 39 times faster than an ArrayList. For the largest size of 990,000 elements the HashMap is 4,863 times faster! You can also see that the time it takes for the <c>contains</c> method on the ArrayList grows linearly with the size of the list. This verifies the assertion that the <c>contains</c> method on a list is <m>O(n)</m>. It can also be seen that the time for the <c>containsKey</c> method on a HashMap is constant even as the map size grows.</p>
   <figure align="" xml:id="i10_id2fig-listvdict">
-    <caption>Comparing Time to Find Elements for Java ArrayList and HashMap</caption>
-    <image source="AlgorithmAnalysis/Figures/list_vs_map.png" width="50%"/>
+    <caption>Comparing time to find elements for Kotlin default list and map implementations</caption>
+    <image source="AlgorithmAnalysis/Figures/list_vs_map.png" width="50%" />
   </figure>
 
   <exercises>
@@ -151,7 +88,7 @@ public class ListVsMap {
         </choice>
         <choice>
           <statement>
-            <p>myList.add()</p>
+            <p>myList.add(19)</p>
           </statement>
           <feedback>
             <p>Appending to the end of the list is a constant operation</p>
@@ -159,7 +96,7 @@ public class ListVsMap {
         </choice>
         <choice>
           <statement>
-            <p>myList.get(10)</p>
+            <p>myList[10]</p>
           </statement>
           <feedback>
             <p>Indexing a list is a constant operation</p>
@@ -198,7 +135,7 @@ public class ListVsMap {
         </choice>
         <choice>
           <statement>
-            <p>myMap.put("x", 22)</p>
+            <p>myMap["x"] = 22</p>
           </statement>
           <feedback>
             <p>Assignment to a HashMap key is constant but there is a better answer.</p>

@@ -3,12 +3,13 @@ name = "kotlinds"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Dave Musicant (limbo)",email = "dmusicant-limbo@carleton.edu"}
+    {name = "Dave Musicant",email = "dmusicant@carleton.edu"}
 ]
 readme = "README.md"
 requires-python = ">=3.12,<4.0"
 dependencies = [
-    "pretext (>=2.32.0,<3.0.0)"
+    "pretext (>=2.32.0,<3.0.0)",
+    "matplotlib (>=3.10.7,<4.0.0)"
 ]
 
 

@@ -15,8 +15,8 @@ for line in infile:
 plt.xlabel("Collection size, 1000s of items")  # add X-axis label
 plt.ylabel("Time to complete contains operation (sec)")  # add Y-axis label
 
-plt.plot(x_arr, y1_arr, label = "Kotlin default MutableList", linestyle="dashed")
-plt.plot(x_arr, y2_arr,  color="#800000", label = "Kotlin default MutableMap", linestyle="dotted")
+plt.plot(x_arr, y1_arr, label = "list (created by mutableListOf)", linestyle="dashed")
+plt.plot(x_arr, y2_arr,  color="#800000", label = "map (created by mutableMapOf)", linestyle="dotted")
 plt.legend()
 plt.show()
 
