@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="algorithm-analysis_arraylists">
-  <title>MutableLists</title>
+  <title>Lists</title>
   <p>The designers of Kotlin's lists had many choices to make when they implemented
     them. Each of these choices could have an impact on
     how fast list operations perform. To help them make the right choices
@@ -10,14 +10,16 @@
     make the less common operations fast, but when a trade-off had to be made
     the performance of a less common operation was often sacrificed in favor
     of the more common operation.</p>
-  <p>Two common operations are indexing and assigning to an index position. Both of these operations
-    take the same amount of time no matter how large the list becomes. When an operation like this
-    is independent of the size of the list, it is <m>O(1)</m>.</p>
-  <p>Another very common programming task is to grow a MutableList by using the <c>add</c> method,
-    which is <m>O(n)</m>, but in a very special way that we will examine in <xref
-      ref="advanced_java-arraylists-revisited" />. </p>
 
-  <p>Here is a table of common MutableList operations and their Big O efficiency:</p>
+  <p>Because different people might have different needs, Kotlin provides multiple list implementations, each of which offers somewhat different advantages. Kotlin also makes the distinction between a <c>List</c> which is immutable (unchangeable), as well as a <c>MutableList</c>, which can be modified. To keep the discussion here focused, we will be talking about the list implementation that you automatically get when you the <c>mutableListOf</c> or <c>MutableList</c> functions to create it. Internally, Kotlin refers to this mutable list as an <c>ArrayList</c>, because it is implemented inside using something called an array. It should be understood for the remainder of this section that when we talk about performance for a Kotlin list, we are talking about performance for this implementation in particular<fn>As of the time of this writing, Kotlin directly provides two implementations of mutable lists. The first, and the default, is the <c>ArrayList</c>. The second implementation is the <c>ArrayDeque</c>. The <c>ArrayDeque</c> is designed to have similar performance to an <c>ArrayList</c>, but allows for <url href="https://discuss.kotlinlang.org/t/why-kotlin-does-not-provide-arraydeque-implementation/16140/4">fast insertions and removals at either end</url>. Additional implementations, such as <c>LinkedList</c>, can be imported from Java.</fn>.</p>
+
+  <p>Two common operations for a list are indexing and assigning to an index position. Both of these operations
+    in Kotlin take the same amount of time no matter how large the list becomes. When an operation like this
+    is independent of the size of the list, it is <m>O(1)</m>.</p>
+  
+    <p>Another very common programming task is to grow a list by using the <c>add</c> method. In Kotlin, this operation is <m>O(n)</m>, but in a very special way that we will examine in <xref ref="advanced_java-arraylists-revisited" />. </p>
+
+  <p>Here is a table of common lists operations and their Big O efficiency in Kotlin:</p>
   <table xml:id="algorithm-analysis_tbl-listbigo">
     <tabular>
       <title>
@@ -52,13 +54,13 @@
     </tabular>
   </table>
   <p> Let's examine the <c>remove</c> method a bit more closely. The <m>O(n)</m> is a <em>worst-case</em>
-    number. When we remove the first element in an MutableList, all the remaining elements have to
-    be moved left one position. If we remove the last element in a MutableList, that is a <em>
+    number. When we remove the first element in an list, all the remaining elements have to
+    be moved left one position. If we remove the last element in a list, that is a <em>
     best-case</em> situation, and is <m>O(1)</m>, as no elements need to be moved. </p>
 
   <p>
-    Here's the results of a program that removes the first item from an
-    MutableList 1000 times and compares that time to the time required to remove
+    Here's the results of a program that removes the first item from a
+    list 1000 times and compares that time to the time required to remove
     the last item 1000 times.
   </p>
 
@@ -88,17 +90,17 @@ Remove last time:   2.008027ms</pre>
   </listing>
 
 
-  <p> In line 13, we will run each test 25 times and average only the last 5 (in line 26), giving
+  <p> In line 13, we will run each test 25 times and average only the last 5 (in line 25), giving
     the cache time to stabilize as we saw in <xref ref="algorithm-analysis_lst-sum11" />. </p>
 
   <p>
-    We allocate the MutableList once before the trials, in line 11, initializing each value to be
+    We allocate the list once before the trials, in line 12, initializing each value to be
     the same as its index (so location 0 has a 0 in it, location 1 has a 1 in it, and so on).
     We need to reinitialize the list at every trial, because each trial removes
     1000 items.
   </p>
 
-  <p> Line 14 introduces a very important concept. When Kotlin allocates and re-allocates memory, it
+  <p> Line 13 introduces a very important concept. When Kotlin allocates and re-allocates memory, it
     is possible to have an area of memory that is no longer referred to. The runtime environment
     periodically goes through memory and collects these unused areas so they can be re-used. This
     process is called <term>garbage collection</term>, and it can take a fair amount of time. We

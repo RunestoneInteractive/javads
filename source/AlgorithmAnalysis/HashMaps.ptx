@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="algorithm-analysis_hashmaps">
-  <title>HashMaps</title>
-  <p>TODO: mutableMapOf creates a LinkedHashMap, which is an improved HashMap that maintains a doubly linked list of entries. Fix this section and also the previous one on lists to somehow be consistent about these implementation issues.</p>
-  <p>The second major Kotlin data structure is the HashMap. Maps, sometimes known as dictionaries, differ from lists in that you can access items in a map by a key rather than a position. Later in this book you will see that there are many ways to implement a map. The thing that is most important to notice right now is that the <c>get</c> and <c>put</c> operations on a HashMap are <m>O(1)</m>. Another important HashMap operation is the <c>containsKey</c> operation. Checking to see whether a key is in the HashMap or not is also <m>O(1)</m>. The efficiency of common HashMap operations is summarized in <xref ref="algorithm-analysis_tbl-hashmapbigo" />. One important side note on HashMap performance is that the efficiencies we provide in the table are for average performance. In some rare cases the <c>contains</c>, <c>get</c>, and <c>set</c> operations can degenerate into <m>O(n)</m> performance, but we will get into that in <xref ref="advanced_dictionaries-revisited-skip-lists"/> when we talk about the different ways that a map could be implemented.</p>
+  <title>Maps</title>
+  <p>Maps, sometimes known as dictionaries, differ from lists in that you can access items in a map by a key rather than a position. Later in this book you will see that there are many ways to implement a map, and Kotlin provides multiple options. As we did in the section on lists, we will constrain our discussion to the default map that Kotlin provides when using the <c>mutableMapOf</c> or <c>MutableMap</c> functions. Internally, Kotlin refers to this default implementation as a <c>LinkedHashMap</c>. It should be understood for the remainder of this section that when we talk about performance of a Kotlin map, we are talking about the performance for this implementation in particular<fn>As of the time of this writing, Kotlin directly provides three implementations of mutable maps. The <c>HashMap</c>, which is automatically included from Java, is a typical hash-based implementation. The <c>LinkedHashMap</c>, which is the default in Kotlin, is also leveraged from Java. A <c>LinkedHashMap</c> is similar to a <c>HashMap</c>, but additionally implements a doubly-linked list that contains all of its entries, which is used for producing a consistent iteration order. Finally, Kotlin also allows you to convert a map to a <c>SortedMap</c> via the <c>toSortedMap</c> member function. The map that is returned is a <c>TreeMap</c>, again provided from Java.</fn>.</p>
+    
+  <p>The thing that is most important to notice right now is that the <c>get</c> and <c>put</c> operations on this Kotlin map are <m>O(1)</m>. Another important map operation is the <c>containsKey</c> operation. Checking to see whether a key is in this map or not is also <m>O(1)</m>. The efficiency of common Kotlin map operations is summarized in <xref ref="algorithm-analysis_tbl-hashmapbigo" />. One important side note on map performance is that the efficiencies we provide in the table are for average performance. In some rare cases the <c>contains</c>, <c>get</c>, and <c>set</c> operations can degenerate into <m>O(n)</m> performance, but we will get into that in <xref ref="advanced_dictionaries-revisited-skip-lists"/> when we talk about the different ways that a map could be implemented.</p>
   <table xml:id="algorithm-analysis_tbl-hashmapbigo">
     <title>
-      Big O Efficiency of Kotlin HashMap Operations
+      Big O Efficiency of Kotlin Map Operations
     </title>
     <tabular>
       <row header="yes">
@@ -45,19 +46,19 @@
     </tabular>
   </table>
 
-  <p>For our last performance experiment, we will compare the performance of the <c>contains</c> method for MutableLists and the <c>containsKey</c> operation for HashMaps. In the process we will confirm that the operation for MutableLists is <m>O(n)</m> and the operation for HashMaps is <m>O(1)</m>. The experiment we will use to compare the two is as follows: we'll make a list with a range of numbers in it, then we will pick numbers at random and check to see if the numbers are in the list. If our performance tables are correct, the bigger the list, the longer it should take to determine if any one number is contained in the list.</p>
-  <p>We will repeat the same experiment for a HashMap that contains
+  <p>For our last performance experiment, we will compare the performance of the <c>contains</c> method for Kotlin lists and the <c>containsKey</c> operation for Kotlin maps. In the process we will confirm that the operation for lists is <m>O(n)</m> and the operation for maps is <m>O(1)</m>. The experiment we will use to compare the two is as follows: we'll make a list with a range of numbers in it, then we will pick numbers at random and check to see if the numbers are in the list. If our performance tables are correct, the bigger the list, the longer it should take to determine if any one number is contained in the list.</p>
+  <p>We will repeat the same experiment for a map that contains
     numbers as the keys. In this experiment we should see that determining
-    whether or not a number is in the HashMap is not only much faster,
+    whether or not a number is in the map is not only much faster,
     but the time it takes to check should remain constant even as the
-    HashMap grows larger.</p>
+    map grows larger.</p>
   <p><xref ref="algorithm-analysis_lst-listvdict" /> implements this comparison. Notice that we are performing exactly the same operation, even though they have different names: <c>list.contains(number)</c> and <c>map.containsKey(number)</c>. (Note: this program takes a while to run, and may time out if you run it within the interactive textbook.)</p>
   <listing xml:id="algorithm-analysis_lst-listvdict">
     <program language="kotlin" interactive="activecode">
         <code><xi:include parse="text" href="samplecode/ListVsMap.kt" /></code>
     </program>
   </listing>
-  <p><xref ref="i10_id2fig-listvdict" /> summarizes the results of running <xref ref="algorithm-analysis_lst-listvdict" />. You can see that the map is consistently faster. For the smallest size of 10,000 elements, a HashMap is roughly 39 times faster than an ArrayList. For the largest size of 990,000 elements the HashMap is 4,863 times faster! You can also see that the time it takes for the <c>contains</c> method on the ArrayList grows linearly with the size of the list. This verifies the assertion that the <c>contains</c> method on a list is <m>O(n)</m>. It can also be seen that the time for the <c>containsKey</c> method on a HashMap is constant even as the map size grows.</p>
+  <p><xref ref="i10_id2fig-listvdict" /> summarizes the results of running <xref ref="algorithm-analysis_lst-listvdict" />. You can see that the map is consistently faster. For the smallest size of 10,000 elements, a map is roughly 39 times faster than a list. For the largest size of 990,000 elements the map is 4,863 times faster! You can also see that the time it takes for the <c>contains</c> method on the list grows linearly with the size of the list. This verifies the assertion that the <c>contains</c> method on a list is <m>O(n)</m>. It can also be seen that the time for the <c>containsKey</c> method on a map is constant even as the map size grows.</p>
   <figure align="" xml:id="i10_id2fig-listvdict">
     <caption>Comparing time to find elements for Kotlin default list and map implementations</caption>
     <image source="AlgorithmAnalysis/Figures/list_vs_map.png" width="50%" />
@@ -67,7 +68,7 @@
     <title>Self Check</title>
     <exercise label="mcpyperform">
       <statement>
-        <p>Q-1: Which of the ArrayList operations shown below is not O(1)?</p>
+        <p>Q-1: Which of the list operations shown below is not O(1)?</p>
       </statement>
       <choices>
         <choice correct="yes">
@@ -114,7 +115,7 @@
     </exercise>
     <exercise label="mcpydictperf">
       <statement>
-        <p>Q-2: Which of the HashMap operations shown below is O(1)?</p>
+        <p>Q-2: Which of the map operations shown below is O(1)?</p>
       </statement>
       <choices>
         <choice>
@@ -122,7 +123,7 @@
             <p>myMap.containsKey("x")</p>
           </statement>
           <feedback>
-            <p>in is a constant operation for a HashMap because you do not have to iterate but there is a better answer.</p>
+            <p>in is a constant operation for a map because you do not have to iterate but there is a better answer.</p>
           </feedback>
         </choice>
         <choice>
@@ -130,7 +131,7 @@
             <p>myMap.remove("x")</p>
           </statement>
           <feedback>
-            <p>removing an element from a HashMap is a constant operation but there is a better answer.</p>
+            <p>removing an element from a map is a constant operation but there is a better answer.</p>
           </feedback>
         </choice>
         <choice>
@@ -138,7 +139,7 @@
             <p>myMap["x"] = 22</p>
           </statement>
           <feedback>
-            <p>Assignment to a HashMap key is constant but there is a better answer.</p>
+            <p>Assignment to a map key is constant but there is a better answer.</p>
           </feedback>
         </choice>
         <choice correct="yes">
@@ -146,11 +147,10 @@
             <p>all of the above are O(1)</p>
           </statement>
           <feedback>
-            <p>The only dictionary operations that are not O(1) are those that require iteration.</p>
+            <p>The only map operations that are not O(1) are those that require iteration.</p>
           </feedback>
         </choice>
       </choices>
     </exercise>
   </exercises>
-  <!--<video xml:id="pythonopsperf" youtube="zKq8iVEX6gU" width="auto"/>-->
 </section>

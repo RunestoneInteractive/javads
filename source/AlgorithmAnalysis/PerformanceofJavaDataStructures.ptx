@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <section xml:id="algorithm-analysis_performance-of-java-data-structures">
   <title>Performance of Kotlin Data Structures</title>
+  <!-- TODO: Big O should be big O -->
   <p>Now that you have a general idea of Big O notation
             and the differences between the different functions, our goal in this
-            section is to tell you about the Big O performance for the operations on
-            Kotlin MutableLists and MutableMaps. We will then show you some timing
+            section is to discuss Big O performance for operations on
+            Kotlin lists and maps. We will then look at some timing
             experiments that illustrate the costs and benefits of using certain
             operations on each data structure. It is important for you to understand
             the efficiency of these Kotlin data structures because they are the
