@@ -1,85 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="algorithm_analysis_exercises">
   <title>Algorithm Analysis: Exercises</title>
+    <p>
+        Here are exercises to practice your understanding.
+    </p>
   <exercises>
           <exercise><p>Give the Big O performance of the following code fragment:</p>
 
-            <program language="java" xml:id="big_o_nested_loop">
-                <code>
-                for (int i = 0; i &lt; n; i++) {
-                    for (int j = 0; j &lt; n; j++) {
-                        int k = i + j;
+            <program language="kotlin" xml:id="big_o_nested_loop">
+                for (i in 0 ..&lt; n) {
+                    for (j in 0 ..&lt; n) {
+                        val k = i + j
                     }
                 }
-                        </code>
             </program>
          </exercise>
 
         <exercise><p>Give the Big O performance of the following code fragment:</p>
 
-        <program language="java" xml:id="big_o_for_loop">
-            <code>
-            for (int i = 0; i &lt; n; i++) {
-                int k = 2 * i;
+        <program language="kotlin" xml:id="big_o_for_loop">
+            for (i in 0 ..&lt; n) {
+                val k = 2 * i
             }
-                </code>
-                </program>
+            </program>
         </exercise>
 
         <exercise><p>Give the Big O performance of the following code fragment:</p>
 
-            <program language="java" xml:id="big_o_while_loop">
-                <code>
-            int i = n;
+            <program language="kotlin" xml:id="big_o_while_loop">
+            var i = n
             while (i > 0) {
-                int k = 2 * i;
-                i = i / 2;
+                val k = 2 * i
+                i = i / 2
             }
-            </code>
             </program>
             </exercise>
 
         <exercise><p>Give the Big O performance of the following code fragment:</p>
 
-   <program language="java" xml:id="big_o_triple_nested_loop">
-       <code>
-       int result = 0;
-       for (int i = 0; i &lt; n; i++) {
-          for (int j = 0; j &lt; n; j++) {
-             for (int k = 0; k &lt; n; k++) {
-                result = i + j + k;
+   <program language="kotlin" xml:id="big_o_triple_nested_loop">
+       var result = 0
+       for (i in 0 ..&lt; n) {
+          for (j in 0 ..&lt; n) {
+             for (k in 0 ..&lt; n) {
+                result = i + j + k
              }
           }
         }
-                </code>
             </program>
         </exercise>
 
         <exercise><p>Give the Big O performance of the following code fragment:</p>
 
-            <program language="python" xml:id="big_o_three_loops"><code>
-       int result = 0;
-       for (int i = 0; i &lt; n; i++) {
-          result = i + i;
+            <program language="kotlin" xml:id="big_o_three_loops">
+       var result = 0
+       for (i in 0 ..&lt; n) {
+          result = i + i
        }
-       for (int j = 0; j &lt; n; j++) {
-          result = j + j;
+       for (j in 0 ..&lt; n) {
+          result = j + j
        }
-       for (int k = 0; k &lt; n; k++) {
-          result = k + k;
+       for (k in 0 ..&lt; n) {
+          result = k + k
        }
-          </code></program>
+          </program>
         </exercise>
 
-        <exercise><p>Devise an experiment to verify that the <c>ArrayList</c> <c>indexOf</c> method is
+        <exercise><p>Devise an experiment to verify that the Kotlin list <c>indexOf</c> operation is
         <m>O(n)</m>.</p></exercise>
 
     <exercise><p>Devise an experiment to verify that <c>get</c> and <c>put</c> are
-        <m>O(1)</m> for HashMaps.</p></exercise>
+        <m>O(1)</m> for Kotlin maps.</p></exercise>
 
 
     <exercise><p>Devise an experiment that compares the performance of the <c>remove</c>
-   method on ArrayLists and HashMaps.</p></exercise>
+   operation function on lists and maps.</p></exercise>
 
 
    <exercise><p>Given a list of numbers in random order, write an algorithm that works in <m>O(n\log(n))</m>
