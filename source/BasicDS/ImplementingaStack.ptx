@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <section xml:id="basic-ds_implementing-a-stack"
    xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>Implementing a Stack in Java</title>
+  <title>Implementing a Stack in Kotlin</title>
   <p>Now that we have clearly defined the stack as an abstract data type, we
-            will turn our attention to using Java to implement the stack. Recall
+            will turn our attention to using Kotlin to implement the stack. Recall
             that when we give an abstract data type a physical implementation, we
             refer to the implementation as a <em>data structure</em>.</p>
-  <p>As we described in <xref ref="introduction_object-oriented-programming-in-java-defining-classes"/>, in Java, as in any object-oriented
+  <p>As we described in <xref ref="introduction_object-oriented-programming-in-java-defining-classes"/>, in Kotlin, as in any object-oriented
             programming language, the implementation of choice for an abstract data
             type such as a stack is the creation of a new class. The stack
-            operations are implemented as methods. Further, to implement a stack,
+            operations are implemented as member functions. Further, to implement a stack,
             which is a collection of elements, it makes sense to utilize the power
-            and simplicity of the collections provided by Java. We will
-            use an <c>ArrayList</c>.</p>
+            and simplicity of the collections provided by Kotlin. We will
+            a typical Kotlin mutable list.</p>
 
-          <p>Recall that the <c>ArrayList</c> class in Java provides an ordered collection mechanism and a set of methods. For example, if we have the list [2, 5, 3, 6, 7, 4], we need only to decide which end of the list will be considered the top of the stack and which will be the bottom (also referred to as the base of the stack). Once that decision is made, the operations can be implemented using the list methods such as <c>add</c> and <c>remove</c>.</p>
+          <p>Recall that a mutable list in Kotlin provides an ordered collection mechanism and a set of methods. For example, if we have the list [2, 5, 3, 6, 7, 4], we need only to decide which end of the list will be considered the top of the stack and which will be the bottom (also referred to as the base of the stack). Once that decision is made, the operations can be implemented using the list methods such as <c>add</c> and <c>remove</c>.</p>
 
   <p>The following stack implementation (<xref ref="lst-stackcode1"/>) assumes that
             the end of the list will hold the top element of the stack. As the stack
@@ -22,90 +22,14 @@
             of the list. <c>pop</c> operations will manipulate that same end.</p>
 
 <listing xml:id="lst-stackcode1">
-  <caption>Implementing a Stack class using Java ArrayLists</caption>
-<program xml:id="prog-stackcode1" label="prog-stackcode1" language="java" line-numbers="yes">
-    <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-
-class Stack&lt;T&gt; {
-
-    /*
-     * The top of the stack is at the end
-     * of the ArrayList.
-     */
-    ArrayList&lt;T&gt; items;
-
-    /*
-     * Create a new stack
-     */
-    public Stack() {
-        this.items = new ArrayList&lt;T&gt;();
-    }
-
-    /*
-     * Returns true if there are no items on the stack;
-     * false otherwise.
-     */
-    public boolean isEmpty() {
-        return (this.items.isEmpty());
-    }
-
-    /*
-     * Pushes given item on the top of the stack
-     */
-    public void push(T item) {
-        this.items.add(item);
-    }
-
-    /*
-     * Removes the item on top of the stack and returns it.
-     * If the stack is empty, throws an exception.
-     */
-    public T pop() {
-        if (this.isEmpty()) {
-            throw new NoSuchElementException("Stack is empty.");
-        }
-        return this.items.remove(items.size() - 1);
-    }
-
-    /*
-     * Returns the item on top of the stack without removing it.
-     * If the stack is empty, throws an exception.
-     */
-    public T peek() {
-        if (this.isEmpty()) {
-            throw new NoSuchElementException("Stack is empty.");
-        }
-        return this.items.get(items.size() - 1);
-    }
-
-    /*
-     * Returns the number of items on the stack.
-     */
-    public int size() {
-        return this.items.size();
-    }
-
-    /*
-     * Convert to string as an array from bottom to top
-     */
-    public String toString() {
-
-        if (!this.items.isEmpty()) {
-            String arrString = this.items.toString();
-            // remove open and closing bracket
-            return "bottom -&gt;" + arrString + "&lt;- top";
-        } else {
-            return "&lt;&lt;empty stack&gt;&gt;";
-        }
-    }
-}
-        </code>
+  <caption>Implementing a Stack class using a Kotlin list</caption>
+<program xml:id="prog-stackcode1" label="prog-stackcode1" language="kotlin" line-numbers="yes">
+      <code><xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" /></code>
   </program>
 </listing>
 
-<p>Remember in our discussion of <c>ArrayList</c> in <xref ref="introduction_arraylist"/> that we put the data type in angle brackets? This allowed us to have an <c>ArrayList&lt;String&gt;</c>, <c>ArrayList&lt;Integer&gt;</c>, etc. We would also like to be able to create a <c>Stack</c> whose elements are of any data type. To do this, we specify in line 4 that a stack has a <term>generic</term> data type.  The <c>T</c> is like a variable that, instead of holding an integer, double, or string value, holds a <em>data type</em>.  Thus, when we create a <c>Stack&lt;String&gt;</c>, the data type <c>String</c> provides the value that fills in the generic <c>T</c>. The body of the class uses <c>T</c> anywhere that it needs the type of stack we are dealing with.</p>
+<!-- TODO: fix this reference -->
+<p>Remember in our discussion of <c>MutableList</c> in <xref ref="introduction_arraylist"/> that we put the data type in angle brackets? This allowed us to have an <c>MutableList&lt;String&gt;</c>, <c>MutableList&lt;Int&gt;</c>, etc. We would also like to be able to create a <c>Stack</c> whose elements are of any data type. To do this, we specify in line 4 that a stack has a <term>generic</term> data type.  The <c>T</c> is like a variable that, instead of holding an integer, double, or string value, holds a <em>data type</em>.  Thus, when we create a <c>Stack&lt;String&gt;</c>, the data type <c>String</c> provides the value that fills in the generic <c>T</c>. The body of the class uses <c>T</c> anywhere that it needs the type of stack we are dealing with.</p>
 
   <p>Now we must write a program that creates a <c>Stack</c> object and then uses it.
             <xref ref="lst-stacktest"/> shows the <c>Stack</c> class in
@@ -113,145 +37,40 @@ class Stack&lt;T&gt; {
             <xref ref="basic-ds_the-stack-abstract-data-type"/>.  We don't need to <c>import</c> the <c>Stack</c> class as long as its source file is in the same directory as our test program. (The interactive code in <xref ref="lst-stacktest"/> has been set up properly for this to work.)</p>
 <listing xml:id="lst-stacktest">
   <caption>Program to Test the Stack Class</caption>
-  <program xml:id="prog-stacktest" language="java" interactive="activecode">
-    <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Stack.java"/>
-^^^^
-public class StackTest {
-
-    public static void main(String[] args) {
-
-        Stack&lt;String&gt; s = new Stack&lt;&gt;();
-        System.out.println("isEmpty returns " + s.isEmpty());
-
-        s.push("java");
-        s.push("keyboard");
-        System.out.println("Top of stack is " + s.peek());
-        s.push("computer");
-        System.out.println("Size of stack is " + s.size());
-        System.out.println("Current stack is: " + s);
-
-        s.push("program");
-        System.out.println("Current stack is: " + s);
-
-        System.out.println("Pop: " + s.pop());
-        System.out.println("Pop: " + s.pop());
-
-        System.out.println("Size of stack is " + s.size());
-        System.out.println("Current stack is: " + s);
-    }
-}
-        </code>
+  <program xml:id="prog-stacktest" language="kotlin" interactive="activecode">
+      <code>
+        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/StackTest.kt" /></code>
   </program>
 </listing>
   <p>It is important to note that we could have chosen to implement the stack
-            using an ArrayList where the top is at the beginning instead of at the end. In
+            using an list where the top is at the beginning instead of at the end. In
             this case, the previous <c>pop</c> and <c>append</c> methods would no longer
             work and we would have to index position 0 (the first item in the list)
             explicitly using <c>remove</c> and <c>add</c>. The implementation is shown in
             <xref ref="lst-stackcode2"/>.</p>
 <listing xml:id="lst-stackcode2">
   <caption>Alternative Implementation of the Stack class</caption>
-<program label="lst-stackcode2" language="java">
-    <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-
-public class Stack&lt;T&gt; {
-
-    /*
-     * The top of the stack is at the beginning
-     * of the ArrayList.
-     */
-    ArrayList&lt;T&gt; items;
-
-    /*
-     * Create a new stack
-     */
-    public Stack() {
-        this.items = new ArrayList&lt;T&gt;();
-    }
-
-    /*
-     * Returns true if there are no items on the stack;
-     * false otherwise.
-     */
-    public boolean isEmpty() {
-        return (this.items.isEmpty());
-    }
-
-    /*
-     * Pushes given item on the top of the stack
-     */
-    public void push(T item) {
-        this.items.add(0, item);
-    }
-
-    /*
-     * Removes the item on top of the stack and returns it.
-     * If the stack is empty, throws an exception.
-     */
-    public T pop() {
-        if (this.isEmpty()) {
-            throw new NoSuchElementException("Stack is empty.");
-        }
-        return this.items.remove(0);
-    }
-
-    /*
-     * Returns the item on top of the stack without removing it.
-     * If the stack is empty, throws an exception.
-     */
-    public T peek() {
-        if (this.isEmpty()) {
-            throw new NoSuchElementException("Stack is empty.");
-        }
-        return this.items.get(0);
-    }
-
-    /*
-     * Returns the number of items on the stack.
-     */
-    public int size() {
-        return this.items.size();
-    }
-
-    /*
-     * Convert to string as an array from top to bottom
-     */
-    public String toString() {
-
-        if (!this.items.isEmpty()) {
-            String arrString = this.items.toString();
-            // remove open and closing bracket
-            return "top -&gt;" + arrString + "&lt;- bottom";
-        } else {
-            return "&lt;&lt;empty stack&gt;&gt;";
-        }
-    }
-}
-
-    </code>
+<program label="lst-stackcode2" language="kotlin">
+    <code><xi:include parse="text" href="samplecode/src/main/kotlin/StackAlt.kt" /></code>
   </program>
 </listing>
 
-<p>This ability to change the physical implementation of an abstract data type while maintaining the logical characteristics is an example of abstraction at work. However, even though the stack will work either way, if we consider the performance of the two implementations, there is definitely a difference. Recall that the <c>add()</c> and <c>remove()</c> operations for the end of the ArrayList were both <m>O(1)</m>. This means that the first implementation will perform <c>push</c> and <c>pop</c> in constant time no matter how many items are on the stack. The performance of the second implementation suffers in that the <c>add(0)</c> and <c>remove(0)</c> operations will both require <m>O(n)</m> for a stack of size <c>n</c>. Clearly, even though the implementations are logically equivalent, they would have very different timings when performing benchmark testing.</p>
+<p>This ability to change the physical implementation of an abstract data type while maintaining the logical characteristics is an example of abstraction at work. However, even though the stack will work either way, if we consider the performance of the two implementations, there is definitely a difference. Recall that the <c>add()</c> and <c>removeLast()</c> operations for the end of the list were both <m>O(1)</m>. This means that the first implementation will perform <c>push</c> and <c>pop</c> in constant time no matter how many items are on the stack. The performance of the second implementation suffers in that the <c>addFirst</c> and <c>removeFirst</c> operations will both require <m>O(n)</m> for a stack of size <c>n</c>. Clearly, even though the implementations are logically equivalent, they would have very different timings when performing benchmark testing.</p>
 
   <exercises>
     <title>Self Check</title>
     <exercise label="stack_1">
       <statement>
         <p>Given the following sequence of stack operations, what is the top item on the stack when the sequence is complete?</p>
-        <program language="java">
+        <program language="kotlin">
           <code>
-Stack&lt;String&gt; m = new Stack&lt;&gt;();
-m.push("x");
-m.push("y");
-m.pop();
-m.push("z");
-m.peek();
+val m = Stack&lt;String&gt;()
+m.push("x")
+m.push("y")
+m.pop()
+m.push("z")
+m.peek()
 </code>
         </program>
       </statement>
@@ -293,15 +112,15 @@ m.peek();
     <exercise label="stack_2">
       <statement>
         <p>Given the following sequence of stack operations, what is the top item on the stack when the sequence is complete?</p>
-        <program language="java">
+        <program language="kotlin">
           <code>
-Stack&lt;String&gt; m = new Stack&lt;&gt;();
-m.push("x");
-m.push("y");
-m.push("z");
+val m = Stack&lt;String&gt;()
+m.push("x")
+m.push("y")
+m.push("z")
 while (!m.isEmpty()) {
-   m.pop();
-   m.pop();
+   m.pop()
+   m.pop()
 }
 </code>
         </program>
@@ -341,33 +160,13 @@ while (!m.isEmpty()) {
         </choice>
       </choices>
     </exercise>
-    <p>Write a method named <c>reverseString</c> that takes a string as input and uses a stack to reverse the
+    <!-- TODO: This code doesn't run, I think there's a problem in the engine
+     itself regarding included code that needs  to be fixed -->
+    <p>Write a function named <c>reverseString</c> that takes a string as input and uses a stack to reverse the
                 characters in that string.</p>
-    <program xml:id="stack_stringrev" language="java" interactive="activecode"
+    <program xml:id="stack_stringrev" language="kotlin" interactive="activecode"
              include="prog-stackcode1">
-      <code>
-public class StringReverser {
-
-    public static String reverseString(String str) {
-        // your code here; returns a String
-        return ""; // placeholder
-    }
-
-    public static void testEqual(String str1, String str2) {
-        if (str1.equals(str2)) {
-            System.out.printf("%s and %s are equal.%n", str1, str2);
-        } else {
-            System.out.printf("%s and %s are not equal.%n", str1, str2);
-        }
-    }
-
-    public static void main(String[] args) {
-        testEqual(reverseString("apple"), "elppa");
-        testEqual(reverseString("x"), "x");
-        testEqual(reverseString("1234567890"), "0987654321");
-    }
-}
-      </code>
+      <code><xi:include parse="text" href="samplecode/src/main/kotlin/StringReverser.kt" /></code>
     </program>
   </exercises>
   <!--<video xml:id="stack1_video" youtube="fZtLSM7k_54" width="auto"/>-->
