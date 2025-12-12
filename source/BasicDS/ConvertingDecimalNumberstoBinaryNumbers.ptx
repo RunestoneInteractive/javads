@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <section xml:id="basic-ds_converting-decimal-numbers-to-binary-numbers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Converting Decimal Numbers to Binary Numbers</title>
-  <p>In your study of computer science, you have probably been exposed in one way or another to the idea of a binary number. Binary representation is important in computer science since all values stored within a computer exist as a string of binary digits, a string of 0s and 1s. Without the ability to convert back and forth between common representations and binary numbers, we would need to interact with computers in very awkward ways.</p>
+  <p>In your study of computer science, you have may have been exposed in one way or another to the idea of a binary number. Binary representation is important in computer science since all values stored within a computer exist as a string of binary digits, a string of 0s and 1s. Without the ability to convert back and forth between common representations and binary numbers, we would need to interact with computers in very awkward ways.</p>
 
-  <p>Integer values are common data items. They are used in computer programs and computation all the time. We learn about them in math class and of course represent them using the decimal number system, or base 10. The decimal number <m>233_{10}</m> and its corresponding binary equivalent <m>11101001_{2}</m> are interpreted respectively as</p>
+  <p>Integer values are common data items. They are used in computer programs and computation all the time. We learn about them in math class and represent them using the decimal number system, or base 10. The decimal number <m>233_{10}</m> and its corresponding binary equivalent <m>11101001_{2}</m> are interpreted respectively as</p>
   <p>
     <m>2\times10^{2} + 3\times10^{1} + 3\times10^{0}</m>
   </p>
@@ -32,45 +32,20 @@
     <image source="BasicDS/Figures/dectobin.png" width="50%"/>
   </figure>
 
-  <p>The Java code in <xref ref="lst-binconverter"/> implements the Divide by 2
-            algorithm. The method <c>divideBy2</c> takes an argument that is a
+  <p>The Kotlin code in <xref ref="lst-binconverter"/> implements the Divide by 2
+            algorithm. The function <c>divideBy2</c> takes an argument that is a
             decimal number and repeatedly divides it by 2. Line 6 uses the built-in
-            modulo operator, <c>%</c>, to extract the remainder push it
+            modulo operator, <c>%</c>, to extract the remainder and push it
             on the stack. After the division process reaches 0, a binary string is
             constructed in lines 10&#x2013;14. Line 10 creates an empty string. The binary
             digits are popped from the stack one at a time and appended to the
             right-hand end of the string. The binary string is then returned.</p>
 <listing xml:id="lst-binconverter">
   <caption>Converting from Decimal to Binary</caption>
-<program label="lst-binconverter" language="java" line-numbers="yes" interactive="activecode">
+<program label="lst-binconverter" language="kotlin" line-numbers="yes" interactive="activecode">
     <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Stack.java"/>
-^^^^
-public class DecimalToBinary {
-    public static String divideBy2(int decimal) {
-        Stack&lt;Integer&gt; digitStack = new Stack&lt;Integer&gt;();
-
-        while (decimal &gt; 0) {
-            digitStack.push(decimal % 2);
-            decimal = decimal / 2;
-        }
-
-        String resultString = "";
-        while (!digitStack.isEmpty()) {
-            Integer digit = digitStack.pop();
-            resultString = resultString + digit.toString();
-        }
-        return resultString;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(divideBy2(42)); // expect 101010
-        System.out.println(divideBy2(31)); // expect 11111
-    }
-}
-        </code>
+        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/DecimalToBinary.kt" /></code>
   </program>
 </listing>
 <p>The algorithm for binary conversion can, with a few changes, be extended to perform
@@ -90,46 +65,16 @@ public class DecimalToBinary {
   <p>
     <m>14\times16^{1} + 9\times16^{0}</m>
   </p>
-  <p>The method <c>divideBy2</c> can be modified to accept not only a decimal value but also a base for the intended conversion. The <q>Divide by 2</q> idea is then replaced with a more general <q>Divide by base</q>. A new method called <c>baseConverter</c>, shown in <xref ref="lst-baseconverter"/>, takes a decimal number and any base between 2 and 16 as parameters. The remainders are still pushed onto the stack until the value being converted becomes 0. The same left-to-right string construction technique can be used with one slight change. Base 2 through base 10 numbers need a maximum of 10 digits, so the typical digit characters 0 through 9 work fine.</p>
+  <p>The function <c>divideBy2</c> can be modified to accept not only a decimal value but also a base for the intended conversion. The <q>Divide by 2</q> idea is then replaced with a more general <q>Divide by base</q>. A new function called <c>baseConverter</c>, shown in <xref ref="lst-baseconverter"/>, takes a decimal number and any base between 2 and 16 as parameters. The remainders are still pushed onto the stack until the value being converted becomes 0. The same left-to-right string construction technique can be used with one slight change. Base 2 through base 10 numbers need a maximum of 10 digits, so the typical digit characters 0 through 9 work fine.</p>
 
           <p>The problem comes when we go beyond base 10. We can no longer simply use the remainders, as they are themselves represented as two-digit decimal numbers. Instead, we need to create a set of digits that can be used to represent those remainders beyond 9.</p>
 
 <listing xml:id="lst-baseconverter">
   <caption>Converting from Decimal to any Base</caption>
-<program label="prog-baseconverter" language="java" line-numbers="yes" interactive="activecode">
+<program label="prog-baseconverter" language="kotlin" line-numbers="yes" interactive="activecode">
     <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Stack.java"/>
-^^^^
-public class DecimalToBaseN {
-
-    public static String baseConvert(int decimal, int base) {
-        final String digits = "0123456789ABCDEF";
-
-        Stack&lt;Integer&gt; digitStack = new Stack&lt;Integer&gt;();
-
-        while (decimal &gt; 0) {
-            digitStack.push(decimal % base);
-            decimal = decimal / base;
-        }
-
-        String resultString = "";
-        while (!digitStack.isEmpty()) {
-            Integer digit = digitStack.pop();
-            resultString = resultString +
-                digits.substring(digit, digit + 1);
-        }
-        return resultString;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(baseConvert(30, 2));  // expect 11110
-        System.out.println(baseConvert(30, 8));  // expect 36
-        System.out.println(baseConvert(30, 16)); // expect 1e
-    }
-}
-        </code>
+        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/DecimalToBaseN.kt" /></code>
   </program>
 </listing>
 
