@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <section xml:id="basic-ds_balanced-symbols-a-general-case" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Balanced Symbols (A General Case)</title>
-  <p>The balanced parentheses problem shown above is a specific case of a more general situation that arises in many programming languages. The general problem of balancing and nesting different kinds of opening and closing symbols occurs frequently. For example, in Java square brackets, <c>[</c> and <c>]</c>, are used for array lists; curly braces, <c>{</c> and <c>}</c>, are used for delimiting code blocks and array initializations; and parentheses, <c>(</c> and <c>)</c>, are used for arithmetic expressions. It is possible to mix symbols as long as each maintains its own open and close relationship. Strings of symbols such as:</p>
+  <p>The balanced parentheses problem shown above is a specific case of a more general situation that arises in many programming languages. The general problem of balancing and nesting different kinds of opening and closing symbols occurs frequently. For example, in Kotlin square brackets, <c>[</c> and <c>]</c>, are used for indexing in lists; curly braces, <c>{</c> and <c>}</c>, are used for delimiting code blocks; and parentheses, <c>(</c> and <c>)</c>, are used for arithmetic expressions. It is possible to mix symbols as long as each maintains its own open and close relationship. Strings of symbols such as:</p>
   <pre>{ { ( [ ] [ ] ) } ( ) }
 
 [ [ { { ( ( ) ) } } ] ]
@@ -17,59 +17,16 @@
 [ { ( ) ]</pre>
 <p>The basic parentheses checker from the previous section can, with a few changes, be extended to handle these new types of symbols. Recall that each opening symbol is simply pushed on the stack to wait for the matching closing symbol to appear later in the sequence. When a closing symbol does appear, the only difference is that we must check to be sure that it correctly matches the type of the opening symbol on top of the stack. If the two symbols do not match, the string is not balanced. Once again, if the entire string is processed and nothing is left on the stack, the string is correctly balanced.</p>
 
-  <p>The Java program to implement this is shown in <xref ref="lst-balcheck"/>.
-            The only change appears in lines 22&#x2013;23 where we call a helper function, <c>matches</c>, to
-            assist with symbol-matching. Each symbol that is removed from the stack
-            must be checked to see that it matches the current closing symbol. If a
+  <p>The Kotlin program to implement this is shown in <xref ref="lst-balcheck"/>.
+            The main change is that we use a map to keep track of the closing symbol that matches each opening one, which we define in line 2. In line 15, we check that each symbol that is removed from the stack matches the current closing symbol. If a
             mismatch occurs, the balance checker returns <c>false</c> immediately.</p>
 
 <listing xml:id="lst-balcheck">
     <caption>Solving the General Balanced Symbol Problem</caption>
-<program label="lst-balcheck" line-numbers="yes" language="java" interactive="activecode">
+<program label="lst-balcheck" line-numbers="yes" language="kotlin" interactive="activecode">
     <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Stack.java"/>
-^^^^
-public class BalancedSymbols {
-
-    static String openers = "({[";
-    static String closers = ")}]";
-
-    public static boolean matches(Character openSymbol, Character closeSymbol) {
-        return openers.indexOf(openSymbol) == closers.indexOf(closeSymbol);
-    }
-
-    public static boolean balanceCheck(String symbolString) {
-        Stack&lt;Character&gt; symStack = new Stack&lt;&gt;();
-
-        for (int i = 0; i &lt; symbolString.length(); i++) {
-            Character symbol = symbolString.charAt(i);
-
-            if (openers.indexOf(symbol) != -1) {
-                symStack.push(symbol);
-            } else if (closers.indexOf(symbol) != -1) {
-                if (symStack.isEmpty()) {
-                    return false;
-                } else {
-                    if (!matches(symStack.pop(), symbol)) {
-                       return false;
-                    }
-                }
-            } else {
-                // not a parenthesis; skip over it
-            }
-        }
-
-        return symStack.isEmpty();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(balanceCheck("{({([][])}())}")); // expect true
-        System.out.println(balanceCheck("[{()]")); // expect false
-        System.out.println(balanceCheck("[{()]]")); // expect false
-    }
-}        </code>
+        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/BalancedSymbols.kt" /></code>
   </program>
 </listing>
 
