@@ -254,7 +254,7 @@
                         Create an empty list for output.</p>
         </li>
         <li>
-          <p>Convert the input infix string to a list by using the string method
+          <p>Convert the input infix string to a list by using the string member function
                         <c>split</c>.</p>
         </li>
         <li>
@@ -299,101 +299,26 @@
       <caption>Converting A &#xB7; B + C &#xB7; D to Postfix Notation</caption>
       <image source="BasicDS/Figures/intopost.png" width="50%"/>
     </figure>
-    <p>In order to code the algorithm in Java, we will use a HashMap
+    <p>In order to code the algorithm in Kotlin, we will use a map
                 called <c>precedence</c> to hold the precedence values for the operators,
                 as seen in in <xref ref="lst-intopost"/>. This
-                dictionary will map each operator to an integer that can be compared
+                map will connect each operator to an integer that can be compared
                 against the precedence levels of other operators (we have arbitrarily
                 used the integers 3, 2, and 1). The left parenthesis will receive the
                 lowest value possible. This way, any operator that is compared against it
                 will have higher precedence and will be placed on top of it.
                 Lines 17&#x2013;18 define the operands to be any upper-case character or digit.  Line 19
-                defines the valid operators</p>
+                defines the valid operators.</p>
   <listing xml:id="lst-intopost">
     <caption>Converting Infix Expressions to Postfix Expressions</caption>
-<program label="prog-intopost" line-numbers="yes" language="java" interactive="activecode">
-      <code>
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Stack.java"/>
-^^^^
-public class ConvertToPostfix {
-
-    static HashMap&lt;String, Integer&gt; precedence = new HashMap&lt;&gt;();
-
-    public static void initPrecedence() {
-        precedence.put("*", 3);
-        precedence.put("/", 3);
-        precedence.put("+", 2);
-        precedence.put("-", 2);
-        precedence.put("(", 1);
-    }
-
-    public static String infixToPostfix(String infixExpr) {
-        final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        final String DIGITS = "0123456789";
-        final String OPERATORS = "*/+-()";
-
-        Stack&lt;String&gt; opStack = new Stack&lt;String&gt;();
-        ArrayList&lt;String&gt; postfixList = new ArrayList&lt;String&gt;();
-
-        String[] tokenList = infixExpr.split("");
-
-        for (String token: tokenList) {
-            if (LETTERS.indexOf(token) &gt;= 0 || DIGITS.indexOf(token) &gt;= 0) {
-                postfixList.add(token);
-            }
-            else if (token.equals("(")) {
-                opStack.push(token);
-            }
-            else if (token.equals(")")) {
-                // pop everything down to the matching open paren
-                String topToken = opStack.pop();
-                while (!topToken.equals("(")) {
-                    postfixList.add(topToken);
-                    topToken = opStack.pop();
-                }
-            } else if (OPERATORS.indexOf(token) &gt;= 0) {
-                // pop higher-precedence operations
-                while (!opStack.isEmpty() &amp;&amp;
-                        (precedence.get(opStack.peek())
-                          &gt;= precedence.get(token))) {
-                    postfixList.add(opStack.pop());
-                }
-                // then push this operator
-                opStack.push(token);
-            }
-        }
-
-        // If any operators remain, add them to the postfix expression
-        while (!opStack.isEmpty()) {
-            postfixList.add(opStack.pop());
-        }
-
-        String result = "";
-        for (String s: postfixList) {
-            result = result + s + " ";
-        }
-        return result;
-
-    }
-
-    public static void main(String[] args) {
-        initPrecedence();
-        String expr = "A * B + C * D";
-        System.out.println(expr + " --&gt; " + infixToPostfix(expr));
-
-        expr = "( A + B ) * C - ( D - E ) * ( F + G )";
-        System.out.println(expr + " --&gt; " + infixToPostfix(expr));
-    }
-}
-        </code>
+<program label="prog-intopost" line-numbers="yes" language="kotlin" interactive="activecode">
+    <code>
+        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/ConvertToPostfix.kt" /></code>
     </program>
   </listing>
 
-  <p>Some notes on the program: We want only one copy of the precedence HashMap, created in line 6, which is why it is <c>static</c>. There's no trivial way to declare and initialize a HashMap in one statement, so we use a method to do that (lines 8&#x2013;14).</p>
-  <p>The code uses a compound condition in lines 42&#x2013;44 to determine the condition for continuing the loop.</p>
+  <p>The code uses a compound condition in lines 31&#x2013;33 to determine the condition for continuing the loop.</p>
 
   </subsection>
 
