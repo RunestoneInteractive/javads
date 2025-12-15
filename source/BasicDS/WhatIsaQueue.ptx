@@ -10,8 +10,8 @@
           <note>
             <title>Nomenclature</title>
             <p>There are many ways to refer to the removal and addition points of a queue:
-              <q>front and rear</q>; <q>front and back</q>; and <q>head and tail</q>. The
-              Java documentation uses the latter notation, and so will we.
+              <q>front and rear</q>; <q>front and back</q>; and <q>head and tail</q>.
+              We will use the <q>head/tail</q> terminology in this book.
             </p>
           </note>
   <p>The most recently added item in the queue must wait at the end of the
@@ -28,7 +28,7 @@
   <p>Computer science also has common examples of queues. <xref ref="i107_id1fig-qubasicqueue"/>
     shows a queue of Java Strings.</p>
   <figure align="center" xml:id="i107_id1fig-qubasicqueue">
-    <caption>A Queue of Java Strings</caption>
+    <caption>A Queue of Kotlin Strings</caption>
     <image source="BasicDS/Figures/basicqueue.png" width="50%"/>
   </figure>
 
