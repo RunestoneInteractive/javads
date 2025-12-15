@@ -12,7 +12,7 @@ fun infixToPostfix(infixExpr: String): String {
     val opStack = Stack<String>()
     val postfixList = mutableListOf<String>()
 
-    val tokenList = infixExpr.split("")
+    val tokenList = infixExpr.split(" ")
 
     for (token in tokenList) {
         if (token in letters || token in digits) {

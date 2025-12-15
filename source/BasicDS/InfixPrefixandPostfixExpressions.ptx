@@ -360,11 +360,11 @@
           <p>Create an empty stack called <c>operandStack</c>.</p>
         </li>
         <li>
-          <p>Convert the string to an array by using the string method <c>split</c>.</p>
+          <p>Convert the string to a list by using the string method <c>split</c>.</p>
         </li>
         <li>
-          <p>Scan the token array from left to right.</p>
-          <p>
+          <p>Scan the token list from left to right.</p>
+          <p>list
             <ul>
               <li>
                 <p>If the token is an operand, convert it from a string to an integer
@@ -388,61 +388,14 @@
     </p>
     <p>The complete function for the evaluation of postfix expressions is shown
                 in <xref ref="lst-postfixeval"/>. To assist with the arithmetic, a helper
-                function <c>do_math</c> is defined. It will take two operands and an
+                function <c>doMath</c> is defined. It will take two operands and an
                 operator and then perform the proper arithmetic operation.</p>
   <listing xml:id="lst-postfixeval">
     <caption>Postfix Evaluation</caption>
-<program label="prog-postfixeval"  xml:id="prog-postfixeval" language="java" interactive="activecode">
-      <code>
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Stack.java"/>
-^^^^
-public class PostfixEvaluator {
-
-    public static Integer postfixEval(String postfixExpr) {
-
-        final String DIGITS = "0123456789";
-
-        Stack&lt;Integer&gt; operandStack = new Stack&lt;Integer&gt;();
-
-        String[] tokenList = postfixExpr.split(" ");
-
-        for (String token: tokenList) {
-            if (DIGITS.indexOf(token) &gt;= 0) {
-                operandStack.push(Integer.valueOf(token));
-            }
-            else {
-                Integer operand2 = operandStack.pop();
-                Integer operand1 = operandStack.pop();
-                Integer result = doMath(token, operand1, operand2);
-                operandStack.push(result);
-            }
-        }
-        return operandStack.pop();
-    }
-
-    public static Integer doMath(String operator, Integer operand1, Integer operand2) {
-        if (operator.equals("*")) {
-            return operand1 * operand2;
-        }
-        else if (operator.equals("/")) {
-            return operand1 / operand2;
-        }
-        else if (operator.equals("+")) {
-            return operand1 + operand2;
-        }
-        else {
-            return operand1 - operand2;
-        }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(postfixEval("7 8 + 3 2 + /"));
-    }
-}
-        </code>
+<program label="prog-postfixeval"  xml:id="prog-postfixeval" language="kotlin" interactive="activecode">
+    <code>
+        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/PostfixEvaluator.kt" /></code>
     </program>
   </listing>
     <p>It is important to note that in both the postfix conversion and the

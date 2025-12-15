@@ -1,0 +1,8 @@
+<preface xml:id="front-back-matter_preface-to-the-java-edition">
+ <title>Preface to the Kotlin Edition</title>
+ <paragraphs>
+    <p>Kotlin preface.</p>
+    <!-- TODO: emphasis on clarity for people coming from Python/Java with emphasis on DS;
+     choice often towards OO vs functional, but goal is clarity-->
+</paragraphs>
+</preface>
