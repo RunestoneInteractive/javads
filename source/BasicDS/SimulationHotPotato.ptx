@@ -47,41 +47,10 @@
             <c>hotPotato</c> method using 7 as the counting constant returns <c>"Susan"</c>.</p>
 <listing  xml:id="lst-josephussim">
   <caption>Hot Potato Simulation</caption>
-  <program language="java" interactive="activecode">
+  <program language="kotlin" interactive="activecode">
     <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Queue.java"/>
-^^^^
-public class HotPotatoSimulation {
-
-    public static String hotPotato(String[] nameList, int num) {
-        Queue&lt;String&gt; simQueue = new Queue&lt;&gt;();
-
-        for (String name: nameList) {
-            simQueue.enqueue(name);
-        }
-
-        while (simQueue.size() &gt; 1) {
-            // pass the potato: move person at head to tail
-            for (int pass = 0; pass &lt; num; pass++) {
-                simQueue.enqueue(simQueue.dequeue());
-            }
-
-            String removed = simQueue.dequeue(); // remove person at head
-            System.out.println(removed + " is out of the game.");
-        }
-        return simQueue.dequeue();
-    }
-
-    public static void main(String[] args) {
-        String[] people = {"Bill", "David", "Susan", "Jane",
-            "Kent", "Brad"};
-        String lastPerson = hotPotato(people, 7);
-        System.out.println("Last person is " + lastPerson + ".");
-    }
-}
-        </code>
+        <xi:include parse="text" href="samplecode/src/main/kotlin/Queue.kt" />
+        ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/HotPotato.kt" /></code>
   </program>
 </listing>
   <p>Note that in this example the value of the counting constant is greater
