@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<section xml:id="basic-ds_queue-simulation-printing-tasks" xmlns:xi="http://www.w3.org/2001/XInclude">
+<section xml:id="basic-ds_queue-simulation-printing-tasks" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xpointer="http://www.w3.org/2001/XPointer">
   <title>Queue Simulation: Printing Tasks</title>
   <introduction>
   <p>A more interesting simulation allows us to study the behavior of the
@@ -111,105 +111,45 @@
     </p>
   </subsection>
   <subsection xml:id="basic-ds_python-implementation">
-    <title>Java Implementation</title>
+    <title>Kotlin Implementation</title>
     <p>To design this simulation we will create classes for the two
-                real-world objects described above: <c>Task</c> and <c>Printer</c>. The simulation class
-                that contains our <c>main</c> method (<c>PrintSimulation</c>) will create a <c>Queue&lt;Task&gt;</c> named <c>printQueue</c>.
-                We will put all these classes in the same file, which means that only one can be <c>public</c>; that
-                will be the <c>PrintSimulation</c> class.</p>
-              <p>We will need to generate random numbers and keep a list of waiting times, so the file will begin with these <c>import</c> statements:</p>
-              <program language="java"><code>
-import java.util.Random;
-import java.util.ArrayList;
-</code></program>
+                real-world objects described above: <c>Task</c> and <c>Printer</c>. Our <c>performSimulation</c> function, which runs an entire simulation, will create a <c>Queue&lt;Task&gt;</c> named <c>printQueue</c>.</p>
    <p>The <c>Task</c> class (<xref ref="basic-ds_lst-task"/>) will represent a single printing
                 task. When the task is created, a random number generator will provide a
-                length from 1 to 20 pages. We will use a random number generator from the <c>java.util.Random</c>
+                length from 1 to 20 pages. We will use a random number generator from the <c>kotlin.random.Random</c>
                 class, as we saw in <xref ref="introduction_defining-methods"/>.</p>
+                <!-- TODO: is the above reference accurate? -->
 
     <p>Each task will also need to keep a timestamp to be used for computing
                 waiting time. This timestamp will represent the time that the task was
-                created and placed in the printer queue. The <c>waitTime</c> method can
+                created and placed in the printer queue. The <c>waitTime</c> function can
                 then be used to retrieve the amount of time spent in the queue before
                 printing begins.</p>
               <listing xml:id="basic-ds_lst-task"><caption>The Task Class</caption>
-                <program language="java">
-      <code>
-class Task {
-    int timeStamp;
-    int pages;
-
-    // The random number generator is static, as it is
-    // shared among all tasks.
-    static Random generator = new Random();
-
-    public Task(int timeStamp) {
-        this.timeStamp = timeStamp;
-        this.pages = generator.nextInt(20) + 1;
-    }
-
-    public int getPages() {
-        return this.pages;
-    }
-
-    public int waitTime(int currentTime) {
-        return currentTime - this.timeStamp;
-    }
-}
-
-</code>
+                <program language="kotlin">
+    <code><xi:include parse="text" href="samplecode/src/main/kotlin/Task.kt" /></code>
     </program></listing>
 
     <p>The <c>Printer</c> class (<xref ref="basic-ds_lst-printer"/>) will need to track whether
-                it has a current task. If it does, then it is busy (lines 13&#x2013;17) and the
+                it has a current task. If it does, then it is busy (lines 8&#x2013;13) and the
                 amount of time needed can be computed from the number of pages in the
                 task. The constructor will also allow the pages-per-minute setting to be
                 initialized. The <c>tick</c> method decrements the internal timer and sets
-                the printer to idle (line 16) if the task is completed.</p>
+                the printer to idle (line 11) if the task is completed.</p>
               <aside>
                 <p>Notice that the <c>Printer</c> class has a <c>Task</c> as one of its properties. This is
                   an example of a <term>has-a</term> relationship.</p>
               </aside>
     <listing xml:id="basic-ds_lst-printer">
       <caption>The Printer Class</caption>
-      <program language="java" line-numbers="yes">
-      <code>
-class Printer {
-    int pageRate; // pages per minute
-    int timeRemaining;
-    Task currentTask;
-
-    public Printer(int pageRate) {
-        this.pageRate = pageRate;
-        this.currentTask = null;
-        this.timeRemaining = 0;
-    }
-
-    public void tick() {
-        if (this.currentTask != null) {
-            this.timeRemaining = this.timeRemaining - 1;
-            if (this.timeRemaining &lt;= 0) {
-                this.currentTask = null;
-            }
-        }
-    }
-
-    public boolean busy() {
-        return this.currentTask != null;
-    }
-
-    public void startNext(Task newTask) {
-        this.currentTask = newTask;
-        this.timeRemaining = newTask.getPages() * 60 / this.pageRate;
-    }
-}
-</code>
+      <program language="kotlin" line-numbers="yes">
+    <code><xi:include parse="text" href="samplecode/src/main/kotlin/Printer.kt" /></code>
     </program></listing>
      <p>The main simulation (<xref ref="basic-ds_lst-qumainsim"/>) implements the algorithm
                 described above. The <c>printQueue</c> object is an instance of our
                 existing queue ADT. A boolean helper function, <c>newPrintTask</c>, decides
                 whether a new printing task has been created. We have again chosen to
-                use the <c>nextInt</c> method from <c>Random</c> to return a
+                use the <c>nextInt</c> member function from <c>Random</c> to return a
                 random integer between 1 and 180. Print tasks arrive once every 180
                 seconds. By arbitrarily choosing 180 from the range of random integers,
                 we can simulate this random event. The simulation function
@@ -217,76 +157,9 @@ class Printer {
                 printer.</p>
     <listing xml:id="basic-ds_lst-qumainsim">
       <caption>The Simulation Driver</caption>
-      <program language="java" line-numbers="yes">
-      <code>
-public class PrintSimulation {
-
-    static Random generator = new Random();
-
-    int numSeconds;
-    Printer labPrinter;
-    Queue&lt;Task&gt; printQueue;
-    ArrayList&lt;Integer&gt; waitingTimes;
-
-    public PrintSimulation (int numSeconds, int pagesPerMinute) {
-        this.numSeconds = numSeconds;
-        labPrinter = new Printer(pagesPerMinute);
-    }
-
-    public void performSimulation() {
-        printQueue = new Queue&lt;Task&gt;();
-        waitingTimes = new ArrayList&lt;Integer&gt;();
-        for (int currentSecond = 0; currentSecond &lt; numSeconds;
-          currentSecond++) {
-            if (newPrintTask()) {
-                Task t = new Task(currentSecond);
-                printQueue.enqueue(t);
-            }
-
-            if ((!labPrinter.busy()) &amp;&amp; (!printQueue.isEmpty())) {
-                Task nextTask = printQueue.dequeue();
-                waitingTimes.add(nextTask.waitTime(currentSecond));
-                labPrinter.startNext(nextTask);
-            }
-
-            labPrinter.tick();
-        }
-
-        int totalWaitingTime = 0;
-        for (int i = 0; i &lt; waitingTimes.size(); i++) {
-            totalWaitingTime = totalWaitingTime +
-                waitingTimes.get(i);
-        }
-        double average_wait =
-            (double) totalWaitingTime / waitingTimes.size();
-
-        System.out.printf("Average wait %6.2f secs. ", average_wait);
-        System.out.printf("%d tasks remaining.%n", printQueue.size());
-    }
-
-    public boolean newPrintTask() {
-        int num = generator.nextInt(180) + 1;
-        return (num == 180);
-    }
-
-    public static void main(String[] args) {
-        PrintSimulation sim = new PrintSimulation(3600, 5);
-        for (int i = 0; i &lt; 10; i++) {
-            sim.performSimulation();
-        }
-    }
-}
-</code>
+      <program language="kotlin" line-numbers="yes">
+    <code><xi:include parse="text" href="samplecode/src/main/kotlin/PrintSimulation.kt" /></code>
     </program></listing>
-<note><title>Java Notes</title>
-<p>
-  <ul>
-    <li><p>Lines 5&#x2013;8 are not <c>static</c>; they are properties of our <c>PrintSimulation</c> class.</p></li>
-    <li><p>The constructor in lines 10&#x2013;13 doesn't initialize the print queue and waiting list. That happens in lines 16 and 17, to ensure that we start with a new print queue and an empty list of waiting times every time we perform a simulation.</p></li>
-    <li><p>The <c>main</c> method in lines 51&#x2013;56 is very different from what we have seen before. Line 52 creates a new instance of a <c>PrintSimulation</c> object in variable <c>sim</c>, and line 54 calls that instance's <c>performSimulation</c> method. This is a typical pattern that you will see in Java programs: the <c>main</c> method creates an instance of the class it belongs to and then calls methods on that instance.</p></li>
-  </ul>
-</p>
-</note>
     <p>When we run the simulation, we should not be concerned that the
                 results are different each time. This is due to the probabilistic nature
                 of the random numbers. We are interested in the trends that may be
@@ -333,124 +206,13 @@ Average wait  12.00 secs. 0 tasks remaining.
 </output>
     </console>
     <p>For your reference, here is the entire code for the simulation:</p>
-
-    <program xml:id="qumainsim" language="java" interactive="activecode">
-      <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Random;
-<xi:include parse="text" href="./Queue.java"/>
+    <!-- TODO: I hacked this to work, but fixing program include would be better -->
+    <program xml:id="qumainsim" language="kotlin" interactive="activecode">
+    <code> 
+import kotlin.random.Random
+<xi:include parse="text" href="samplecode/src/main/kotlin/Queue.kt" />
 ^^^^
-public class PrintSimulation {
-
-    static Random generator = new Random();
-
-    int numSeconds;
-    Printer labPrinter;
-    Queue&lt;Task&gt; printQueue;
-    ArrayList&lt;Integer&gt; waitingTimes;
-
-    public PrintSimulation (int numSeconds, int pagesPerMinute) {
-        this.numSeconds = numSeconds;
-        labPrinter = new Printer(pagesPerMinute);
-    }
-
-    public void performSimulation() {
-        printQueue = new Queue&lt;Task&gt;();
-        waitingTimes = new ArrayList&lt;Integer&gt;();
-        for (int currentSecond = 0; currentSecond &lt; numSeconds;
-          currentSecond++) {
-            if (newPrintTask()) {
-                Task t = new Task(currentSecond);
-                printQueue.enqueue(t);
-            }
-
-            if ((!labPrinter.busy()) &amp;&amp; (!printQueue.isEmpty())) {
-                Task nextTask = printQueue.dequeue();
-                waitingTimes.add(nextTask.waitTime(currentSecond));
-                labPrinter.startNext(nextTask);
-            }
-
-            labPrinter.tick();
-        }
-
-        int totalWaitingTime = 0;
-        for (int i = 0; i &lt; waitingTimes.size(); i++) {
-            totalWaitingTime = totalWaitingTime +
-                waitingTimes.get(i);
-        }
-        double average_wait =
-            (double) totalWaitingTime / waitingTimes.size();
-
-        System.out.printf("Average wait %6.2f secs. ", average_wait);
-        System.out.printf("%d tasks remaining.%n", printQueue.size());
-    }
-
-    public boolean newPrintTask() {
-        int num = generator.nextInt(180) + 1;
-        return (num == 180);
-    }
-
-    public static void main(String[] args) {
-        PrintSimulation sim = new PrintSimulation(3600, 5);
-        for (int i = 0; i &lt; 10; i++) {
-            sim.performSimulation();
-        }
-    }
-}
-
-class Task {
-    int timeStamp;
-    int pages;
-
-    // The random number generator is static, as it is
-    // shared among all tasks.
-    static Random generator = new Random();
-
-    public Task(int timeStamp) {
-        this.timeStamp = timeStamp;
-        this.pages = generator.nextInt(20) + 1;
-    }
-
-    public int getPages() {
-        return this.pages;
-    }
-
-    public int waitTime(int currentTime) {
-        return currentTime - this.timeStamp;
-    }
-}
-
-class Printer {
-    int pageRate; // pages per minute
-    int timeRemaining;
-    Task currentTask;
-
-    public Printer(int pageRate) {
-        this.pageRate = pageRate;
-        this.currentTask = null;
-        this.timeRemaining = 0;
-    }
-
-    public void tick() {
-        if (this.currentTask != null) {
-            this.timeRemaining = this.timeRemaining - 1;
-            if (this.timeRemaining &lt;= 0) {
-                this.currentTask = null;
-            }
-        }
-    }
-
-    public boolean busy() {
-        return this.currentTask != null;
-    }
-
-    public void startNext(Task newTask) {
-        this.currentTask = newTask;
-        this.timeRemaining = newTask.getPages() * 60 / this.pageRate;
-    }
-}
-        </code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/PrintSimulationCombined.txt" /></code>
     </program>
   </subsection>
   <subsection xml:id="basic-ds_discussion">
@@ -485,8 +247,7 @@ class Printer {
                         Can they afford to wait?</p>
         </li>
         <li>
-          <p>What if the size of the average print task decreases if students program in Python, which tends
-            to be less verbose and lead to shorter source code?</p>
+          <p>Does the size of the average print task change if code is printed from different programming languages?</p>
         </li>
       </ul>
     </p>

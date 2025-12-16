@@ -1,0 +1,75 @@
+class Task(var timeStamp: Int) {
+    var pages = Random.nextInt(20) + 1
+
+    fun waitTime(currentTime: Int): Int {
+        return currentTime - timeStamp
+    }
+}
+
+class Printer(
+    var pageRate: Int // pages per minute
+) {
+    var currentTask: Task? = null
+    var timeRemaining = 0
+
+    fun tick() {
+        if (currentTask != null) {
+            timeRemaining = timeRemaining - 1
+            if (timeRemaining <= 0) {
+                currentTask = null
+            }
+        }
+    }
+
+    fun busy(): Boolean {
+        return currentTask != null
+    }
+
+    fun startNext(newTask: Task) {
+        currentTask = newTask
+        timeRemaining = newTask.pages * 60 / pageRate
+    }
+}
+
+fun performSimulation(numSeconds: Int, pagesPerMinute: Int) {
+
+    val labPrinter = Printer(pagesPerMinute)
+    val printQueue = Queue<Task>()
+    val waitingTimes = mutableListOf<Int>()
+
+    for (currentSecond in 0..<numSeconds) {
+
+        if (newPrintTask()) {
+            val task = Task(currentSecond)
+            printQueue.enqueue(task)
+        }
+
+        if ((!labPrinter.busy()) && (!printQueue.isEmpty())) {
+            val nextTask = printQueue.dequeue()
+            waitingTimes.add(nextTask.waitTime(currentSecond))
+            labPrinter.startNext(nextTask)
+        }
+
+        labPrinter.tick()
+    }
+
+    val averageWait = waitingTimes.average()
+
+    println(
+        String.format(
+            "Average wait %6.2f secs. %d tasks remaining.",
+            averageWait, printQueue.size()
+        )
+    )
+}
+
+fun newPrintTask(): Boolean {
+    val num = Random.nextInt(180) + 1
+    return (num == 180)
+}
+
+fun main() {
+    for (i in 0..9) {
+        performSimulation(3600, 5)
+    }
+}
