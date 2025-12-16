@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <section xml:id="basic-ds_implementing-a-queue" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>Implementing a Queue in Java</title>
+  <title>Implementing a Queue in Kotlin</title>
   <p>It is again appropriate to create a new class for the implementation of
             the abstract data type queue. As before, we will use the power and
-            simplicity of the ArrayList collection to build the internal representation
+            simplicity of a list to build the internal representation
             of the queue.</p>
   <p>We need to decide which end of the list to use as the tail and which to
             use as the head. The implementation shown in <xref ref="basic-ds_lst-queuecode"/>
@@ -14,139 +14,31 @@
             will be <m>O(n)</m> and <c>dequeue</c> will be <m>O(1)</m>.</p>
   <listing xml:id="basic-ds_lst-queuecode">
     <caption>Implementation of a Queue</caption>
-    <program xml:id="basic-ds_prog-queuecode" language="java">
-      <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-
-class Queue&lt;T&gt; {
-
-    /*
-     * The tail of the queue is at the beginning
-     * of the ArrayList; the head is the last item
-     */
-    ArrayList&lt;T&gt; items;
-
-    /*
-     * Create a new Queue
-     */
-    public Queue() {
-        this.items = new ArrayList&lt;T&gt;();
-    }
-
-    /*
-     * Returns true if there are no items in the queue;
-     * false otherwise.
-     */
-    public boolean isEmpty() {
-        return (this.items.isEmpty());
-    }
-
-    /*
-     * Add an item to the tail of the queue
-     */
-    public void enqueue(T item) {
-        this.items.add(0, item);
-    }
-
-    /*
-     * Remove the item at the head of the queue and return it.
-     * If the queue is empty, throws an exception.
-     */
-    public T dequeue() {
-        if (this.isEmpty()) {
-            throw new NoSuchElementException("Queue is empty.");
-        }
-        return this.items.remove(this.size() - 1);
-    }
-
-    /*
-     * Return the item at the head of the queue, but do not remove it.
-     * If the queue is empty, throws an exception.
-     */
-    public T peek() {
-        if (this.isEmpty()) {
-            throw new NoSuchElementException("Queue is empty.");
-        }
-        return this.items.get(this.size() - 1);
-    }
-
-    /*
-     * Returns the number of items in the queue.
-     */
-    public int size() {
-        return this.items.size();
-    }
-
-    /*
-     * Convert to string as an array from tail to head
-     */
-    public String toString() {
-
-        if (!this.items.isEmpty()) {
-            String arrString = this.items.toString();
-            return "tail -&gt;" + arrString + "-&gt; head";
-        } else {
-            return "&lt;&lt;empty queue&gt;&gt;";
-        }
-    }
-}
-
-</code></program></listing>
+    <program xml:id="basic-ds_prog-queuecode" language="kotlin">
+    <code><xi:include parse="text" href="samplecode/src/main/kotlin/Queue.kt" /></code>
+    </program>
+</listing>
   <p><xref ref="lst-queuetest"/> shows the <c>Queue</c> class in
             action as we perform the sequence of operations from
             <xref ref="basic-ds_the-queue-abstract-data-type"/>.</p>
           <listing xml:id="lst-queuetest">
             <caption>Example Queue Operations</caption>
-            <program xml:id="prog-queuetest" language="java" interactive="activecode">
+            <program xml:id="prog-queuetest" language="kotlin" interactive="activecode">
     <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Queue.java"/>
-^^^^
-public class QueueTest {
-
-    public static void main(String[] args) {
-
-        Queue&lt;Integer&gt; q = new Queue&lt;&gt;();
-        System.out.println("isEmpty returns " + q.isEmpty());
-
-        q.enqueue(4);
-        q.enqueue(27);
-        System.out.println("Queue is now: " + q);
-
-        q.enqueue(1066);
-        System.out.println("After another enqueue, size is " +
-            q.size());
-        System.out.println("isEmpty now returns " + q.isEmpty());
-
-        q.enqueue(4711);
-
-        System.out.println("After another enqueue, queue is " + q);
-
-        Integer head = q.dequeue();
-        System.out.println("Dequeue - head was: " + head);
-        head = q.dequeue();
-        System.out.println("Dequeue again - head was: " + head);
-
-
-        System.out.println("Queue is now: " + q);
-        System.out.println("Size is now: " + q.size());
-
-    }
-}
-      </code></program></listing>
+        <xi:include parse="text" href="samplecode/src/main/kotlin/Queue.kt" />
+        ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/QueueTest.kt" /></code>
+</program></listing>
 
   <exercises>
     <title>Self Check</title>
     <exercise label="queue_1">
       <statement>
         <p>Suppose you have the following series of queue operations.</p>
-        <pre>Queue&lt;String&gt; q = new Queue&lt;&gt;()
-q.enqueue("hello");
-q.enqueue("dog");
-q.enqueue("cat");
-q.dequeue();</pre>
+        <pre>val q = new Queue&lt;&gt;()
+q.enqueue("hello")
+q.enqueue("dog")
+q.enqueue("cat")
+q.dequeue()</pre>
         <p>What items are left on the queue (from head to tail)?</p>
       </statement>
       <choices>
