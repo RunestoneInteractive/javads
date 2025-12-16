@@ -2,7 +2,7 @@ class Stack<T> {
 
     /*
      * Create a new stack. The top of the stack is at the end
-     * of the ArrayList.
+     * of the list.
      */
     private val items = mutableListOf<T>()
 
