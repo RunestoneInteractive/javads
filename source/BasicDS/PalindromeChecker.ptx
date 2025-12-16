@@ -22,45 +22,15 @@
             items, we will eventually either run out of characters or be left with a
             deque of size 1, depending on whether the length of the original string
             was even or odd. In either case, the string must be a palindrome. The
-            complete method for palindrome-checking appears in
+            complete function for palindrome-checking appears in
             <xref ref="lst-palchecker"/>.</p>
 <listing xml:id="lst-palchecker">
     <caption>Implementation of Palindrome Checker</caption>
-<program label="prog-palchecker" language="java" interactive="activecode">
-    <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Deque.java"/>
+<program label="prog-palchecker" language="kotlin" interactive="activecode">
+<code><xi:include parse="text" href="samplecode/src/main/kotlin/Deque.kt"/>
 ^^^^
-public class Palindrome {
-
-    public static boolean isPalindrome(String str) {
-        Deque&lt;Character&gt; charDeque = new Deque&lt;Character&gt;();
-
-        for (int i = 0; i &lt; str.length(); i++) {
-            charDeque.addTail(str.charAt(i));
-        }
-
-        while (charDeque.size() &gt; 1) {
-            Character first = charDeque.removeHead();
-            Character last = charDeque.removeTail();
-            if (!first.equals(last)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Is \"regular\" a palindrome? " +
-            isPalindrome("regular"));
-        System.out.println("Is \"rotator\" a palindrome? " +
-            isPalindrome("rotator"));
-        System.out.println("Is \"deed\" a palindrome? " +
-            isPalindrome("deed"));
-    }
-}
-</code></program></listing>
+<xi:include parse="text" href="samplecode/src/main/kotlin/Palindrome.kt" /></code>
+</program></listing>
 
 <note>
 <p>If you want to have a double quote appear in a double-quoted string, you must <term>escape</term> it by using the backslash before the internal double quotes.</p>
