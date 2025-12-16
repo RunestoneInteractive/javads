@@ -1,5 +1,5 @@
 fun main() {
-    val s = Stack<String>()
+    val s = ListStack<String>()
     println("isEmpty returns ${s.isEmpty()}")
 
     s.push("java")

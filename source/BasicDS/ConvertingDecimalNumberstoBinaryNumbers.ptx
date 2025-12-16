@@ -44,7 +44,8 @@
   <caption>Converting from Decimal to Binary</caption>
 <program label="lst-binconverter" language="kotlin" line-numbers="yes" interactive="activecode">
     <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/DecimalToBinary.kt" /></code>
   </program>
 </listing>
@@ -73,7 +74,8 @@
   <caption>Converting from Decimal to any Base</caption>
 <program label="prog-baseconverter" language="kotlin" line-numbers="yes" interactive="activecode">
     <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/DecimalToBaseN.kt" /></code>
   </program>
 </listing>
@@ -81,7 +83,7 @@
   <p>A solution to this problem is to extend the digit set to include some
             alphabet characters. For example, hexadecimal uses the ten decimal
             digits along with the first six alphabet characters for the 16 digits.
-            To implement this, a digit string is created (line 5 in
+            To implement this, a digit string is created (line 2 in
             <xref ref="lst-baseconverter"/>) that stores the digits in their corresponding
             positions. 0 is at position 0, 1 is at position 1, A is at position 10,
             B is at position 11, and so on. When a remainder is removed from the
@@ -110,7 +112,7 @@
     </exercise>
     <exercise label="baseconvert2">
       <statement>
-        <p>What is value of 256 expressed as a hexidecimal number? <var/>  </p>
+        <p>What is value of 256 expressed as a hexadecimal number? <var/>  </p>
       </statement>
       <setup>
         <var>

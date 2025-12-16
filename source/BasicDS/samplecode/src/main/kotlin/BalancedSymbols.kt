@@ -3,7 +3,7 @@ fun balanceCheck(symbolString: String): Boolean {
     val openers = matchingMap.keys
     val closers = matchingMap.values
 
-    val symStack = Stack<Char>()
+    val symStack = ListStack<Char>()
 
     for (symbol in symbolString) {
         if (symbol in openers) {

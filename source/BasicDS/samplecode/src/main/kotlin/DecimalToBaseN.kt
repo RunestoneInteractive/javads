@@ -1,6 +1,6 @@
 fun baseConvert(decimal: Int, base: Int): String {
     val digits = "0123456789ABCDEF"
-    val digitStack = Stack<Int>()
+    val digitStack = ListStack<Int>()
     var remainingValue = decimal
 
     while (remainingValue > 0) {

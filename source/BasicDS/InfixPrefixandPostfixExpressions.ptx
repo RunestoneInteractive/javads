@@ -313,7 +313,8 @@
     <caption>Converting Infix Expressions to Postfix Expressions</caption>
 <program label="prog-intopost" line-numbers="yes" language="kotlin" interactive="activecode">
     <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/ConvertToPostfix.kt" /></code>
     </program>
   </listing>
@@ -394,7 +395,8 @@
     <caption>Postfix Evaluation</caption>
 <program label="prog-postfixeval"  xml:id="prog-postfixeval" language="kotlin" interactive="activecode">
     <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/PostfixEvaluator.kt" /></code>
     </program>
   </listing>

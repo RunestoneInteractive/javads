@@ -9,7 +9,7 @@ fun infixToPostfix(infixExpr: String): String {
         "(" to 1
     )
 
-    val opStack = Stack<String>()
+    val opStack = ListStack<String>()
     val postfixList = mutableListOf<String>()
 
     val tokenList = infixExpr.split(" ")

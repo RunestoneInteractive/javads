@@ -1,5 +1,5 @@
 fun parenCheck(symbolString: String): Boolean {
-    val symStack = Stack<Char>()
+    val symStack = ListStack<Char>()
 
     for (symbol in symbolString) {
         if (symbol == '(') {

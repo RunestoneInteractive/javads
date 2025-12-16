@@ -21,25 +21,28 @@
             grows (as <c>push</c> operations occur), new items will be added on the end
             of the list. <c>pop</c> operations will manipulate that same end.</p>
 
+  <p>Because we implement this stack using a list, we will name the class <c>ListStack</c>. Every member function that implements something in the interface needs the word <c>override</c> to appear at the beginning of the function definition. This indicates that we are overriding the empty implementation for that function provided in the interface with actual code.</p>
+
 <listing xml:id="lst-stackcode1">
   <caption>Implementing a Stack class using a Kotlin list</caption>
 <program xml:id="prog-stackcode1" label="prog-stackcode1" language="kotlin" line-numbers="yes">
-      <code><xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" /></code>
+      <code><xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" /></code>
   </program>
 </listing>
 
 <!-- TODO: fix this reference -->
-<p>Remember in our discussion of <c>MutableList</c> in <xref ref="introduction_arraylist"/> that we put the data type in angle brackets? This allowed us to have an <c>MutableList&lt;String&gt;</c>, <c>MutableList&lt;Int&gt;</c>, etc. We would also like to be able to create a <c>Stack</c> whose elements are of any data type. To do this, we specify in line 4 that a stack has a <term>generic</term> data type.  The <c>T</c> is like a variable that, instead of holding an integer, double, or string value, holds a <em>data type</em>.  Thus, when we create a <c>Stack&lt;String&gt;</c>, the data type <c>String</c> provides the value that fills in the generic <c>T</c>. The body of the class uses <c>T</c> anywhere that it needs the type of stack we are dealing with.</p>
+<p>Remember in our discussion of <c>MutableList</c> in <xref ref="introduction_arraylist"/> that we put the data type in angle brackets? This allowed us to have an <c>MutableList&lt;String&gt;</c>, <c>MutableList&lt;Int&gt;</c>, etc. We would also like to be able to create a <c>ListStack</c> whose elements are of any data type. To do this, we specify in line 1 that a stack has a <term>generic</term> data type.  The <c>T</c> is like a variable that, instead of holding an integer, double, or string value, holds a <em>data type</em>.  Thus, when we create a <c>ListStack&lt;String&gt;</c>, the data type <c>String</c> provides the value that fills in the generic <c>T</c>. The body of the class uses <c>T</c> anywhere that it needs the type of stack we are dealing with.</p>
 
-  <p>Now we must write a program that creates a <c>Stack</c> object and then uses it.
-            <xref ref="lst-stacktest"/> shows the <c>Stack</c> class in
+  <p>Now we must write a program that creates a <c>ListStack</c> object and then uses it.
+            <xref ref="lst-stacktest"/> shows the <c>ListStack</c> class in
             action as we perform the sequence of operations from
-            <xref ref="basic-ds_the-stack-abstract-data-type"/>.  We don't need to <c>import</c> the <c>Stack</c> class as long as its source file is in the same directory as our test program. (The interactive code in <xref ref="lst-stacktest"/> has been set up properly for this to work.)</p>
+            <xref ref="basic-ds_the-stack-abstract-data-type"/>.  We don't need to <c>import</c> the <c>ListStack</c> class as long as its source file is in the same directory as our test program. (The interactive code in <xref ref="lst-stacktest"/> has been set up properly for this to work.)</p>
 <listing xml:id="lst-stacktest">
-  <caption>Program to Test the Stack Class</caption>
+  <caption>Program to Test the ListStack Class</caption>
   <program xml:id="prog-stacktest" language="kotlin" interactive="activecode">
       <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/StackTest.kt" /></code>
   </program>
 </listing>
@@ -50,13 +53,26 @@
             explicitly using <c>remove</c> and <c>add</c>. The implementation is shown in
             <xref ref="lst-stackcode2"/>.</p>
 <listing xml:id="lst-stackcode2">
-  <caption>Alternative Implementation of the Stack class</caption>
+  <caption>Alternative Implementation of the ListStack class</caption>
 <program label="lst-stackcode2" language="kotlin">
-    <code><xi:include parse="text" href="samplecode/src/main/kotlin/StackAlt.kt" /></code>
+    <code><xi:include parse="text" href="samplecode/src/main/kotlin/AltListStack.kt" /></code>
   </program>
 </listing>
 
 <p>This ability to change the physical implementation of an abstract data type while maintaining the logical characteristics is an example of abstraction at work. However, even though the stack will work either way, if we consider the performance of the two implementations, there is definitely a difference. Recall that the <c>add()</c> and <c>removeLast()</c> operations for the end of the list were both <m>O(1)</m>. This means that the first implementation will perform <c>push</c> and <c>pop</c> in constant time no matter how many items are on the stack. The performance of the second implementation suffers in that the <c>addFirst</c> and <c>removeFirst</c> operations will both require <m>O(n)</m> for a stack of size <c>n</c>. Clearly, even though the implementations are logically equivalent, they would have very different timings when performing benchmark testing.</p>
+
+<p>Having these two implementations helps to show the value of using an interface to define the member functions. Consider this short function that randomly chooses which stack to use. (A random choice is silly, but it's a good way to briefly illustrate the point.)</p>
+
+<!-- TODO: Fix the inclusion problem, it would really help here -->
+<listing xml:id="lst-stackchoice">
+  <caption>Example that chooses which stack implementation to use</caption>
+<program label="lst-stackchoice" language="kotlin">
+    <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/StackChoice.kt" /></code>
+  </program>
+</listing>
+
+<p>Kotlin uses <em>type inferencing</em> to figure out the type of a variable while the program is compiling, before it begins running. When we enter code such as <c>val x = 3</c>, Kotlin automatically determines that the variable <c>x</c> must be types as an <c>Int</c> because we assign it to an integer. In the above program, however, the type of <c>myStack</c> is unknown until the program starts. Will it be a <c>ListStack</c>, or an <c>AltListStack</c>? Both stack implementations implement the interface <c>StackInt</c>, so we can specify that the type of the variable <c>myStack</c> is <c>StackInt</c>. This is sufficient to allow the program to compile and run, and will work for either implementation.</p>
 
   <exercises>
     <title>Self Check</title>

@@ -25,7 +25,8 @@
     <caption>Solving the General Balanced Symbol Problem</caption>
 <program label="lst-balcheck" line-numbers="yes" language="kotlin" interactive="activecode">
     <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/Stack.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/BalancedSymbols.kt" /></code>
   </program>
 </listing>

@@ -1,6 +1,6 @@
 fun postfixEval(postfixExpr: String): Int? {
     val digits = "0123456789"
-    val operandStack = Stack<Int>()
+    val operandStack = ListStack<Int>()
 
     val tokenList = postfixExpr.split(" ")
 

@@ -1,5 +1,5 @@
 fun divideBy2(decimal: Int): String {
-    val digitStack = Stack<Int>()
+    val digitStack = ListStack<Int>()
     var remainingValue = decimal
 
     while (remainingValue > 0) {

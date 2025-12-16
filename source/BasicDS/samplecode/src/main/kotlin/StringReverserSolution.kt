@@ -1,6 +1,6 @@
 fun reverseStringSolution(str: String): String {
     // your code here; returns a String
-    val stack = Stack<Char>()
+    val stack = ListStack<Char>()
     for (c in str) {
         stack.push(c)
     }
