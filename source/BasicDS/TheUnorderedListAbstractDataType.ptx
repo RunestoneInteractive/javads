@@ -1,57 +1,47 @@
 <?xml version="1.0"?>
-<section xml:id="basic-ds_the-unordered-list-abstract-data-type">
+<section xml:id="basic-ds_the-unordered-list-abstract-data-type" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The Unordered List Abstract Data Type</title>
   <p>The structure of an unordered list, as described above, is a collection
-            of items where each item holds a relative position with respect to the
-            others. Some possible unordered list operations are given below.</p>
+    of items where each item holds a relative position with respect to the
+    others. The default list in Kotlin is an unordered list. It has a very large collection of member functions, but we'll focus on a small number here as an example.</p>
   <p>
     <ul>
       <li>
-        <p><c>List()</c> creates a new list that is empty. It needs no parameters
-                    and returns an empty list.</p>
+        <p><c>add(item)</c> adds a new item to the end of the list making it the last item in the collection. It needs the item and returns nothing.</p>
       </li>
       <li>
-        <p><c>add(item)</c> adds a new item to the list. It needs the item and
-                    returns nothing. Assume the item is not already in the list.</p>
+        <p><c>add(index, item)</c> adds a new item to the list at the provided index, inserting it before the remaining items in the list. <c>index</c> may not be bigger than the length of the list (in order to prevent empty entries in the list). It needs the item and returns nothing.</p>
       </li>
       <li>
-        <p><c>remove(item)</c> removes the item from the list. It needs the item
-                    and modifies the list. If the item is not present in the list, we leave the list unchanged.</p>
+        <p><c>get(index)</c> returns the item in the list at position <c>index</c>. The index must be at least 0 and no more than one less than the length of the list; otherwise, an exception is thrown.</p>
       </li>
       <li>
-        <p><c>search(item)</c> searches for the item in the list. It needs the item
-          and returns a boolean value (<c>true</c> if found, <c>false</c> if not).</p>
+        <p><c>indexOf(item)</c> searches for the item in the list and returns the first index where it is found. It needs the item and returns the index of the item, or a -1 if not found.</p>
       </li>
       <li>
-        <p><c>isEmpty()</c> tests to see whether the list is empty. It needs no
-                    parameters and returns a boolean value.</p>
+        <p><c>isEmpty()</c> tests to see whether the list is empty. It needs no parameters and returns a boolean value.</p>
       </li>
       <li>
-        <p><c>size()</c> returns the number of items in the list. It needs no
-                    parameters and returns an integer.</p>
+        <p><c>removeAt(index, item)</c> removes the item from the list at position `index`. It needs the index and modifies the list. The index must be at least 0 and no more than one less than the length of the list; otherwise, an exception is thrown. Items at higher index values are shifted down to fill the gap. It returns nothing.</p>
       </li>
       <li>
-        <p><c>append(item)</c> adds a new item to the end of the list making it the
-                    last item in the collection. It needs the item and returns nothing.
-                    Assume the item is not already in the list.</p>
+        <p><c>size()</c> returns the number of items in the list. It needs no parameters and returns an integer.</p>
       </li>
-      <li>
-        <p><c>index(item)</c> returns the position of item in the list. It needs
-                    the item and returns the index. Assume the item is in the list.</p>
-      </li>
-      <li>
-        <p><c>insert(pos, item)</c> adds a new item to the list at position <c>pos</c>. It
-                    needs the item and returns nothing. Assume the item is not already in
-                    the list and there are enough existing items to have position <c>pos</c>.</p>
-      </li>
-      <li>
-        <p><c>pop()</c> removes and returns the last item in the list. It needs
-                    nothing and returns an item. Assume the list has at least one item.</p>
-      </li>
-      <li>
-        <p><c>pop(pos)</c> removes and returns the item at position <c>pos</c>. It needs
-                    the position and returns the item. Assume the item is in the list.</p>
-      </li>
+
     </ul>
   </p>
+
+  <aside>
+    <p>Note that we have two different functions `add`, each of which takes a different set of parameters. This is called <em>overloading</em>. When one of these functions is called, Kotlin can figure out which one is intended based on the number and types of the parameters used when calling the function. </p>
+  </aside>
+
+  <p>Here is an interface representing an unordered list:</p>
+
+    <listing xml:id="lst-unorderedlist-interface">
+    <caption>Interface representing Unordered List ADT</caption>
+<program xml:id="prog-unorderedlist-interface" label="prog-unorderedlist-interface" language="kotlin">
+<code><xi:include parse="text" href="samplecode/src/main/kotlin/UnorderedListADT.kt"/></code>
+</program></listing>
+
+
 </section>
