@@ -95,54 +95,42 @@
     <title>Self Check</title>
     <exercise label="baseconvert1">
       <statement>
-        <p>What is value of 25 expressed as an octal number? <var/>  </p>
+        <p>What is value of 25 expressed as an octal number?</p>
+        <p><fillin width="5" answer="31"/></p>
       </statement>
-      <setup>
-        <var>
-          <p>
-            <BlankNode/>
-          </p>
-          <condition number="[31, 31]">
-            <feedback>
-              <p>Correct.</p>
-            </feedback>
-          </condition>
-        </var>
-      </setup>
+      <evaluation>
+        <evaluate>
+          <test correct="yes">
+            <numcmp use-answer="yes"/>
+          </test>
+        </evaluate>
+      </evaluation>
     </exercise>
     <exercise label="baseconvert2">
       <statement>
-        <p>What is value of 256 expressed as a hexadecimal number? <var/>  </p>
+        <p>What is value of 256 expressed as a hexadecimal number?</p>
+        <p><fillin width="5" answer="100"/></p>
       </statement>
-      <setup>
-        <var>
-          <p>
-            <BlankNode/>
-          </p>
-          <condition number="[100, 100]">
-            <feedback>
-              <p>Correct.</p>
-            </feedback>
-          </condition>
-        </var>
-      </setup>
+      <evaluation>
+        <evaluate>
+          <test correct="yes">
+            <numcmp use-answer="yes"/>
+          </test>
+        </evaluate>
+      </evaluation>
     </exercise>
     <exercise label="baseconvert3">
       <statement>
-        <p>What is value of 26 expressed in base 26? <var/>  </p>
+        <p>What is value of 26 expressed in base 26?</p>
+        <p><fillin width="5" answer="10"/></p>
       </statement>
-      <setup>
-        <var>
-          <p>
-            <BlankNode/>
-          </p>
-          <condition number="[10, 10]">
-            <feedback>
-              <p>Correct.</p>
-            </feedback>
-          </condition>
-        </var>
-      </setup>
+      <evaluation>
+        <evaluate>
+          <test correct="yes">
+            <numcmp use-answer="yes"/>
+          </test>
+        </evaluate>
+      </evaluation>
     </exercise>
   </exercises>
   <!--<video xml:id="video_Stack2" youtube="Q6B8k8INeq8" width="auto"/>-->

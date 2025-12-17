@@ -10,6 +10,10 @@ output
 # don't track runestone's published folder
 published
 
+# don't track another runestone output folder
+kotlinds
+.cache
+
 # don't track assets generated from source
 generated-assets
 
