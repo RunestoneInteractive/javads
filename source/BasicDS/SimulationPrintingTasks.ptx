@@ -113,7 +113,7 @@
   <subsection xml:id="basic-ds_python-implementation">
     <title>Kotlin Implementation</title>
     <p>To design this simulation we will create classes for the two
-                real-world objects described above: <c>Task</c> and <c>Printer</c>. Our <c>performSimulation</c> function, which runs an entire simulation, will create a <c>Queue&lt;Task&gt;</c> named <c>printQueue</c>.</p>
+                real-world objects described above: <c>Task</c> and <c>Printer</c>. Our <c>performSimulation</c> function, which runs an entire simulation, will create a <c>ListQueue&lt;Task&gt;</c> named <c>printQueue</c>.</p>
    <p>The <c>Task</c> class (<xref ref="basic-ds_lst-task"/>) will represent a single printing
                 task. When the task is created, a random number generator will provide a
                 length from 1 to 20 pages. We will use a random number generator from the <c>kotlin.random.Random</c>
@@ -206,11 +206,12 @@ Average wait  12.00 secs. 0 tasks remaining.
 </output>
     </console>
     <p>For your reference, here is the entire code for the simulation:</p>
-    <!-- TODO: I hacked this to work, but fixing program include would be better -->
+    <!-- TODO: I hacked this to work; imports can't appear in the middle -->
     <program xml:id="qumainsim" language="kotlin" interactive="activecode">
     <code> 
 import kotlin.random.Random
-<xi:include parse="text" href="samplecode/src/main/kotlin/Queue.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/QueueADT.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/ListQueue.kt" />
 ^^^^
 <xi:include parse="text" href="samplecode/src/main/kotlin/PrintSimulationCombined.txt" /></code>
     </program>

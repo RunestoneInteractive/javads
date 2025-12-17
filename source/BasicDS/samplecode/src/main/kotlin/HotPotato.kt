@@ -1,5 +1,5 @@
 fun hotPotato(nameList: List<String>, num: Int): String {
-    val simQueue = Queue<String>()
+    val simQueue = ListQueue<String>()
 
     for (name in nameList) {
         simQueue.enqueue(name)

@@ -1,5 +1,5 @@
 fun main() {
-    val q = Queue<Int>()
+    val q = ListQueue<Int>()
     println("isEmpty returns ${q.isEmpty()}")
 
     q.enqueue(4)

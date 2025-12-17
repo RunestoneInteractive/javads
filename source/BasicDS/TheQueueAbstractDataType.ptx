@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<section xml:id="basic-ds_the-queue-abstract-data-type">
+<section xml:id="basic-ds_the-queue-abstract-data-type" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The Queue Abstract Data Type</title>
   <p>The queue abstract data type is defined by the following structure and
             operations. A queue is structured, as described above, as an ordered
@@ -8,10 +8,6 @@
             ordering property. The queue operations are given below.</p>
   <p>
     <ul>
-      <li>
-        <p><c>Queue()</c> creates a new queue that is empty. It needs no parameters
-                    and returns an empty queue.</p>
-      </li>
       <li>
         <p><c>enqueue(item)</c> adds a new item to the tail of the queue. It needs
                     the item and returns nothing.</p>
@@ -101,4 +97,16 @@
       </row>
     </tabular>
   </table>
+
+
+  <p>
+    As we did with the stack, here is the specification of the queue ADT as an interface. By specifying it as an interface, it will help us later on in making sure that we remember to implement all of the appropriate functions, and we can switch more easily between implementaitons.
+  </p>
+
+  <listing xml:id="lst-queue-interface">
+    <caption>Interface representing Queue ADT</caption>
+<program xml:id="prog-queue-interface" label="prog-queue-interface" language="kotlin">
+<code><xi:include parse="text" href="samplecode/src/main/kotlin/QueueADT.kt"/></code>
+</program></listing>
+
 </section>

@@ -1,4 +1,4 @@
-class Queue<T> {
+class ListQueue<T> : QueueADT<T> {
 
     /*
      * The tail of the queue is at the beginning
@@ -10,14 +10,14 @@ class Queue<T> {
      * Returns true if there are no items in the queue;
      * false otherwise.
      */
-    fun isEmpty(): Boolean {
+    override fun isEmpty(): Boolean {
         return items.isEmpty()
     }
 
     /*
     * Add an item to the tail of the queue
     */
-    fun enqueue(item: T) {
+    override fun enqueue(item: T) {
         items.add(0, item)
     }
 
@@ -25,7 +25,7 @@ class Queue<T> {
      * Remove the item at the head of the queue and return it.
      * If the queue is empty, throws an exception.
      */
-    fun dequeue(): T {
+    override fun dequeue(): T {
         if (isEmpty()) {
             throw NoSuchElementException("Queue is empty.")
         }
@@ -36,7 +36,7 @@ class Queue<T> {
      * Return the item at the head of the queue, but do not remove it.
      * If the queue is empty, throws an exception.
      */
-    fun peek(): T {
+    override fun peek(): T {
         if (isEmpty()) {
             throw NoSuchElementException("Queue is empty.")
         }
@@ -46,7 +46,7 @@ class Queue<T> {
     /*
      * Returns the number of items in the queue.
      */
-    fun size(): Int {
+    override fun size(): Int {
         return items.count()
     }
 

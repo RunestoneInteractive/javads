@@ -3,7 +3,7 @@ import kotlin.random.Random
 fun performSimulation(numSeconds: Int, pagesPerMinute: Int) {
 
     val labPrinter = Printer(pagesPerMinute)
-    val printQueue = Queue<Task>()
+    val printQueue = ListQueue<Task>()
     val waitingTimes = mutableListOf<Int>()
 
     for (currentSecond in 0..<numSeconds) {

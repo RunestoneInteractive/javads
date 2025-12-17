@@ -26,7 +26,7 @@
             out. There is no jumping in the middle and no leaving before you have
             waited the necessary amount of time to get to the front.</p>
   <p>Computer science also has common examples of queues. <xref ref="i107_id1fig-qubasicqueue"/>
-    shows a queue of Java Strings.</p>
+    shows a queue of Kotlin Strings.</p>
   <figure align="center" xml:id="i107_id1fig-qubasicqueue">
     <caption>A Queue of Kotlin Strings</caption>
     <image source="BasicDS/Figures/basicqueue.png" width="50%"/>
