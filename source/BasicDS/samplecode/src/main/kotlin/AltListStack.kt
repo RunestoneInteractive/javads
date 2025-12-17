@@ -1,4 +1,4 @@
-class AltListStack<T>: StackInt<T> {
+class AltListStack<T>: StackADT<T> {
 
     /*
      * Create a new stack. The top of the stack is at the end

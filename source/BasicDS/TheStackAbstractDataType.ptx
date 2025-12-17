@@ -112,7 +112,7 @@
   <listing xml:id="lst-stack-interface">
     <caption>Interface representing Stack ADT</caption>
 <program label="prog-stack-interface" language="kotlin">
-<code><xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt"/></code>
+<code><xi:include parse="text" href="samplecode/src/main/kotlin/StackADT.kt"/></code>
 </program></listing>
 
 </section>

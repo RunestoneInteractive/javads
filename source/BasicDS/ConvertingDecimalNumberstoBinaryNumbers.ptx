@@ -44,7 +44,7 @@
   <caption>Converting from Decimal to Binary</caption>
 <program label="lst-binconverter" language="kotlin" line-numbers="yes" interactive="activecode">
     <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackADT.kt" />
         <xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/DecimalToBinary.kt" /></code>
   </program>
@@ -74,7 +74,7 @@
   <caption>Converting from Decimal to any Base</caption>
 <program label="prog-baseconverter" language="kotlin" line-numbers="yes" interactive="activecode">
     <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackADT.kt" />
         <xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/DecimalToBaseN.kt" /></code>
   </program>

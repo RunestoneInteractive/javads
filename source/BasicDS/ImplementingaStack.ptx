@@ -41,7 +41,7 @@
   <caption>Program to Test the ListStack Class</caption>
   <program xml:id="prog-stacktest" language="kotlin" interactive="activecode">
       <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackADT.kt" />
         <xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/StackTest.kt" /></code>
   </program>
@@ -72,7 +72,7 @@
   </program>
 </listing>
 
-<p>Kotlin uses <em>type inferencing</em> to figure out the type of a variable while the program is compiling, before it begins running. When we enter code such as <c>val x = 3</c>, Kotlin automatically determines that the variable <c>x</c> must be types as an <c>Int</c> because we assign it to an integer. In the above program, however, the type of <c>myStack</c> is unknown until the program starts. Will it be a <c>ListStack</c>, or an <c>AltListStack</c>? Both stack implementations implement the interface <c>StackInt</c>, so we can specify that the type of the variable <c>myStack</c> is <c>StackInt</c>. This is sufficient to allow the program to compile and run, and will work for either implementation.</p>
+<p>Kotlin uses <em>type inferencing</em> to figure out the type of a variable while the program is compiling, before it begins running. When we enter code such as <c>val x = 3</c>, Kotlin automatically determines that the variable <c>x</c> must be types as an <c>Int</c> because we assign it to an integer. In the above program, however, the type of <c>myStack</c> is unknown until the program starts. Will it be a <c>ListStack</c>, or an <c>AltListStack</c>? Both stack implementations implement <c>StackADT</c>, so we can specify that the type of the variable <c>myStack</c> is <c>StackADT</c>. This is sufficient to allow the program to compile and run, and will work for either implementation.</p>
 
   <exercises>
     <title>Self Check</title>
@@ -183,7 +183,7 @@ while (!m.isEmpty()) {
     <program xml:id="stack_stringrev" language="kotlin" interactive="activecode"
              include="prog-stackcode1">
       <code>
-        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackADT.kt" />
         ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/StringReverser.kt" /></code>
     </program>
   </exercises>

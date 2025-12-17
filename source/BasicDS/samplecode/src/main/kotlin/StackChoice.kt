@@ -1,7 +1,7 @@
 import kotlin.random.Random
 
 fun main() {
-    val myStack: StackInt<Int>
+    val myStack: StackADT<Int>
 
     if (Random.nextInt(1) == 1) {
         myStack = ListStack<Int>()

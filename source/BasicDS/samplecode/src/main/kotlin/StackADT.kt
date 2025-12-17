@@ -1,4 +1,4 @@
-interface StackInt<T> {
+interface StackADT<T> {
 
     // Returns true if there are no items on the stack;
     // false otherwise.
