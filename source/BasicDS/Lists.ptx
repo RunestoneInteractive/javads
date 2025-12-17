@@ -6,7 +6,7 @@
             powerful, yet simple collection mechanism that provides the programmer
             with a wide variety of operations. However, not all programming
             languages include a list collection. In these cases, the notion of a
-            list must be implemented by the programmer.</p>
+            list must be implemented by the programmer. Even in Kotlin, it is sometimes useful to use different implementations of lists than the default one. We will therefore look at some different approaches for implementing lists using more fundamental memory representations.</p>
   <p>A <term>list</term> is a collection of items where each item holds a relative
             position with respect to the others. More specifically, we will refer to
             this type of list as an <em>unordered list</em>. We can consider the list as
@@ -19,4 +19,6 @@
             written them as comma-delimited values, a common way of showing the list
             structure. Printing the list in Kotlin would show this list as
             <c>[54, 26, 93, 17, 77, 31]</c>.</p>
+
+  <p>We refer to this as an unordered list because we do not require that the items within be ordered in a particular way, such as in sorted order. Nonetheless, each item in an unordered list is addressable by its index in the list. In the above example, 54 is at index location 0, 26 is at index location 1, and so on. So the term "unordered" should be understood to mean that the list does not enforce a particular ordering of the items based on their values, but they still occur in a fixed order based on how they were inserted into the list.</p>
 </section>
