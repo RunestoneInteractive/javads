@@ -1,5 +1,5 @@
 fun isPalindrome(str: String): Boolean {
-    val charDeque = Deque<Char>()
+    val charDeque = ListDeque<Char>()
 
     for (ch in str) {
         charDeque.addTail(ch)

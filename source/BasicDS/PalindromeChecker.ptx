@@ -27,7 +27,9 @@
 <listing xml:id="lst-palchecker">
     <caption>Implementation of Palindrome Checker</caption>
 <program label="prog-palchecker" language="kotlin" interactive="activecode">
-<code><xi:include parse="text" href="samplecode/src/main/kotlin/Deque.kt"/>
+<code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/DequeADT.kt"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ListDeque.kt"/>
 ^^^^
 <xi:include parse="text" href="samplecode/src/main/kotlin/Palindrome.kt" /></code>
 </program></listing>

@@ -9,7 +9,8 @@
   <listing xml:id="lst-dequecode">
       <caption>Implementation of a Deque</caption>
 <program label="lst-dequecode"  language="kotlin">
-      <code><xi:include parse="text" href="samplecode/src/main/kotlin/Deque.kt" /></code>
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ListDeque.kt" /></code>
   </program>
   </listing>
 
@@ -20,7 +21,8 @@
             <caption>Test of Deque Operation</caption>
   <program xml:id="deqtest" language="kotlin" interactive="activecode">
     <code>
-<xi:include parse="text" href="samplecode/src/main/kotlin/Deque.kt"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/DequeADT.kt"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ListDeque.kt"/>
 ^^^^
 <xi:include parse="text" href="samplecode/src/main/kotlin/DequeTest.kt" /></code>
   </program>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<section xml:id="basic-ds_the-deque-abstract-data-type">
+<section xml:id="basic-ds_the-deque-abstract-data-type" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The Deque Abstract Data Type</title>
   <p>The deque abstract data type is defined by the following structure and
             operations. A deque is structured, as described above, as an ordered
@@ -7,10 +7,6 @@
             either head or tail. The deque operations are given below.</p>
   <p>
     <ul>
-      <li>
-        <p><c>Deque()</c> creates a new deque that is empty. It needs no parameters
-                    and returns an empty deque.</p>
-      </li>
       <li>
         <p><c>addHead(item)</c> adds a new item to the head of the deque. It
                     needs the item and returns nothing.</p>
@@ -113,4 +109,15 @@
       </row>
     </tabular>
   </table>
+
+    <p>
+      Here is a definition of a deque, expressed as a Kotlin interface.
+  </p>
+
+  <listing xml:id="lst-deque-interface">
+    <caption>Interface representing Queue ADT</caption>
+<program xml:id="prog-deque-interface" label="prog-deque-interface" language="kotlin">
+<code><xi:include parse="text" href="samplecode/src/main/kotlin/DequeADT.kt"/></code>
+</program></listing>
+
 </section>

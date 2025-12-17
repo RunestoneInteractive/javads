@@ -1,13 +1,13 @@
 /*
  * Show the operation, its result (if any), and the resulting deque
  */
-fun display(operation: String, result: String, d: Deque<Int>) {
+fun display(operation: String, result: String, d: ListDeque<Int>) {
     println(String.format(
         "%-17s | %-7s | %s", operation, result, d))
 }
 
 fun main() {
-    val d = Deque<Int>()
+    val d = ListDeque<Int>()
     display("d.isEmpty()", d.isEmpty().toString(), d)
 
     d.addTail(4)

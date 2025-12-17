@@ -100,7 +100,7 @@
 
 
   <p>
-    As we did with the stack, here is the specification of the queue ADT as an interface. By specifying it as an interface, it will help us later on in making sure that we remember to implement all of the appropriate functions, and we can switch more easily between implementaitons.
+    As we did with the stack, here is the specification of the queue ADT as an interface. By specifying it as an interface, it will help us later on in making sure that we remember to implement all of the appropriate functions, and we can switch more easily between implementations.
   </p>
 
   <listing xml:id="lst-queue-interface">
