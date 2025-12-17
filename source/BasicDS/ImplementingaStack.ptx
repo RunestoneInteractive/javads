@@ -182,7 +182,9 @@ while (!m.isEmpty()) {
                 characters in that string.</p>
     <program xml:id="stack_stringrev" language="kotlin" interactive="activecode"
              include="prog-stackcode1">
-      <code><xi:include parse="text" href="samplecode/src/main/kotlin/StringReverser.kt" /></code>
+      <code>
+        <xi:include parse="text" href="samplecode/src/main/kotlin/StackInt.kt" />
+        ^^^^<xi:include parse="text" href="samplecode/src/main/kotlin/StringReverser.kt" /></code>
     </program>
   </exercises>
   <!--<video xml:id="stack1_video" youtube="fZtLSM7k_54" width="auto"/>-->
