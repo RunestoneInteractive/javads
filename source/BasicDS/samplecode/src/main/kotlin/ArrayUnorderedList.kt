@@ -2,7 +2,7 @@ class ArrayUnorderedList<T> : UnorderedListADT<T> {
 
     // Create an initial array, of size 1
     @Suppress("UNCHECKED_CAST")
-    private var array = arrayOfNulls<Any?>(10) as Array<T?>
+    private var array = arrayOfNulls<Any?>(16) as Array<T?>
 
     // Keeps track of the number of locations in the
     // array that have been used
@@ -31,6 +31,15 @@ class ArrayUnorderedList<T> : UnorderedListADT<T> {
     // Add a new item to the end of the list.
     override fun add(item: T) {
         add(usedCount, item)
+    }
+
+    // Set the value of an item at the specified index.
+    override fun set(index: Int, item: T) {
+        if (index in 0..< usedCount) {
+            array[index] = item
+        } else {
+            throw Exception("Index out of range")
+        }
     }
 
     // Return item at specified index.

@@ -1,10 +1,13 @@
 interface UnorderedListADT<T> {
 
-    // Add a new item to the end of the list.
+    // Add (insert )a new item to the end of the list.
     fun add(item: T)
 
-    // Add a new item at the specified index.
+    // Add (insert) a new item at the specified index.
     fun add(index: Int, item: T)
+
+    // Set the value of an item at the specified index.
+    fun set(index: Int, item: T)
 
     // Return item at specified index.
     fun get(index: Int): T

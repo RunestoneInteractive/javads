@@ -3,25 +3,95 @@
     xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Implementing an Unordered List: Arrays</title>
     <introduction>
-        <p>In order to implement an unordered list, we will first do so by using an <term>array</term>. In Kotlin, an array is very similar to a list. Just like a list, an array is a collection of items, where each item has an index, starting from zero. The difference is that arrays are much more limited in functionality than lists. When creating an array, you need to specify its size, and then you are unable to modify its size once it has been created. You also need to specify initial values for all items in the array. Once the array has been created, you can change the value at a particular index location, but there's no built-in capability for inserting a new item between others, or at the end. Likewise, there's no built-in capability for removing an item.</p>
+        <p>In order to implement an unordered list, we will first do so by using an <term>array</term>. In Kotlin, an array is very similar to a list. Just like a list, an array is a collection of items, where each item has an index, starting from zero. The difference is that arrays are much more limited in functionality than lists. When creating an array, you need to specify its size, and then you are unable to modify its size once it has been created. You also need to specify initial values for all items in the array. Once the array has been created, you can change the value at a particular index location, but there's no built-in capability for inserting a new item between others, or at the end. Likewise, there's no built-in capability for removing an item. The only two supported operations for an array, once it has been created, are indexing and assignment to an array index.</p>
 
-        <p>It sounds as though an array is just a limited version of a lists. So why would we
-            bother with them? It's not that arrays are better than lists. Rather, arrays are the
-            underlying mechanism on which lists are built in Kotlin. If we were to look at the
-            actual programming code for the Kotlin language itself that implements default lists, we
-            would see that they use arrays.</p>
+        <p>It sounds as though an array is just a limited version of a list. So why would we bother with it? It's not that arrays are better than lists. Rather, arrays are the underlying mechanism on which lists are built in Kotlin. If we were to look at the actual programming code for the Kotlin language itself that implements default lists, we would see that they use arrays.</p>
 
         <p>Therefore, even though Kotlin provides us with capable lists that do all of the detailed work with arrays underneath, we are going to implement some of that ourselves. It helps us learn about how lists are actually implemented in a programming language, and it also helps us continue to learn about ADTs and data structures. In the following section, we will implement a list using an entirely different mechanism called a <em>linked list</em>, and so implementing a list with an array helps give us a basis for comparison.</p>
     </introduction>
 
     <subsection>
-        <title>Storing the data, and leaving extra space</title>
-        <p>As described above, we will use an array to store the data in our unordered list. Since arrays are fixed in size, we have something of a problem: how will we expand it if we need to? If our array fills up and we wish to add a new value, we will replace it with a new larger array in which we copy all of our existing content. This can be slow if our array is large, so we don't want to do it very often. Therefore, we will intentionally make our array larger than we need it to be, and use another variable to keep track of how much if it we have used. That way, if we need to add a new item to it, it's quick to do so. If we do fill up the array and need to make a new one, we'll make one that's twice as big. As the array keeps doubling in size, we can insert more and more items before we have to replace it again. This approach allows us to not waste too much memory in our computer, because our array is always at least half full, but also works at reasonable speed because we replace our array less and less frequently as it grows. It can be shown that with this approach, each addition to the list averages out to <m>O(1)</m>.</p>
+        <title>More details about arrays</title>
+
+        <p>The best way to think about an array is that it is one continuous block of bytes in the computer's memory. This block is divided up into <m>n</m>-byte chunks where <m>n</m> is based on the data type that is stored in the array. <xref ref="basicds-fig-array" /> illustrates the an array that is sized to hold six floating point values represented as <c>Double</c>.</p>
+        <figure xml:id="basicds-fig-array">
+            <caption>An Array of <c>double</c> Point Numbers</caption>
+            <image source="Advanced/Figures/array.png" width="50%">
+                <shortdescription>An Array of Floating Point Numbers</shortdescription>
+            </image>
+        </figure>
+
+        <p>In Kotlin, each floating point number uses 64 bytes of memory. So the array in <xref ref="basicds-fig-array" /> would use a total of 384 bytes. The base address is the location in memory where the array starts. If you do code like the following:</p>
+
+        <program language="kotlin">
+            <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/DoubleArrayExample.kt" />                 
+            </code>
+        </program>
+
+        <p>We get this output showing the reference address after the <c>@</c>:</p>
+        <console>
+            <input>
+                [D@27bc2616
+            </input>
+        </console>
+
+        <p> The address is very important because an array implements the index operator using a very simple calculation:</p>
+
+        <pre>itemAddress = baseAddress + index * sizeOfObject</pre>
+
+        <p>For example, suppose that our array starts at location <c>0x000030</c>, which is 48 in decimal. To calculate the location of the object at position 4 in the array we do the arithmetic: <m>48 + 4 \cdot 64 = 304</m>. This kind of calculation is <m>O(1)</m>. Of course this comes with some risks. First, since the size of an array is fixed, one cannot just add things on to the end of the array indefinitely without some serious consequences. Second, in some languages, like C, the bounds of the array are not even checked, so even though your array has only six elements in it, assigning a value to index 7 will not result in a runtime error. As you might imagine this can cause big problems that are hard to track down. In the Linux operating system, accessing a value that is beyond the boundaries of an array will often produce the rather uninformative error message <q>segmentation violation.</q></p>
+
+        <p>In Kotlin, we have been using both the <c>List</c> and <c>MutableList</c> classes, which use an array underneath. The strategy that Kotlin uses is as follows:</p>
+        <p>
+            <ul>
+                <li>
+                    <p>Kotlin uses an array that holds references (called <em>pointers</em> in C) to other objects.</p>
+                </li>
+                <li>
+                    <p>Kotlin uses a strategy called <em>over-allocation</em> to allocate an array with space for more objects than is needed initially.</p>
+                </li>
+                <li>
+                    <p>When the initial array is finally filled up, a new, bigger array is
+                        over-allocated and the contents of the old array are copied to the
+                        new array.</p>
+                </li>
+            </ul>
+        </p>
+        <p>The implications of this strategy are pretty amazing. Let's look at what
+            they are first before we dive into the implementation or prove anything.</p>
+        <p>
+            <ul>
+                <li>
+                    <p>Accessing an item at a specific location is <m>O(1)</m>.</p>
+                </li>
+                <li>
+                    <p>Appending to the list is <m>O(1)</m> on average, but <m>O(n)</m> in the worst case.</p>
+                </li>
+                <li>
+                    <p>Removing from the end of the list is <m>O(1)</m>.</p>
+                </li>
+                <li>
+                    <p>Removing from elsewhere in the list is <m>O(n)</m> in the worst case.</p>
+                </li>
+                <li>
+                    <p>Inserting an item into an arbitrary position is <m>O(n)</m> in the worst case.</p>
+                </li>
+            </ul>
+        </p>
+
+
     </subsection>
 
+    <!-- 
     <subsection>
-        <title>How to set up the array in Kotlin</title>
-        <p>We will create a private variable within our class named <c>array</c>, which will store the contents for our unsorted list. As explained above, we need to provide an initial size for that array, as well as initial values. We'll start with an array of size 10 to get things started, and create new bigger arrays in the future as we need them. We'll also create a variable to keep track of how much of the array we are currently using.</p>
+        <title>Storing the data, and leaving extra space</title>
+        <p>As described above, we will use an array to store the data in our unordered list. Since arrays are fixed in size, we have something of a problem: how will we expand it if we need to? If our array fills up and we wish to add a new value, we will replace it with a new larger array in which we copy all of our existing content. This can be slow if our array is large, so we don't want to do it very often. Therefore, we will intentionally make our array larger than we need it to be, and use another variable to keep track of how much if it we have used. That way, if we need to add a new item to it, it's quick to do so. If we do fill up the array and need to make a new one, we'll make one that's twice as big. As the array keeps doubling in size, we can insert more and more items before we have to replace it again. This approach allows us to not waste too much memory in our computer, because our array is always at least half full, but also works at reasonable speed because we replace our array less and less frequently as it grows. It can be shown that with this approach, each addition to the list averages out to <m>O(1)</m>.</p>
+    </subsection> -->
+
+    <subsection>
+        <title>Building our own list: setting up the array in Kotlin</title>
+        <p>Let's start using the above ideas to create our own implementation of an unordered list, using an array to store the data. We'll use a private variable within our class named <c>array</c>, which will store the contents for our unsorted list. As explained above, we need to provide an initial size for that array, as well as initial values, with more space than we need. We'll start with an array of size 16 to get things started, and create new bigger arrays in the future as we need them. We'll also create a variable to keep track of how much of the array we are currently using.</p>
 
         <p>The following code below isn't quite correct, but shows the idea of what we're trying to
             do. We'll then fix it.</p>
@@ -32,7 +102,7 @@
                 <code>
                     class ArrayUnorderedList&lt;T&gt; : UnorderedListADT&lt;T&gt; {
 
-                        private var array = arrayOfNulls&lt;T?&gt;(10)  // initialize to size 10
+                        private var array = arrayOfNulls&lt;T?&gt;(16)  // initialize to size 16
                         private var usedCount = 0  // how many places we currently use
 
                         ...
@@ -41,7 +111,7 @@
             </program>
         </listing>
 
-        <p>Kotlin has a built-in function named <c>arrayOfNulls</c>, which we use above to create an array of size 10. We use <c>T?</c> as the type instead of just <c>T</c> to indicate the type, because we are using null values for spaces that are not being used. The above code is right in principle, but Kotlin will not permit us create an array of a generic types (i.e., where the type is a parameter, like <c>&lt;T&gt;</c> in this code). Therefore, we have to use a trick: we instead will make it an array of type <c>Any?</c>. <c>Any?</c> is a class in Kotlin for which all other classes are subclasses. The <c>?</c> indicates that null values are permitted. Therefore, which this change, our code (which is still not quite right yet) looks like:</p>
+        <p>Kotlin has a built-in function named <c>arrayOfNulls</c>, which we use above to create an array of size 16. We use <c>T?</c> as the type instead of just <c>T</c> to indicate the type, because we are using null values for spaces that are not being used. The above code is right in principle, but Kotlin will not permit us create an array of a generic types (i.e., where the type is a parameter, like <c>&lt;T&gt;</c> in this code). Therefore, we have to use a trick: we instead will make it an array of type <c>Any?</c>. <c>Any?</c> is a class in Kotlin for which all other classes are subclasses. The <c>?</c> indicates that null values are permitted. Therefore, with this change, our code (which is still not quite right yet) looks like:</p>
 
         <listing>
             <title>An attempt at a fix using <c>Any?</c>.</title>
@@ -49,7 +119,7 @@
                 <code>
                     class ArrayUnorderedList&lt;T&gt; : UnorderedListADT&lt;T&gt; {
 
-                        private var array = arrayOfNulls&lt;Any?&gt;(10)  // initialize to size 10
+                        private var array = arrayOfNulls&lt;Any?&gt;(16)  // initialize to size 16
                         private var usedCount = 0  // how many places we currently use
 
                         ...
@@ -72,7 +142,7 @@
             </program>
         </listing>
 
-        <p>This function takes <c>item</c> as a parameter, places it in the index-0 location of the array, then returns it. Kotlin reports an error at the return statement, where it indicates a mismatch in return types: the function expects something of type <c>T</c> to be returned, but it is instead returning something of type <c>Any?</c>. The simplest way to fix this is to tell Kotlin right when we create the array that we intend to think of it as an array of type <c>T?</c>, even though we have applied a trick of making it a type of <c>Any?</c>. To that end, here's our next (almost there!) update to creating our array:</p>
+        <p>This function takes <c>item</c> as a parameter, places it in the index-0 location of the array, then returns it. Kotlin reports an error at the return statement, where it indicates a mismatch in return types: the function expects something of type <c>T</c> to be returned, but it is instead returning something of type <c>Any?</c>. The simplest fix is to tell Kotlin when we create the array that we intend to think of it as an array of type <c>T?</c>, even though we have applied a trick of making it a type of <c>Any?</c>. To that end, here's our next (almost there!) update to creating our array:</p>
 
 
         <listing>
@@ -81,7 +151,7 @@
                 <code>
                     class ArrayUnorderedList&lt;T&gt; : UnorderedListADT&lt;T&gt; {
 
-                        private var array = arrayOfNulls&lt;Any?&gt;(10) as Array&lt;T?&gt;
+                        private var array = arrayOfNulls&lt;Any?&gt;(16) as Array&lt;T?&gt;
                         private var usedCount = 0
 
                         ...
@@ -90,7 +160,7 @@
             </program>
         </listing>
 
-        <p>The above approach actually works, though we get a warning. The warning is concerning the code we added at the end of the line creating the array, where we added the code <c> as Array&lt;T?&gt;</c>. This is called a <term>cast</term>, and it indicates that we are telling Kotlin to treat an array of <c>Any?</c> as an array of type <c>T?</c>. If we write our code correctly and only put items of type <c>T?</c> in the array, this will all work. However, if we put something in that array that is not of type <c>T?</c>, Kotlin will happily do it, because the array is really of type <c>Any?</c>. This would cause an exception when the program runs when we try to get that item back out and assign it to a variable of type <c>T?</c>. By using this trick, it means that we have to take on the responsibility ourselves of getting this right, and Kotlin warns us about that. This approach is essential, however, so we will tell Kotlin to suppress that warning. In general, warnings shouldn't be suppressed, and this should be considered to be poor style in general. In this particular case, this is considered to be standard procedure to work around the fact that Kotlin has this particular limitation for arrays. With all of that said, here is the correct working start to our class:</p>
+        <p>The above approach actually works, though we get a warning. The warning is concerning the code we added at the end of the line creating the array, where we added the code <c> as Array&lt;T?&gt;</c>. This is called a <term>cast</term>, and it indicates that we are telling Kotlin to treat an array of <c>Any?</c> as an array of type <c>T?</c>. If we write our code correctly and only put items of type <c>T?</c> in the array, this will all work. However, if we put something in that array that is not of type <c>T?</c>, Kotlin will happily do it, because the array is really of type <c>Any?</c>. This would cause an exception when the program runs when we try to get that item back out and assign it to a variable of type <c>T?</c>. This approach is essential, however, so we will tell Kotlin to suppress that warning. Typically, warnings shouldn't be suppressed, and this should be considered to be poor style in general. But in this particular case this is considered to be standard procedure to work around the fact that Kotlin has this particular limitation for arrays. With all of that said, here is the correct working start to our class:</p>
 
         <listing>
             <title>A final solution, suppressing a warning.</title>
@@ -99,7 +169,7 @@
                     class ArrayUnorderedList&lt;T&gt; : UnorderedListADT&lt;T&gt; {
 
                         @Suppress("UNCHECKED_CAST")
-                        private var array = arrayOfNulls&lt;Any?&gt;(10) as Array&lt;T?&gt;
+                        private var array = arrayOfNulls&lt;Any?&gt;(16) as Array&lt;T?&gt;
                         private var usedCount = 0
 
                         ...
@@ -114,12 +184,60 @@
 
         <p>Now that we have the array set up, we can now implement the member functions that we need. The code below shows code for both <c>add</c> functions, as well as for <c>get</c>.</p>
 
-        <listing>
+        <listing xml:id="basicds-lst_arrindex">
             <title>Implementation of <c>add</c> and <c>get</c></title>
             <program language="kotlin" line-numbers="yes">
                 <code>
-<xi:include parse="text" href="samplecode/src/main/kotlin/ArrayUnorderedListUnfinished.kt" />                 
+<xi:include parse="text" href="samplecode/src/main/kotlin/ArrayUnorderedListUnfinished.txt" />                 
                 </code>
+            </program>
+        </listing>
+
+        <p>Let's look first at the first of the two <c>add</c> functions that appear above, beginning on line 12. The first thing <c>add</c> does is, in lines 14-16, is make sure that the index at which are an adding an item is appropriate. The variable <c>usedCount</c> indicate how much of the array we are using. In other words, it indicates how many values we have stored in the array. If <c>index</c> is equal to <c>usedCount</c>, this indicates that we are appending a new value at the end of the array. If it is less than that, then we are are putting the new value in a location that previously had a value, and we shift all of the other values over to make room.</p>
+
+        <p>The next check we do is to see if there is room in the array to store a new value. In line 19, we check to see if the number of spaces in the array that we are using is equal to the size of the array itself. If that is the case, line 20 reassigns our array to a new one, which is a copy of the original one but with double its capacity. The old array, which no longer is referred to by any variables, is garbage collected.</p>
+
+        <p>There are many methods that could be used for resizing the array. Some implementations double the size of the array every time as we do here, some use a multiplier of 1.5, and some use powers of two. Doubling the array size leads to a bit more wasted space at any one time, but is much easier to analyze.</p>
+
+        <p>Once we are confident we have enough room in the array for the new value, we make room at the necessary location for the new value in lines 24-26. The key to doing this correctly is to realize that as you are shifting values in the array you do not want to overwrite any important data. The way to do this is to work from the end of the list back toward the insertion point, copying data forward. Our implementation does this in lines 24-26. Note how the loop index goes downward to ensure that we are copying existing data into the unused part of the array first, and then subsequent values are copied over old values that have already been shifted. If the loop had started at the insertion point and copied that value to the next larger index position in the array, the old value would have been lost forever.</p>
+
+        <p>Finally, in lines 27-28, we put the new item in the array, and increment <c>usedCount</c>. Note that if <c>index</c>, which is the location of the new value, is the same as <c>usedCount</c>, that means that nothing needs to be shifted over. The loop in lines 24-26 will occur zero times in that scenario.</p>
+
+        <p>The second method <c>add</c>, which doesn't take an index value, is a convenience function for inserting the new item at the end. It is simply a one-line function which calls the other <c>add</c> function, indicating the location to be at the very end of the current used values, which is indicated by the value <c>usedCount</c>.</p>
+
+
+        <p>Let's look at the big O performance for add. To do this, let's think of add as two separate operations: one operation expands the array if necessary, and the other slides values down to make room for the new value. The performance of sliding values down to make room is <m>O(n)</m>, since in the worst case we want to insert something at index 0, and we have to shift the entire array forward by one. On average we will only need to shift half of the array, but this is still <m>O(n)</m>.</p>
+
+        <p>Regarding the expansion operation, how much work does that take every time we insert something? Most of the time, it takes no work at all apart from checking to see if there is room in the array, which is <m>O(1)</m>. Occasionally, the array does need to be expanded, but remarkably, the amount of work that needs to be done averages out to <m>O(1)</m> as well. Let's see why. The only time that the expansion operation takes more than <m>O(1)</m> work is when <c>usedCount</c> is a power of 2. When <c>usedCount</c> is a power of 2 then the cost to expand the array is <m>O(usedCount)</m>. We can therefore summarize the cost to expand the array for adding the <m>i_{th}</m> item as follows:</p>
+        <me>c_i =
+            \begin{cases}
+            O(usedCount) \text{ if } i \text{ is a power of 2} \\
+            O(1) \text{ otherwise}
+            \end{cases}</me>
+        <p>Since the expensive cost of copying <c>usedCount</c> items occurs relatively infrequently, we spread the cost out, or <em>amortize</em>, the cost of insertion over all of the adds. When we do this the cost of any one <c>add</c> averages out to <m>O(1)</m>. For example, consider the case where you have already added 16 items. Each of the previous 16 adds cost you just one operation to check that array is large enough to hold 16 items. When the 17th item is added, a new array of size 32 is allocated and the 16 old items are copied. But now you have room in the array for 16 additional low cost appends. Mathematically we can show this as follows:</p>
+        <me>\begin{aligned}
+            cost_{total} &amp;= n + \sum_{j=0}^{\log_2{n}}{2^j} \\
+            &amp;= n + 2n \\
+            &amp;= 3n \\
+            \end{aligned}
+        </me>
+        <p>The summation in the previous equation may not be obvious to you, so let's think about that a bit more. The sum goes from zero to <m>\log_2{n}</m>. The upper bound on the summation tells us how many times we need to double the size of the array. The term <m>2^j</m> accounts for the copies that we need to do when the array is doubled. Since the total cost to append n items is <m>3n</m>, the cost for a single item is <m>3n/n = 3</m>. Because the cost is a constant we say that it is <m>O(1)</m>. This kind of analysis is called <term>amortized analysis</term> and is very useful in analyzing more advanced algorithms.</p>
+
+        <p>Let us now turn to the <c>set</c> and <c>get</c> functions, which are also in <xref ref="basicds-lst_arrindex" />, shown above. Recall as we discussed that the calculation required to find the memory location of the <m>i_{th}</m> item in an array is an <m>O(1)</m> arithmetic expression, so both of these operations are <m>O(1)</m>.</p>
+
+        <p> There are several other operations that we have not yet implemented for our list: <c>indexOf</c>, <c>isEmpty</c>, <c>removeAt</c>, and <c>size</c>. We leave these enhancements as an exercise for you.</p>
+
+        <p>Here is a program that we used to test our class.</p>
+
+        <listing xml:id="lst_unsorted-array-list-test">
+            <title>Test of ArrayUnorderedList class</title>
+            <program language="kotlin" interactive="activecode">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/UnorderedListADT.kt"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ArrayUnorderedList.kt"/>
+^^^^
+<xi:include parse="text" href="samplecode/src/main/kotlin/TestArrayUnorderedList.kt" />
+    </code>
             </program>
         </listing>
 

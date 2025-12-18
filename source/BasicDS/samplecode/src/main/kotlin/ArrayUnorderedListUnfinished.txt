@@ -33,6 +33,15 @@ class ArrayUnorderedList<T> : UnorderedListADT<T> {
         add(usedCount, item)
     }
 
+    // Set the value of an item at the specified index.
+    override fun set(index: Int, item: T) {
+        if (index in 0..< usedCount) {
+            array[index] = item
+        } else {
+            throw Exception("Index out of range")
+        }
+    }
+
     // Return item at specified index.
     override fun get(index: Int): T {
         if (index in 0..<usedCount) {

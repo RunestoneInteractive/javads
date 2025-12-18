@@ -14,4 +14,7 @@ fun main() {
 
     myList.add(2, 19)
     println(myList.toString() + " size: " + myList.size())
+
+    myList.set(2, 28)
+    println(myList.toString() + " size: " + myList.size())
 }
