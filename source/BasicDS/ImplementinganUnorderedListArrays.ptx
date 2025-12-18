@@ -1,24 +1,128 @@
 <?xml version="1.0"?>
-<section xml:id="basic-ds_implementing-an-unordered-list-arrays" xmlns:xi="http://www.w3.org/2001/XInclude">
+<section xml:id="basic-ds_implementing-an-unordered-list-arrays"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Implementing an Unordered List: Arrays</title>
     <introduction>
         <p>In order to implement an unordered list, we will first do so by using an <term>array</term>. In Kotlin, an array is very similar to a list. Just like a list, an array is a collection of items, where each item has an index, starting from zero. The difference is that arrays are much more limited in functionality than lists. When creating an array, you need to specify its size, and then you are unable to modify its size once it has been created. You also need to specify initial values for all items in the array. Once the array has been created, you can change the value at a particular index location, but there's no built-in capability for inserting a new item between others, or at the end. Likewise, there's no built-in capability for removing an item.</p>
 
-        <p>It sounds as though an arrays is just a limited version of a lists. So why would we bother with them? It's not that arrays are better than lists. Rather, arrays are the underlying mechanism on which lists are built in Kotlin. If we were to look at the actual programming code for the Kotlin language itself that implements default lists, we would see that they use arrays.</p>
+        <p>It sounds as though an array is just a limited version of a lists. So why would we
+            bother with them? It's not that arrays are better than lists. Rather, arrays are the
+            underlying mechanism on which lists are built in Kotlin. If we were to look at the
+            actual programming code for the Kotlin language itself that implements default lists, we
+            would see that they use arrays.</p>
 
         <p>Therefore, even though Kotlin provides us with capable lists that do all of the detailed work with arrays underneath, we are going to implement some of that ourselves. It helps us learn about how lists are actually implemented in a programming language, and it also helps us continue to learn about ADTs and data structures. In the following section, we will implement a list using an entirely different mechanism called a <em>linked list</em>, and so implementing a list with an array helps give us a basis for comparison.</p>
     </introduction>
 
-    <subsection xml:id="subsec-">
-        <title>Here we go</title>
-        <fragment xml:id="thingthing" filename="testfile.py">
-            <title>A fragment title</title>
-            <code>
-                print("Hello")
-            </code>
-        </fragment>
-
+    <subsection>
+        <title>Storing the data, and leaving extra space</title>
+        <p>As described above, we will use an array to store the data in our unordered list. Since arrays are fixed in size, we have something of a problem: how will we expand it if we need to? If our array fills up and we wish to add a new value, we will replace it with a new larger array in which we copy all of our existing content. This can be slow if our array is large, so we don't want to do it very often. Therefore, we will intentionally make our array larger than we need it to be, and use another variable to keep track of how much if it we have used. That way, if we need to add a new item to it, it's quick to do so. If we do fill up the array and need to make a new one, we'll make one that's twice as big. As the array keeps doubling in size, we can insert more and more items before we have to replace it again. This approach allows us to not waste too much memory in our computer, because our array is always at least half full, but also works at reasonable speed because we replace our array less and less frequently as it grows. It can be shown that with this approach, each addition to the list averages out to <m>O(1)</m>.</p>
     </subsection>
 
+    <subsection>
+        <title>How to set up the array in Kotlin</title>
+        <p>We will create a private variable within our class named <c>array</c>, which will store the contents for our unsorted list. As explained above, we need to provide an initial size for that array, as well as initial values. We'll start with an array of size 10 to get things started, and create new bigger arrays in the future as we need them. We'll also create a variable to keep track of how much of the array we are currently using.</p>
 
+        <p>The following code below isn't quite correct, but shows the idea of what we're trying to
+            do. We'll then fix it.</p>
+
+        <listing>
+            <title>A first attempt at starting an array-based unordered list.</title>
+            <program language="kotlin">
+                <code>
+                    class ArrayUnorderedList&lt;T&gt; : UnorderedListADT&lt;T&gt; {
+
+                        private var array = arrayOfNulls&lt;T?&gt;(10)  // initialize to size 10
+                        private var usedCount = 0  // how many places we currently use
+
+                        ...
+                    }
+                </code>
+            </program>
+        </listing>
+
+        <p>Kotlin has a built-in function named <c>arrayOfNulls</c>, which we use above to create an array of size 10. We use <c>T?</c> as the type instead of just <c>T</c> to indicate the type, because we are using null values for spaces that are not being used. The above code is right in principle, but Kotlin will not permit us create an array of a generic types (i.e., where the type is a parameter, like <c>&lt;T&gt;</c> in this code). Therefore, we have to use a trick: we instead will make it an array of type <c>Any?</c>. <c>Any?</c> is a class in Kotlin for which all other classes are subclasses. The <c>?</c> indicates that null values are permitted. Therefore, which this change, our code (which is still not quite right yet) looks like:</p>
+
+        <listing>
+            <title>An attempt at a fix using <c>Any?</c>.</title>
+            <program language="kotlin">
+                <code>
+                    class ArrayUnorderedList&lt;T&gt; : UnorderedListADT&lt;T&gt; {
+
+                        private var array = arrayOfNulls&lt;Any?&gt;(10)  // initialize to size 10
+                        private var usedCount = 0  // how many places we currently use
+
+                        ...
+                    }
+                </code>
+            </program>
+        </listing>
+
+        <p>The above approach is closer, but it results in the type of our variable <c>array</c> being <c>Array&lt;Any?&gt;</c>. Kotlin will happily let us put items of type <c>T</c> into the array, but the problem occurs when we try to get an item out of our array. Here's some sample code that shows the problem:</p>
+
+        <listing>
+            <title>A member function that is problematic.</title>
+            <program language="kotlin">
+                <code>
+    fun putInArrayThenReturn(T item): T? {
+        array[0] = item
+        return array[0]
+    }
+                </code>
+            </program>
+        </listing>
+
+        <p>This function takes <c>item</c> as a parameter, places it in the index-0 location of the array, then returns it. Kotlin reports an error at the return statement, where it indicates a mismatch in return types: the function expects something of type <c>T</c> to be returned, but it is instead returning something of type <c>Any?</c>. The simplest way to fix this is to tell Kotlin right when we create the array that we intend to think of it as an array of type <c>T?</c>, even though we have applied a trick of making it a type of <c>Any?</c>. To that end, here's our next (almost there!) update to creating our array:</p>
+
+
+        <listing>
+            <title>A new attempt at a fix using casting.</title>
+            <program language="kotlin">
+                <code>
+                    class ArrayUnorderedList&lt;T&gt; : UnorderedListADT&lt;T&gt; {
+
+                        private var array = arrayOfNulls&lt;Any?&gt;(10) as Array&lt;T?&gt;
+                        private var usedCount = 0
+
+                        ...
+                    }
+                </code>
+            </program>
+        </listing>
+
+        <p>The above approach actually works, though we get a warning. The warning is concerning the code we added at the end of the line creating the array, where we added the code <c> as Array&lt;T?&gt;</c>. This is called a <term>cast</term>, and it indicates that we are telling Kotlin to treat an array of <c>Any?</c> as an array of type <c>T?</c>. If we write our code correctly and only put items of type <c>T?</c> in the array, this will all work. However, if we put something in that array that is not of type <c>T?</c>, Kotlin will happily do it, because the array is really of type <c>Any?</c>. This would cause an exception when the program runs when we try to get that item back out and assign it to a variable of type <c>T?</c>. By using this trick, it means that we have to take on the responsibility ourselves of getting this right, and Kotlin warns us about that. This approach is essential, however, so we will tell Kotlin to suppress that warning. In general, warnings shouldn't be suppressed, and this should be considered to be poor style in general. In this particular case, this is considered to be standard procedure to work around the fact that Kotlin has this particular limitation for arrays. With all of that said, here is the correct working start to our class:</p>
+
+        <listing>
+            <title>A final solution, suppressing a warning.</title>
+            <program language="kotlin">
+                <code>
+                    class ArrayUnorderedList&lt;T&gt; : UnorderedListADT&lt;T&gt; {
+
+                        @Suppress("UNCHECKED_CAST")
+                        private var array = arrayOfNulls&lt;Any?&gt;(10) as Array&lt;T?&gt;
+                        private var usedCount = 0
+
+                        ...
+                    }
+                </code>
+            </program>
+        </listing>
+    </subsection>
+
+    <subsection>
+        <title>Implementing the rest of the unordered list</title>
+
+        <p>Now that we have the array set up, we can now implement the member functions that we need. The code below shows code for both <c>add</c> functions, as well as for <c>get</c>.</p>
+
+        <listing>
+            <title>Implementation of <c>add</c> and <c>get</c></title>
+            <program language="kotlin" line-numbers="yes">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ArrayUnorderedListUnfinished.kt" />                 
+                </code>
+            </program>
+        </listing>
+
+
+    </subsection>
 </section>
