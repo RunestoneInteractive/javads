@@ -9,5 +9,16 @@
         <p>Therefore, even though Kotlin provides us with capable lists that do all of the detailed work with arrays underneath, we are going to implement some of that ourselves. It helps us learn about how lists are actually implemented in a programming language, and it also helps us continue to learn about ADTs and data structures. In the following section, we will implement a list using an entirely different mechanism called a <em>linked list</em>, and so implementing a list with an array helps give us a basis for comparison.</p>
     </introduction>
 
-    <p> More more</p>
+    <subsection xml:id="subsec-">
+        <title>Here we go</title>
+        <fragment xml:id="thingthing" filename="testfile.py">
+            <title>A fragment title</title>
+            <code>
+                print("Hello")
+            </code>
+        </fragment>
+
+    </subsection>
+
+
 </section>

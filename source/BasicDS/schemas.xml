@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+  <!-- <uri pattern="*.ptx" uri="pretext.rnc"/> -->
+  <namespace ns="http://www.w3.org/2001/XInclude" uri=".rnc"/>
+</locatingRules>
