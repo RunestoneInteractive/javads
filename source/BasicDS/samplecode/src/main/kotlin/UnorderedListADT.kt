@@ -18,7 +18,7 @@ interface UnorderedListADT<T> {
     // Find index of first occurrence of item in list.
     fun indexOf(item: T): Int
 
-    // Returns true if there are no items in the deque;
+    // Returns true if there are no items in the list;
     // false otherwise.
     fun isEmpty(): Boolean
 
