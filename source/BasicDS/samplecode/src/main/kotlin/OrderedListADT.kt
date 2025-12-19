@@ -1,7 +1,7 @@
-interface OrderedListADT<T> {
+interface OrderedListADT<T: Comparable<T>> {
 
     // Adds (insert) a new item at the appropriate location.
-    fun add(index: Int, item: T)
+    fun add(item: T)
 
     // Searches for first occurrence of item and removes it.
     fun remove(item: T)

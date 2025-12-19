@@ -12,7 +12,7 @@ fun main() {
     println(
         "search for 17 returns index of " +
                 myList.indexOf(17)
-    )
+        )
     println(
         "search for 1066 returns index of " +
                 myList.indexOf(1066)
