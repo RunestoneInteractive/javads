@@ -180,12 +180,12 @@
     </subsection>
 
     <subsection>
-        <title>Implementing the rest of the unordered list</title>
+        <title>Implementing more of the unordered list</title>
 
-        <p>Now that we have the array set up, we can now implement the member functions that we need. The code below shows code for both <c>add</c> functions, as well as for <c>get</c>.</p>
+        <p>Now that we have the array set up, we can now implement some of the member functions that we need. The code below shows code <c>add</c>, <c>addLast</c> functions, as well as for <c>get</c>.</p>
 
         <listing xml:id="basicds-lst_arrindex">
-            <title>Implementation of <c>add</c> and <c>get</c></title>
+            <title>Implementation of <c>add</c>, <c>addLast</c>, and <c>get</c></title>
             <program language="kotlin" line-numbers="yes">
                 <code>
 <xi:include parse="text" href="samplecode/src/main/kotlin/ArrayUnorderedListUnfinished.txt" />                 
@@ -193,7 +193,7 @@
             </program>
         </listing>
 
-        <p>Let's look first at the first of the two <c>add</c> functions that appear above, beginning on line 12. The first thing <c>add</c> does is, in lines 14-16, is make sure that the index at which are an adding an item is appropriate. The variable <c>usedCount</c> indicate how much of the array we are using. In other words, it indicates how many values we have stored in the array. If <c>index</c> is equal to <c>usedCount</c>, this indicates that we are appending a new value at the end of the array. If it is less than that, then we are are putting the new value in a location that previously had a value, and we shift all of the other values over to make room.</p>
+        <p>Let's look first at the <c>add</c> function, beginning on line 12. The first thing <c>add</c> does is, in lines 14-16, is make sure that the index at which are an adding an item is appropriate. The variable <c>usedCount</c> indicate how much of the array we are using. In other words, it indicates how many values we have stored in the array. If <c>index</c> is equal to <c>usedCount</c>, this indicates that we are appending a new value at the end of the array. If it is less than that, then we are are putting the new value in a location that previously had a value, and we shift all of the other values over to make room.</p>
 
         <p>The next check we do is to see if there is room in the array to store a new value. In line 19, we check to see if the number of spaces in the array that we are using is equal to the size of the array itself. If that is the case, line 20 reassigns our array to a new one, which is a copy of the original one but with double its capacity. The old array, which no longer is referred to by any variables, is garbage collected.</p>
 
@@ -203,7 +203,7 @@
 
         <p>Finally, in lines 27-28, we put the new item in the array, and increment <c>usedCount</c>. Note that if <c>index</c>, which is the location of the new value, is the same as <c>usedCount</c>, that means that nothing needs to be shifted over. The loop in lines 24-26 will occur zero times in that scenario.</p>
 
-        <p>The second method <c>add</c>, which doesn't take an index value, is a convenience function for inserting the new item at the end. It is simply a one-line function which calls the other <c>add</c> function, indicating the location to be at the very end of the current used values, which is indicated by the value <c>usedCount</c>.</p>
+        <p>The second member function <c>addLast</c>, which doesn't take an index value, is a convenience function for inserting the new item at the end. It is simply a one-line function which calls the other <c>add</c> function, indicating the location to be at the very end of the current used values, which is indicated by the value <c>usedCount</c>.</p>
 
 
         <p>Let's look at the big O performance for add. To do this, let's think of add as two separate operations: one operation expands the array if necessary, and the other slides values down to make room for the new value. The performance of sliding values down to make room is <m>O(n)</m>, since in the worst case we want to insert something at index 0, and we have to shift the entire array forward by one. On average we will only need to shift half of the array, but this is still <m>O(n)</m>.</p>
@@ -225,7 +225,7 @@
 
         <p>Let us now turn to the <c>set</c> and <c>get</c> functions, which are also in <xref ref="basicds-lst_arrindex" />, shown above. Recall as we discussed that the calculation required to find the memory location of the <m>i_{th}</m> item in an array is an <m>O(1)</m> arithmetic expression, so both of these operations are <m>O(1)</m>.</p>
 
-        <p> There are several other operations that we have not yet implemented for our list: <c>indexOf</c>, <c>isEmpty</c>, <c>removeAt</c>, and <c>size</c>. We leave these enhancements as an exercise for you.</p>
+        <p> There are several other operations that we have not yet implemented for our list: <c>addFirst</c>, <c>indexOf</c>, <c>isEmpty</c>, <c>remove</c>, <c>removeAt</c>, and <c>size</c>. We leave these enhancements as an exercise for you.</p>
 
         <p>Here is a program that we used to test our class.</p>
 

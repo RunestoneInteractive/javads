@@ -1,7 +1,10 @@
 interface UnorderedListADT<T> {
 
-    // Add (insert )a new item to the end of the list.
-    fun add(item: T)
+    // Add (insert) a new item to the end of the list.
+    fun addFirst(item: T)
+
+    // Add (insert) a new item to the end of the list.
+    fun addLast(item: T)
 
     // Add (insert) a new item at the specified index.
     fun add(index: Int, item: T)
@@ -18,6 +21,9 @@ interface UnorderedListADT<T> {
     // Returns true if there are no items in the deque;
     // false otherwise.
     fun isEmpty(): Boolean
+
+    // Searches for first occurrence of item and removes it.
+    fun remove(item: T)
 
     // Removes item at specified index. Items at higher
     // index values are shifted down to fill the gap.

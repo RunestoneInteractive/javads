@@ -29,7 +29,7 @@ class ArrayUnorderedList<T> : UnorderedListADT<T> {
     }
 
     // Add a new item to the end of the list.
-    override fun add(item: T) {
+    override fun addLast(item: T) {
         add(usedCount, item)
     }
 

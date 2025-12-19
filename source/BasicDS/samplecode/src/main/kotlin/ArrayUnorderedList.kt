@@ -29,7 +29,7 @@ class ArrayUnorderedList<T> : UnorderedListADT<T> {
     }
 
     // Add a new item to the end of the list.
-    override fun add(item: T) {
+    override fun addLast(item: T) {
         add(usedCount, item)
     }
 
@@ -50,13 +50,17 @@ class ArrayUnorderedList<T> : UnorderedListADT<T> {
             throw Exception("Index out of range")
         }
     }
+    // Add (insert) a new item to the end of the list.
+    override fun addFirst(item: T) {
+        throw NotImplementedError()
+    }
 
     // Find index of first occurrence of item in list.
     override fun indexOf(item: T): Int {
         throw NotImplementedError()
     }
 
-    // Returns true if there are no items in the deque;
+    // Returns true if there are no items in the list;
     // false otherwise.
     override fun isEmpty(): Boolean {
         throw NotImplementedError()
@@ -65,6 +69,11 @@ class ArrayUnorderedList<T> : UnorderedListADT<T> {
     // Removes item at specified index. Items at higher
     // index values are shifted down to fill the gap.
     override fun removeAt(index: Int) {
+        throw NotImplementedError()
+    }
+
+    // Searches for first occurrence of item and removes it.
+    override fun remove(item: T) {
         throw NotImplementedError()
     }
 

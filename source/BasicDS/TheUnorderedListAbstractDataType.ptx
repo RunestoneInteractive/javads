@@ -3,14 +3,17 @@
   <title>The Unordered List Abstract Data Type</title>
   <p>The structure of an unordered list, as described above, is a collection
     of items where each item holds a relative position with respect to the
-    others. The default list in Kotlin is an unordered list. It has a very large collection of member functions, but we'll focus on a small number here as an example.</p>
+    others. The default list in Kotlin is an unordered list. It has a very large collection of member functions. We'll pick a small group of member functions to consider, which may or may not be precisely in the built-in Kotlin list as presented here.</p>
   <p>
     <ul>
       <li>
-        <p><c>add(item)</c> adds a new item to the end of the list making it the last item in the collection. It needs the item and returns nothing.</p>
+        <p><c>add(index, item)</c> adds a new item to the list at the provided index, inserting it before the remaining items in the list. <c>index</c> may not be bigger than the length of the list (in order to prevent empty entries in the list). It needs the item and returns nothing.</p>
       </li>
       <li>
-        <p><c>add(index, item)</c> adds a new item to the list at the provided index, inserting it before the remaining items in the list. <c>index</c> may not be bigger than the length of the list (in order to prevent empty entries in the list). It needs the item and returns nothing.</p>
+        <p><c>addLast(item)</c> adds a new item to the end of the list making it the last item in the collection. It needs the item and returns nothing.</p>
+      </li>
+      <li>
+        <p><c>addFirst(item)</c> adds a new item to the end of the list making it the first item in the collection. It needs the item and returns nothing.</p>
       </li>
       <li>
         <p><c>get(index)</c> returns the item in the list at position <c>index</c>. The index must be at least 0 and no more than one less than the length of the list; otherwise, an exception is thrown.</p>
@@ -21,6 +24,7 @@
       <li>
         <p><c>isEmpty()</c> tests to see whether the list is empty. It needs no parameters and returns a boolean value.</p>
       </li>
+        <p><c>remove(item)</c> searches for the first occurrence of the item in the list and removes it. Items at higher index values are shifted down. It returns nothing.</p>
       <li>
         <p><c>removeAt(index, item)</c> removes the item from the list at position `index`. It needs the index and modifies the list. The index must be at least 0 and no more than one less than the length of the list; otherwise, an exception is thrown. Items at higher index values are shifted down to fill the gap. It returns nothing.</p>
       </li>
