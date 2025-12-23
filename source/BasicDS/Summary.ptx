@@ -53,7 +53,7 @@
       </li>
       <li>
         <p>A linked list implementation maintains logical order without
-          requiring physical storage requirements such as an underlying <c>ArrayList</c>.</p>
+          requiring physical storage requirements such as an underlying <c>MutableList</c>.</p>
       </li>
       <li>
         <p>Modification to the head of the linked list is a special case.</p>

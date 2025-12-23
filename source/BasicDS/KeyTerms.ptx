@@ -2,55 +2,29 @@
 <section xml:id="basic-ds_key-terms">
   <title>Key Terms</title>
 
-<table>
-  <tabular>
-    <row>
-      <cell>balanced parentheses</cell>
-      <cell>has-a</cell>
-      <cell>node</cell>
-    </row>
-    <row>
-      <cell>data field</cell>
-      <cell>head</cell>
-      <cell>override</cell>
-    </row>
-    <row>
-      <cell>deque</cell>
-      <cell>inheritance</cell>
-      <cell>palindrome</cell>
-    </row>
-    <row>
-      <cell>doubly linked list</cell>
-      <cell>last in, first out</cell>
-      <cell>queue</cell>
-    </row>
-    <row>
-      <cell>escape</cell>
-      <cell>LIFO</cell>
-      <cell>short-circuit evaluation</cell>
-    </row>
-    <row>
-      <cell>FIFO</cell>
-      <cell>linear data structures</cell>
-      <cell>simulation</cell>
-    </row>
-    <row>
-      <cell>first in, first out</cell>
-      <cell>linked list</cell>
-      <cell>singly linked list</cell>
-    </row>
-    <row>
-      <cell>fully qualified name</cell>
-      <cell>linked list traversal</cell>
-      <cell>stack</cell>
-    </row>
-    <row>
-      <cell>generic</cell>
-      <cell>list</cell>
-      <cell></cell>
-    </row>
-    </tabular>
-</table>
-
-
+  <p>
+    <ul cols="3">
+      <li>balanced parentheses</li>
+      <li>data field</li>
+      <li>deque</li>
+      <li>first in, first out (FIFO)</li>
+      <li>fully parenthesized</li>
+      <li>head</li>
+      <li>infix</li>
+      <li>last in, first out (LIFO)</li>
+      <li>linear data structure</li>
+      <li>linked list</li>
+      <li>linked list traveral</li>
+      <li>list</li>
+      <li>node</li>
+      <li>palindrome</li>
+      <li>postfix</li>
+      <li>precedence</li>
+      <li>prefix</li>
+      <li>queue</li>
+      <li>short-circuit evaluation</li>
+      <li>simulation</li>
+      <li>stack</li>
+    </ul>
+  </p>
 </section>
