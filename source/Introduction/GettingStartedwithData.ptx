@@ -1,58 +1,40 @@
 <?xml version="1.0"?>
-<section xml:id="introduction_getting-started-with-data">
+<section xml:id="introduction_getting-started-with-data" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Getting Started with Data</title>
   <introduction>
-    <p>We stated in <xref ref="introduction_review-of-basic-kotlin"/> that Java supports the object-oriented programming
-            paradigm. This means that Java considers data to be the focal point of
-            the problem-solving process. In Java, as well as in any other
-            object-oriented programming language, we define a <term>class</term> to be a
-            description of what the data look like (the state) and what the data can
-            do (the behavior). Classes are analogous to abstract data types because
-            a user of a class only sees the state and behavior of a data item. Data
-            items are called <term>objects</term> in the object-oriented paradigm. An object
-            is an instance of a class.</p>
-        </introduction>
+    <p>We stated in <xref ref="introduction_review-of-basic-kotlin" /> that Kotlin supports the object-oriented programming paradigm. This means that Kotlin considers data to be the focal point of the problem-solving process. In Kotlin, as well as in any other object-oriented programming language, we define a <term>class</term> to be a description of what the data look like (the state) and what the data can do (the behavior). Classes are analogous to abstract data types because a user of a class only sees the state and behavior of a data item. Data items are called <term>objects</term> in the object-oriented paradigm. An object is an instance of a class.</p>
+
+
+  </introduction>
   <subsection xml:id="introduction_primitive-data-types">
-    <title>Primitive Data Types</title>
-    <p>We will begin our review by considering the <term>primitive</term> data types. Java
-                has two main built-in numeric data types that implement integers and
-                floating-point values. These Java types are called <c>int</c> and
-                <c>double</c>. The standard arithmetic operators, +, -, *, and / can be used with parentheses forcing the order of
-                operations away from normal operator precedence. Another very useful
-                operator is the remainder (modulo) operator (%).
-                Note that when two integers are divided, the result is an integer.
-              </p>
-              <p>To do exponentiation, you use the built-in <c>Math.pow()</c> method, which always yields a <c>double</c> result.</p>
-              <p>
-                The folllowing listing shows some arithmetic expressions and their results.
-                The <c>//</c> introduces a Java <term>comment</term>; Java ignores everything from
-                the <c>//</c> to the end of the line.
-                point.</p>
-    <program xml:id="intro_1" language="java">
+    <title>Built-in Atomic Data Types</title>
+    <p>We will begin our review by considering the atomic data types. Kotlin has two main built-in numeric data types that implement integers and floating-point values. These Kotlin types are called <c>Int</c> and <c>Double</c>. The standard arithmetic operators, +, -, *, and / can be used with parentheses forcing the order of operations away from normal operator precedence. Another very useful operator is the remainder (modulo) operator (%). Note that when two integers are divided, the result is an integer. </p>
+    <p>To do exponentiation, you use the built-in extension function <c>pow()</c> method, which always yields a <c>Double</c> result. You'll see an example below: the following listing shows some arithmetic expressions and their results. The <c>//</c> introduces a Kotlin <term>comment</term>; Kotlin ignores everything from the <c>//</c> to the end of the line. point.</p>
+    <program xml:id="intro_1" language="kotlin" interactive="activecode">
       <code>
-2 + 3 * 4        // 14
-(2 + 3) * 4      // 20
-Math.pow(2, 10)  // 1024.0
-8 / 4            // 2
-11 / 4           // 2
-11.0 / 4         // 2.75
-11 % 4           // 3
-3 / 6            // 0
-Math.pow(2, 100) // 1.2676506002282294E30
-        </code>
+import kotlin.math.pow
+
+fun main() {
+  println(2 + 3 * 4)        // 14
+  println((2 + 3) * 4)      // 20
+  println(2.0.pow(10.0))    // 1024.0
+  println(8 / 4)            // 2
+  println(11 / 4)           // 2
+  println(11.0 / 4)         // 2.75
+  println(11 % 4)           // 3
+  println(3 / 6)            // 0
+  println(2.0.pow(100.0))   // 1.2676506002282294E30
+}     </code>
     </program>
 
-    <p>The Boolean data type, implemented as the Java <c>boolean</c> primitive data type, is
-    quite useful for representing truth values. The possible values
-    for a <c>boolean</c> variable are <c>true</c> and <c>false</c>, with the standard
-    Boolean operators, <c>&amp;&amp;</c> (and), <c>||</c> (or), and <c>!</c> (not).</p>
+    <p>The Kotlin <c>Boolean</c> data type is quite useful for representing truth values. The possible values for a <c>Boolean</c> variable are <c>true</c> and <c>false</c>, with the standard Boolean operators, <c>&amp;&amp;</c> (and), <c>||</c> (or), and <c>!</c> (not).</p>
 
-    <p>Boolean values are also used as results for comparison operators such as equality (==) and greater than (<m>&gt;</m>). In addition, relational operators and logical operators can be combined together to form complex logical expressions. <xref ref="introduction_tab-relational"/> shows the relational and logical operators.</p>
+    <p>Boolean values are also used as results for comparison operators such as equality (==) and greater than (<m>&gt;</m>). In addition, relational operators and logical operators can be combined together to form complex logical expressions. <xref ref="introduction_tab-relational" /> shows the relational and logical operators.</p>
 
     <table xml:id="introduction_tab-relational">
       <title>
-          Relational and Logical Operators
-        </title>
+        Relational and Logical Operators
+      </title>
       <tabular>
         <row header="yes">
           <cell>Operation Name</cell>
@@ -61,148 +43,185 @@ Math.pow(2, 100) // 1.2676506002282294E30
         </row>
         <row>
           <cell>less than</cell>
-          <cell><c>&lt;</c></cell>
+          <cell>
+            <c>&lt;</c>
+          </cell>
           <cell>Less than operator</cell>
         </row>
         <row>
           <cell>greater than</cell>
-          <cell><c>&gt;</c></cell>
+          <cell>
+            <c>&gt;</c>
+          </cell>
           <cell>Greater than operator</cell>
         </row>
         <row>
           <cell>less than or equal</cell>
-          <cell><c>&lt;=</c></cell>
+          <cell>
+            <c>&lt;=</c>
+          </cell>
           <cell>Less than or equal to operator</cell>
         </row>
         <row>
           <cell>greater than or equal</cell>
-          <cell><c>&gt;=</c></cell>
+          <cell>
+            <c>&gt;=</c>
+          </cell>
           <cell>Greater than or equal to operator</cell>
         </row>
         <row>
           <cell>equal</cell>
-          <cell><c>==</c></cell>
+          <cell>
+            <c>==</c>
+          </cell>
           <cell>Equality operator</cell>
         </row>
         <row>
           <cell>not equal</cell>
-          <cell><c>!=</c></cell>
+          <cell>
+            <c>!=</c>
+          </cell>
           <cell>Not equal operator</cell>
         </row>
         <row>
           <cell>logical and</cell>
-          <cell><c>&amp;&amp;</c></cell>
+          <cell>
+            <c>&amp;&amp;</c>
+          </cell>
           <cell>Both operands true for result to be true</cell>
         </row>
         <row>
           <cell>logical or</cell>
-          <cell><c>||</c></cell>
-          <cell><line>One or the other operand is true for the</line><line>result to be true</line></cell>
+          <cell>
+            <c>||</c>
+          </cell>
+          <cell>
+            <line>One or the other operand is true for the</line>
+            <line>result to be true</line>
+          </cell>
         </row>
         <row>
           <cell>logical not</cell>
-          <cell><c>!</c></cell>
-          <cell><line>Negates the truth value, false becomes</line><line>true, true becomes false</line></cell>
+          <cell>
+            <c>!</c>
+          </cell>
+          <cell>
+            <line>Negates the truth value, false becomes</line>
+            <line>true, true becomes false</line>
+          </cell>
         </row>
       </tabular>
     </table>
 
     <p>Here are examples of boolean expressions using these operators. Notice that, in the last example, you <em>must</em> fully write out both conditions; unlike some languages, you cannot write it as <c>2 &lt; 7 &lt; 12</c>.</p>
 
-    <program xml:id="intro_2" language="java">
+    <program xml:id="intro_2" language="kotlin" interactive="activecode">
       <code>
-5 == 10                   // false
-10 &gt; 5                    // true
-(5 &gt;= 1) &amp;&amp; (5 &lt;= 10)     // true
-(1 &lt; 5) || (10 &lt; 1)       // true
-(2 &lt; 7) &amp;&amp; (7 &lt; 12)       // true
-        </code>
+fun main() {
+  println(5 == 10)                   // false
+  println(10 &gt; 5)                    // true
+  println((5 &gt;= 1) &amp;&amp; (5 &lt;= 10))     // true
+  println((1 &lt; 5) || (10 &lt; 1))       // true
+  println((2 &lt; 7) &amp;&amp; (7 &lt; 12)       // true
+}</code>
     </program>
 
-    <p>Identifiers are used in programming languages as names. In Java, identifiers consist of a sequence of Unicode letters, digits, dollar sign ($), or underscore (_). The first character must be a letter, dollar sign ($), or an underscore (_). Identifiers are case sensitive and can be of any length. Remember that it is always a good idea to use names that convey meaning so that your program code is easier to read and understand.</p>
+    <p>Identifiers are used in programming languages as names. In Kotlin, identifiers consist of a sequence of Unicode letters, digits, dollar sign ($), or underscore (_). The first character must be a letter, dollar sign ($), or an underscore (_). Identifiers are case sensitive and can be of any length. Remember that it is always a good idea to use names that convey meaning so that your program code is easier to read and understand.</p>
 
-    <p>By convention, Java names consisting of more than one word use <term>camel case</term>, where the first word of the name starts with a lower case letter and the first letter of subsequent words are capitalized, such as <c>salesTax</c> and <c>partsPerMillion</c>.</p>
+    <p>By convention, Kotlin names consisting of more than one word use <term>camel case</term>, where the first word of the name starts with a lower case letter and the first letter of subsequent words are capitalized, such as <c>salesTax</c> and <c>partsPerMillion</c>.</p>
 
-      <p>In Java, you must <term>declare</term> a variable before you use it. You declare a variable by putting the data type before the variable name.  Assignment statements provide a way to associate a name with a value. The variable will hold the data specified on the right-hand side of the assignment operator (<c>=</c>). Consider the following session:</p>
+    <p>In Kotlin, you must <term>declare</term> a variable before you use it. You declare a variable by putting the word <c>val</c> or <c>var</c> before the variable name. <c>val</c> indicates that the variable is a constant, i.e. its value cannot be changed after it has been assigned. <c>var</c> indicates that the variable be modified as many times as you like.</p>
 
+    <p>Assignment statements provide a way to associate a name with a value. The variable will hold the data specified on the right-hand side of the assignment operator (<c>=</c>). Consider the following program:</p>
 
-    <pre>jshell> int theSum = 0;
-theSum ==> 0
+    <program xml:id="intro_3" language="kotlin" interactive="activecode">
+      <code>
+fun main() {
+  var theSum = 0
+  // theSum = true     &lt;---- This line would cause an error
+  theSum = theSum + 1
+  println(theSum)
+  var doubleSum: Double = theSum.toDouble()
+  println(doubleSum)
+}</code>
+    </program>
 
-jshell> theSum = theSum + 1;
-theSum ==> 1
+    <p>The statement <c>var theSum = 0</c> creates a variable called <c>theSum</c>. In Kotlin, every variable must have a type. We can explicitly state the type if we wish, like this:</p>
 
-jshell> theSum = true;
-|  Error:
-|  incompatible types: boolean cannot be converted to int
-|  theSum = true;
-|           ^--^
+    <pre>
+        var theSum: Int = 0
+      </pre>
 
-jshell> double doubleSum = theSum;
-doubleSum ==> 1.0
+    <p>This explicitly states that the variable <c>theSum</c> should be an integer. Much of the time, it is unnecessary for us to do this because Kotlin figures it out via <em>type inferencing</em>. When we express</p>
 
-</pre>
-    <p>The assignment statement <c>theSum = 0;</c> creates an integer variable called
-                <c>theSum</c> and lets it hold the value <c>0</c> (see
-                <xref ref="fig-assignment1"/>). In general, the right-hand side of the assignment
-                statement is evaluated and the resulting value is
-                assigned to the name on the left-hand side. In the second statement, the right-hand side gets the current value of <c>theSum</c> (zero) and adds one; the resulting value is re-assigned as the value of the variable (see <xref ref="fig-assignment2"/>) Once you declare a variable's data type, Java will not let you assign an
-                incompatible data type (the third assignment).  In the last example, you can see
-                that a compatible data type (<c>double</c> values are compatible with <c>int</c>) is
-                allowed, and Java implicitly converts the integer value to floating point.</p>
+    <pre>var theSum = 0</pre>
 
-    <figure align="center" xml:id="fig-assignment1">
-      <caption>Primitive Data Type Variables Hold Values</caption>
-      <image source="Introduction/Figures/assignment1.png" width="20%"/>
+    <p>without putting a type for <c>theSum</c>, Kotlin infers the type based on the value we assign it to. Since 0 is an integer, Kotlin assigns <c>Int</c> as the type for <c>theSum</c>. This type is permanent for the life of the variable. Some languages, such as Python, allow you to assign a variable to a different type. Kotlin does not behave this way, which is why line 3 in the code above would result in an error if it were not commented: Kotlin will not allow assigning a <c>Boolean</c> value to an <c>Int</c>.</p>
+
+    <p>Line 1 is a combination of both a declaration and an assignment. Line 4 has no declaration, but it assigns the result of the calculation on the right to the variable on the left.</p>
+
+    <p>In Kotlin, variables are <term>references</term> to the data. We can think of each variable as being associated an object, which is stored elsewhere in the computer's memory <xref ref="fig-reference1" /> illustrates the variable <c>theSum</c> after line 1 has executed.</p>
+
+    <figure xml:id="fig-reference1">
+      <caption>Variables hold references to objects</caption>
+      <image source="Introduction/Figures/kotlin-reference1.png" width="50%" />
     </figure>
-    <figure align="center" xml:id="fig-assignment2">
-      <caption>Assignment Changes the Value</caption>
-      <image source="Introduction/Figures/assignment2.png" width="20%"/>
+
+    <p>When a variable is reassigned in Kotlin, such as in line 4, we change its reference to refer to a new object. In line 4 above, we first calculate the right hand side of the assignment statement, which is <c>theSum = theSum + 1</c>. This creates a <em>new</em> object, which is an <c>Int</c> with value 1. The variable <c>theSum</c> then refers to this new object. A background process called the <em>garbage collector</em> then frees up the object containing 0 at some point in the future. See <xref ref="fig-reference2" /> for an illustration.</p>
+
+    <figure xml:id="fig-reference2">
+      <caption>Assignment changes the reference</caption>
+      <image source="Introduction/Figures/kotlin-reference2.png" width="50%" />
     </figure>
 
-    <p>The final primitive data type that we want to introduce is <c>char</c>, which contains a single 16-bit Unicode character.</p>
+    <aside>
+      <title>Difference from Java</title>
+      <p>For students who have previously programmed in Java: Kotlin is similar to the language Java in many ways, but this is a critical difference. In Java, primitive types such as <c>int</c>, <c>double</c>, etc, are <em>primitive</em> types, and are not handled as references. On the other hand, in Java objext types such as <c>String</c> are handles as references. Kotlin is consistent across all types; they are all treated as references.</p>
+    </aside>
+
+    <p>The final atomic data type that we want to introduce is <c>Char</c>, which contains a single 16-bit Unicode character.</p>
   </subsection>
+
 
   <subsection xml:id="introduction_strings">
     <title>Strings</title>
-     <p>In addition to the numeric and boolean types, Java has a number of
-       data types which are <term>objects</term>.  In Java, as well as in any other object-oriented programming language, we define a <term>class</term> to be a description of what the data look like (the state) and what the data can do (the behavior). Classes are analogous to abstract data types because a user of a class only sees the state and behavior of a data item. Data items are called objects in the object-oriented paradigm. An object is an <term>instance</term> of a class.</p>
-     <p>Unlike primitive data types, where a variable stores the data value, objects are <term>reference types</term>. An object does not contain the state; it refers to the area of memory where the data resides.  For example, in this string declaration:</p>
+    <p>In addition to the numeric and boolean types, Kotlin has a number of very powerful built-in collection classes. Lists and strings are ordered collections that are very similar in structure but have specific differences that must be understood for them to be used properly. Sets and maps are unordered collections.</p>
 
-     <pre>String word = "computer";</pre>
+    <p>Notice that the data type <c>String</c> starts with a capital letter. By convention, all class names in Kotlin begin with a capital letter. Objects in Kotlin often have functions associated with them, that are often used to do actions associated with that object. In this textbook, we will refer to these functions as <term>methods</term>.</p>
 
-     <p>you can visualize the reference as in <xref ref="fig-reference1"/>:</p>
+    <p>To invoke an method for an object, you use <term>dot notation</term>: give the variable name, then a dot, then the method or property desired. For example, to find the length of a String, you use the <c>count()</c> method:</p>
 
-         <figure align="center" xml:id="fig-reference1">
-      <caption>A String is a reference type</caption>
-      <image source="Introduction/Figures/reference1.png" width="50%"/>
-    </figure>
+    <pre>
+val word = "computer"
+println(word.count())
+    </pre>
 
-    <p>Notice that the data type <c>String</c> starts with a capital letter. By convention, all class names in Java begin with a capital letter. To invoke an object's <term>method</term> (its behavior) or a <term>field</term> (its state), you use <term>dot notation</term>: give the variable name, then a dot, then the method or field desired. For example, to find the length of a String, you use the <c>length()</c> method:</p>
+    <aside>
+      <title>Member functions, extension functions, and methods</title>
+      <p>The Kotlin language provides two different capabilities for creating functions associated with objects. One of them, referred to in the Kotlin documentation as a <term>member function</term>, is the same thing as what is referred to as a method in languages such as Python and Java. We will create member functions ourselves later in this book. Kotlin offers a second capability referred to as an <term>extension function</term>, which looks identical to a member function when using it, but has some internal differences. In practice, this distinction does not typically matter at all when using one of these functions; it relates to how the code is written when it is defined. For simplicity, in this book we will follow a somewhat-established convention<fn><em>Sebastian Aigner, Roman Elizarov, Svetlana Isakova, and Dmitry Jemerov. Kotlin in Action, Second Edition</em>. Manning, 2024.</fn> where we will refer to both member functions and extension functions as <term>methods</term>. If we need to distinguish between the two, we'll use the more precise terminology.</p>
+    </aside>
 
-    <pre>jshell> String word = "computer";
-word ==> "computer"
+    <p></p>
 
-jshell> word.length()
-$2 ==> 8
-      </pre>
 
-      <p>The <c>+</c> operator allows you to <term>concatenate</term> Strings. When concatenating a number with a String, the number will be converted to a String. Note that the order of operations is important:</p>
+    <p>The <c>+</c> operator allows you to <term>concatenate</term> Strings. When concatenating a String followed by a number, the number will be converted to a String. When a number appears first, however, it attempts to do numeric addition. Note that the order of operations is important:</p>
 
-      <pre>jshell> String word2 = "door" + "bell";
-word2 ==> "doorbell"
+    <program xml:id="intro_2-1" language="kotlin" interactive="activecode">
+      <code>
+fun main() {
+  println("door" + "bell")                      // "doorbell"
+  println("eyesight " + 20 + 20)                // "eyesight 2020"
+  //println(40 + 36 + " trombones")             // error: tries to numerically add 76 and " trombones"
+  println((40 + 36).toString() + " trombones")  // "76 trombones"
+}</code>
+    </program>
 
-jshell> String word3 = 40 + 36 + " trombones"; // numeric addition first
-word3 ==> "76 trombones"
 
-jshell> String word4 = "eyesight " + 20 + 20; // all String concatenation
-word4 ==> "eyesight 2020"</pre>
-
-    <p>Some of the methods available for Strings are shown in <xref ref="introduction_tab-stringmethods"/>.</p>
+    <p>Some of the methods available for Strings are shown in <xref ref="introduction_tab-stringmethods" />.</p>
     <table xml:id="introduction_tab-stringmethods">
-        <title>
-          Methods Provided by the Java String Class
-        </title>
+      <title>
+        Methods Available for Strings
+      </title>
       <tabular>
         <row header="yes">
           <cell>Method Name</cell>
@@ -210,164 +229,163 @@ word4 ==> "eyesight 2020"</pre>
           <cell>Explanation</cell>
         </row>
         <row>
-          <cell><c>length</c></cell>
-          <cell><c>str.length()</c></cell>
-          <cell><line>Returns the number of characters in</line><line> the string</line></cell>
+          <cell>
+            <c>count</c>
+          </cell>
+          <cell>
+            <c>str.count()</c>
+          </cell>
+          <cell>
+            <line>Returns the number of characters in</line>
+            <line> the string</line>
+          </cell>
         </row>
         <row>
-          <cell><c>charAt</c></cell>
-          <cell><c>str.charAt(index)</c></cell>
-          <cell><line>Returns the character at the given</line><line> index. This returns a <c>char</c> primitive,</line><line> not a <c>String</c>.</line></cell>
+          <cell>
+            <c>get</c>
+          </cell>
+          <cell>
+            <c>str.get(index)</c>
+          </cell>
+          <cell>
+            <line>Returns the character at the given</line>
+            <line>index. This returns a <c>Char</c> object.</line>
+            <line>This can also be abbreviated as <c>str[index]</c></line>
+          </cell>
         </row>
         <row>
-          <cell><c>substring(start, end)</c></cell>
-          <cell><c>str.substring(s, e)</c></cell>
-          <cell><line>Returns the portion of the string</line><line> starting at given start index up</line><line> to <em>but not including</em> the end index</line></cell>
+          <cell>
+            <c>substring(start, end)</c>
+          </cell>
+          <cell>
+            <c>str.substring(s, e)</c>
+          </cell>
+          <cell>
+            <line>Returns the portion of the string</line>
+            <line> starting at given start index up</line>
+            <line> to <em>but not including</em> the end index</line>
+          </cell>
         </row>
         <row>
-          <cell><c>substring(start)</c></cell>
-          <cell><c>str.substring(s)</c></cell>
-          <cell><line>Returns the portion of the string</line><line> starting at given start index to the</line><line> end of the string</line></cell>
+          <cell>
+            <c>substring(start)</c>
+          </cell>
+          <cell>
+            <c>str.substring(s)</c>
+          </cell>
+          <cell>
+            <line>Returns the portion of the string</line>
+            <line> starting at given start index to the</line>
+            <line> end of the string</line>
+          </cell>
         </row>
         <row>
-          <cell><c>toLowerCase</c></cell>
-          <cell><c>str.toLowerCase()</c></cell>
-          <cell><line>Returns the string with all letters</line><line> in lower case</line></cell>
+          <cell>
+            <c>toLowerCase</c>
+          </cell>
+          <cell>
+            <c>str.lowercase()</c>
+          </cell>
+          <cell>
+            <line>Returns the string with all letters</line>
+            <line> in lower case</line>
+          </cell>
         </row>
         <row>
-          <cell><c>toUpperCase</c></cell>
-          <cell><c>str.toUpperCase()</c></cell>
-          <cell><line>Returns the string with all letters</line><line> in upper case</line></cell>
+          <cell>
+            <c>uppercase()</c>
+          </cell>
+          <cell>
+            <c>str.uppercase()</c>
+          </cell>
+          <cell>
+            <line>Returns the string with all letters</line>
+            <line> in upper case</line>
+          </cell>
         </row>
         <row>
-          <cell><c>strip</c></cell>
-          <cell><c>str.strip()</c></cell>
-          <cell><line>Returns a string with all leading</line><line> and trailing whitespace removed</line></cell>
+          <cell>
+            <c>trim</c>
+          </cell>
+          <cell>
+            <c>str.trim()</c>
+          </cell>
+          <cell>
+            <line>Returns a string with all leading</line>
+            <line> and trailing whitespace removed</line>
+          </cell>
         </row>
         <row>
-          <cell><c>split</c></cell>
-          <cell><c>str.split(delimiter_str)</c></cell>
-          <cell><line>Splits a string into an array of</line><line> substrings at <c>delimiter_str</c></line></cell>
+          <cell>
+            <c>split</c>
+          </cell>
+          <cell>
+            <c>str.split(delim1, delim2, ...)</c>
+          </cell>
+          <cell>
+            <line>Splits a string into a list of</line>
+            <line>substrings at any of the delimiters</line>
+          </cell>
         </row>
       </tabular>
     </table>
-    <p>Of these, <c>split</c> will be very useful for processing data. <c>split</c>
-                will take a string and return an array of strings using the split
-                delimiter as a division point. The first example uses <q>-</q> as the delimiter; the second uses a semicolon followed by a space as the delimiter.</p>
-    <pre>jshell> String s1 = "1900-05-07";
-s1 ==> "1900-05-07"
+    <p>Of these, <c>split</c> will be very useful for processing data. <c>split</c> will take a string and return an list of strings using any of the split delimiters as a division point. The first example uses <q>-</q> as the delimiter; the second uses a semicolon followed by a space as the delimiter; the third uses both.</p>
 
-jshell> s1.split("-")
-$2 ==> String[3] { "1900", "05", "07" }
+    <program xml:id="intro_2-2" language="kotlin" interactive="activecode">
+      <code>
+fun main() {
+  val s1 = "1900-05-07"
+  println(s1.split("-"))          // [1900, 05, 07]
 
-jshell> String s2 = "abc, de, fghi";
-s2 ==> "abc, de, fghi"
+  val s2 = "abc, de, fghi"
+  println(s2.split(", "))         // [abc, de, fghi]
 
-jshell> s2.split(", ");
-$3 ==> String[3] { "abc", "de", "fghi" }</pre>
+  val s3 = "1900-05-07 abc, de, fghi 1901-03-04"
+  println(s3.split("-", ", "))    // [1900, 05, 07 abc, de, fghi 1901, 03, 04]
+}</code>
+    </program>
 
-      <p>
-        Because strings in Java are objects, you cannot use the <c>==</c> operator to compare them. The <c>==</c> operator will test to see if the <em>references</em> are equal, not the contents of the strings themselves, as in this jshell session:
-      </p>
+    <p>You can compare strings as you can compare numbers, with double equals for equality, and the usual less-than and greater-than signs:</p>
 
-      <console><output>
-jshell&gt; String word1 = "cat";
-word1 ==&gt; "cat"
+    <program xml:id="intro_2-3" language="kotlin" interactive="activecode">
+      <code>
+fun main() {
+  val word1 = "cat"
+  val word2 = "catalog".substring(0,3)
+  println(word1 == word2)     // true
 
-jshell&gt; String word2 = "catalog".substring(0, 3);
-word2 ==&gt; "cat"
+  val animal1 = "cat"
+  val animal2 = "elk"
+  val animal3 = "gnu"
+  println(animal1 &lt; animal3)   // true
+  println(animal3 &lt; animal2)   // false
+}</code>
+    </program>
 
-jshell&gt; word1 == word2
-$1 ==&gt; false
-          </output></console>
 
-      <p>To compare the actual content of the strings, you must use the <c>equals</c> method:</p>
+  </subsection>
 
-      <console><output>
-jshell&gt; word1.equals(word2)
-$2 ==&gt; true
-</output></console>
-
-      <p>Similarly, you cannot use <c>&lt;</c> and <c>&gt;</c> to compare strings:</p>
-      <console><output>
-jshell&gt; word1 &gt; word2
-|  Error:
-|  bad operand types for binary operator '&gt;'
-|    first type:  java.lang.String
-|    second type: java.lang.String
-|  word1 &gt; word2
-|  ^-----------^
-</output></console>
-
-<p>Instead, you must use the <c>compareTo</c> method.  Given String variables <c>a</c> and <c>b</c>, the expression <c>a.compareTo(b)</c> returns:</p>
-
-  <p>
-    <ul>
-      <li><p>A negative number if <c>a</c> lexicographically precedes (comes before) <c>b</c></p></li>
-      <li><p>Zero if <c>a</c> and <c>b</c> have the same value</p></li>
-      <li><p>A positive number if <c>a</c> lexicographically folllows <c>b</c></p></li>
-    </ul>
-  </p>
-
-  <console><output>
-jshell&gt; String word1 = "cat";
-word1 ==&gt; "cat"
-
-jshell&gt; String word2 = "elk";
-word2 ==&gt; "elk"
-
-jshell&gt; String word3 = "gnu";
-word3 ==&gt; "gnu"
-
-jshell&gt; word1.compareTo(word3)
-$15 ==&gt; -4
-
-jshell&gt; word3.compareTo(word2)
-$16 ==&gt; 2
-</output></console>
-    </subsection>
-
+  <!-- TODO: This should move after lists have been introduced, since arrays are not used frequently -->
+  <!-- TODO: Explain what's happening with the lambda expression as a second parameter, if it hasn't been explained elsewhere -->
   <subsection xml:id="introduction_arrays">
     <title>Arrays</title>
 
-    <p>An <term>array</term> is an ordered collection of zero or more primitves or other objects. To declare an array, you follow the data type with a pair of square brackets <c>[]</c>. You can initialize an array by assigning a comma-separated list of values enclosed in braces <c>{}</c>:</p>
+    <p>An <term>array</term> is an ordered collection of zero or more objects. The following example shows the <c>arrayOf</c> function, which is used for creating arrays if you want to specify each initial value.</p>
 
-    <pre>int[] ages = {32, 47, 19, 62};
-double[] prices = {12.95, 13.88, 10.66};
-String[] words = {"ant", "bee", "cat", "dog", "elk"};</pre>
+    <program language="kotlin">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ArrayOf.kt"/>
+    </code>
+    </program>
 
-<p><xref ref="fig-arrays"/> shows a diagram of the references in the preceding array declarations.</p>
+    <p>Arrays can also be created with a constructor to the <c>Array</c> class, which is convenient when you don't want to specify each initial value individually. Here are examples that create arrays of a specified size, and initialize all of the values to a particular value.</p>
 
-           <figure align="center" xml:id="fig-arrays">
-      <caption>Arrays are References</caption>
-      <image source="Introduction/Figures/array_diagram.png" width="50%"/>
-    </figure>
+    <program language="kotlin">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ArrayNew.kt"/>
+    </code>
+    </program>
 
-<p>Unlike primitive values, arrays are a <term>reference</term> data type. The variable name does not contain the data; it contains a reference to where the data is stored in memory.</p>
-
-<p>You can also declare an array with the <c>new</c> operator, giving the data type and, in brackets, the number of items you want in the array. (This number can be in a variable or expression.) The items in the array will be given the appropriate default value for their data type. For objects such as <c>String</c>, the default value is <c>null</c>, which means the element does not refer to any value.</p>
-
-<console prompt="jshell&gt; ">
-<code>int[] ages = new int[3];</code>
-<output>ages ==> int[3] { 0, 0, 0 }
-&#160;
-
-</output>
-<code>double[] prices = new double[3];</code>
-<output>prices ==> double[4] { 0.0, 0.0, 0.0 }
-&#160;
-
-</output>
-<code>boolean[] valid = new boolean[3];</code>
-<output>valid ==> boolean[3] { false, false, false }
-&#160;
-
-</output>
-<code>String[] words = new String[3];</code>
-<output>words ==> String[3] { null, null, null }
-</output>
-      </console>
-
-      <p>Arrays have a fixed number of elements; they cannot shrink or expand without doing a lot of extra work. To get around this problem, we need to investigate Java collections.</p>
+    <p>Arrays have a fixed number of elements; they cannot shrink or expand without doing a lot of extra work. To get around this problem, we need to investigate Kotlin collections.</p>
   </subsection>
 </section>
