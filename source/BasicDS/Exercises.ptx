@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="basic_data_strutures_exercises">
   <title>Basic Data Structures: Exercises</title>
+  <p></p>
 <exercises>
 <exercise><p>Convert the following values to binary using the Divide by 2 algorithm. Show the
         stack of remainders.</p>
@@ -131,41 +132,27 @@
    proper opening and closing tags.</p>
 </exercise>
 
-<exercise><p>Extend the program from Listing 3.15 to handle palindromes with
+<exercise><p>Extend the program from <xref ref="lst-palchecker"/> to handle palindromes with
         spaces. For example, <c>I PREFER PI</c> is a palindrome that reads the same
         forward and backward if you ignore the blank characters.</p></exercise>
 
 <exercise><p>To implement the <c>size</c> method, we counted the number of nodes in
    the list. An alternative strategy would be to store the number of
    nodes in the list as an additional piece of data in the head of the
-   list. Modify the <c>UnorderedList</c> class to include this information
+   list. Modify the <c>LinkedUnorderedList</c> class to include this information
    and rewrite the <c>size</c> method.</p></exercise>
 
-<exercise><p>Implement the <c>remove</c> method so that does not throw an exception in the
-        case where the item is not in the list (by leaving the list unchanged).</p></exercise>
+<exercise><p>Modify the <c>remove</c> method for <c>LinkedUnorderedList</c> so that it throws an exception in the case where the item is not in the list.</p></exercise>
 
-<exercise><p>Modify the list classes to allow duplicates. Which methods (if any) will be
-        impacted by this change? Make sure you update the comments at the start of the methods to reflect
-        any changes in the input and output the method expects.</p></exercise>
+<exercise><p>Implement the remaining operations for each of the list implementations.</p></exercise>
 
-<!--<exercise><p>Implement the <c>__str__</c> method in the <c>UnorderedList</c> class. What
-        would be a good string representation for a list?</p></exercise>
-
-<exercise><p>Implement the <c>__str__</c> method so that lists are displayed the
-Python way (with square brackets).</p></exercise>-->
-
-<exercise><p>Implement the remaining operations defined in the unordered list ADT
-        (<c>append</c>, <c>index</c>, <c>pop</c>, <c>insert</c>).</p></exercise>
-
-<exercise><p>Implement a <c>slice</c> method for the <c>UnorderedList</c> class. It should
+<exercise><p>Implement a <c>slice</c> method for the <c>LinkedUnorderedList</c> class. It should
    take two parameters, <c>start</c> and <c>stop</c>, and return a copy of the
    list starting at the <c>start</c> position and going up to but not
    including the <c>stop</c> position.</p></exercise>
 
-   <exercise><p>Implement the remaining operations defined in the ordered list ADT.</p></exercise>
-
    <exercise>
-           <p>Use inheritance to implement a <c>MinMaxUnorderedList</c> that is a child of <c>UnorderedList</c> and adds a <c>minimum</c> and <c>maximum</c> property. This will allow users to access the minimum and maximum values in the list in an <m>O(1)</m> operation. This will require changes to any methods that add or remove items from the list. How will those changes affect the Big-O characteristics of those methods?</p>
+           <p>Use inheritance to implement a <c>MinMaxLinkedUnorderedList</c> that is a child of <c>LinkedUnorderedList</c> and adds a <c>minimum</c> and <c>maximum</c> property. This will allow users to access the minimum and maximum values in the list in an <m>O(1)</m> operation. This will require changes to any methods that add or remove items from the list. How will those changes affect the Big-O characteristics of those methods?</p>
    </exercise>
 
 <exercise><p>Implement a stack using linked lists.</p></exercise>
@@ -175,10 +162,10 @@ Python way (with square brackets).</p></exercise>-->
 <exercise><p>Implement a deque using linked lists.</p></exercise>
 
 <exercise><p>Design and implement an experiment that will compare the performance
-   of a Java ArrayList with a list implemented as a linked list.</p></exercise>
+   of the <c>ArrayUnorderedList</c> and the <c>LinkedUnorderedList</c> classes.</p></exercise>
 
 <exercise><p>Design and implement an experiment that will compare the performance
-   of the Java ArrayList-based stack and queue with the linked list
+   of an array-based stack and queue with a linked list
    implementation.</p></exercise>
 
    <exercise><p>The linked list implementation given above is called a <term>singly linked
@@ -188,7 +175,7 @@ Python way (with square brackets).</p></exercise>-->
    node (commonly called <em>next</em>) as well as a reference to the preceding
    node (commonly called <em>back</em>). The head reference also contains two
    references, one to the first node in the linked list and one to the
-   last. Code this implementation in Java.</p></exercise>
+   last. Code this implementation in Kotlin.</p></exercise>
 
 <exercise><p>Create an implementation of a queue that would have an average performance of
         <m>O(1)</m> for <c>enqueue</c> and <c>dequeue</c> operations.</p></exercise>
