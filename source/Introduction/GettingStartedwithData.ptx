@@ -2,7 +2,7 @@
 <section xml:id="introduction_getting-started-with-data">
   <title>Getting Started with Data</title>
   <introduction>
-    <p>We stated in <xref ref="introduction_review-of-basic-java"/> that Java supports the object-oriented programming
+    <p>We stated in <xref ref="introduction_review-of-basic-kotlin"/> that Java supports the object-oriented programming
             paradigm. This means that Java considers data to be the focal point of
             the problem-solving process. In Java, as well as in any other
             object-oriented programming language, we define a <term>class</term> to be a
