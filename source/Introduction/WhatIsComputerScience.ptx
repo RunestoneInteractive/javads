@@ -70,12 +70,17 @@
     complexities of the implementation.</p>
 
   <p>As another example of abstraction,
-    consider the Java <c>Math</c> class, which is automatically imported into your programs.
-    Using this module lets us
-    perform computations such as</p>
-  <pre>jshell> Math.sqrt(2)
-$1 ==> 1.4142135623730951
-</pre>
+    consider the <c>kotlin.math</c> package. Once we import the package, we can perform computations such as in this small program:</p>
+<program language="kotlin">
+<code>
+import kotlin.math.sqrt
+
+fun main()  {
+   println(sqrt(9.0))
+}
+</code>
+</program>
+
   <p>This is an example of <term>procedural abstraction</term>. We do not necessarily
     know how the square root is being calculated, but we know what the
     function is called and how to use it. If we perform the method call correctly,
