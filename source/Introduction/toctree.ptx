@@ -10,7 +10,7 @@
   <xi:include href="./ReviewOfBasicKotlin.ptx"/>
   <xi:include href="./GettingStartedwithData.ptx"/>
   <xi:include href="./Collections.ptx"/>
-  <xi:include href="./CompleteJavaProgram.ptx"/>
+  <xi:include href="./RunningAKotlinProgram.ptx"/>
   <xi:include href="./InputandOutput.ptx"/>
   <xi:include href="./ControlStructures.ptx"/>
   <xi:include href="./ExceptionHandling.ptx"/>

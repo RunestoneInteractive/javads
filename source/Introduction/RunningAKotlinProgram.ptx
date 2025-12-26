@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<section xml:id="introduction_complete-java-program">
+    <title>Running a Kotlin program</title>
+    <introduction>
+        <p>
+            Up to this point, we have been doing all of our work via demonstrations shown in this book. At some point, we will have to write a complete Kotlin program that we can run from an Integrated Development Environment (IDE) or the command line.
+        </p>
+    </introduction>
+    <subsection>
+        <title>Basic Program and File Structure</title>
+
+        <p>Here's the minimal prototypical Kotlin program:</p>
+
+        <program interactive="activecode" language="kotlin" line-numbers="yes">
+            <code>
+fun main() {
+    println("Kotlin works!")
+}
+</code>
+        </program>
+
+        <p>Let's go through this line by line.</p>
+
+        <p>Line 1: Every program that you want to run <em>must</em> have a function named <c>main</c>; the operating system will start running your program by calling this method.</p>
+
+        <p>Line 2: The <term>function body</term>, which, in this case, consists of a single statement that prints the words <c>Kotlin works!</c>. This function prints its argument followed by a newline<mdash /><c>ln</c> stands for <em>line</em>.</p>
+
+        <p>When you save this program, you can use any filename you wish, though it must end with the extension <c>.kt</c>. For example, we can save this as <c>ExampleProgram.kt</c>.</p>
+
+    </subsection>
+
+    <subsection xml:id="introduction_running-a-java-program" label="introduction_running-a-java-program">
+        <title>Compiling and Executing the Program</title>
+        <p>Most Integrated Development Environments are set up so that you can compile and run your Java programs with the click of a button or a menu choice. It is also possible to run a Kotlin program from the command line. Here is an example of running the preceding program from a Linux shell where the <c>$</c> is the command line input prompt: </p>
+
+        <listing>
+            <title>Running ExampleProgram.kt</title>
+            <console prompt="$ ">
+                <input>kotlinc ExampleProgram.kt</input>
+                <input>ls</input>
+                <output>ExampleProgramKt.class ExampleProgram.kt</output>
+                <input>kotlin ExampleProgramKt</input>
+                <output>Java works!</output>
+            </console>
+        </listing>
+
+        <p>The <c>kotlinc</c> command invokes the Kotlin compiler. It translates the source code into <term>bytecode</term>, a form which the runtime system can execute. This bytecode file is given almost the same name as the original file, but it adds <c>Kt</c> to the main part of the filename, and the extension is <c>.class</c>. So in this case, after compiling, we have a new file named <c>ExampleProgramKt.class</c>. Since there are no errors in the program, there is no output shown on the screen after running <c>kotlinc</c> (<q>no news is good news</q>).</p>
+
+        <p>The <c>ls</c> command lists the files in the current directory; you don't need to do this command, but it's here to show you that, after compiling, you have two files: <c>ExampleProgramKt.class</c> (the bytecode) and <c>ExampleProgram.kt</c> (the source code).</p>
+
+        <p>The <c>kotlin</c> runs the program. You give it the main part of the name of the compiled bytecode file (in this case, <c>ExampleProgramKt</c>).</p>
+
+
+    </subsection>
+
+</section>
