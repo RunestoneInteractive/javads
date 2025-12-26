@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<section xml:id="introduction_collections-and-wrappers" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Collections</title>
+  <introduction>
+  <p>Kotlin provides a number of <term>collections</term>, some of which implement the data structures we will be looking at in this book. (Later on in this book, we will be implementing our own versions of these data structures rather than relying on the ones that Kotlin gives us.)</p>
+        </introduction>
+  <subsection xml:id="introduction_arraylist" label="introduction_arraylist">
+    <title>The <c>MutableList</c></title>
+    <p>The primary collection we'll be using is the <c>MutableList</c>. Kotlin distinguishes between the collection <c>List</c>, which is immutable (or unchangeable) after it has been created, and the collection <c>MutableList</c>, which enables you to make changes to it. Most of the time we are doing interesting coding, we want a <c>MutableList</c>. The immutable <c>List</c> is mostly useful if you want a short fixed list for a singular purpose.</p>
+
+    <p>Let's create a <c>MutableList</c> of <c>String</c> elements. The element data type is enclosed in angle brackets, and is a <term>generic</term>. All the elements in a <c>MutableList</c> must be of the same data type.</p>
+
+    <aside>
+        <p>You can read more about generics in <xref ref="oop_generics"/>.</p>
+    </aside>
+
+    <program language="kotlin">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ListExample.kt"/>
+    </code>
+    </program>
+
+    <p>The <c>add</c> method appends items to the end of the list and returns <c>true</c>. A two-argument version of <c>add</c> lets you give an index position at which to add an element, but it does not return any value. The first element in an <c>MutableList</c> has index zero.</p>
+
+<p>Here are examples of other commonly-used <c>MutableList</c> operations, demonstrated on the list <c>animals</c>:</p>
+
+<table xml:id="table-arraylist-methods" label="table-arraylist-methods">
+    <title>MutableList Examples</title>
+    <tabular>
+        <col width="50%"/>
+        <col width="50%"/>
+
+        <row header="yes">
+            <cell><p>Method</p></cell>
+            <cell><p>Purpose</p></cell>
+        </row>
+        <row>
+            <cell><p><c>animals.count()</c></p></cell>
+            <cell><p>Returns number of elements in list</p></cell>
+        </row>
+        <row>
+            <cell><p><c>animals[index]</c></p></cell>
+            <cell><p>Returns the element at the given index in the list</p></cell>
+        </row>
+        <row>
+            <cell><p><c>animals[index] = element</c></p></cell>
+            <cell><p>Replaces item at given index with the given element.</p></cell>
+        </row>
+        <row>
+            <cell><p><c>animals.removeAt(index)</c></p></cell>
+            <cell><p>Removes and returns the element at the given index</p></cell>
+        </row>
+        <row>
+            <cell><p><c>animals.indexOf(element)</c></p></cell>
+            <cell><p>Returns index of the first occurrence of the element in the list, or -1 if element is not in list.</p></cell>
+        </row>
+    </tabular>
+</table>
+
+  </subsection>
+
+<subsection>
+    <title>The <c>MutableMap</c></title>
+    <p>
+        Another important collection type in Kotlin is an unordered structure called a map. A map, also known as a dictionary, is a collection of associated pairs of items where each pair consists of a key and a value. Unlike lists which are indexed by number, you access values in a map by their keys. Kotlin contains a <c>Map</c> collection, which is immutable, and a <c>MutableMap</c>, which can be modified after it has been created. As with lists, <c>MutableMap</c> is generally the more useful of the two. For example, if we want to represent <xref ref="table-city-hashmap"/> of cities and their populations (according to 2018 estimates by the United Nations):
+    </p>
+
+    <table xml:id="table-city-hashmap" label="table-city-hashmap">
+    <title>Table of Cities and Populations</title>
+    <tabular>
+        <row header="yes">
+            <cell>City</cell>
+            <cell>Population</cell>
+        </row>
+        <row>
+            <cell>New York City</cell>
+            <cell>7,888,121</cell>
+        </row>
+        <row>
+            <cell>Tokyo</cell>
+            <cell>13,515,271</cell>
+        </row>
+        <row>
+            <cell>Dhaka</cell>
+            <cell>8,906,039</cell>
+        </row>
+        <row>
+            <cell>Luanda</cell>
+            <cell>2,165,867</cell>
+        </row>
+        </tabular>
+        </table>
+
+        <p>We would use this code:</p>
+
+    <program language="kotlin" line-numbers="yes">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/MapExample.kt"/>
+    </code>
+    </program>
+
+        <p>Line 2 creates the map, where we put the data types for the key and value inside angle brackets.</p>
+
+        <p>Lines 3-6 add keys and values to the map. If a key already is in the HashMap, the value given as the second argument will replace the current map value.</p>
+
+        <aside>
+            <p>You can put underscores anywhere in an integer literal such as 2_165_867 to make your source code more readable.</p>
+        </aside>
+        <p>Here's the output from line 8:</p>
+        <pre>{New York City=7888121, Tokyo=13515271, Dhaka=8906039, Luanda=2165867}</pre>
+
+        <!-- TODO: Fix the reference below to the hashing chapter. -->
+        <p>It is important to note that Kotlin has alternative map implementations (other than the default mutable map that Kotlin automatically provides) that don't necessarily display the keys in the same order that you put them in. The placement of a key is dependent on the idea of hashing, which will be explained in more detail in Chapter 5. The default mutable map implementation in Kotlin (known as a <c>LinkedHashMap</c>) does maintain the order, so in the example above the pairs appear in the order they were added.</p>
+
+        <p>You can, then, iterate through a map as shown in lines 11-15 above. That produces this output:</p>
+        <pre>Key New York City has value 7,888,121.
+Key Tokyo has value 13,515,271.
+Key Dhaka has value 8,906,039.
+Key Luanda has value 2,165,867.</pre>
+
+<p>(You will learn more about the <c>String.format</c> method in <xref ref="introduction_string-formatting"/>.)</p>
+
+<p>Here are examples of commonly-used <c>MutableMap</c> operations, demonstrated on the map <c>cityInfo</c>:</p>
+
+<table xml:id="table-hashmap-methods" label="table-hashmap-methods">
+    <title>MutableMap Examples</title>
+    <tabular>
+        <col width="50%"/>
+        <col width="50%"/>
+        <row header="yes">
+            <cell>Method</cell>
+            <cell>Purpose</cell>
+        </row>
+        <row>
+            <cell><p><c>cityInfo.count()</c></p></cell>
+            <cell><p>Returns number of key/value pairs in the map</p></cell>
+        </row>
+        <row>
+            <cell><p><c>cityInfo[key]</c></p></cell>
+            <cell><p>Returns the value associated with the given key</p></cell>
+        </row>
+        <row>
+            <cell><p><c>cityInfo[key] = value</c></p></cell>
+            <cell><p>Replaces value for given key if it is in the map already; adds a new key and value if not. Returns the value previously associated with the key, or <c>null</c> if not previously in map.</p></cell>
+        </row>
+        <row>
+            <cell><p><c>cityInfo.remove(key)</c></p></cell>
+            <cell><p>Removes the specified key and its value. Returns the value for the given key, or <c>null</c> if key is not in the map.</p></cell>
+        </row>
+        <row>
+            <cell><p><c>cityInfo.keys</c></p></cell>
+            <cell><p>Returns a collection of the keys contained in the map.</p></cell>
+        </row>
+        <row>
+            <cell><p><c>key in cityInfo</c></p></cell>
+            <cell><p>Returns <c>true</c> if key is in the map, otherwise <c>false</c>.</p></cell>
+        </row>
+    </tabular>
+</table>
+</subsection>
+
+<subsection>
+    <title>The <c>MutableSet</c></title>
+    <p>A <term>set</term> is an unordered collection of zero or more objects. Sets do not allow duplicates. As with the other collections, Kotlin contains both an immutable <c>Set</c> and a <c>MutableSet</c>.</p>
+
+    <p>Here are the commonly-used <c>MutableSet</c> methods:</p>
+
+<table xml:id="table-set-methods" label="table-set-methods">
+    <title>Set Methods</title>
+    <tabular>
+        <col width="50%"/>
+        <col width="50%"/>
+
+        <row header="yes">
+            <cell><p>Method</p></cell>
+            <cell><p>Purpose</p></cell>
+        </row>
+        <row>
+            <cell><p><c>add(element)</c></p></cell>
+            <cell><p>If the element is not in the set, adds the element and returns <c>true</c>; otherwise, returns <c>false</c> and leaves the set unchanged</p></cell>
+        </row>
+        <row>
+            <cell><p><c>remove(element)</c></p></cell>
+            <cell><p>If the element is in the set, removes the object from the set and returns <c>true</c>;
+                    otherwise returns <c>false</c> and leaves the set unchanged</p></cell>
+        </row>
+        <row>
+            <cell><p><c>contains(element)</c></p></cell>
+            <cell><p>Returns <c>true</c> if the element is in the set, <c>false</c> otherwise.</p></cell>
+        </row>
+    </tabular>
+</table>
+</subsection>
+
+</section>
