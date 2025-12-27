@@ -1,223 +1,187 @@
 <?xml version="1.0"?>
-<section xml:id="introduction_input-and-output">
+<section xml:id="introduction_input-and-output" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Input and Output</title>
   <introduction>
-  <p>We often have a need to interact with users,
-            either to get data or to provide some sort of result. Most programs
-            today use a dialog box as a way of asking the user to provide some type
-            of input. While Java does have a way to create dialog boxes, there is
-            a <c>Scanner</c> class we can use to get input from the command line.</p>
+    <p>We often have a need to interact with users,
+      either to get data or to provide some sort of result.</p>
+  </introduction>
 
-          <p><xref ref="input-output-age"/> asks the user for their age in years and prints
-            the approximate age in days:</p>
+  <subsection>
+    <title>Input</title>
 
-          <listing xml:id="input-output-age" label="input-output-age">
-            <caption>Age in Days Program</caption>
-            <program language="java" line-numbers="yes">
-              <code>
-import java.util.Scanner;
+    <p>Most programs today use a dialog box as a way of asking the user to provide some type of input. While Kotlin does have a way to create dialog boxes, there is a much simpler function that we can use. Kotlin provides us with a function that allows us to ask a user to enter some data and returns a reference to the data in the form of a string. The function is called <c>readln</c>.</p>
 
-class AgeInDays {
+    <p><xref ref="input-output-age" /> shows an example of this: it asks the user for their age in years and prints the approximate age in days:</p>
 
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+    <listing xml:id="input-output-age" label="input-output-age">
+      <title>Age in Days Program</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/AgeInDays.kt"/>
+</code>
+      </program>
+    </listing>
 
-        System.out.print("Enter your age in years: ");
-        int years = input.nextInt();
+    <p>It is important to note that the value returned from the <c>readln</c> function will be a string representing the exact characters that were entered after the prompt. If you want this string interpreted as another type, you must provide the type conversion explicitly. The above program uses the <c>toInt</c> method on strings to an integer.</p>
 
-        int days = years * 365;
-        System.out.println("Your age in days is approximately "
-            + days + ".");
-    }
-}
-</code></program></listing>
+    <pre>Enter your age in years: 27
+Your age in days is approximately 9855.</pre>
+  </subsection>
 
-<p>Any <c>import</c> statements that your program does should come at the beginning of the file.
-  In line 6, the left-hand side of the assignment declares a <c>Scanner</c> object named <c>input</c>.
-  The right-hand side constructs a <c>new</c> <c>Scanner</c> object based on the user's keyboard (<c>System.in</c>).
-  The <c>System</c> class is automatically imported for you.</p>
+  <subsection>
+    <title>String Templates</title>
 
-<p>Line 8 prints the prompt for the user. Notice that it uses <c>System.out.print()</c> instead of <c>System.out.println()</c>; the output will <em>not</em> be followed by a newline; we want the input cursor on the same line as the prompt.</p>
+    <p>One way in which Kotlin makes output easier is through using <term>string templates</term>. String templates aren't only used for output --- they're really just a feature of strings --- but we will commonly use them in this book for output purposes. <xref ref="input-output-age" /> above uses a string template near the end of line 5, where is uses the expression <c>$days</c> as part of the string being printed. In Kotlin, a variable name inside a string that has a <c>$</c> in front of it is a string template, which means that it is evaluated as an expression. In other words, <c>$days</c> appearing in that string indicates that Kotlin should replace <c>$days</c> with the value of the variable <c>days</c>.</p>
 
-<p>Line 9 gets the next integer from the <c>Scanner</c> and assigns it to <c>years</c>.</p>
+    <p>String templates can also be used to contain more complicated expressions if they are placed in curly braces. Here are some examples:</p>
 
-<p>Lines 12 and 13 produce the output, using the <c>+</c> operator to concatenate strings; <c>days</c> will implicitly be converted to a string in the process.</p>
+    <program language="kotlin" line-numbers="yes">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/TemplateExamples.kt"/>
+</code>
+    </program>
 
-<p>Here is what the output of running this program looks like:</p>
+    <p>Here is the program output:</p>
 
-<console>
-  <output>Enter your age in years: 27
-Your age in days is approximately 9855.</output>
-</console>
+    <pre>Our friend gazelle is 20 years old.
+The animal string has 7 characters in it.
+In a few years, the animal will be 23 years old.</pre>
 
-<p>The <c>Scanner</c> class reads <term>tokens</term> from the input; it skips over any leading white space (blanks, tabs, and newlines), and reads up to, but not including, the next blank, tab, or newline.)  Here are other <c>Scanner</c> methods:</p>
-
-    <table>
-      <title><c>Scanner</c> Methods</title>
-      <tabular>
-        <col width="25%"/>
-        <col width="75%"/>
-        <row>
-          <cell><p><c>nextInt()</c></p></cell>
-          <cell><p>Reads next token, converts it to an integer, and returns it.</p></cell>
-        </row>
-        <row>
-          <cell><p><c>nextDouble()</c></p></cell>
-          <cell><p>Reads next token, converts it to a double, and returns it.</p></cell>
-        </row>
-        <row>
-          <cell><p><c>nextBoolean()</c></p></cell>
-          <cell><p>Reads next token, converts it to a boolean, and returns it.</p></cell>
-        </row>
-        <row>
-          <cell><p><c>next()</c></p></cell>
-          <cell><p>Reads next token and returns it as a String.</p></cell>
-        </row>
-        <row>
-          <cell><p><c>nextLine()</c></p></cell>
-          <cell><p>Advances scanner past the current line and returns the skipped String. (This has the same effect as reading the next line up to and including a newline, and returning the line <em>without</em> the newline character.)</p></cell>
-        </row>
-      </tabular>
-    </table>
-
-</introduction>
+  </subsection>
 
   <subsection xml:id="introduction_string-formatting">
     <title>String Formatting</title>
-    <p>While we can use <c>System.out.println()</c> for output, it often gives us output that is less than pleasing, as in <xref ref="io_discount_program"/>.</p>
+    <p>We have already seen that the <c>println</c> function provides a very simple way to output values from a Kotlin program. We can also the <c>print</c> function, which does not automatically print a newline at the end of the string. This allows us to be able to print multiple strings on the same line, as shown in the following example:</p>
+
+    <program language="kotlin" line-numbers="yes">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/PrintExamples.kt"/>
+</code>
+    </program>
+
+
+    <p>While we can use <c>print()</c>, <c>println()</c>, and string templates for output, it often gives us output that is less than pleasing, as in <xref ref="io_discount_program" />.</p>
 
     <listing xml:id="io_discount_program">
-      <program language="java" line-numbers="yes"><code>import java.util.Scanner;
+      <title>Discount program</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/Discount.kt"/>
+        </code>
+      </program>
+    </listing>
 
-class Discount {
+    <p>Notice the double <c>$</c> in line 8 above. The first <c>$</c> is there to simply print a <c>$</c>. The second <c>$</c> is part of the string template <c>$newPrice</c>, which obtains a string representation of the variable <c>newPrice</c>.</p>
 
-    public static void main(String[] args) {
-        final double DISCOUNT_RATE = 0.0725;
 
-        Scanner input = new Scanner(System.in);
+    <p>Here is the output:</p>
 
-        System.out.print("Enter price: $");
-        double price = input.nextDouble();
+    <pre>Enter price: $12.95
+Your new price is $12.011125.</pre>
 
-        double newPrice = price * (1.0 - DISCOUNT_RATE);
-        System.out.println("Your new price is $" + newPrice + ".");
-    }
-}</code>
-</program>
-</listing>
 
-<p>Here is its output:</p>
-
-<console>
-  <output>Enter price: $12.95
-Your new price is $12.011125.</output>
-</console>
-
-<aside>
-<p>Line 6 introduces the <c>final</c> keyword, used to declare values that are constant. Once initialized, a <c>final</c> variable's value cannot be changed. By convention, names of <c>final</c> variables are all upper case, with underscores used to separate words.</p>
-</aside>
-
-<p>It is often useful to have more control over the look of your output. Fortunately, Java provides us with an alternative called <term>formatted printing</term>. The <c>System.out.format()</c> method as its first argument a <term>format string</term><mdash/> a template in which words or spaces that will remain constant are combined with placeholders for variables that will be inserted into the string. Let's expand on our <q>age in days</q> program to ask the user's name:</p>
+    <p>That new price is ugly: we typically show dollars and cents with two decimal places only.</p>
+    
+    <p>It is often useful to have more control over the look of your output. Fortunately, Kotlin provides us with an alternative called <term>string formatting</term>. The <c>String.format()</c> method as its first argument a <term>format string</term><mdash /> a template in which words or spaces that will remain constant are combined with placeholders for variables that will be inserted into the string. Let's expand on our <q>age in days</q> program to ask the user's name:</p>
 
     <listing xml:id="io_age-and-name">
-      <caption>Name and Age</caption>
-      <program language="java" line-numbers="yes"><code>import java.util.Scanner;
-
-class AgeAndName {
-
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Enter your name: ");
-        String name = input.nextLine();
-
-        System.out.print("Enter your age in years: ");
-        int years = input.nextInt();
-
-        int days = years * 365;
-        System.out.format("You are about %d days old, %s.%n",
-            days, name);
-    }
-}</code></program></listing>
+      <title>Name and Age</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/AgeInDaysFormatted.kt"/>
+</code>
+      </program>
+    </listing>
 
 
-<p>Let's examine lines 15 and 16. The first argument to <c>format()</c> is the format string. The <c>%d</c> and <c>%s</c> are <term>format specifiers</term>; you can think of them as placeholders for values.  The <c>%d</c> specifier says that the placeholder will be filled in by a decimal integer value; <c>%s</c> is a placeholder for a String value.</p>
-<p>The third specifier <c>%n</c> is special. It is <em>not</em> a placeholder for a value; instead, it stands for newline, as <c>format()</c> does not automatically print a newline character at the end of its output. You can also use the escape sequence <c>\n</c>, but <c>%n</c> is preferred.</p>
+    <p>Let's examine lines 9 and 10. The first argument to <c>String.format()</c> is the format string. The <c>%d</c> and <c>%s</c> are <term>format specifiers</term>; you can think of them as placeholders for values. The <c>%d</c> specifier says that the placeholder will be filled in by a decimal integer value; <c>%s</c> is a placeholder for a String value.</p>
 
-<p>The remaining arguments to <c>format()</c> are the values that will fill in the <c>%d</c> and <c>%s</c> placeholders. The values are taken in order from left to right and inserted into the format string. Here's what the output looks like:</p>
+    <p>The remaining arguments to <c>String.format()</c> are the values that will fill in the <c>%d</c> and <c>%s</c> placeholders. The values are taken in order from left to right and inserted into the format string. Here's what the output looks like:</p>
 
-<console>
+    <pre>
 Enter your name: Kim
 Enter your age in years: 29
 You are about 10585 days old, Kim.
-</console>
+    </pre>
 
-    <p>The format string may contain one or more conversion specifications. A
-                conversion character tells the format operator what type of value is
-                going to be inserted into that position in the string. In the example
-                above, the <c>s</c> specifies a string, while the <c>d</c> specifies an
-                integer. Other possible type specifications include <c>f</c>,
-                <c>e</c>, <c>g</c>, <c>c</c>, or <c>%</c>. <xref ref="introduction_tab-fmta"/> summarizes all of the
-                various type specifications.</p>
+    <p>The format string may contain one or more conversion specifications. A conversion character tells the format operator what type of value is going to be inserted into that position in the string. In the example above, the <c>s</c> specifies a string, while the <c>d</c> specifies an integer. Other possible type specifications include <c>f</c>, <c>e</c>, <c>g</c>, <c>c</c>, or <c>%</c>. <xref ref="introduction_tab-fmta" /> summarizes all of the various type specifications.</p>
     <table xml:id="introduction_tab-fmta" label="introduction_tab-fmta">
-        <title>
-          String Formatting Conversion Characters
-        </title>
+      <title>
+        String Formatting Conversion Characters
+      </title>
       <tabular>
         <row header="yes">
           <cell>Character</cell>
           <cell>Output Format</cell>
         </row>
         <row>
-          <cell><c>d</c></cell>
+          <cell>
+            <c>d</c>
+          </cell>
           <cell>Integer</cell>
         </row>
         <row>
-          <cell><c>u</c></cell>
+          <cell>
+            <c>u</c>
+          </cell>
           <cell>Unsigned integer</cell>
         </row>
         <row>
-          <cell><c>f</c></cell>
+          <cell>
+            <c>f</c>
+          </cell>
           <cell>Floating point (default six decimal places if needed)</cell>
         </row>
         <row>
-          <cell><c>e</c></cell>
+          <cell>
+            <c>e</c>
+          </cell>
           <cell>Floating point as exponential notation: m.dddddde+/-xx</cell>
         </row>
         <row>
-          <cell><c>E</c></cell>
+          <cell>
+            <c>E</c>
+          </cell>
           <cell>Floating point as exponential notation: m.ddddddE+/-xx</cell>
         </row>
         <row>
-          <cell><c>g</c></cell>
+          <cell>
+            <c>g</c>
+          </cell>
           <cell>Use <c>%e</c> for exponents less than <m>-4</m> or greater than <m>+5</m>, otherwise use <c>%f</c></cell>
         </row>
         <row>
-          <cell><c>c</c></cell>
+          <cell>
+            <c>c</c>
+          </cell>
           <cell>Single character</cell>
         </row>
         <row>
-          <cell><c>s</c></cell>
+          <cell>
+            <c>s</c>
+          </cell>
           <cell>String</cell>
         </row>
         <row>
-          <cell><c>%</c></cell>
+          <cell>
+            <c>%</c>
+          </cell>
           <cell>Insert a literal <c>%</c> character</cell>
         </row>
         <row>
-          <cell><c>n</c></cell>
+          <cell>
+            <c>n</c>
+          </cell>
           <cell>Insert a newline character</cell>
         </row>
       </tabular>
     </table>
 
-    <p>In addition to the format character, you can also include a format
-                modifier between the <c>%</c> and the format character. Format modifiers can be used to specify the field width along with a number of digits after the decimal point. <xref ref="introduction_tab-fmtaddsa"/>
-                explains these format modifiers.</p>
+    <p>In addition to the format character, you can also include a format modifier between the <c>%</c> and the format character. Format modifiers can be used to specify the field width along with a number of digits after the decimal point. <xref ref="introduction_tab-fmtaddsa" /> explains these format modifiers.</p>
     <table xml:id="introduction_tab-fmtaddsa">
-        <title>
-          Additional formatting options
-        </title>
+      <title>
+        Additional formatting options
+      </title>
       <tabular>
         <row header="yes">
           <cell>Modifier</cell>
@@ -226,79 +190,70 @@ You are about 10585 days old, Kim.
         </row>
         <row>
           <cell>number</cell>
-          <cell><c>%20d</c></cell>
+          <cell>
+            <c>%20d</c>
+          </cell>
           <cell>Put the value in a field width of 20</cell>
         </row>
         <row>
-          <cell><c>-</c></cell>
-          <cell><c>%-20d</c></cell>
+          <cell>
+            <c>-</c>
+          </cell>
+          <cell>
+            <c>%-20d</c>
+          </cell>
           <cell>Put the value in a field 20 characters wide, left-justified</cell>
         </row>
         <row>
-          <cell><c>+</c></cell>
-          <cell><c>%20d</c></cell>
+          <cell>
+            <c>+</c>
+          </cell>
+          <cell>
+            <c>%20d</c>
+          </cell>
           <cell>Put the value in a field 20 characters wide, right-justified</cell>
         </row>
         <row>
-          <cell><c>0</c></cell>
-          <cell><c>%020d</c></cell>
+          <cell>
+            <c>0</c>
+          </cell>
+          <cell>
+            <c>%020d</c>
+          </cell>
           <cell>Put the value in a field 20 characters wide, fill in with leading zeros</cell>
         </row>
         <row>
-          <cell><c>.</c></cell>
-          <cell><c>%20.2f</c></cell>
+          <cell>
+            <c>.</c>
+          </cell>
+          <cell>
+            <c>%20.2f</c>
+          </cell>
           <cell>Put the value in a field 20 characters wide with 2 characters to the right of the decimal point</cell>
         </row>
       </tabular>
     </table>
 
 
-    <p><xref ref="io_format-examples"/> gives some examples of <c>System.out.format()</c>.</p>
+    <p><xref ref="io_format-examples" /> gives some examples of <c>String.format()</c>.</p>
 
     <listing xml:id="io_format-examples">
-      <caption>Examples of Formatted Output</caption>
-      <program interactive="activecode" language="java" line-numbers="yes"><code>
-public class FormatExamples {
+      <title>Examples of Formatted Output</title>
+      <program interactive="activecode" language="kotlin" line-numbers="yes">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/FormatExamples.kt"/>
+        </code>
+      </program>
+    </listing>
 
-    public static void main(String[] args) {
-        String word = "Java";
-        int number = 123456;
-        double value = 12345.678901234;
+    <p>The width given in the example is the <em>minimum</em> space allocated for the output. If output requires more space, as in the last line, it will use more.</p>
 
-        /*
-         * The vertical bars in the output let you see the
-         * alignment more clearly.
-         */
+    <p>Here is the output:</p>
 
-        System.out.format("|%s|%n", word);
-        System.out.format("|%10s|%n", word);    // right-aligned
-        System.out.format("|%-10s|%n", word);   // left-aligned
-
-        System.out.println(); // blank line for readability
-
-        System.out.format("|%d|%n", number);
-        System.out.format("|%10d|%n", number);
-        System.out.format("|%-10d|%n", number);
-        System.out.format("|%,10d|%n", number);
-
-        System.out.println();
-
-        System.out.format("|%f|%n", value);
-        System.out.format("|%10.3f|%n", value);
-        System.out.format("|%,10.3f|%n", value);
-        System.out.format("|%10.3e|%n", value);
-        System.out.format("|%10.7f|%n", value);
-    }
-}
-</code></program></listing>
-
-<p>The width given in the example is the <em>minimum</em> space allocated for the output. If output requires more space, as in the last line, it will use more.</p>
-
-<p>Here is the output:</p>
-
-<console><output>|Java|
-|      Java|
-|Java      |
+    <pre>
+|Kotlin|
+|    Kotlin|
+|Kotlin    |
 
 |123456|
 |    123456|
@@ -309,10 +264,11 @@ public class FormatExamples {
 | 12345.679|
 |12,345.679|
 | 1.235e+04|
-|12345.6789012|</output></console>
+|12345.6789012|
+      </pre>
 
 
-<p>This program also gives examples of how to write a <term>comment</term> in Java. The characters <c>//</c> introduce a single-line comment; Java ignores everything from the <c>//</c> to the end of line (lines 14, 15, and 17). Multi-line coments begin with <c>/*</c> and end with <c>*/</c> (lines 8-11).</p>
+    <p>This program also gives examples of how to write a <term>comment</term> in Java. The characters <c>//</c> introduce a single-line comment; Kotlin ignores everything from the <c>//</c> to the end of line (lines 11, 12, and 14). Multi-line coments begin with <c>/*</c> and end with <c>*/</c> (lines 6-9). The additional <c>*</c> at the beginning of each line inside the multiline comment (lines 7 and 8) are a common stylistic addition to make the comment easier to read, but those asterisks on line 7 and 8 are not required.</p>
 
   </subsection>
 </section>

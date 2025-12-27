@@ -48,7 +48,7 @@ fun main() {
 
         <p>The <c>ls</c> command lists the files in the current directory; you don't need to do this command, but it's here to show you that, after compiling, you have two files: <c>ExampleProgramKt.class</c> (the bytecode) and <c>ExampleProgram.kt</c> (the source code).</p>
 
-        <p>The <c>kotlin</c> runs the program. You give it the main part of the name of the compiled bytecode file (in this case, <c>ExampleProgramKt</c>).</p>
+        <p>The <c>kotlin</c> command runs the program. You give it the main part of the name of the compiled bytecode file (in this case, <c>ExampleProgramKt</c>).</p>
 
 
     </subsection>
