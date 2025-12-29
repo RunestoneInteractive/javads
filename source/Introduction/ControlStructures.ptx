@@ -1,193 +1,209 @@
 <?xml version="1.0"?>
-<section xml:id="introduction_control-structures">
-  <title>Control Structures</title>
-  <p>As we noted earlier, algorithms require two important control structures: selection and iteration. Java supports both of these in various forms. Programmers can choose the statement that is most useful for the given circumstance.</p>
+<section xml:id="introduction_control-structures" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Control Structures</title>
+    <introduction>
+        <p>As we noted earlier, algorithms require two important control structures: selection and iteration. Kotlin supports both of these in various forms. Programmers can choose the statement that is most useful for the given circumstance.</p>
+    </introduction>
 
-  <p>Selection statements allow programmers to ask questions and then, based on the result, perform different actions. Most programming languages provide two versions of this useful construct: the <c>if...else</c> and the <c>if</c>. The following code fragment is an example of a binary selection using the <c>if...else</c> statement.</p>
+    <subsection>
+        <title>Selection</title>
 
-  <program language="java"><code>
-Scanner input = new Scanner(System.in);
-System.out.print("Enter a number: ");
-double n = input.nextDouble();
+        <subsubsection>
+            <title><c>if</c>...<c>else</c> statements</title>
 
-if (n >= 0) {
-    System.out.println(Math.sqrt(n));
-} else {
-    System.out.println("Number can not be negative.");
-}</code></program>
+            <p>Selection statements allow programmers to ask questions and then, based on the result, perform different actions. Most programming languages provide two versions of this useful construct: the <c>if...else</c> and the <c>if</c>. The following code fragment is an example of a binary selection using the <c>if...else</c> statement.</p>
 
-  <p>In this example, the value of variable <c>n</c> is checked to see if it is greater than or equal to zero. If it is, the program prints the square root of the number.  If it is not, the statement performs the <c>else</c> clause and tells the user that the number cannot be negative.</p>
+            <program language="kotlin">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/IfBinarySelection.kt"/>
+        </code>
+            </program>
 
-  <p>The condition for the <c>if</c> must be enclosed in parentheses. The body of the <c>if</c> and <c>else</c> clause is enclosed in braces. If there is exactly one statement in the clause, you may omit the braces, but doing so may lead to code that is ambiguous and difficult to read. Thus, we strongly recommend that you <em>always</em> use braces (with one exception that we will cover later).</p>
+            <p>In this example, the value of variable <c>n</c> is checked to see if it is greater than or equal to zero. If it is, the program prints the square root of the number. If it is not, the statement performs the <c>else</c> clause and tells the user that the number cannot be negative.</p>
 
-  <p>Selection constructs, as with any control construct, can be nested so that the result of one question helps decide whether to ask the next. For example, assume that <c>score</c> is a variable holding a reference to a score for a computer science test.</p>
+            <p>The condition for the <c>if</c> must be enclosed in parentheses. The body of the <c>if</c> and <c>else</c> clause is enclosed in braces. If there is exactly one statement in the clause, you may omit the braces, but doing so may lead to code that is ambiguous and difficult to read. Thus, we strongly recommend that you <em>always</em> use braces (with one exception that we will cover later).</p>
 
-  <program language="java" line-numbers="yes">
-    <code>
-String grade;
+            <p>Selection constructs, as with any control construct, can be nested so that the result of one question helps decide whether to ask the next. For example, consider this program to determine the grade based on the score for a computer science test.</p>
 
-if (score >= 90) {
-    grade = "A";
-} else {
-    if (score >= 80) {
-        grade = "B";
-    } else {
-        if (score >= 70) {
-            grade = "C";
-        } else {
-            if (score >= 60) {
-                grade ="D";
-            } else {
-                grade = "F";
-            }
-        }
-    }
-}
-
-System.out.println("The grade is " + grade + ".");
+            <listing xml:id="intro-score-bad-indentation">
+                <title>Score conversion program.</title>
+                <program language="kotlin" line-numbers="yes">
+                    <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ScoreBadIndentation.kt"/>
       </code>
-    </program>
-  <p>This fragment will classify a value called <c>score</c> by printing the letter grade earned. If the score is greater than or equal to 90, the variable <c>grade</c> will be assigned <c>"A"</c>. If it is not (<c>else</c>), the next question is asked. If the score is greater than or equal to 80, then it must be between 80 and 89 since the answer to the first question was false. In this case, the grade becomes <c>"B"</c> is printed. You can see that using correct indentation pattern helps to make sense of the association between <c>if</c> and <c>else</c>.</p>
+                </program>
+            </listing>
 
-  <p>The drawback of this indentation is that the code tends to march off the page to the right, which does not help readability. We can, however, consider the block in lines 6-18 as a single statement, and use the <q>omit braces</q> shortcut. Similarly, we can eliminate braces around the statement in lines 8-17 and so on. We can then follow the <c>else</c> immediately by an <c>if</c> with the resulting code:</p>
+            <p>This program will classify a value called <c>score</c> by printing the letter grade earned. If the score is greater than or equal to 90, the variable <c>grade</c> will be assigned <c>"A"</c>. If it is not (<c>else</c>), the next question is asked. If the score is greater than or equal to 80, then it must be between 80 and 89 since the answer to the first question was false. In this case, the grade becomes <c>"B"</c> is printed. You can see that using correct indentation pattern helps to make sense of the association between <c>if</c> and <c>else</c>.</p>
 
-  <program language="java"><code>
-String grade;
+            <p>The drawback of this indentation is that the code tends to march off the page to the right, which does not help readability. We can, however, consider the block in lines 6-18 as a single statement, and use the <q>omit braces</q> shortcut. Similarly, we can eliminate braces around the statement in lines 8-17 and so on. We can then follow the <c>else</c> immediately by an <c>if</c> with the resulting code:</p>
 
-if (score >= 90) {
-    grade = "A";
-} else if (score >= 80) {
-    grade = "B";
-} else if (score >= 70) {
-    grade = "C";
-} else if (score >= 60) {
-    grade ="D";
-} else {
-    grade = "F";
-}
-
-System.out.println("The grade is " + grade + ".");
-      </code></program>
-
-  <p>Note that the final <c>else</c> is still necessary to provide the default case if all other conditions fail.</p>
-
-  <p>The <c>else</c> clause is not required in Java; an <c>if</c> without an <c>else</c> is called a single-way selection construct. In a single-way selection, if the condition is true, an action is performed. When the condition is false, processing simply continues on to the next statement after the <c>if</c>. For example, the following fragment will first check to see if the value of a variable <c>n</c> is negative. If so, then it is modified by the absolute value function. Regardless, the next action is to compute the square root.</p>
-  <program language="java"><code>
-if (n &lt; 0) {
-    n = Math.abs(n);
-}
-
-System.out.println(Math.sqrt(n));
-
-      </code></program>
-
-  <p>For iteration, Java provides a standard <c>while</c> statement and two varieties of the <c>for</c> statement. The <c>while</c> statement repeats a body of code as long as a condition evaluates to <c>true</c>. Generally, we use a <c>while</c> loop for <term>indeterminate loops</term>, where we do not know how many times the loop has to iterate. Consider this program, where we ask the user repeatedly enter numbers they want to sum, entering zero when they are finished. In this case, we have no idea how many times the user will enter numbers before finishing:</p>
-  <program language="java">
-      <code>
-import java.util.Scanner;
-
-class SumNumbers {
-
-    public static void main(String[] args) {
-
-        Scanner input = new Scanner(System.in);
-        double sum = 0.0;
-
-        System.out.print("Enter a number, or zero to quit: ");
-        double n = input.nextDouble();
-        while (n != 0) {
-            sum = sum + n;
-            System.out.print("Enter another number, or zero to quit: ");
-            n = input.nextDouble();
-        }
-
-        System.out.format("The sum is %.3f%n", sum);
-    }
-}
+            <listing xml:id="intro-score-good-indentation">
+                <title>Score conversion, with good indentation.</title>
+                <program language="kotlin">
+                    <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ScoreGoodIndentation.kt"/>
       </code>
-  </program>
+                </program>
+            </listing>
 
-  <p>The condition on the <c>while</c> statement is evaluated at the start of each repetition. If the condition evaluates to <c>true</c>, the body of the statement will execute. While Java does not require you to indent the body of the loop, we strongly suggest you do so to make your code more readable.</p>
-
-  <p>The <c>while</c> statement is a very general-purpose iterative structure that we will use in a number of different algorithms. In many cases, a compound condition will control the iteration. Consider the following code to sum the elements in an array up to, but not including, the first negative number:</p>
-
-  <listing xml:id="while-not-negative" label="while-not-negative">
-    <caption>Example of while loop</caption>
-  <program language="java"><code>
-int index = 0;
-double sum = 0.0;
-double [] data...; // code to initialize array
-
-while ((index &lt; data.length) &amp;&amp; (data[index] &gt;= 0.0) {
-   sum = sum + data[index];
-   index = index + 1;
-}
-</code></program>
-</listing>
-
-<p>The compound condition would cause the body of the statement to be executed only in the case where both parts of the condition are satisfied. The value of the variable <c>index</c> would need to be less than the array length (to avoid <q>falling off the edge of the earth</q>), and the value array element at the current index would need to be greater than or equal to zero.</p>
-
-<p>Sometimes, though, we <em>do</em> know how many iterations a calculation will require. We can use the <c>for</c> loop in conjunction with many of the Java collections to iterate over the collection's members.</p>
-
-<p>The first version of the <c>for</c> statement combines the elements of this <c>while</c> loop:</p>
-
-<program language="java"><code>
-initialization;
-while (condition) {
-    loop body;
-    action; // update variable used in condition
-}
-</code></program>
-
-<p>Into a single statement of this form:</p>
-
-<program language="java"><code>
-for (initialization; condition; action) {
-      loop body;
-}
-</code></program>
-
-<p>Here is a program fragment that does the same thing as <xref ref="while-not-negative"/>, but uses a <c>for</c> loop to sum all the items up to, but not including, the first negative value in an array:</p>
-
- <listing xml:id="for-not-negative" label="for-not-negative">
-    <caption>Example of for loop</caption>
-<program language="java"><code>
-double sum = 0.0;
-for (int index = 0; (index &lt; data.length) &amp;&amp; (data[index] &gt;= 0.0); index++) {
-    sum = sum + data[index];
-}
-</code></program>
-</listing>
-
-<aside>
-  <p>The <c>++</c> operator increments a variable. <c>i++</c> is shorthand for <c>i = i + 1</c>.
-    The <c>--</c> operator decrements a variable; <c>i--</c> is shorthand for <c>i = i - 1</c>.</p>
-</aside>
+            <p>Note that the final <c>else</c> is still necessary to provide the default case if all other conditions fail.</p>
+        </subsubsection>
 
 
-<p>If you want to access every element in the collection but do not need to use the index as a part of the calculation, you can use the <term>extended <c>for</c></term> loop. The following example adds up all the items in the <c>data</c> array:</p>
+        <subsubsection>
+            <title><c>else</c> is optional for <c>if</c> statements</title>
 
-<program language="java"><code>
-double sum = 0.0;
-for (double item: data) {
-    sum = sum + item;
-}
-</code></program>
+            <p>The <c>else</c> clause is not required in Kotlin; an <c>if</c> without an <c>else</c> is called a single-way selection construct. In a single-way selection, if the condition is true, an action is performed. When the condition is false, processing simply continues on to the next statement after the <c>if</c>. For example, the following fragment will first check to see if the value of a variable <c>n</c> is negative. If so, then it is modified by the absolute value function. Regardless, the next action is to compute the square root.</p>
+            <program language="kotlin">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/IfAbs.kt"/>
+      </code>
+            </program>
 
-<p>The loop will assign each item in the <c>data</c> array to the loop variable <c>item</c>, one after another, and you can use that value in the loop body. You may use any variable name you wish; we used <c>item</c> here because it is a meaningful name.</p>
+        </subsubsection>
 
-  <exercises>
-    <title>Self Check</title>
-    <exercise>
-        <p>Write a Java program that uses a <c>while</c> loop to continually prompt the user to enter a number greater than zero until the user does so.  (Hint: as long as the number is <em>not</em> greater than zero, you must keep asking.)</p>
-    </exercise>
 
-    <exercise>
-        <p>Here five scores for a student's assignments: 98.2, 85.9, 94.0, 92.0, 88.5 and the weight of each assignment: 0.3,  0.2,  0.3,  0.1,  0.1 (that is, the first assignment is worth 30% of the total grade, the second is worth 20%, and so on). Write a program which calculates a weighted sum by multiplying each score by its corresponding weight and summing them up. Your program must use a <c>for</c> loop.</p>
-    </exercise>
+        <subsubsection xml:id="subsubsec-if-expression">
+            <title><c>if</c> expressions</title>
 
-    <exercise>
-        <p>Write a Java program that takes an array of integers and produces the sum of the odd-indexed numbers and the sum of the even-indexed numbers. For example, in this array: {4, 2, 8, 5, 9}, the even-numbered index elements are 4, 8, and 9, which add up to 21. The odd-numbered index elements are 2 and 5, which sum to 7. Your program must work with any array, not just this example array. Try to do it with only one loop (hint: <c>if</c> is your friend).</p>
-    </exercise>
-  </exercises>
+            <p>Look again at the score assignment example shown above in <xref ref="intro-score-good-indentation" />. In every single case, we assign a value to the variable <c>grade</c>. Kotlin provides an <em>if expression</em> that we can use to make the code a bit briefer:</p>
+
+            <listing xml:id="intro-score-expression">
+                <title>Score conversion, with if expression.</title>
+                <program language="kotlin">
+                    <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ScoreExpression.kt"/>
+      </code>
+                </program>
+            </listing>
+
+            <p>In this version, <c>if</c> is an expression that returns a value, which is then assigned to the variable <c>grade</c>. Again, this version if <c>if</c> is useful when every case assigns a value to the same variable. This form requires that there be an <c>else</c> case.</p>
+
+        </subsubsection>
+
+        <subsubsection>
+            <title><c>when</c> statements and expressions</title>
+
+            <p>When we have an <c>if</c>...<c>else</c> statement or expression where at every step we check the same variable for equality to different values, we can use a <c>when</c> statement or expression instead. <c>when</c> results in slightly briefer code than <c>if</c> in this situation. Here are two examples with similar behavior, one using <c>when</c> as a statement, and one using it as an expression.</p>
+
+            <listing xml:id="intro-when-statement">
+                <title>Grade conversion, with <c>when</c> statement.</title>
+                <program language="kotlin">
+                    <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/WhenStatement.kt"/>
+      </code>
+                </program>
+            </listing>
+
+            <listing xml:id="intro-when-expression">
+                <title>Grade conversion, with <c>when</c> expression.</title>
+                <program language="kotlin">
+                    <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/WhenExpression.kt"/>
+      </code>
+                </program>
+            </listing>
+
+        </subsubsection>
+
+
+    </subsection>
+
+    <subsection>
+        <title>Iteration</title>
+
+        <p>For iteration, Kotlin provides a standard <c>while</c> statement and a very powerful <c>for</c> statement. The <c>while</c> statement repeats a body of code as long as a condition evaluates to <c>true</c>. Generally, we use a <c>while</c> loop for <term>indeterminate loops</term>, where we do not know how many times the loop has to iterate. Consider this program, where we ask the user repeatedly enter numbers they want to sum, entering zero when they are finished. In this case, we have no idea how many times the user will enter numbers before finishing:</p>
+        <program language="kotlin">
+            <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/WhileSum.kt"/>
+      </code>
+        </program>
+
+        <p>The condition on the <c>while</c> statement is evaluated at the start of each repetition. If the condition evaluates to <c>true</c>, the body of the statement will execute. While Kotlin does not require you to indent the body of the loop, we strongly suggest you do so to make your code more readable.</p>
+
+        <p>The <c>while</c> statement is a very general-purpose iterative structure that we will use in a number of different algorithms. In many cases, a compound condition will control the iteration. Consider the following variation of the above program, which will also stop when the sum goes over 10:</p>
+
+        <listing xml:id="while-compound" label="while-compound">
+            <title>Example of while loop</title>
+            <program language="java">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/WhileSumCompound.kt"/>
+</code>
+            </program>
+        </listing>
+
+        <p>The compound condition would cause the body of the statement to be executed only in the case where both parts of the condition are satisfied.</p>
+
+        <p>Sometimes, though, we <em>do</em> know how many iterations a calculation will require. We can use the <c>for</c> loop in conjunction with many of the Kotlin collections to iterate over the collection's members. So, for example,</p>
+
+        <program language="kotlin">
+            <code>
+                for (item in listOf(1, 3, 6, 2, 5)) {
+                    println(item)
+                }
+            </code>
+        </program>
+
+
+        <p>assigns the variable <c>item</c> to be each successive value in the list [1, 3, 6, 2, 5]. The body of the iteration is then executed. This results in the following output:</p>
+
+        <pre>
+1
+3
+6
+2
+5
+        </pre>
+
+
+        <p>This works for any collection that provides iteration capability; this includes lists and strings, among others.</p>
+
+        <p>A common use of the for statement is to implement definite iteration over a range of values. The statement</p>
+
+        <program language="kotlin">
+            <code>
+                for (item in 0 ..&lt; 5) {
+                    println(item * item)
+                }
+            </code>
+        </program>
+
+        <p>will perform the <c>println</c> function five times. The expression <c>0 ..&lt; 5</c> returns a range object representing the sequence 0, 1, 2, 3, 4 and each value will be assigned to the variable item. This value is then squared and printed.</p>
+
+        <p>Kotlin has a variety of options in range expressions. Most notably, the range <c>0 .. 5</c> (without the <c>&lt;</c>) is inclusive on both ends: it represents the sequence 0, 1, 2, 3, 4, 5. Here are some other examples:</p>
+
+        <p>
+            <ul>
+                <li><c>0 ..&lt; 5 step 2
+                    </c>: sequence starting at 0, ending with 4, each item increasing by 2</li>
+                <li><c>5 downTo 1</c>: sequence starting at 5, ending at 1, each item decreasing by 1</li>
+            </ul>
+        </p>
+
+        <p>Another useful version of this iteration structure is used to process each character of a string. The following program iterates over a list of strings and for each string processes each character by appending it to a list. The result is a list of all the letters in all of the words.</p>
+
+        <program language="kotlin" interactive="activecode">
+            <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/AppendLettersFromStrings.kt"/>
+            </code>
+        </program>
+
+
+
+    </subsection>
+    <exercises>
+        <title>Self Check</title>
+        <exercise>
+            <p>Write a Kotlin program that uses a <c>while</c> loop to continually prompt the user to enter a number greater than zero until the user does so. (Hint: as long as the number is <em>not</em> greater than zero, you must keep asking.)</p>
+        </exercise>
+
+        <exercise>
+            <p>Here are five scores for a student's assignments: 98.2, 85.9, 94.0, 92.0, 88.5. The weight of each assignment is 0.3, 0.2, 0.3, 0.1, 0.1 (that is, the first assignment is worth 30% of the total grade, the second is worth 20%, and so on). Write a program which calculates a weighted sum by multiplying each score by its corresponding weight and summing them up. Your program must use a <c>for</c> loop.</p>
+        </exercise>
+
+        <exercise>
+            <p>Write a Kotlin program that takes a list of integers and produces the sum of the odd-indexed numbers and the sum of the even-indexed numbers. For example, in the list [4, 2, 8, 5, 9], the even-numbered index elements are 4, 8, and 9, which add up to 21. The odd-numbered index elements are 2 and 5, which sum to 7. Your program must work with any list, not just this example list. Try to do it with only one loop (hint: <c>if</c> is your friend).</p>
+        </exercise>
+    </exercises>
 </section>

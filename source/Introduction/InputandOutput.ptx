@@ -268,7 +268,7 @@ You are about 10585 days old, Kim.
       </pre>
 
 
-    <p>This program also gives examples of how to write a <term>comment</term> in Java. The characters <c>//</c> introduce a single-line comment; Kotlin ignores everything from the <c>//</c> to the end of line (lines 11, 12, and 14). Multi-line coments begin with <c>/*</c> and end with <c>*/</c> (lines 6-9). The additional <c>*</c> at the beginning of each line inside the multiline comment (lines 7 and 8) are a common stylistic addition to make the comment easier to read, but those asterisks on line 7 and 8 are not required.</p>
+    <p>This program also gives examples of how to write a <term>comment</term> in Kotlin. The characters <c>//</c> introduce a single-line comment; Kotlin ignores everything from the <c>//</c> to the end of line (lines 11, 12, and 14). Multi-line coments begin with <c>/*</c> and end with <c>*/</c> (lines 6-9). The additional <c>*</c> at the beginning of each line inside the multiline comment (lines 7 and 8) are a common stylistic addition to make the comment easier to read, but those asterisks on line 7 and 8 are not required.</p>
 
   </subsection>
 </section>
