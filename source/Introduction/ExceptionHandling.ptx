@@ -1,116 +1,115 @@
 <?xml version="1.0"?>
-<section xml:id="introduction_exception-handling">
+<section xml:id="introduction_exception-handling" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Exception Handling</title>
-  <p>There are three types of errors that typically occur when writing
-            programs. The first, known as a <em>syntax error</em>, simply means that the
-            programmer has made a mistake in the structure of a statement or
-            expression. For example, putting these arithmetic operators together:</p>
-  <pre>jshell&gt; int n = 2 + * 3;
-|  Error:
-|  illegal start of expression
-|  int n = 2 + * 3;
-|              ^
-</pre>
-  <p>In this case, the Java compiler has found that it cannot complete
-            the processing of this statement since it does not conform to the
-            rules of the language. Syntax errors are usually more frequent when you
-            are first learning a language.</p>
+  <p>There are three types of errors that typically occur when writing programs. The first, known as a <em>syntax error</em>, simply means that the programmer has made a mistake in the structure of a statement or expression. For example, putting these arithmetic operators together:</p>
 
-          <p>Another type of error, known as a <em>run time error</em>, happens when the syntax is correct, but the program cannot execute correctly:</p>
-          <console><output>
-jshell&gt; int n = 12 / 0;
-|  Exception java.lang.ArithmeticException: / by zero
-|        at (#1:1)
-</output></console>
-<p>The last type of error, known as a <em>logic error</em> or <em>semantic error</em>, denotes a situation where the program executes but gives the wrong result. This can be due to an error in the underlying algorithm or an error in your translation of that algorithm. For example, the following code for computing the area of a rectangle uses correct Java syntax, and the arithmetic will not cause a run-time error, but the logic is wrong; area is length times width, not length plus width:</p>
 
-<program language="java">
-  <code>
-int length = 25;
-int width = 15;
-int area = length + width;
-System.out.println(area);
-</code></program>
+  <program language="kotlin">
+    <code>
+fun main() {
+    val n = 2 + * 3
+    println(n)
+} 
+      </code>
+  </program>
 
-<p>In some cases, logic errors can lead to errors such as trying to divide by zero or trying to access an item in an array where the index of the item is outside the bounds of the array. In this case, the logic error leads to a runtime error that causes the program to terminate. These types of runtime errors are typically called <term>exceptions</term>.</p>
+  <p>results in this error:</p>
+
+
+  <pre>
+    Kotlin: Syntax error: Expecting an element.    
+  </pre>
+
+  <p>In this case, the Kotlin compiler has found that it cannot complete
+    the processing of this statement since it does not conform to the
+    rules of the language. Syntax errors are usually more frequent when you
+    are first learning a language.</p>
+
+  <p>Another type of error, known as a <em>run time error</em>, happens when the syntax is correct, but the program cannot execute correctly:</p>
+
+
+ <program language="kotlin">
+    <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/RuntimeErrorExample.kt"/>
+      </code>
+  </program>  
+
+  <pre>
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at RuntimeErrorExampleKt.main(RuntimeErrorExample.kt:2)
+	at RuntimeErrorExampleKt.main(RuntimeErrorExample.kt)
+  </pre>
+
+  <aside>
+    <title>Why does this error mention Java?</title>
+    <p>Kotlin was built using significant capabilities from Java. In particular, when compiling a Kotlin program, it is compiled to Java bytecode, and then a Java runtime environment runs the program. Most of the time, that's all completely invisible to us. Since the error occurred while the Java runtime was attempting to divide by zero, this is a case where we do see the existence of the Java runtime underneath.</p>
+  </aside>
+
+  <p>The last type of error, known as a <em>logic error</em> or <em>semantic error</em>, denotes a situation where the program executes but gives the wrong result. This can be due to an error in the underlying algorithm or an error in your translation of that algorithm. For example, the following code for computing the area of a rectangle uses correct Kotlin syntax, and the arithmetic will not cause a run-time error, but the logic is wrong; area is length times width, not length plus width:</p>
+
+  <program language="java">
+    <code>
+val length = 25
+val width = 15
+val area = length + width
+println(area)
+</code>
+  </program>
+
+  <p>In some cases, logic errors can lead to errors such as trying to divide by zero or trying to access an item in a list where the index of the item is outside the bounds of the array. In this case, the logic error leads to a runtime error that causes the program to terminate. These types of runtime errors are typically called <term>exceptions</term>.</p>
 
   <p>Most of the time, beginning programmers think of exceptions as fatal runtime errors that cause the end of execution. However, most programming languages provide a way to deal with these errors that will allow the programmer to have some type of intervention if they so choose. In addition, programmers can create their own exceptions if they detect a situation in the program execution that warrants it.</p>
 
-  <p>When an exception occurs, we say that it has been <em>thrown</em> or <em>raised</em>. You can
-            <em>handle</em> the exception that has been raised by using a <c>try</c>
-            statement. For example, consider the following program that asks the
-            user for an integer and then tries to access an array element at that index.</p>
+  <p>When an exception occurs, we say that it has been <em>thrown</em> or <em>raised</em>. You can <em>handle</em> the exception that has been raised by using a <c>try</c> statement. For example, consider the following program that asks the user for an integer and then tries to access an array element at that index.</p>
 
-          <program xml:id="prog_array_access" label="prog_array_access">
-            <code>
-import java.util.Scanner;
-
-class ArrayAccess {
-
-    public static void main(String[] args) {
-        int[] data = {10, 66, 47, 11, 505, 217};
-
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Enter an index: ");
-        int index = input.nextInt();
-
-        int value = data[index];
-        System.out.format("The element is %d.%n", value);
-    }
-}
-</code></program>
-
-<p>If the user enters a value that is less than the array length, the <c>System.out.println()</c> will display the value. However, if they enter a negative number or a number greater than or equal to the array length, the program will report an <c>ArrayIndexOutOfBounds</c>  exception.</p>
-<console>
-<output>Enter an index: 7
-Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException:
-  Index 7 out of bounds for length 6
-        at ArrayAccess.main(ArrayAccess.java:13)
-        </output></console>
-
-  <p>We can handle this exception by calling the <c>System.out.format</c> method from within a
-            <c>try</c> block. A corresponding <c>catch</c> block <q>catches</q> the exception
-            and prints a message back to the user in the event that an exception
-            occurs. Here is the modified section of the code:</p>
-  <program language="java">
+ <program language="kotlin" xml:id="prog_array_access" label="prog_array_access">>
     <code>
-try {
-    int value = data[index];
-    System.out.format("The element is %d.%n", value);
-}
-catch (Exception ex) {
-    System.out.format("Index must be from 0 to %d.%n",
-        data.length);
-    }
-}
-    </code></program>
+<xi:include parse="text" href="samplecode/src/main/kotlin/BadIndexOnList.kt"/>
+      </code>
+  </program>  
+
+  <p>If the user enters a positive value that is less than the array length, the <c>println()</c> will display the value. However, if they enter a negative number or a number greater than or equal to the array length, the program will report an <c>ArrayIndexOutOfBounds</c> exception.</p>
+
+  <pre>
+Enter an index: 7
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 7 out of bounds for length 6
+	at java.base/java.util.Arrays$ArrayList.get(Arrays.java:4266)
+	at BadIndexOnListKt.main(BadIndexOnList.kt:7)
+	at BadIndexOnListKt.main(BadIndexOnList.kt)
+  </pre>
+
+  <p>We can handle this exception by calling the <c>println</c> function from within a <c>try</c> block. A corresponding <c>catch</c> block <q>catches</q> the exception and prints a message back to the user in the event that an exception occurs. Here is the modified program:</p>
+ <program language="kotlin" xml:id="prog_array_access_catch" label="prog_array_access_catch">>
+    <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/BadIndexWithCatch.kt"/>
+      </code>
+  </program>  
   <p>Now, if the user enters a number out of range, the program will catch the exception raised by the array access and will instead print a useful error message. This means that the program will not terminate but instead will continue on to the next statements.</p>
 
-  <p>The <c>ex</c> variable is an <c>Exception</c> object, and Java provides methods to allow programmers to extract information about the exception, such as an error message, the <q>stack trace</q> (the sequence of calls that happened when the exception occurred), and other information.</p>
+  <pre>
+      Enter an index: 7
+      Index must be from 0 to 6.
+  </pre>
 
-  <console><output>
-Enter an index: 7
-Index must be from 0 to 6.
-</output></console>
+  <p>The <c>e</c> variable is an <c>Exception</c> object, and Kotlin provides methods to allow programmers to extract information about the exception, such as an error message, the <q>stack trace</q> (the sequence of calls that happened when the exception occurred), and other information.</p>
 
-  <p>It is also possible for a programmer to cause a runtime exception by
-    using the <c>throw</c> statement. For example, let's say a method cannot calculate a valid return value if given a negative number. Instead of printing an error message<mdash>which may not be appropriate in a general-purpose library</mdash>it will throw an <c>IllegalArgumentException</c> and let the code that callled the method handle it with a <c>catch</c>:</p>
 
-  <program xml:id="intro_throw_exception" language="java">
+  <p>It is also possible for a programmer to cause a runtime exception by using the <c>throw</c> statement. For example, let's say a method cannot calculate a valid return value if given a negative number. Instead of printing an error message <mdash />which may not be appropriate in a general-purpose library <mdash /> it will throw an <c>IllegalArgumentException</c> and let the code that callled the method handle it with a <c>catch</c>:</p>
+
+  <program xml:id="intro_throw_exception" language="kotlin">
     <code>
-public static double doCalculation(double n) {
+fun doCalculation(n: Double): Double {
     if (n &gt; 0) {
         // a complicated calculation goes here
-        return ...;
+        return ...
     } else {
-        throw new IllegalArgumentException(n + " cannot be negative.");
+        throw IllegalArgumentException("$n cannot be negative.")
     }
   }
-    </code></program>
+    </code>
+  </program>
 
-<p>The string in the <c>throw</c> statement will be the message associated with the exception.</p>
+  <p>The string in the <c>throw</c> statement will be the message associated with the exception.</p>
 
-  <p>There are many kinds of exceptions that can be raised in addition to the
-    <c>ArrayIndexOutOfBoundsException</c> shown above. See <url href="https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/lang/Exception.html">the Java API</url> for a list of some of the exception types.</p>
+  <p>There are many kinds of exceptions that can be raised in addition to the <c>IllegalArgumentException</c> shown above. See <url href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-runtime-exception/">the Kotlin API</url> for a list of some of the exception types.</p>
 </section>
