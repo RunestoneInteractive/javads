@@ -44,9 +44,12 @@
       <colophon>
         <colophon-items />
       </colophon>
+      <xi:include href="./FrontMatter/preface_kotlin.ptx" />
       <xi:include href="./FrontMatter/preface.ptx" />
       <xi:include href="./FrontMatter/older_preface.ptx" />
       <acknowledgement>
+      <paragraphs>
+        <title>For the Python version</title>
         <p>
           There are many people who have helped us to complete this book.
           Thanks to our Computer Science colleague Steve Hubbard who provided
@@ -69,10 +72,23 @@
           Their
           love and support helped make this book a reality.
         </p>
-        Bradley N. Miller David L. Ranum Roman Yasinovskyy <p>The Java version of this book was
+        <p>Bradley N. Miller,  David L. Ranum, Roman Yasinovskyy</p>
+      </paragraphs>
+      <paragraphs>
+        <title>For the Java version</title>
+        <p>The Java version of this book was
         constructed by J. David Eisenberg for the Computer Science 76 course at
           Evergreen Valley College in San Jose, CA. Any mistakes in the book are entirely his.</p>
+        
+      </paragraphs>
 
+      <paragraphs>
+        <title>For the Kotlin version</title>
+        <p>The Kotlin translation of this book was
+        constructed by Dave Musicant for the Data Structures course at
+          Carleton College in Northfield, MN. He is grateful that the previous authors prepared such detailed content for him to work with.</p>
+        
+      </paragraphs>
 
       </acknowledgement>
 
