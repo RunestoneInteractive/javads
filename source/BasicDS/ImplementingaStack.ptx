@@ -6,7 +6,10 @@
             will turn our attention to using Kotlin to implement the stack. Recall
             that when we give an abstract data type a physical implementation, we
             refer to the implementation as a <em>data structure</em>.</p>
-  <p>As we described in <xref ref="introduction_object-oriented-programming-in-java-defining-classes"/>, in Kotlin, as in any object-oriented
+  <p>
+    <!-- TODO: fix reference. As we described in <xref ref="introduction_object-oriented-programming-in-java-defining-classes"/>, -->
+    As we described earlier,
+     in Kotlin, as in any object-oriented
             programming language, the implementation of choice for an abstract data
             type such as a stack is the creation of a new class. The stack
             operations are implemented as member functions. Further, to implement a stack,

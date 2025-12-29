@@ -11,12 +11,12 @@
   <xi:include href="./GettingStartedwithData.ptx"/>
   <xi:include href="./Collections.ptx"/>
   <xi:include href="./RunningAKotlinProgram.ptx"/>
-  <xi:include href="./InputandOutput.ptx"/>
+  <!-- <xi:include href="./InputandOutput.ptx"/>
   <xi:include href="./ControlStructures.ptx"/>
   <xi:include href="./ExceptionHandling.ptx"/>
   <xi:include href="./DefiningMethods.ptx"/>
   <xi:include href="./ObjectOrientedProgramminginJavaDefiningClasses.ptx"/>
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>
-  <xi:include href="./Exercises.ptx"/>
+  <xi:include href="./Exercises.ptx"/> -->
 </chapter>

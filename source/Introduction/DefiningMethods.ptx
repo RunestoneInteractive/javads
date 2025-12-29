@@ -27,7 +27,11 @@ $2 ==&gt; 6.25
   <p>
     <ul>
       <li><p><c>public</c> says that this method can be invoked by any program that imports the class it belongs to.</p></li>
-      <li><p><c>static</c> means that this method belongs to the class as a whole (we will discuss this more in <xref ref="introduction_object-oriented-programming-in-java-defining-classes"/>).</p></li>
+      <li><p><c>static</c> means that this method belongs to the class as a whole
+        
+        <!-- TODO: fix reference (we will discuss this more in <xref ref="introduction_object-oriented-programming-in-java-defining-classes"/>). -->
+      
+      </p></li>
       <li><p><c>double</c> is the type of data this method will return.</p></li>
       <li><p><c>square</c> is the name of the method.</p></li>
       <li><p><c>double n</c> specifies the type and name of the method's parameter(s); in this example there is only one parameter. This means that <c>square</c> needs only one piece of data to do its work.</p></li>

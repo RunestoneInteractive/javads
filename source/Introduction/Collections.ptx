@@ -10,9 +10,10 @@
 
     <p>Let's create a <c>MutableList</c> of <c>String</c> elements. The element data type is enclosed in angle brackets, and is a <term>generic</term>. All the elements in a <c>MutableList</c> must be of the same data type.</p>
 
-    <aside>
+    <!-- TODO: Put back when generics section is done. -->
+    <!-- <aside>
         <p>You can read more about generics in <xref ref="oop_generics"/>.</p>
-    </aside>
+    </aside> -->
 
     <program language="kotlin">
       <code>
@@ -118,7 +119,8 @@ Key Tokyo has value 13,515,271.
 Key Dhaka has value 8,906,039.
 Key Luanda has value 2,165,867.</pre>
 
-<p>(You will learn more about the <c>String.format</c> method in <xref ref="introduction_string-formatting"/>.)</p>
+<p>(You will learn more about the <c>String.format</c> method later.</p>
+<!-- TODO: fix reference. <p>(You will learn more about the <c>String.format</c> method in <xref ref="introduction_string-formatting"/>.)</p> -->
 
 <p>Here are examples of commonly-used <c>MutableMap</c> operations, demonstrated on the map <c>cityInfo</c>:</p>
 

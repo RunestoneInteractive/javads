@@ -117,8 +117,10 @@
    <p>The <c>Task</c> class (<xref ref="basic-ds_lst-task"/>) will represent a single printing
                 task. When the task is created, a random number generator will provide a
                 length from 1 to 20 pages. We will use a random number generator from the <c>kotlin.random.Random</c>
-                class, as we saw in <xref ref="introduction_defining-methods"/>.</p>
-                <!-- TODO: is the above reference accurate? -->
+                class, as we saw earlier.
+                 <!-- in <xref ref="introduction_defining-methods"/>. -->
+                </p>
+                <!-- TODO: is the above reference accurate? Then fix the reference. -->
 
     <p>Each task will also need to keep a timestamp to be used for computing
                 waiting time. This timestamp will represent the time that the task was

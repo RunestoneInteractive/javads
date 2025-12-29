@@ -96,16 +96,16 @@
     <xi:include href="./Introduction/toctree.ptx" />
     <xi:include href="./AlgorithmAnalysis/toctree.ptx" />
     <xi:include href="./BasicDS/toctree.ptx" />
-    <xi:include href="./Recursion/toctree.ptx" />
+    <!-- <xi:include href="./Recursion/toctree.ptx" />
     <xi:include href="./SortSearch/toctree.ptx" />
     <xi:include href="./Trees/toctree.ptx" />
     <xi:include href="./Graphs/toctree.ptx" />
-    <xi:include href="./Advanced/toctree.ptx" />
+    <xi:include href="./Advanced/toctree.ptx" /> -->
     <backmatter>
-      <xi:include href="./AppendixOOP/toctree.ptx" />
+      <!-- <xi:include href="./AppendixOOP/toctree.ptx" />
       <xi:include href="./AppendixFiles/toctree.ptx" />
       <xi:include href="./AppendixUML/toctree.ptx" />
-      <xi:include href="./AppendixHOF/toctree.ptx" />
+      <xi:include href="./AppendixHOF/toctree.ptx" /> -->
       <index>
         <title>Index</title>
         <index-list />

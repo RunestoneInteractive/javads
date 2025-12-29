@@ -328,7 +328,8 @@ public static Fraction add(Fraction fracA, Fraction fracB) {
 
 <p>Now we have two methods with the same name. Java allows this, as long as the number of parameters and type of parameters are different. This is called <term>overloading</term> a method. There's no conflict here; when Java encounters <c>fracA.add(fracB)</c>, it will use the instance method that has one parameter instead of calling the two-argument method that is already in progress.
 </p>
-<aside><p>A method <em>can</em> call itself; this is called <term>recursion</term>, and it is the topic of <xref ref="chapter_recursion"/>, but that's not what we want here!</p></aside>
+<!-- TODO: put back when recursion section is done. <aside><p>A method <em>can</em> call itself; this is called <term>recursion</term>, and it is the topic of <xref ref="chapter_recursion"/>, but that's not what we want here!</p></aside> -->
+<aside><p>A method <em>can</em> call itself; this is called <term>recursion</term>, but that's not what we want here!</p></aside>
 
 <p>We can now complete our <c>FractionTest</c> program with one additional change: because our two-argument <c>add</c> method belongs to the class, we must prefix it with the class name:</p>
 
@@ -423,7 +424,13 @@ public class FractionTest {
     </program>
     </listing>
 
-    <p>This is what you need to know to create most of the classes we will use in this book. This is, after all, a review of <em>basic</em> Java, and our goal is to teach you data structures, not Java. However, we will also need the more advanced concepts of inheritance, polymorphism, interfaces, composition, and generics. See <xref ref="appendix_oop"/> for an overview of these concepts. We have put them in an Appendix so that this section can be kept to a reasonable length.</p>
+    <p>This is what you need to know to create most of the classes we will use in this book. This is, after all, a review of <em>basic</em> Java, and our goal is to teach you data structures, not Java. However, we will also need the more advanced concepts of inheritance, polymorphism, interfaces, composition, and generics.
+      
+      <!-- TODO: Put this back when appendix is done.
+       
+      See <xref ref="appendix_oop"/> for an overview of these concepts. We have put them in an Appendix so that this section can be kept to a reasonable length.
+     -->
+    </p>
 
     <exercises>
       <title>Self Check</title>
