@@ -196,12 +196,10 @@ val word = "computer"
 println(word.count())
     </pre>
 
-    <aside>
+    <note xml:id="data-member-functions">
       <title>Member functions, extension functions, and methods</title>
       <p>The Kotlin language provides two different capabilities for creating functions associated with objects. One of them, referred to in the Kotlin documentation as a <term>member function</term>, is the same thing as what is referred to as a method in languages such as Python and Java. We will create member functions ourselves later in this book. Kotlin offers a second capability referred to as an <term>extension function</term>, which looks identical to a member function when using it, but has some internal differences. In practice, this distinction does not typically matter at all when using one of these functions; it relates to how the code is written when it is defined. For simplicity, in this book we will follow a somewhat-established convention<fn><em>Sebastian Aigner, Roman Elizarov, Svetlana Isakova, and Dmitry Jemerov. Kotlin in Action, Second Edition</em>. Manning, 2024.</fn> where we will refer to both member functions and extension functions as <term>methods</term>. If we need to distinguish between the two, we'll use the more precise terminology.</p>
-    </aside>
-
-    <p></p>
+    </note>
 
 
     <p>The <c>+</c> operator allows you to <term>concatenate</term> Strings. When concatenating a String followed by a number, the number will be converted to a String. When a number appears first, however, it attempts to do numeric addition. Note that the order of operations is important:</p>
