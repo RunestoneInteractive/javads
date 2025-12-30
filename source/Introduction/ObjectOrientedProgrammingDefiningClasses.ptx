@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <section xml:id="introduction_object-oriented-programming-in-java-defining-classes" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <!-- TODO: Add additional properties not in default constructor -->
+  <!-- TODO: Add section on null safety -->
   <title>Object-Oriented Programming in Kotlin: Defining Classes</title>
   <introduction>
   <p>We stated earlier that Kotlin is an object-oriented programming

@@ -15,13 +15,13 @@
                     problem domain by hiding the details of the data.</p>
       </li>
       <li>
-        <p>Java is a powerful object-oriented language.</p>
+        <p>Kotlin is a powerful object-oriented language.</p>
       </li>
       <li>
-        <p>Arrays and ArrayLists are Java sequential collections.</p>
+        <p>Arrays, Lists, MutableLists, and Strings are Kotlin sequential collections.</p>
       </li>
       <li>
-        <p>HashMaps and Sets are nonsequential collections of data.</p>
+        <p>Maps, MutableMaps, Sets, and MutableSets are nonsequential collections of data.</p>
       </li>
       <li>
         <p>Classes allow programmers to implement abstract data types.</p>
@@ -29,10 +29,6 @@
       <li>
         <p>Programmers can override standard methods as well as create new
                     methods.</p>
-      </li>
-      <li>
-        <p>Programmers can have multiple methods with the same name as long
-          as their number and/or types of parameters differ. This is called overloading a method.</p>
       </li>
     </ul>
   </p>
