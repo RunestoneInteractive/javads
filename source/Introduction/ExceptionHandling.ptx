@@ -33,7 +33,7 @@ fun main() {
 <xi:include parse="text" href="samplecode/src/main/kotlin/RuntimeErrorExample.kt"/>
       </code>
   </program>  
-
+sierpinski-kotlin.png
   <pre>
 Exception in thread "main" java.lang.ArithmeticException: / by zero
 	at RuntimeErrorExampleKt.main(RuntimeErrorExample.kt:2)
@@ -79,7 +79,7 @@ Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 7 out
   </pre>
 
   <p>We can handle this exception by calling the <c>println</c> function from within a <c>try</c> block. A corresponding <c>catch</c> block <q>catches</q> the exception and prints a message back to the user in the event that an exception occurs. Here is the modified program:</p>
- <program language="kotlin" xml:id="prog_array_access_catch" label="prog_array_access_catch">>
+ <program language="kotlin" xml:id="prog_array_access_catch" label="prog_array_access_catch">
     <code>
 <xi:include parse="text" href="samplecode/src/main/kotlin/BadIndexWithCatch.kt"/>
       </code>

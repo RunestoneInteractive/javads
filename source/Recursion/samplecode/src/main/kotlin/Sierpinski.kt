@@ -2,34 +2,26 @@ import java.awt.Color
 
 data class Point(var x: Double, var y: Double)
 
-fun center(p1: Point, p2: Point, p3:Point): Point {
-    return Point((p1.x + p2.x + p3.x) / 3.0, (p1.y + p2.y + p3.y) / 3.0)
-}
-
-fun drawTriangle(points: List<Point>, color: Color, t: TurtleSeward) {
-    // Move to center of triangle and draw dot
-    t.up()
-    val middle = center(points[0], points[1], points[2])
-    t.setPosition(middle.x, middle.y)
-    t.dot(color)
-
-    // Move to corner of triangle and draw it
-    t.setPosition(points[0].x, points[0].y)
-    t.down()
-    t.penColor(color)
-    t.setPosition(points[1].x, points[1].y)
-    t.setPosition(points[2].x, points[2].y)
-    t.setPosition(points[0].x, points[0].y)
+fun drawTriangle(points: List<Point>, color: Color, t: Turtle) {
+    t.penUp()
+    t.goTo(points[0].x, points[0].y)
+    t.penDown()
+    t.setColor(color)
+    t.beginFill()
+    t.goTo(points[1].x, points[1].y)
+    t.goTo(points[2].x, points[2].y)
+    t.goTo(points[0].x, points[0].y)
+    t.endFill()
 }
 
 fun midpoint(p1: Point, p2: Point): Point {
     return Point((p1.x + p2.x) / 2.0, (p1.y + p2.y) / 2.0)
 }
 
-fun sierpinski(points: List<Point>, level: Int, t: TurtleSeward) {
+fun sierpinski(points: List<Point>, level: Int, t: Turtle) {
 
     val colorMap = listOf(Color.BLUE, Color.RED, Color.GREEN,
-        Color.WHITE, Color.ORANGE, Color.MAGENTA)
+        Color.WHITE, Color.YELLOW, Color.MAGENTA, Color.ORANGE)
 
     drawTriangle(points, colorMap[level], t)
 
@@ -61,7 +53,8 @@ fun sierpinski(points: List<Point>, level: Int, t: TurtleSeward) {
 }
 
 fun main() {
-    val myTurtle = TurtleSeward()
+    val habitat = World(400, 400)
+    val myTurtle = Turtle(habitat)
 
     val points = listOf(
         Point(-180.0, -150.0),
@@ -71,5 +64,4 @@ fun main() {
 
     sierpinski(points, 5, myTurtle)
     myTurtle.hide()
-    TurtleSeward.zoomFit()
 }

@@ -30,5 +30,5 @@
     <image source="Recursion/Figures/stCallTree.png" width="50%" />
   </figure>
 
-  <p>The <c>sierpinski</c> function relies heavily on the <c>midpoint</c> function. <c>midpoint</c> takes as arguments two endpoints and returns the point halfway between them. In addition, <xref ref="recursion_lst-sierpinski" /> draws a dot in the center of each triangle.</p>
+  <p>The <c>sierpinski</c> function relies heavily on the <c>midpoint</c> function. <c>midpoint</c> takes as arguments two endpoints and returns the point halfway between them. In addition, <xref ref="recursion_lst-sierpinski" /> has a <c>drawTriangle</c> function that draws a filled triangle using the <c>beginFill</c> and <c>endFill</c> turtle methods. (<c>beginFill</c> tells the turtle to store all subsequent movements as a <em>path</em> to be filled in the specified color. <c>endFill</c> marks the end of the path, at which point the path is filled with the color.)</p>
 </section>
