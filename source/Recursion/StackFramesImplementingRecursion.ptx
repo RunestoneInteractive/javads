@@ -1,79 +1,33 @@
 <?xml version="1.0"?>
 <section xml:id="recursion_stack-frames-implementing-recursion" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>Stack Frames: Implementing Recursion</title>
-  <p>Suppose that instead of concatenating the result of the recursive call
-            to <c>convert</c> with the string from <c>digitStrings</c>, we modified our
-            algorithm to push the strings onto a stack instead of making the recursive
-            call. The code for this modified algorithm is shown in
-            <xref ref="lst-recstack"/>.</p>
-<listing xml:id="lst-recstack">
-    <caption>Converting an Integer to a String Using a Stack</caption>
-<program label="lst-recstack" language="java" line-numbers="yes" interactive="activecode">
-    <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Stack.java"/>
+    <title>Stack Frames: Implementing Recursion</title>
+    <p>Suppose that instead of concatenating the result of the recursive call to <c>convert</c> with the string from <c>digitStrings</c>, we modified our algorithm to push the strings onto a stack instead of making the recursive call. The code for this modified algorithm is shown in <xref ref="lst-recstack" />.</p>
+    <listing xml:id="lst-recstack">
+        <title>Converting an Integer to a String Using a Stack</title>
+        <program label="lst-recstack" language="kotlin" line-numbers="yes" interactive="activecode">
+            <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/StackADT.kt"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt"/>
 ^^^^
-public class ConvertViaStack {
+<xi:include parse="text" href="samplecode/src/main/kotlin/ConvertViaStack.kt"/>
+            </code>
+        </program>
+    </listing>
+    <p>Each time we go through the first <c>while</c> loop in lines 9&#x2013;16, we push a character on the stack. When converting 13 to base 2, we see that when the loop exits, the stack would look like <xref ref="recursion_fig-recstack" />. Now we can pop the characters off the stack and concatenate them into the final result, <c>"1101"</c>.</p>
 
-    public static String convert(int n, int base) {
-        Stack&lt;String&gt; rStack = new Stack&lt;&gt;();
+    <figure xml:id="recursion_fig-recstack">
+        <caption>Strings Placed on the Stack During Conversion</caption>
+        <image source="Recursion/Figures/recstack.png" width="50%" />
+    </figure>
+    <p>The previous example gives us some insight into how Kotlin implements a recursive function call. When a function is called in Kotlin, a <term>stack
+            frame</term> is allocated to handle the local variables of the function. When the function returns, the return value is left on top of the stack for the calling function to access. <xref ref="recursion_fig-callstack" /> illustrates the call stack after the return statement on line 22.</p>
 
-        String [] digitStrings = {"0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+    <figure xml:id="recursion_fig-callstack">
+        <caption>Call Stack Generated from <c>toString(13, 2)</c></caption>
+        <image source="Recursion/Figures/callstack.png" width="50%" />
+    </figure>
+    <p>Notice that the call to <c>toString(2 / 2, 2)</c> defined in Listing 4.4 leaves a return value of <c>"1"</c> on the stack. This return value is then used in place of the function call (<c>toString(1, 2)</c>) in the expression <c>"1" + digitStrings[3 % 2]</c>, which will leave the string <c>"11"</c> on the top of the stack. In this way, the Kotlin call stack takes the place of the stack we used explicitly in <xref ref="lst-recstack" />. In our list-summing example, you can think of the return value on the stack taking the place of an accumulator variable.</p>
 
-        while (n &gt; 0) {
-            if (n &lt; base) {
-                rStack.push(digitStrings[n]);
-            } else {
-                rStack.push(digitStrings[n % base]);
-            }
-            n = n / base;
-        }
-
-        String result = "";
-        while (! rStack.isEmpty()) {
-            result = result + rStack.pop();
-        }
-        return result;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(convert(13, 2)); // 1101
-    }
-}
-        </code>
-  </program>
-</listing>
-<p>Each time we go through the first <c>while</c> loop in lines 9&#x2013;16, we push a character on the stack.
-            When converting 13 to base 2, we see that when the loop exits, the stack would look like <xref ref="recursion_fig-recstack"/>. Now we can pop the characters off the stack and concatenate
-            them into the final result, <c>"1101"</c>.</p>
-
-  <figure xml:id="recursion_fig-recstack" align="center">
-      <caption>Strings Placed on the Stack During Conversion</caption>
-    <image source="Recursion/Figures/recstack.png" width="50%"/>
-  </figure>
-  <p>The previous example gives us some insight into how Java implements a
-            recursive method call. When a method is called in Java, a <term>stack
-                frame</term> is allocated to handle the local variables of the method. When
-            the method returns, the return value is left on top of the stack for
-            the calling method to access. <xref ref="recursion_fig-callstack"/> illustrates the
-            call stack after the return statement on line 9.</p>
-
-  <figure xml:id="recursion_fig-callstack" align="center">
-      <caption>Call Stack Generated from <c>convert(13, 2)</c></caption>
-    <image source="Recursion/Figures/callstack.png" width="50%"/>
-  </figure>
-  <p>Notice that the call to <c>convert(2 / 2, 2)</c> defined in Listing 4.4 leaves a return value of
-            <c>"1"</c> on the stack because we have reached a base case. This return value is then used in place of the
-            method call (<c>convert(1, 2)</c>) in the expression <c>"1" + convert[3 % 2]</c>,
-            which will leave the string <c>"11"</c> on the top of the stack.
-            In this way, the Java call stack takes the place of the
-            stack we used explicitly in <xref ref="lst-recstack"/>. In our array-summing
-            example, you can think of the return value on the stack taking the place
-            of an accumulator variable.</p>
-  <p>The stack frames also provide a scope for the variables used by the
-            method. Even though we are calling the same methodd over and over,
-            each call creates a new scope for the variables that are local to the
-            method.</p>
+    <p>The stack frames also provide a scope for the variables used by the function. Even though we are calling the same function over and over, each call creates a new scope for the variables that are local to the function.</p>
 </section>
+
