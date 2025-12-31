@@ -9,11 +9,13 @@
     some interesting pictures. As you watch these pictures take shape you
     will get some new insight into the recursive process that may be helpful
     in cementing your understanding of recursion.</p>
-  <p>The tool we will use for our illustrations is called turtle graphics. You will need to put the <url href="https://sites.google.com/a/asmsa.org/java-turtle/download?authuser=0">
+  <p>The tool we will use for our illustrations is called turtle graphics. You will need to put the <url href="external/Recursion/code/World.java">
+      <c>World.java</c>
+    </url> and <url href="external/Recursion/code/Turtle.java">
       <c>Turtle.java</c>
-    </url> class in the same directory as your Kotlin programs for these examples.Here is the metaphor that turtle graphics uses: You can create a turtle and the turtle can move forward, move backward, turn left, turn right, etc. The turtle can have its tail up or down. When the turtle's tail is down and the turtle moves, it draws a line as it moves. To increase the artistic value of the turtle, you can change the width of the tail as well as the color of the ink the tail is dipped in.</p>
+    </url> classes in the same directory as your Kotlin programs for these examples.Here is the metaphor that turtle graphics uses: You can create a turtle and the turtle can move forward, move backward, turn left, turn right, etc. The turtle can have its tail up or down. When the turtle's tail is down and the turtle moves, it draws a line as it moves. To increase the artistic value of the turtle, you can change the width of the tail as well as the color of the ink the tail is dipped in.</p>
   <aside>
-    <p>Thanks to Nicholas Seward, who wrote Turtle class and released it with a permissive license. (This turtle graphics class is written in Java, but Kotlin will happily use it.)</p>
+    <p>Thanks to Luther Tychonievich, who wrote the World and Turtle classes and released them to the public domain.</p>
   </aside>
   <p>Here is an example to illustrate graphics basics. We will use the Turtle class to draw a spiral recursively. <xref ref="lst-turtle-spiral" /> shows how it is done. We first define the <c>drawSpiral</c> function. The base case for this simple function is when the length of the line we want to draw, as given by the <c>lineLen</c> parameter, is reduced to zero or less. If the length of the line is longer than zero, we instruct the turtle to go forward by <c>lineLen</c> units and then turn right 90 degrees. The recursive step is when we call <c>drawSpiral</c> again with a reduced length. In <c>main</c>, we create the turtle object, and then we call <c>drawSpiral</c>. We then hide the image of the turtle so we can see the drawing in its entirety, and then zoom in on the image so that we can see the entire picture without wasted space.</p>
 
@@ -45,7 +47,7 @@
     means that we will apply the recursive definition of a tree to both of
     the smaller left and right trees.</p>
 
-  <p>Let's translate this idea to some Kotlin code. <xref ref="recursion_lst-fractree" /> shows how we can use our turtle to generate a fractal tree. Let's look at the code a bit more closely. You will see that on lines 5 and 7 we are making a recursive call. On line 5 we make the recursive call right after the turtle turns to the right by 20 degrees; this is the right tree mentioned above. Then in line 7 the turtle makes another recursive call, but this time after turning left by 40 degrees. The reason the turtle must turn left by 40 degrees is that it needs to undo the original 20-degree turn to the right and then do an additional 20-degree turn to the left in order to draw the left tree. Also notice that each time we make a recursive call to <c>drawTree</c> we subtract some amount from the <c>branchLen</c> parameter; this is to make sure that the recursive trees get smaller and smaller. You should also recognize the initial <c>if</c> statement on line 2 as a check for the base case of <c>branchLen</c> getting too small.</p>
+  <p>Let's translate this idea to some Kotlin code. <xref ref="recursion_lst-fractree" /> shows how we can use our turtle to generate a fractal tree. Let's look at the code a bit more closely. You will see that on lines 7 and 9 we are making a recursive call. On line 7 we make the recursive call right after the turtle turns to the right by 20 degrees; this is the right tree mentioned above. Then in line 9 the turtle makes another recursive call, but this time after turning left by 40 degrees. The reason the turtle must turn left by 40 degrees is that it needs to undo the original 20-degree turn to the right and then do an additional 20-degree turn to the left in order to draw the left tree. Also notice that each time we make a recursive call to <c>drawTree</c> we subtract some amount from the <c>branchLen</c> parameter; this is to make sure that the recursive trees get smaller and smaller. You should also recognize the initial <c>if</c> statement on line 4 as a check for the base case of <c>branchLen</c> getting too small.</p>
   <listing xml:id="recursion_lst-fractree">
     <title>Fractal Tree Code</title>
     <program language="java" line-numbers="yes">
@@ -88,7 +90,7 @@
       <p>
         <ul>
           <li>
-            <p>Modify the thickness of the branches so that as the <c>branch_len</c> gets smaller, the line gets thinner. (Use the <c>width</c> method. Its parameter gives the width of the line in pixels, and is a <c>Double</c>.)</p>
+            <p>Modify the thickness of the branches so that as <c>branchLen</c> gets smaller, the line gets thinner. (Use the <c>setPenWidth</c> method. Its parameter gives the width of the line in pixels, and is a <c>Double</c>.)</p>
           </li>
           <li>
             <p>Modify the color of the branches so that as the <c>branchLen</c> gets very short it is colored like a leaf.</p>

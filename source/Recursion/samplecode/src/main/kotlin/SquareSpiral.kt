@@ -1,5 +1,5 @@
 fun main() {
-    val bob = Turtle()
+    val bob = TurtleSeward()
 
     for (i in 0..359) {
         bob.forward(i * 1.25)

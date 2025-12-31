@@ -6,7 +6,7 @@ public class SquareSpiral
 
     {
 
-        Turtle bob = new Turtle();
+        TurtleSeward bob = new TurtleSeward();
 
         for(int i=0;i<360;i++)
 

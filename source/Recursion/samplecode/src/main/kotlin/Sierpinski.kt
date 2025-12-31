@@ -6,7 +6,7 @@ fun center(p1: Point, p2: Point, p3:Point): Point {
     return Point((p1.x + p2.x + p3.x) / 3.0, (p1.y + p2.y + p3.y) / 3.0)
 }
 
-fun drawTriangle(points: List<Point>, color: Color, t: Turtle) {
+fun drawTriangle(points: List<Point>, color: Color, t: TurtleSeward) {
     // Move to center of triangle and draw dot
     t.up()
     val middle = center(points[0], points[1], points[2])
@@ -26,7 +26,7 @@ fun midpoint(p1: Point, p2: Point): Point {
     return Point((p1.x + p2.x) / 2.0, (p1.y + p2.y) / 2.0)
 }
 
-fun sierpinski(points: List<Point>, level: Int, t: Turtle) {
+fun sierpinski(points: List<Point>, level: Int, t: TurtleSeward) {
 
     val colorMap = listOf(Color.BLUE, Color.RED, Color.GREEN,
         Color.WHITE, Color.ORANGE, Color.MAGENTA)
@@ -61,7 +61,7 @@ fun sierpinski(points: List<Point>, level: Int, t: Turtle) {
 }
 
 fun main() {
-    val myTurtle = Turtle()
+    val myTurtle = TurtleSeward()
 
     val points = listOf(
         Point(-180.0, -150.0),
@@ -71,5 +71,5 @@ fun main() {
 
     sierpinski(points, 5, myTurtle)
     myTurtle.hide()
-    Turtle.zoomFit()
+    TurtleSeward.zoomFit()
 }
