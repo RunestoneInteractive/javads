@@ -11,8 +11,8 @@
   <xi:include href="./SierpinskiTriangle.ptx"/>
   <xi:include href="./ComplexRecursiveProblems.ptx"/>
   <xi:include href="./TowerofHanoi.ptx"/>
-  <!-- <xi:include href="./ExploringaMaze.ptx"/>
-  <xi:include href="./DynamicProgramming.ptx"/>
+  <xi:include href="./ExploringaMaze.ptx"/>
+  <!-- <xi:include href="./DynamicProgramming.ptx"/>
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>
   <xi:include href="./Exercises.ptx"/>
