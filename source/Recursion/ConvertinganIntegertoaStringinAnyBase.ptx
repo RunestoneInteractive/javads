@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<section xml:id="recursion_converting-an-integer-to-a-string-in-any-base">
-  <title>Converting an Integer to a String in Any Base</title>
+<section xml:id="recursion_converting-an-integer-to-a-string-in-any-base" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Converting an Int to a String in Any Base</title>
   <p>Suppose you want to convert an integer to a string in some base between
             binary and hexadecimal. For example, convert the integer 10 to its
             string representation in decimal as <c>"10"</c>, or to its string
@@ -8,14 +8,14 @@
             to solve this problem, including the algorithm we discussed in <xref ref="basic-ds_converting-decimal-numbers-to-binary-numbers"/> when discussing the stack data structure, the recursive formulation of the problem is very
             elegant.</p>
   <p>Let's look at a concrete example using base 10 and the number 769.
-            Suppose we have an array of strings corresponding to the first 10
+            Suppose we have a list of strings corresponding to the first 10
             digits, like:</p>
 
-          <pre>String [] digitStrings = {"0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};</pre>
+          <pre>val digitStrings = listOf("0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "A", "B", "C", "D", "E", "F")</pre>
 <p>We can convert a
             number less than 10 to its string equivalent by looking it up in the
-            array. For example, if the number is 9, then the string is
+            list. For example, if the number is 9, then the string is
             <c>digitStrings[9]</c> or <c>"9"</c>. If we can arrange to break up the number
             769 into three single-digit numbers, 7, 6, and 9, then converting it to
             a string is simple. A number less than 10 sounds like a good base case.</p>
@@ -62,35 +62,19 @@
   <p><xref ref="lst-rectostr"/> shows the Python code that implements the algorithm
             outlined above for any base between 2 and 16.</p>
 <listing xml:id="lst-rectostr">
-  <caption>Recursively Converting from Integer to String</caption>
-<program label="prg-rectostr"  language="java" line-numbers="yes" interactive="activecode">
+  <title>Recursively Converting from Integer to String</title>
+<program label="prg-rectostr"  language="kotlin" line-numbers="yes" interactive="activecode">
     <code>
-public class RecursiveBaseConversion {
-    public static String convert(int n, int base) {
-        String [] digitStrings = {"0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
-        if (n &lt; base) {
-            return digitStrings[n];
-        } else {
-            int remainder = n % base;
-            return convert(n / base, base) + digitStrings[remainder];
-        }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(convert(13, 2));     // 1101
-        System.out.println(convert(1066, 16));  // 42A
-    }
-}
-        </code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/RecursiveBaseConversion.kt"/>
+    </code>
   </program>
 </listing>
-  <p>Notice that in line 5 we check for the base case where <c>n</c>
+  <p>Notice that in line 4 we check for the base case where <c>n</c>
             is less than the base we are converting to. When we detect the base
             case, we stop recursing and return the string from the
             <c>convert</c> sequence. In line 9 we satisfy both the
-            second and third laws&#x2013;by making the recursive call and by reducing the
-            problem size&#x2013;using division.</p>
+            second and third laws <mdash /> by making the recursive call and by reducing the
+            problem size <mdash /> using division.</p>
   <p>Let's trace the algorithm shown in <xref ref="lst-rectostr"/> again; this time we will convert the number 13
             to its base 2 string representation (<c>"1101"</c>).</p>
 
@@ -110,35 +94,15 @@ public class RecursiveBaseConversion {
   <exercises>
     <title>Self Check</title>
     <exercise>
-    <p>Write a method that takes a string as a parameter and returns a new string that is the reverse of the old string. Use this as your starting point.</p>
-    <program xml:id="recursion_sc_1" language="java" interactive="activecode">
+    <p>Write a function that takes a string as a parameter and returns a new string that is the reverse of the old string. Use this as your starting point.</p>
+    <program xml:id="recursion_sc_1" language="kotlin" interactive="activecode">
       <code>
-public class ReverseString {
-    public static String reverse(String s) {
-        // your code here
-        return ""; // placeholder
-    }
-
-    public static void testEqual(String s1, String s2) {
-        if (s1.equals(s2)) {
-            System.out.printf("\"%s\" and \"%s\" are equal.%n", s1, s2);
-        } else {
-            System.out.printf("\"%s\" and \"%s\" are not equal.%n", s1, s2);
-        }
-    }
-
-    public static void main(String[] args) {
-        testEqual(reverse("hello"), "olleh");
-        testEqual(reverse("m"), "m");
-        testEqual(reverse("follow"), "wollof");
-        testEqual(reverse(""), "");
-    }
-}
-        </code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ReverseString.kt"/>
+      </code>
     </program>
   </exercise>
   <exercise>
-    <p>Write a method that takes a string as a parameter and returns <c>true</c> if the string is a palindrome, <c>false</c> otherwise.  Remember that a string is a palindrome if it is spelled the same both forward and backward.  For example:  <em>radar</em> is a palindrome.  For bonus points palindromes can also be phrases, but you need to remove the spaces and punctuation, and you need to change all the letters to lower case before checking.  For example, <em>Madam, I'm Adam</em> is a palindrome.  Other fun palindromes include:</p>
+    <p>Write a function that takes a string as a parameter and returns <c>true</c> if the string is a palindrome, <c>false</c> otherwise.  Remember that a string is a palindrome if it is spelled the same both forward and backward.  For example:  <em>radar</em> is a palindrome.  For bonus points palindromes can also be phrases, but you need to remove the spaces and punctuation, and you need to change all the letters to lower case before checking.  For example, <em>Madam, I'm Adam</em> is a palindrome.  Other fun palindromes include:</p>
     <p>
       <ul>
         <li>
@@ -167,44 +131,12 @@ public class ReverseString {
         </li>
       </ul>
     </p>
-    <p>Here is a starting point for your program. Hint: the <c>Character.isLetter(ch)</c> method returns <c>true</c> if its argument is a letter, <c>false</c> otherwise.  <c>Character.toLowerCase(ch)</c> converts letters to their lower case versions, leaving non-letters unchanged.</p>
+    <p>Here is a starting point for your program. Hint: the <c>isLetter()</c> method on characters returns <c>true</c> if the character is a letter, <c>false</c> otherwise.  The <c>toLowerCase()</c> converts characters to their lower case versions, leaving non-letters unchanged.</p>
 
-    <program xml:id="recursion_sc_2" language="java" interactive="activecode">
+    <program xml:id="recursion_sc_2" language="kotlin" interactive="activecode">
       <code>
-public class RecursivePalindromes {
-
-    /*
-     * Given a String, return the string with only letters,
-     * and all in lower case.
-     */
-    public static String lettersOnly(String s) {
-        return ""; // placeholder
-    }
-
-    /*
-     * Return true if the given string is a palindrome,
-     * false otherwise.
-     */
-    public static boolean isPalindrome(String s) {
-        return false; // placeholder
-    }
-
-    public static void testResult(String s, boolean given, boolean expected) {
-        System.out.printf("isPalindrome(\"%s\") returns %s; expected %s.%n",
-            s, given, expected);
-    }
-
-    public static void main(String[] args) {
-        testResult("x", isPalindrome(lettersOnly("x")), true);
-        testResult("radar", isPalindrome(lettersOnly("radar")), true);
-        testResult("hello", isPalindrome(lettersOnly("hello")), false);
-        testResult("", isPalindrome(lettersOnly("")), true);
-        testResult("hannah", isPalindrome(lettersOnly("hannah")), true);
-        testResult("Madam, I'm Adam.",
-            isPalindrome(lettersOnly("Madam, I'm Adam.")), true);
-    }
-}
-        </code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/RecursivePalindromes.kt"/>
+      </code>
     </program>
   </exercise>
   </exercises>
