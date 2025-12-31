@@ -1,136 +1,34 @@
 <?xml version="1.0"?>
-<section xml:id="recursion_sierpinski-triangle">
+<section xml:id="recursion_sierpinski-triangle" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Sierpinski Triangle</title>
-  <p>Another fractal that exhibits the property of self-similarity is the
-            Sierpinski triangle. An example is shown in <xref ref="recursion_fig-sierpinski"/>. The
-            Sierpinski triangle illustrates a three-way recursive algorithm. The
-            procedure for drawing a Sierpinski triangle by hand is as follows: Start
-            with a single large triangle. Divide this large triangle into four new
-            triangles by connecting the midpoint of each side. Ignoring the middle
-            triangle that you just created, apply the same procedure to each of the
-            three corner triangles. Each time you create a new set of triangles, you
-            recursively apply this procedure to the three smaller corner triangles.
-            You can continue to apply this procedure indefinitely if you have a
-            sharp enough pencil. Before you continue reading, you may want to try
-            drawing the Sierpinski triangle yourself, using the method described.</p>
+  <p>Another fractal that exhibits the property of self-similarity is the Sierpinski triangle. An example is shown in <xref ref="recursion_fig-sierpinski" />. The Sierpinski triangle illustrates a three-way recursive algorithm. The procedure for drawing a Sierpinski triangle by hand is as follows: Start with a single large triangle. Divide this large triangle into four new triangles by connecting the midpoint of each side. Ignoring the middle triangle that you just created, apply the same procedure to each of the three corner triangles. Each time you create a new set of triangles, you recursively apply this procedure to the three smaller corner triangles. You can continue to apply this procedure indefinitely if you have a sharp enough pencil. Before you continue reading, you may want to try drawing the Sierpinski triangle yourself, using the method described.</p>
 
-        <figure xml:id="recursion_fig-sierpinski" align="center">
-          <caption>The Sierpinski Triangle</caption>
-    <image source="Recursion/Figures/sierpinski.png" width="50%"/>
+  <figure xml:id="recursion_fig-sierpinski">
+    <caption>The Sierpinski Triangle</caption>
+    <image source="Recursion/Figures/sierpinski-kotlin.png" width="50%" />
   </figure>
 
-  <p><xref ref="recursion_lst-sierpinski"/> shows the Java program to produce this drawing.</p>
+  <p><xref ref="recursion_lst-sierpinski" /> shows the Kotlin program to produce this drawing.</p>
 
   <listing xml:id="recursion_lst-sierpinski">
-    <caption>Program for Sierpinski Triangle</caption>
-<program label="prog-sierpinski" language="java" line-numbers="yes">
-    <code>
-import java.awt.Color;
-import java.awt.geom.Point2D;
+    <title>Program for Sierpinski Triangle</title>
+    <program label="prog-sierpinski" language="kotlin" line-numbers="yes">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/Sierpinski.kt"/>
+       </code>
+    </program>
+  </listing>
 
-public class SierpinskiTriangles {
+  <p><xref ref="recursion_lst-sierpinski" /> follows the ideas outlined above. The first thing <c>sierpinski</c> does is draw the outer triangle. Next, there are three recursive calls, one for each of the new corner triangles we get when we connect the midpoints.</p>
 
-    public static void drawTriangle(Point2D.Double[] points, Color color,
-      Turtle t) {
-        t.penUp();
-        t.goTo(points[0].x, points[0].y);
-        t.penDown();
-        t.setColor(color);
-        t.beginFill();
-        t.goTo(points[1].x, points[1].y);
-        t.goTo(points[2].x, points[2].y);
-        t.goTo(points[0].x, points[0].y);
-        t.endFill();
-    }
+  <p>Look at the code and think about the order in which the triangles will be drawn. While the exact order of the corners depends upon how the initial set is specified, let's assume that the corners are ordered lower left, top, lower right. Because of the way the <c>sierpinski</c> function calls itself, <c>sierpinski</c> works its way to the smallest allowed triangle in the lower-left corner and then begins to fill out the rest of the triangles working back. Then it fills in the triangles in the top corner by working toward the smallest, topmost triangle. Finally, it fills in the lower-right corner, working its way toward the smallest triangle in the lower right.</p>
 
-    public static Point2D.Double midpoint(Point2D.Double p1,
-      Point2D.Double p2) {
-        return new Point2D.Double((p1.x + p2.x) / 2.0, (p1.y + p2.y) / 2.0);
-    }
+  <p>Sometimes it is helpful to think of a recursive algorithm in terms of a diagram of function calls. <xref ref="recursion_fig-stcalltree" /> shows that the recursive calls are always made going to the left. The active functions are outlined in black, and the inactive function calls are in gray. The farther you go toward the bottom of <xref ref="recursion_fig-stcalltree" />, the smaller the triangles. The function finishes drawing one level at a time; once it is finished with the bottom left it moves to the bottom middle, and so on.</p>
 
-    public static Color[] colorMap = {
-        Color.BLUE, Color.RED, Color.GREEN,
-        Color.WHITE, Color.YELLOW, Color.MAGENTA, Color.ORANGE};
-
-    public static void sierpinski(Point2D.Double[] points, int level,
-      Turtle t) {
-        drawTriangle(points, colorMap[level], t);
-
-        if (level > 0) {
-            Point2D.Double[] triangle1 = {
-                points[0], midpoint(points[0], points[1]),
-                midpoint(points[0], points[2]) };
-
-            sierpinski(triangle1, level -1, t);
-
-            Point2D.Double[] triangle2 = {
-                points[1], midpoint(points[0], points[1]),
-                midpoint(points[1], points[2])
-            };
-
-            sierpinski(triangle2, level -1, t);
-
-            Point2D.Double[] triangle3 = {
-                points[2], midpoint(points[2], points[1]),
-                midpoint(points[0], points[2])
-            };
-
-            sierpinski(triangle3, level -1, t);
-        }
-    }
-
-    public static void main(String[] args) {
-        World habitat = new World(400, 400);
-        Turtle t = new Turtle(habitat);
-
-        t.setDelay(0.05);
-
-        Point2D.Double[] points = {
-            new Point2D.Double(-180, -150),
-            new Point2D.Double(0, 150),
-            new Point2D.Double(180, -150)
-        };
-
-        sierpinski(points, 5, t);
-        t.hide();
-    }
-}
-        </code>
-  </program></listing>
-
-  <note>
-      <title>Java Note</title>
-      <p>This program takes advantage of Java's AWT by using the <c>Point2D.Double</c> class to represent points with an <c>x</c> and <c>y</c> property. It is a subclass of the <c>Point2D</c> class; importing <c>java.awt.geom.Point2D</c> will give you access to it.</p>
-  </note>
-
-  <p><xref ref="recursion_lst-sierpinski"/> follows the ideas outlined above. The
-            first thing <c>sierpinski</c> does is draw the outer triangle. Next, there
-            are three recursive calls, one for each of the new corner triangles we
-            get when we connect the midpoints.</p>
-
-  <p>Look at the code and think about the order in which the triangles will
-            be drawn. While the exact order of the corners depends upon how the
-            initial set is specified, let's assume that the corners are ordered
-            lower left, top, lower right. Because of the way the <c>sierpinski</c>
-            function calls itself, <c>sierpinski</c> works its way to the smallest
-            allowed triangle in the lower-left corner and then begins to fill out
-            the rest of the triangles working back. Then it fills in the triangles
-            in the top corner by working toward the smallest, topmost triangle.
-            Finally, it fills in the lower-right corner, working its way toward the
-            smallest triangle in the lower right.</p>
-
-  <p>Sometimes it is helpful to think of a recursive algorithm in terms of a
-            diagram of method calls. <xref ref="recursion_fig-stcalltree"/> shows that the recursive
-            calls are always made going to the left. The active functions are
-            outlined in black, and the inactive function calls are in gray. The
-            farther you go toward the bottom of <xref ref="recursion_fig-stcalltree"/>, the smaller the
-            triangles. The function finishes drawing one level at a time; once it is
-            finished with the bottom left it moves to the bottom middle, and so on.</p>
-
-  <figure xml:id="recursion_fig-stcalltree" align="center">
+  <figure xml:id="recursion_fig-stcalltree">
     <caption>Call Tree for Sierpinski Triangle</caption>
-    <image source="Recursion/Figures/stCallTree.png" width="50%"/>
+    <image source="Recursion/Figures/stCallTree.png" width="50%" />
   </figure>
 
-  <p>The <c>sierpinski</c> method relies heavily on the <c>midpoint</c> method. <c>midpoint</c> takes as arguments two endpoints and returns the point halfway between them. In addition, <xref ref="recursion_lst-sierpinski"/> has a <c>drawTriangle</c> method that draws a filled triangle using the <c>beginFill</c> and <c>endFill</c> turtle methods. (<c>beginFill</c> tells the turtle to store all subsequent movements as a <em>path</em> to be filled in the specified color. <c>endFill</c> marks the end of the path, at which point the path is filled with the color.)</p>
+  <p>The <c>sierpinski</c> function relies heavily on the <c>midpoint</c> method. <c>midpoint</c> takes as arguments two endpoints and returns the point halfway between them. In addition, <xref ref="recursion_lst-sierpinski" /> draws a dot in the center of each triangle.</p>
 </section>
