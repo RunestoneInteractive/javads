@@ -1,197 +1,92 @@
 <?xml version="1.0"?>
-<section xml:id="sort-search_the-bubble-sort">
+<section xml:id="sort-search_the-bubble-sort" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The Bubble Sort</title>
-  <p>The <term>bubble sort</term> makes multiple passes through a list. It compares
-            adjacent items and exchanges those that are out of order. Each pass
-            through the list places the next largest value in its proper place. In
-            essence, each item bubbles up to the location where it belongs.</p>
-  <p><xref ref="i15_id1fig-bubblepass"/> shows the first pass of a bubble sort. The shaded
-            items are being compared to see if they are out of order. If there are
-            <m>n</m> items in the list, then there are <m>n-1</m> pairs of items that
-            need to be compared on the first pass. It is important to note that once
-            the largest value in the list is part of a pair, it will continually be
-            moved along until the pass is complete.</p>
+  <p>The <term>bubble sort</term> makes multiple passes through a list. It compares adjacent items and exchanges those that are out of order. Each pass through the list places the next largest value in its proper place. In essence, each item bubbles up to the location where it belongs.</p>
+  <p><xref ref="i15_id1fig-bubblepass" /> shows the first pass of a bubble sort. The shaded items are being compared to see if they are out of order. If there are <m>n</m> items in the list, then there are <m>n-1</m> pairs of items that need to be compared on the first pass. It is important to note that once the largest value in the list is part of a pair, it will continually be moved along until the pass is complete.</p>
   <figure align="center" xml:id="i15_id1fig-bubblepass">
     <caption>Bubble Sort: The First Pass</caption>
-    <image source="SortSearch/Figures/bubblepass.png" width="50%"/>
+    <image source="SortSearch/Figures/bubblepass.png" width="50%" />
   </figure>
-  <p>At the start of the second pass, the largest value is now in place.
-            There are <m>n-1</m> items left to sort, meaning that there will be
-            <m>n-2</m> pairs. Since each pass places the next largest value in
-            place, the total number of passes necessary will be <m>n-1</m>. After
-            completing the <m>n-1</m> passes, the smallest item must be in the
-            correct position with no further processing required. <xref ref="lst-bubble"/>
-            shows the complete <c>bubble_sort</c> function. It takes the list as a
-            parameter and modifies it by exchanging items as necessary.</p>
+  <p>At the start of the second pass, the largest value is now in place. There are <m>n-1</m> items left to sort, meaning that there will be <m>n-2</m> pairs. Since each pass places the next largest value in place, the total number of passes necessary will be <m>n-1</m>. After completing the <m>n-1</m> passes, the smallest item must be in the correct position with no further processing required. <xref ref="lst-bubble" /> shows the complete <c>bubbleSort</c> function. It takes the list as a parameter and modifies it by exchanging items as necessary.</p>
   <p>Typically, swapping
-            two elements in a list requires a temporary variable (an
-            additional memory location). A code fragment such as</p>
+    two elements in a list requires a temporary variable (an
+    additional memory location). A code fragment such as</p>
   <pre>temp = list[i];
 list[i] = list[j];
 list[j] = temp;</pre>
-  <p>will exchange the <m>i</m>-th and <m>j</m>-th items in the list. Without the
-            temporary storage, one of the values would be overwritten.</p>
-          <aside>
-          <p>In some other languages such as Python, it is possible to use <em>simultaneous assignment</em> to do the two assignments at the same time in one statement.</p>
-        </aside>
-  <!--<p>In Python, it is possible to perform simultaneous assignment. The
-            statement <c>a, b = b, a</c> will result in two assignment statements being
-            done at the same time (see <xref ref="i15_id2fig-pythonswap"/>). Using simultaneous
-          assignment, the exchange operation can be done in one statement.</p>-->
-  <p>Lines 13&#x2013;15 in <xref ref="lst-bubble"/> perform the exchange of the <m>i</m> and
-            <m>(i+1)</m>-th items using the three-step procedure described
-            earlier.</p>
-  <!--<figure align="center" xml:id="i15_id2fig-pythonswap">
-    <caption>Exchanging Two Values in Python</caption>
-    <image source="SortSearch/Figures/swap.png" width="50%"/>
-          </figure>-->
-          <p>The following example shows the complete <c>bubbleSort</c> function working on the preceding list. We have put <c>System.out.printf</c> calls in the code so you can see how it works.</p>
-<listing xml:id="lst-bubble">
-  <caption>The Bubble Sort Implementation</caption>
-<program label="prog-bubble" language="java" line-numbers="yes" interactive="activecode">
-    <code>
-import java.util.Arrays;
+  <p>will exchange the <m>i</m>-th and <m>j</m>-th items in the list. Without the temporary storage, one of the values would be overwritten.</p>
+  <aside>
+    <p>In some other languages such as Python, it is possible to use <em>simultaneous assignment</em> to do the two assignments at the same time in one statement.</p>
+  </aside>
+  <p>Lines 8<ndash/>10 in <xref ref="lst-bubble" /> perform the exchange of the <m>i</m> and <m>(i+1)</m>-th items using the three-step procedure described earlier.</p>
+  <p>The following example shows the complete <c>bubbleSort</c> function working on the preceding list.</p>
+  <listing xml:id="lst-bubble">
+    <title>The Bubble Sort Implementation</title>
+    <program label="prog-bubble" language="kotlin" line-numbers="yes" interactive="activecode">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/BubbleSortExample.kt"/>
+      </code>
+    </program>
+  </listing>
 
-public class BubbleSortExample {
-
-    public static void bubbleSort(int[] list) {
-        for (int i = list.length - 1; i > 0; i--) {
-            System.out.printf("Scanning from 0 to %d%n", i);
-            for (int j = 0; j &lt; i; j++) {
-                System.out.printf("   Compare %d and %d", list[j],
-                    list[j + 1]);
-                if (list[j] &gt; list[j + 1]) {
-                    System.out.printf(" -- must swap");
-                    int temporary = list[j];
-                    list[j] = list[j + 1];
-                    list[j + 1] = temporary;
-                }
-                System.out.println();
-            }
-            System.out.println(Arrays.toString(list));
-            System.out.println();
-        }
-    }
-
-    public static void main(String[] args) {
-        int[] testList = {54, 26, 93, 17, 77, 31, 44, 55, 20};
-        System.out.println("Start point: " + Arrays.toString(testList));
-        bubbleSort(testList);
-        System.out.println("Final result: " + Arrays.toString(testList));
-    }
-}
-        </code>
-  </program>
-</listing>
-
-  <p>To analyze the bubble sort, we should note that regardless of how the
-            items are arranged in the initial list, <m>n - 1</m> passes will be
-            made to sort a list of size <m>n</m>. <xref ref="sort-search_tbl-bubbleanalysis"/> shows the number
-            of comparisons for each pass. The total number of comparisons is the sum
-            of the first <m>n - 1</m> integers. Recall that the sum of the first
-            <m>n</m> integers is <m>\frac{1}{2}n^{2} + \frac{1}{2}n</m>. The sum of
-            the first <m>n - 1</m> integers is
-            <m>\frac{1}{2}n^{2} + \frac{1}{2}n - n</m>, which is
-            <m>\frac{1}{2}n^{2} - \frac{1}{2}n</m>. This is still
-            <m>O(n^{2})</m> comparisons. In the best case, if the list is already
-            ordered, no exchanges will be made. However, in the worst case, every
-            comparison will cause an exchange. On average, we exchange half of the
-            time.</p>
+  <p>To analyze the bubble sort, we should note that regardless of how the items are arranged in the initial list, <m>n - 1</m> passes will be made to sort a list of size <m>n</m>. <xref ref="sort-search_tbl-bubbleanalysis" /> shows the number of comparisons for each pass. The total number of comparisons is the sum of the first <m>n - 1</m> integers. Recall that the sum of the first <m>n</m> integers is <m>\frac{1}{2}n^{2} + \frac{1}{2}n</m>. The sum of the first <m>n - 1</m> integers is <m>\frac{1}{2}n^{2} + \frac{1}{2}n - n</m>, which is <m>\frac{1}{2}n^{2} - \frac{1}{2}n</m>. This is still <m>O(n^{2})</m> comparisons. In the best case, if the list is already ordered, no exchanges will be made. However, in the worst case, every comparison will cause an exchange. On average, we exchange half of the time.</p>
   <table xml:id="sort-search_tbl-bubbleanalysis">
-    <tabular>
       <title>
         Comparisons for Each Pass of Bubble Sort
       </title>
+    <tabular>
       <row header="yes">
         <cell>Pass</cell>
         <cell>Comparisons</cell>
       </row>
       <row>
         <cell>1</cell>
-        <cell><m>n-1</m></cell>
+        <cell>
+          <m>n-1</m>
+        </cell>
       </row>
       <row>
         <cell>2</cell>
-        <cell><m>n-2</m></cell>
+        <cell>
+          <m>n-2</m>
+        </cell>
       </row>
       <row>
         <cell>3</cell>
-        <cell><m>n-3</m></cell>
+        <cell>
+          <m>n-3</m>
+        </cell>
       </row>
       <row>
         <cell>&#x2026;</cell>
         <cell>&#x2026;</cell>
       </row>
       <row>
-        <cell><m>n-1</m></cell>
-        <cell><m>1</m></cell>
+        <cell>
+          <m>n-1</m>
+        </cell>
+        <cell>
+          <m>1</m>
+        </cell>
       </row>
     </tabular>
   </table>
-  <p>A bubble sort is often considered the most inefficient sorting method
-            since it must exchange items before the final location is known. These
-            <q>wasted</q> exchange operations are very costly. However, because the
-            bubble sort makes passes through the entire unsorted portion of the
-            list, it has the capability to do something most sorting algorithms
-            cannot. In particular, if during a pass there are no exchanges, then we
-            know that the list must be sorted. A bubble sort can be modified to stop
-            early if it finds that the list has become sorted. This means that for
-            lists that require just a few passes, a bubble sort may have an
-            advantage in that it will recognize the sorted list and stop.
-            <xref ref="lst-shortbubble"/> shows this modification, which is often referred
-            to as the <term>short bubble</term>.</p>
-<listing xml:id="lst-shortbubble">
-<program label="lst-shortbubble" language="java" line-numbers="yes"
-         interactive="activecode">
-    <code>
-import java.util.Arrays;
-
-public class ShortBubbleExample {
-    public static void bubbleSortShort(int[] list) {
-        for (int i = list.length - 1; i &gt; 0; i--) {
-            boolean exchanges = false;
-            System.out.printf("Scanning from 0 to %d%n", i);
-            for (int j = 0; j &lt; i; j++) {
-                System.out.printf("   Compare %d and %d", list[j],
-                    list[j + 1]);
-                if (list[j] &gt; list[j + 1]) {
-                    System.out.printf(" -- must swap");
-                    int temporary = list[j];
-                    list[j] = list[j + 1];
-                    list[j + 1] = temporary;
-                    exchanges = true;
-                }
-                System.out.println();
-            }
-            System.out.println(Arrays.toString(list));
-            System.out.println();
-            if (!exchanges) {
-                break;
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        int[] testList = {20, 30, 40, 90, 50, 60, 70, 80, 100, 110};
-        System.out.println("Start point: " + Arrays.toString(testList));
-        bubbleSortShort(testList);
-        System.out.println("Final result: " + Arrays.toString(testList));
-    }
-}
-</code></program></listing>
-
-<note>
-  <title>Java Note</title>
-  <p>The <c>break</c> statement in line 23 does what its name says; it breaks out of the loop. In general, one of the authors recommends avoiding the use of <c>break</c> and using compound conditions instead to determine when the loop ends.</p>
-  <p>While it is possible to write this code without using <c>break</c>, it turns out that, in this case, the code is more readable when you use <c>break</c>.</p>
-</note>
+  <p>A bubble sort is often considered to be a particularly inefficient sorting method since it must exchange items before the final location is known. These <q>wasted</q> exchange operations are very costly. However, because the bubble sort makes passes through the entire unsorted portion of the list, it has the capability to do something most sorting algorithms cannot. In particular, if during a pass there are no exchanges, then we know that the list must be sorted. A bubble sort can be modified to stop early if it finds that the list has become sorted. This means that for lists that require just a few passes, a bubble sort may have an advantage in that it will recognize the sorted list and stop. <xref ref="lst-shortbubble" /> shows this modification, which is often referred to as the <term>short bubble</term>.</p>
+  <listing xml:id="lst-shortbubble">
+    <title>Short Bubble Sort Implementation</title>
+    <program label="lst-shortbubble" language="kotlin" line-numbers="yes"
+      interactive="activecode">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ShortBubbleExample.kt"/>
+</code>
+    </program>
+  </listing>
 
   <exercises>
     <title>Self Check</title>
     <exercise label="question_sort_1">
       <statement>
-        <p>Suppose you have the following list of numbers to sort: &lt;br&gt;
-                [19, 1, 9, 7, 3, 10, 13, 15, 8, 12] which list represents the partially sorted list after three complete passes of bubble sort?</p>
+        <p>Suppose you have the following list of numbers to sort: [19, 1, 9, 7, 3, 10, 13, 15, 8, 12]. Which list represents the partially sorted list after three complete passes of bubble sort?</p>
       </statement>
       <choices>
         <choice>
@@ -199,7 +94,7 @@ public class ShortBubbleExample {
             <p>[1, 9, 19, 7, 3, 10, 13, 15, 8, 12]</p>
           </statement>
           <feedback>
-            <p>This answer represents three swaps.  A pass means that you continue swapping all the way to the end of the list.</p>
+            <p>This answer represents three swaps. A pass means that you continue swapping all the way to the end of the list.</p>
           </feedback>
         </choice>
         <choice correct="yes">
@@ -215,7 +110,7 @@ public class ShortBubbleExample {
             <p>[1, 7, 3, 9, 10, 13, 8, 12, 15, 19]</p>
           </statement>
           <feedback>
-            <p>A bubble sort contines to swap numbers up to index position passnum.  But remember that passnum starts at the length of the list - 1.</p>
+            <p>A bubble sort contines to swap numbers up to index position passnum. But remember that passnum starts at the length of the list - 1.</p>
           </feedback>
         </choice>
         <choice>
