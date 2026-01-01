@@ -114,7 +114,7 @@
     </exercise>
 
     <exercise>
-      <p>Suppose you are a computer scientist/art dealer who is going on a trip to selling art to likely buyers. All you have with you to haul out your art with you is your knapsack which only holds <m>W</m> pounds of art, but for every piece of art, you know its value and its weight. Write a dynamic programming function to help you maximize your profit. Here is a sample problem for you to get started: suppose your knapsack can hold a total weight of 20 pounds. You have 5 items as follows: <pre>
+      <p>Suppose you are a computer scientist/art dealer who is going on a trip to sell art to likely buyers. All you have with you to haul out your art with you is your knapsack which only holds <m>W</m> pounds of art, but for every piece of art, you know its value and its weight. Write a dynamic programming function to help you maximize your profit. Here is a sample problem for you to get started: suppose your knapsack can hold a total weight of 20 pounds. You have 5 items as follows: <pre>
         item     weight      value
           1        2           3
           2        3           4
