@@ -7,8 +7,8 @@
   <xi:include href="./TheBinarySearch.ptx"/>
   <xi:include href="./sorting.ptx"/>
   <xi:include href="./TheBubbleSort.ptx"/>
-  <!--
   <xi:include href="./TheSelectionSort.ptx"/>
+  <!--
   <xi:include href="./TheInsertionSort.ptx"/>
   <xi:include href="./TheShellSort.ptx"/>
   <xi:include href="./TheMergeSort.ptx"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<section xml:id="sort-search_the-selection-sort">
+<section xml:id="sort-search_the-selection-sort" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The Selection Sort</title>
   <p>The <term>selection sort</term> improves on the bubble sort by making only one
             exchange for every pass through the list. In order to do this, a
@@ -14,46 +14,15 @@
             location. The first pass places 93, the second pass places 77, the third
             places 55, and so on. The function is shown in
             <xref ref="lst-selectionsortcode"/>.</p>
-  <figure align="center" xml:id="i18_id1fig-selectionsort">
+  <figure xml:id="i18_id1fig-selectionsort">
     <caption>Selection Sort: Complete</caption>
     <image source="SortSearch/Figures/selectionsortnew.png" width="50%"/>
   </figure>
   <listing xml:id="lst-selectionsortcode">
-    <caption>The Selection Sort</caption>
-<program label="lst-selectionsortcode" language="java" interactive="activecode">
+    <title>The Selection Sort</title>
+<program label="lst-selectionsortcode" language="kotlin" interactive="activecode">
     <code>
-import java.util.Arrays;
-
-public class SelectionSortExample {
-
-    public static void selectionSort(int[] list) {
-        for (int i = 0; i &lt; list.length; i++) {
-            int item = list[i];
-            int minIndex = list.length - 1;
-
-            // find index of smallest item in range
-            for (int j = i; j &lt; list.length; j++) {
-                if (list[j] &lt; list[minIndex]) {
-                    minIndex = j;
-                }
-            }
-
-            // if it's not this item, swap them
-            if (minIndex != i) {
-                int temporary = list[i];
-                list[i] = list[minIndex];
-                list[minIndex] = temporary;
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        int[] testList = {54, 26, 93, 17, 77, 31, 44, 55, 20};
-        System.out.println("Start point:  " + Arrays.toString(testList));
-        selectionSort(testList);
-        System.out.println("Final result: " + Arrays.toString(testList));
-    }
-}
+<xi:include parse="text" href="samplecode/src/main/kotlin/SelectionSortExample.kt"/>
         </code>
   </program>
   </listing>
@@ -65,7 +34,11 @@ public class SelectionSortExample {
             the bubble sort makes 20 exchanges, while the selection sort makes only
             8.</p>
 
-          <p>This code does not print anything as it sorts. You may want to add some <c>System.out.printf</c> calls to see the process in action.</p>
+  <p>
+    Selection sort is sometimes implemented the other way around. On the first pass, it would find the smallest item and swap it to the first position, and so on. You might try modifying the provided code to do this an exercise.
+  </p>
+
+
   <exercises>
     <title>Self Check</title>
     <exercise label="question_sort_2">
