@@ -1,106 +1,39 @@
 <?xml version="1.0"?>
-<section xml:id="sort-search_the-insertion-sort">
+<section xml:id="sort-search_the-insertion-sort" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The Insertion Sort</title>
-  <p>The <term>insertion sort</term>, although still <m>O(n^{2})</m>, works in a
-            slightly different way. It always maintains a sorted sublist in the
-            lower positions of the list. Each new item is then inserted back into
-            the previous sublist such that the sorted sublist is one item larger.
-            <xref ref="i16_id1fig-insertionsort"/> shows the insertion sorting process. The shaded
-            items represent the ordered sublists as the algorithm makes each pass.</p>
-  <figure align="center" xml:id="i16_id1fig-insertionsort">
+  <p>The <term>insertion sort</term>, although still <m>O(n^{2})</m>, works in a slightly different way. It always maintains a sorted sublist in the lower positions of the list. Each new item is then inserted back into the previous sublist such that the sorted sublist is one item larger. <xref ref="i16_id1fig-insertionsort" /> shows the insertion sorting process. The shaded items represent the ordered sublists as the algorithm makes each pass.</p>
+  <figure xml:id="i16_id1fig-insertionsort">
     <caption>Insertion Sort: Complete</caption>
-    <image source="SortSearch/Figures/insertionsort.png" width="50%"/>
+    <image source="SortSearch/Figures/insertionsort.png" width="50%" />
   </figure>
-  <p>We begin by assuming that a list with one item (position <m>0</m>) is
-            already sorted. On each pass, one for each item 1 through <m>n-1</m>,
-            the current item is checked against those in the already sorted sublist.
-            As we look back into the already sorted sublist, we shift those items
-            that are greater to the right. When we reach a smaller item or the end
-            of the sublist, the current item can be inserted.</p>
-  <p><xref ref="i16_id2fig-insertionpass"/> shows the fifth pass in detail. At this point in
-            the algorithm, here is a sorted sublist of five items: 17, 26, 54,
-            77, and 93. We want to insert 31 back into the already sorted
-            items. The first comparison against 93 causes 93 to be shifted to the
-            right. 77 and 54 are also shifted. When the item 26 is encountered, the
-            shifting process stops and 31 is placed in the open position. Now we
-            have a sorted sublist of six items.</p>
-  <figure align="center" xml:id="i16_id2fig-insertionpass">
+  <p>We begin by assuming that a list with one item (position <m>0</m>) is already sorted. On each pass, one for each item 1 through <m>n-1</m>, the current item is checked against those in the already sorted sublist. As we look back into the already sorted sublist, we shift those items that are greater to the right. When we reach a smaller item or the end of the sublist, the current item can be inserted.</p>
+  <p><xref ref="i16_id2fig-insertionpass" /> shows the fifth pass in detail. At this point in the algorithm, here is a sorted sublist of five items: 17, 26, 54, 77, and 93. We want to insert 31 back into the already sorted items. The first comparison against 93 causes 93 to be shifted to the right. 77 and 54 are also shifted. When the item 26 is encountered, the shifting process stops and 31 is placed in the open position. Now we have a sorted sublist of six items.</p>
+  <figure xml:id="i16_id2fig-insertionpass">
     <caption>Insertion Sort: Fifth Pass of the Sort</caption>
-    <image source="SortSearch/Figures/insertionpass.png" width="50%"/>
+    <image source="SortSearch/Figures/insertionpass.png" width="50%" />
   </figure>
-  <p>The implementation of <c>insertion_sort</c> (<xref ref="lst-insertion"/>) shows that
-            there are again <m>n-1</m> passes to sort <m>n</m> items. The iteration
-            starts at position 1 and moves through position <m>n-1</m>, as these
-            are the items that need to be inserted back into the sorted sublists.
-            Line 8 performs the shift operation that moves a value up one position
-            in the list, making room behind it for the insertion. Remember that this
-            is not a complete exchange as was performed in the previous algorithms.</p>
-  <p>The maximum number of comparisons for an insertion sort is the sum of
-            the first <m>n-1</m> integers. Again, this is <m>O(n^{2})</m>.
-            However, in the best case, only one comparison needs to be done on each
-            pass. This would be the case for an already sorted list.</p>
+  <p>The implementation of <c>insertionSort</c> (<xref ref="lst-insertion" />) shows that there are again <m>n-1</m> passes to sort <m>n</m> items. The iteration starts at position 1 and moves through position <m>n-1</m>, as these are the items that need to be inserted back into the sorted sublists. Line 8 performs the shift operation that moves a value up one position in the list, making room behind it for the insertion. Remember that this is not a complete exchange as was performed in the previous algorithms.</p>
+  <p>The maximum number of comparisons for an insertion sort is the sum of the first <m>n-1</m> integers. Again, this is <m>O(n^{2})</m>. However, in the best case, only one comparison needs to be done on each pass. This would be the case for an already sorted list.</p>
   <p>One note about shifting versus exchanging is also important. In general,
-            a shift operation requires approximately a third of the processing work
-            of an exchange since only one assignment is performed. In benchmark
-            studies, insertion sort will show very good performance.</p>
-<listing xml:id="lst-insertion">
-  <caption>The Insertion Sort</caption>
-<program label="lst-insertion" language="java" interactive="activecode">
-    <code>
-import java.util.Arrays;
+    a shift operation requires approximately a third of the processing work
+    of an exchange since only one assignment is performed. In benchmark
+    studies, insertion sort will show very good performance.</p>
+  <listing xml:id="lst-insertion">
+    <title>The Insertion Sort</title>
+    <program label="lst-insertion" language="kotlin" interactive="activecode">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/InsertionSortExample.kt"/>
+      </code>
+    </program>
+  </listing>
 
-public class InsertionSortExample {
-
-    public static void insertionSort(int[] list) {
-        for (int i = 1; i &lt; list.length; i++) {
-            int value = list[i];
-            int position = i;
-
-            while (position > 0 &amp;&amp; list[position - 1] > value) {
-                list[position] = list[position - 1];
-                position = position - 1;
-            }
-            list[position] = value;
-        }
-    }
-
-    public static void main(String[] args) {
-        int[] testList = {54, 26, 93, 17, 77, 31, 44, 55, 20};
-        System.out.println("Start point:  " + Arrays.toString(testList));
-        insertionSort(testList);
-        System.out.println("Final result: " + Arrays.toString(testList));
-    }
-}
-        </code>
-  </program>
-</listing>
-
-  <!--For more detail, CodeLens 4 allows you to step through the algorithm.-->
-  <!---->
-  <!--.. codelens:: insertionsortcodetrace-->
-  <!--:caption: Tracing the Insertion Sort-->
-  <!---->
-  <!--def insertion_sort(a_list):-->
-  <!--for i in range(1, len(a_list)):-->
-  <!--cur_val = a_list[i]-->
-  <!--cur_pos = i-->
-  <!---->
-  <!--while cur_pos > 0 and a_list[cur_pos - 1] > cur_val:-->
-  <!--a_list[cur_pos] = a_list[cur_pos - 1]-->
-  <!--cur_pos = cur_pos - 1-->
-  <!--a_list[cur_pos] = cur_val-->
-  <!---->
-  <!---->
-  <!--a_list = [54, 26, 93, 17, 77, 31, 44, 55, 20]-->
-  <!--insertion_sort(a_list)-->
-  <!--print(a_list)-->
   <exercises>
     <title>Self Check</title>
     <exercise label="question_sort_3">
       <statement>
-            <p>Suppose you have the following list of numbers to sort:</p>
-            <p>[15, 5, 4, 18, 12, 19, 14, 10, 8, 20]</p>
-            <p>Which list represents the partially sorted list after three complete passes of insertion sort?</p>
+        <p>Suppose you have the following list of numbers to sort:</p>
+        <p>[15, 5, 4, 18, 12, 19, 14, 10, 8, 20]</p>
+        <p>Which list represents the partially sorted list after three complete passes of insertion sort?</p>
       </statement>
       <choices>
         <choice>
@@ -124,7 +57,7 @@ public class InsertionSortExample {
             <p>[4, 5, 15, 18, 12, 19, 14, 10, 8, 20]</p>
           </statement>
           <feedback>
-            <p>Insertion sort works at the start of the list.  Each pass produces a longer sorted list.</p>
+            <p>Insertion sort works at the start of the list. Each pass produces a longer sorted list.</p>
           </feedback>
         </choice>
         <choice>
