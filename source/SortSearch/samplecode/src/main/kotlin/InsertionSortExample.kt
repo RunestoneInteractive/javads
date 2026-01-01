@@ -1,4 +1,4 @@
-fun insertionSort(list: MutableList<Int>) {
+fun <T: Comparable<T>> insertionSort(list: MutableList<T>) {
     for (i in 1 ..< list.count()) {
         val value = list[i]
         var position = i
