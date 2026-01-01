@@ -1,31 +1,83 @@
 <?xml version="1.0"?>
-<section xml:id="sort-search_sorting">
+<section xml:id="sort-search_sorting" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Sorting</title>
-  <p>Sorting is the process of placing elements from a collection in some
-            kind of order. For example, a list of words could be sorted
-            alphabetically or by length. A list of cities could be sorted by
-            population, by area, or by zip code. We have already seen a number of
-            algorithms that were able to benefit from having a sorted list (recall
-            the final anagram example and the binary search).</p>
-  <p>There are many, many sorting algorithms that have been developed and
-            analyzed. This suggests that sorting is an important area of study in
-            computer science. Sorting a large number of items can take a substantial
-            amount of computing resources. Like searching, the efficiency of a
-            sorting algorithm is related to the number of items being processed. For
-            small collections, a complex sorting method may be more trouble than it
-            is worth. The overhead may be too high. On the other hand, for larger
-            collections, we want to take advantage of as many improvements as
-            possible. In this section we will discuss several sorting techniques and
-            compare them with respect to their running time.</p>
-  <p>Before getting into specific algorithms, we should think about the
-            operations that can be used to analyze a sorting process. First, it will
-            be necessary to compare two values to see which is smaller (or larger).
-            In order to sort a collection, it will be necessary to have some
-            systematic way to compare values to see if they are out of order. The
-            total number of comparisons will be the most common way to measure a
-            sort procedure. Second, when values are not in the correct position with
-            respect to one another, it may be necessary to exchange them. This
-            exchange is a costly operation, and the total number of exchanges will
-            also be important for evaluating the overall efficiency of the
-            algorithm.</p>
+  <introduction>
+    <p>Sorting is the process of placing elements from a collection in some
+      kind of order. For example, a list of words could be sorted
+      alphabetically or by length. A list of cities could be sorted by
+      population, by area, or by zip code. We have already seen a number of
+      algorithms that were able to benefit from having a sorted list (recall
+      the final anagram example and the binary search).</p>
+    <p>There are many, many sorting algorithms that have been developed and
+      analyzed. This suggests that sorting is an important area of study in
+      computer science. Sorting a large number of items can take a substantial
+      amount of computing resources. Like searching, the efficiency of a
+      sorting algorithm is related to the number of items being processed. For
+      small collections, a complex sorting method may be more trouble than it
+      is worth. The overhead may be too high. On the other hand, for larger
+      collections, we want to take advantage of as many improvements as
+      possible. In this section we will discuss several sorting techniques and
+      compare them with respect to their running time.</p>
+    <p>Before getting into specific algorithms, we should think about the
+      operations that can be used to analyze a sorting process. First, it will
+      be necessary to compare two values to see which is smaller (or larger).
+      In order to sort a collection, it will be necessary to have some
+      systematic way to compare values to see if they are out of order. The
+      total number of comparisons will be the most common way to measure a
+      sort procedure. Second, when values are not in the correct position with
+      respect to one another, it may be necessary to exchange them. This
+      exchange is a costly operation, and the total number of exchanges will
+      also be important for evaluating the overall efficiency of the
+      algorithm.</p>
+  </introduction>
+
+  <subsection xml:id="subsec-generic-functions">
+    <title>Generic functions</title>
+    <p>
+      Before we look at actual sorting algorithms, we should first look at a particular piece of Kotlin functionality that we'll need. Consider this function below, which simply compares two integers and returns true if the first one is smaller than the second.
+    </p>
+    <program language="kotlin" line-numbers="yes">
+      <code>
+fun trueIfSmaller(a: Int, b: Int): Boolean {
+    return a &lt; b
+}
+
+fun main() {
+    println(trueIfSmaller(5, 7))
+}
+    </code>
+    </program>
+
+    <p> The above function works as desired, but it only works for integers. It would be convenient if we could make it work for any type where a less-than comparison makes sense, such as <c>Double</c>, <c>String</c>, or others. To do this, we will make use of generic types in Kotlin. We have done this before in <xref ref="basic-ds_implementing-an-ordered-list" />, but we do so here with a general function, rather than a method, so we'll review the ideas again. </p>
+
+    <p> Since we want this function to work for any type that allows comparison, not just <c>Int</c>, we might make a first attempt by replacing the <c>Int</c> type with a generic type <c>T</c>. Kotlin allows us to do this. As long as we declare the type <c>T</c>immediately after the word <c>fun</c> (see line 1 below), Kotlin will create the function to work with any type that can be substituted for <c>T</c>. Here's what that looks like: </p>
+
+    <program language="kotlin" line-numbers="yes">
+      <code>
+fun &lt;T&gt; trueIfSmaller(a: T, b: T): Boolean {
+    return a &lt; b
+}
+
+fun main() {
+    println(trueIfSmaller(5, 7))
+    println(trueIfSmaller("apple", "banana"))
+}
+    </code>
+    </program>
+
+    <p> The above version is nearly correct, but if we try to run it, we get an error. The error occurs at the less-than sign (<c>&lt;</c>) in line 2, and the problem is that not all possible types <c>T</c> might support a less-than comparison. For example, we could pass in two file objects; Kotlin is unable to make less-than comparisons between file objects. Therefore, in order for Kotlin to compile this code, we need to tell it that this function is not defined for any possible type <c>T</c>; rather, it is only true for types <c>T</c> for which comparisons are allowed to be made. That code looks like the following: </p>
+
+    <program language="kotlin" interactive="activecode">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ComparableExample3.kt"/>
+    </code>
+    </program>
+
+    <p> In Kotlin, <c>Comparable</c> is a built-in interface that is used to mean "comparisons to type <c>T</c> are allowed." So when we specify <c>T: Comparable&lt;T&gt;</c>, we are saying that we are defining this function for all types <c>T</c> that implement the <c>Comparable</c> interface, meaning that comparisons are permitted. </p>
+
+    <p> All of the sorting algorithms that we cover in the book depend on being able to compare one item with another. Therefore, all of the sample code that we provide in the following sections will use Kotlin generic types based on <c>Comparable</c>, such as shown above. </p>
+
+    <p>There are sorting algorithms that don't compare items. The <em>radix sort</em> algorithm is perhaps the most well-known example of a sorting algorithm not based on comparisons.</p>
+
+  </subsection>
 </section>
