@@ -3,8 +3,8 @@
   <title>Searching and Sorting</title>
   <xi:include href="./Objectives.ptx"/>
   <xi:include href="./searching.ptx"/>
-  <!-- <xi:include href="./TheSequentialSearch.ptx"/>
-  <xi:include href="./TheBinarySearch.ptx"/>
+  <xi:include href="./TheSequentialSearch.ptx"/>
+  <!-- <xi:include href="./TheBinarySearch.ptx"/>
   <xi:include href="./Hashing.ptx"/>
   <xi:include href="./sorting.ptx"/>
   <xi:include href="./TheBubbleSort.ptx"/>
