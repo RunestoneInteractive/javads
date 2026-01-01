@@ -1,4 +1,4 @@
-fun bubbleSort(list: MutableList<Int>) {
+fun <T: Comparable<T>> bubbleSort(list: MutableList<T>) {
     for (i in list.count() - 1 downTo 1) {
         for (j in 0..<i) {
             if (list[j] > list[j + 1]) {

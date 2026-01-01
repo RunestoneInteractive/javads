@@ -1,4 +1,4 @@
-fun bubbleSortShort(list: MutableList<Int>) {
+fun <T: Comparable<T>> bubbleSortShort(list: MutableList<T>) {
     for (i in list.count() - 1 downTo 1) {
         var exchanges = false
         for (j in 0..<i) {
