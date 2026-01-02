@@ -1,153 +1,40 @@
 <?xml version="1.0"?>
-<section xml:id="sort-search_the-quicksort">
+<section xml:id="sort-search_the-quicksort" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The Quicksort</title>
-  <p>The <term>quicksort</term> uses divide and conquer to gain the same advantages
-            as the merge sort, while not using additional storage. As a trade-off,
-            however, it is possible that the list may not be divided in half. When
-            this happens, we will see that performance is diminished.</p>
-          <aside>
-            <p>The quicksort algorithm was first published by <url href="https://en.wikipedia.org/wiki/Tony_Hoare">Sir Charles Antony Richard Hoare</url> in 1961.</p>
-          </aside>
-  <p>A quicksort first selects a value, which is called the <term>pivot value</term>.
-            Although there are many different ways to choose the pivot value, we
-            will simply use the first item in the list. The role of the pivot value
-            is to assist with splitting the list. The actual position where the
-            pivot value belongs in the final sorted list, commonly called the
-            <term>split point</term>, will be used to divide the list for subsequent calls to
-            the quicksort.</p>
-  <p><xref ref="i15_id1fig-splitvalue"/> shows that 54 will serve as our first pivot value.
-            Since we have looked at this example a few times already, we know that
-            54 will eventually end up in the position currently holding 31. The
-            <term>partition</term> process will happen next. It will find the split point and
-            at the same time move other items to the appropriate side of the list,
-            either less than or greater than the pivot value.</p>
-  <figure align="center" xml:id="i15_id1fig-splitvalue">
+  <p>The <term>quicksort</term> uses divide and conquer to gain the same advantages as the merge sort, while not using additional storage. As a trade-off, however, it is possible that the list may not be divided in half. When this happens, we will see that performance is diminished.</p>
+  <aside>
+    <p>The quicksort algorithm was first published by <url href="https://en.wikipedia.org/wiki/Tony_Hoare">Sir Charles Antony Richard Hoare</url> in 1961.</p>
+  </aside>
+  <p>A quicksort first selects a value, which is called the <term>pivot value</term>. Although there are many different ways to choose the pivot value, we will simply use the first item in the list. The role of the pivot value is to assist with splitting the list. The actual position where the pivot value belongs in the final sorted list, commonly called the <term>split point</term>, will be used to divide the list for subsequent calls to the quicksort.</p>
+  <p><xref ref="i15_id1fig-splitvalue" /> shows that 54 will serve as our first pivot value. Since we have looked at this example a few times already, we know that 54 will eventually end up in the position currently holding 31. The <term>partition</term> process will happen next. It will find the split point and at the same time move other items to the appropriate side of the list, either less than or greater than the pivot value.</p>
+  <figure xml:id="i15_id1fig-splitvalue">
     <caption>The First Pivot Value for a Quicksort</caption>
-    <image source="SortSearch/Figures/firstsplit.png" width="50%"/>
+    <image source="SortSearch/Figures/firstsplit.png" width="50%" />
   </figure>
-  <p>Partitioning begins by locating two position markers&#x2014;let's call them
-            <c>leftMark</c> and <c>rightMark</c>&#x2014;at the beginning and end of the remaining
-            items in the list (positions 1 and 8 in <xref ref="i15_id2fig-partitiona"/>). The goal
-            of the partition process is to move items that are on the wrong side
-            with respect to the pivot value while also converging on the split
-            point. <xref ref="i15_id2fig-partitiona"/> shows this process as we locate the position
-            of 54.</p>
-  <figure align="center" xml:id="i15_id2fig-partitiona">
+  <p>Partitioning begins by locating two position markers&#x2014;let's call them <c>leftMark</c> and <c>rightMark</c>&#x2014;at the beginning and end of the remaining items in the list (positions 1 and 8 in <xref ref="i15_id2fig-partitiona" />). The goal of the partition process is to move items that are on the wrong side with respect to the pivot value while also converging on the split point. <xref ref="i15_id2fig-partitiona" /> shows this process as we locate the position of 54.</p>
+  <figure xml:id="i15_id2fig-partitiona">
     <caption>Finding the Split Point for 54</caption>
-    <image source="SortSearch/Figures/partitionA.png" width="50%"/>
+    <image source="SortSearch/Figures/partitionA.png" width="50%" />
   </figure>
-  <p>We begin by incrementing <c>leftMark</c> until we locate a value that is
-            greater than the pivot value. We then decrement <c>rightMark</c> until we
-            find a value that is less than the pivot value. At this point we have
-            discovered two items that are out of place with respect to the eventual
-            split point. For our example, this occurs at 93 and 20. Now we can
-            exchange these two items and then repeat the process again.</p>
-  <p>At the point where <c>rightMark</c> becomes less than <c>leftMark</c>, we
-            stop. The position of <c>rightMark</c> is now the split point. The pivot
-            value can be exchanged with the contents of the split point and the
-            pivot value is now in place (<xref ref="fig-partitionb"/>). In addition, all the
-            items to the left of the split point are less than the pivot value, and
-            all the items to the right of the split point are greater than the pivot
-            value. The list can now be divided at the split point and the quicksort
-            can be invoked recursively on the two halves.</p>
-  <figure align="center" xml:id="fig-partitionb">
+  <p>We begin by incrementing <c>leftMark</c> until we locate a value that is greater than the pivot value. We then decrement <c>rightMark</c> until we find a value that is less than the pivot value. At this point we have discovered two items that are out of place with respect to the eventual split point. For our example, this occurs at 93 and 20. Now we can exchange these two items and then repeat the process again.</p>
+  <p>At the point where <c>rightMark</c> becomes less than <c>leftMark</c>, we stop. The position of <c>rightMark</c> is now the split point. The pivot value can be exchanged with the contents of the split point and the pivot value is now in place (<xref ref="fig-partitionb" />). In addition, all the items to the left of the split point are less than the pivot value, and all the items to the right of the split point are greater than the pivot value. The list can now be divided at the split point and the quicksort can be invoked recursively on the two halves.</p>
+  <figure xml:id="fig-partitionb">
     <caption>Completing the Partition Process to Find the Split Point for 54</caption>
-    <image source="SortSearch/Figures/partitionB.png" width="50%"/>
+    <image source="SortSearch/Figures/partitionB.png" width="50%" />
   </figure>
-  <p>The <c>quickSort</c> function shown in <xref ref="lst-quick"/> invokes a recursive
-            function, <c>quickSortHelper</c>. <c>quickSortHelper</c> begins with the same
-            base case as the merge sort. If the length of the list is less than or
-            equal to one, it is already sorted. If it is greater, then it can be
-            partitioned and recursively sorted. The <c>partition</c> function
-            implements the process described earlier.</p>
-<listing xml:id="lst-quick">
-  <caption>The Quicksort Program</caption>
-<program label="lst-quick" language="java" interactive="activecode">
-    <code>
-import java.util.Arrays;
-
-public class QuickSortExample {
-
-    public static void quickSort(int[] list) {
-        quickSortHelper(list, 0, list.length - 1);
-    }
-
-    public static void quickSortHelper(int[] list, int first, int last) {
-        if (first &lt; last) {
-            int split = partition(list, first, last);
-            quickSortHelper(list, first, split - 1);
-            quickSortHelper(list, split + 1, last);
-        }
-    }
-
-    public static int partition(int [] list, int first, int last) {
-        int pivotValue = list[first];
-        int leftMark = first + 1;
-        int rightMark = last;
-        boolean done = false;
-
-        while (!done) {
-            while (leftMark &lt;= rightMark &amp;&amp; list[leftMark] &lt;= pivotValue) {
-                leftMark = leftMark + 1;
-            }
-            while (leftMark &lt;= rightMark &amp;&amp; list[rightMark] &gt;= pivotValue) {
-                rightMark = rightMark - 1;
-            }
-
-            if (rightMark &lt; leftMark) {
-                done = true;
-            } else {
-                int temporary = list[leftMark];
-                list[leftMark] = list[rightMark];
-                list[rightMark] = temporary;
-            }
-        }
-
-        int temporary = list[first];
-        list[first] = list[rightMark];
-        list[rightMark] = temporary;
-
-        return rightMark;
-    }
-
-    public static void main(String[] args) {
-        int[] testList = {54, 26, 93, 17, 77, 31, 44, 55, 20};
-        System.out.println("Start point:  " + Arrays.toString(testList));
-
-        quickSort(testList);
-
-        System.out.println("Final result: " + Arrays.toString(testList));
-    }
-}
+  <p>As we did with <c>mergeSort</c>, we provide two <c>quickSort</c> functions. The first one is the one that is intended to be called, and then calls the second one which is the actual recursive function. This second function is the actual <c>quickSort</c> code; we use the first function to supply the starting values for the range that we are sorting. In the second <c>quickSort</c> function, we begin begins with the same base case as the merge sort. If the length of the list is less than or equal to one, it is already sorted. If it is greater, then it can be partitioned and recursively sorted. The <c>partition</c> function implements the process described earlier.</p>
+  <listing xml:id="lst-quick">
+    <title>The Quicksort Program</title>
+    <program label="lst-quick" language="kotlin" interactive="activecode">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/QuickSortExample.kt"/>
         </code>
-  </program>
-</listing>
+    </program>
+  </listing>
 
-  <p>To analyze the <c>quickSort</c> function, note that for a list of length
-            <m>n</m>, if the partition always occurs in the middle of the list, there
-            will again be <m>\log{n}</m> divisions. In order to find the split
-            point, each of the <m>n</m> items needs to be checked against the pivot
-            value. The result is <m>n\log{n}</m>. In addition, there is no need
-            for additional memory as in the merge sort process.</p>
-  <p>Unfortunately, in the worst case, the split points may not be in the
-            middle and can be very skewed to the left or the right, leaving a very
-            uneven division. In this case, sorting a list of <m>n</m> items divides into
-            sorting a list of 0 items and a list of <m>n - 1</m> items. Then
-            sorting a list of <m>n - 1</m> divides into a list of size 0 and a list
-            of size <m>n - 2</m>, and so on. The result is an <m>O(n^{2})</m>
-            sort with all of the overhead that recursion requires.</p>
-  <p>We mentioned earlier that there are different ways to choose the pivot
-            value. In particular, we can attempt to alleviate some of the potential
-            for an uneven division by using a technique called <term>median of three</term>.
-            To choose the pivot value, we will consider the first, the middle, and
-            the last element in the list. In our example, those are 54, 77, and 20.
-            Now pick the median value, in our case 54, and use it for the pivot
-            value (of course, that was the pivot value we used originally). The idea
-            is that in the case where the first item in the list does not belong
-            toward the middle of the list, the median of three will choose a better
-            <q>middle</q> value. This will be particularly useful when the original list
-            is somewhat sorted to begin with. We leave the implementation of this
-            pivot value selection as an exercise.</p>
+  <p>To analyze the <c>quickSort</c> function, note that for a list of length <m>n</m>, if the partition always occurs in the middle of the list, there will again be <m>\log{n}</m> divisions. In order to find the split point, each of the <m>n</m> items needs to be checked against the pivot value. The result is <m>n\log{n}</m>. In addition, there is no need for additional memory as in the merge sort process.</p>
+  <p>Unfortunately, in the worst case, the split points may not be in the middle and can be very skewed to the left or the right, leaving a very uneven division. In this case, sorting a list of <m>n</m> items divides into sorting a list of 0 items and a list of <m>n - 1</m> items. Then sorting a list of <m>n - 1</m> divides into a list of size 0 and a list of size <m>n - 2</m>, and so on. The result is an <m>O(n^{2})</m> sort with all of the overhead that recursion requires.</p>
+  <p>We mentioned earlier that there are different ways to choose the pivot value. In particular, we can attempt to alleviate some of the potential for an uneven division by using a technique called <term>median of three</term>. To choose the pivot value, we will consider the first, the middle, and the last element in the list. In our example, those are 54, 77, and 20. Now pick the median value, in our case 54, and use it for the pivot value (of course, that was the pivot value we used originally). The idea is that in the case where the first item in the list does not belong toward the middle of the list, the median of three will choose a better <q>middle</q> value. This will be particularly useful when the original list is somewhat sorted to begin with. We leave the implementation of this pivot value selection as an exercise.</p>
   <exercises>
     <title>Self Check</title>
     <exercise label="question_sort_7">
@@ -199,7 +86,7 @@ public class QuickSortExample {
             <p>1</p>
           </statement>
           <feedback>
-            <p>The three numbers used in selecting the pivot are 1, 9, 19.  1 is not the median, and would be a very bad choice for the pivot since it is the smallest number in the list.</p>
+            <p>The three numbers used in selecting the pivot are 1, 9, 19. 1 is not the median, and would be a very bad choice for the pivot since it is the smallest number in the list.</p>
           </feedback>
         </choice>
         <choice correct="yes">
@@ -223,7 +110,7 @@ public class QuickSortExample {
             <p>19</p>
           </statement>
           <feedback>
-            <p>the three numbers used in selecting the pivot are 1, 9, 19.  9 is the median.  19 would be a bad choice since it is almost the largest.</p>
+            <p>the three numbers used in selecting the pivot are 1, 9, 19. 9 is the median. 19 would be a bad choice since it is almost the largest.</p>
           </feedback>
         </choice>
       </choices>
@@ -254,7 +141,7 @@ public class QuickSortExample {
             <p>Merge Sort</p>
           </statement>
           <feedback>
-            <p>Merge Sort is the only guaranteed <m>O(n\log n)</m> even in the worst case.  The cost is that merge sort uses more memory.</p>
+            <p>Merge Sort is the only guaranteed <m>O(n\log n)</m> even in the worst case. The cost is that merge sort uses more memory.</p>
           </feedback>
         </choice>
         <choice>
