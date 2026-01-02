@@ -12,8 +12,7 @@
   <xi:include href="./TheShellSort.ptx"/>
   <xi:include href="./TheMergeSort.ptx"/>
   <xi:include href="./TheQuickSort.ptx"/>
-  <!--
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>
-  <xi:include href="./Exercises.ptx"/> -->
+  <xi:include href="./Exercises.ptx"/> 
 </chapter>

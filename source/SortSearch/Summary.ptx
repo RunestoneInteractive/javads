@@ -11,9 +11,9 @@
         <p>A binary search of an ordered list is <m>O(\log{n})</m> in the
                     worst case.</p>
       </li>
-      <li>
+      <!-- <li>
         <p>Hash tables can provide constant time searching.</p>
-      </li>
+      </li> -->
       <li>
         <p>A bubble sort, a selection sort, and an insertion sort are
                     <m>O(n^{2})</m> algorithms.</p>

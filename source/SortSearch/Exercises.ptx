@@ -3,7 +3,7 @@
   <title>Searching and Sorting: Exercises</title>
 <exercises>
 
-            <exercise><p>Using the hash table performance formulas given in the chapter,
+            <!-- <exercise><p>Using the hash table performance formulas given in the chapter,
                     compute the average number of comparisons necessary when the table is</p>
                 <p><ul>
                         <li>10% full</li>
@@ -26,7 +26,7 @@
 
         <exercise><p>Research perfect hash functions. Using a list of names (classmates,
    family members, etc.), generate the hash values using the perfect
-   hash algorithm</p></exercise>
+   hash algorithm</p></exercise> -->
 
         <exercise><p>Generate a random list of integers. Show how this list is sorted by
                 the following algorithms:</p>
@@ -100,7 +100,7 @@
    starting and ending index values for the sublist. Generate a random,
    ordered list of integers and do a benchmark analysis.</p></exercise>
 
-            <exercise><p>Implement the <c>size</c> method for the hash table Map ADT
+            <!-- <exercise><p>Implement the <c>size</c> method for the hash table Map ADT
    implementation.</p></exercise>
 
             <exercise><p>Implement the <c>containsKey</c> method for the hash table Map
@@ -117,7 +117,7 @@
    resize itself when the loading factor reaches a predetermined value
    (you can decide the value based on your assessment of load versus
    performance).</p></exercise>
-
+ -->
             <exercise><p>Implement quadratic probing as a rehash technique.</p></exercise>
 
             <exercise><p>Using a random number generator, create a list of 500 integers.
