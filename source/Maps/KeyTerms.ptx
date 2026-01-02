@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<section xml:id="map_key-terms">
+  <title>Key Terms</title>
+  <p>
+    <ul cols="3">
+      <li>chaining</li>
+      <li>clustering</li>
+      <li>collision resolution</li>
+      <li>collision</li>
+      <li>folding method</li>
+      <li>hash function</li>
+      <li>hash table</li>
+      <li>hashing</li>
+      <li>linear probing</li>
+      <li>load factor</li>
+      <li>map</li>
+      <li>mid-square method</li>
+      <li>open addressing</li>
+      <li>perfect hash function</li>
+      <li>quadratic probing</li>
+      <li>rehashing</li>
+      <li>slot</li>
+    </ul>
+  </p>
+
+</section>

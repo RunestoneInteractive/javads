@@ -98,8 +98,8 @@
     <xi:include href="./BasicDS/toctree.ptx" />
     <xi:include href="./Recursion/toctree.ptx" />
     <xi:include href="./SortSearch/toctree.ptx" />
+    <xi:include href="./Maps/toctree.ptx"/>
     <!-- 
-    <xi:include href="./SortSearch/Hashing.ptx"/>
     <xi:include href="./Trees/toctree.ptx" />
     <xi:include href="./Graphs/toctree.ptx" />
     <xi:include href="./Advanced/toctree.ptx" /> -->

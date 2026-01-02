@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<section xml:id="map_summary">
+  <title>Summary</title>
+  <p>
+    <ul>
+      <li>
+        <p>Hash tables can provide constant time searching.</p>
+      </li>
+    </ul>
+  </p>
+</section>

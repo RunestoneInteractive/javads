@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<section xml:id="map_ADT" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The Map and Set Abstract Data Types</title>
+
+  <subsection xml:id="mapset_mapADT">
+    <title>The Map Abstract Data Type</title>
+    <p>One of the most useful Kotlin collections is the map (called a <em>dictionary</em> in other languages such as Python). Recall that a map is an associative data type where you can store key-data pairs. The key is used to look up the associated data value. We often refer to this idea as a <term>map</term>.</p>
+
+    <p>The map abstract data type is defined as follows. The structure is an
+      unordered collection of associations between a key and a data value. The
+      keys in a map are all unique so that there is a one-to-one relationship
+      between a key and a value. The operations are given below.</p>
+    <p>
+      <ul>
+        <li>
+          <p><c>put(key, value)</c> adds a new key&#x2013;value pair to the map. If the key is already in the map, it replaces the old value with the new value.</p>
+        </li>
+        <li>
+          <p><c>get(key)</c> takes a key and returns the matching value stored in the map or <c>null</c> otherwise.</p>
+        </li>
+        <li>
+          <p><c>remove(key)</c> deletes the key&#x2013;value pair from the map. It returns the value associated with the removed key, or null if the key is not in the map.</p>
+        </li>
+        <li>
+          <p><c>containsKey(key)</c> returns <c>true</c> if the key is in the map, <c>false</c> otherwise.</p>
+        </li>
+        <li>
+          <p><c>size()</c> returns the number of key&#x2013;value pairs stored in the map.</p>
+        </li>
+
+      </ul>
+    </p>
+
+    <p>We have already used Kotlin's built-in <c>Map</c> and <c>MutableMap</c> for a variety of purposes. In this chapter, we will look at multiple approaches for implementing a map ourselves, and study the advantages and disadvantages of each approach.</p>
+
+    <p>As we have done for previous ADTs, here is a Kotlin interface that represents a map. We can then implement this interface when we write code for our own map.</p>
+    <listing xml:id="lst-map-interface">
+      <title>Interface representing Map ADT</title>
+      <program label="prog-map-interface" language="kotlin">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/MapADT.kt"/>
+        </code>
+      </program>
+    </listing>
+  </subsection>
+
+  <subsection xml:id="mapset_setADT">
+  <title>The Set Abstract Data Type</title>
+  <p>Another very useful Kotlin collection is the set. A set is used when keeping track of a collection of items where duplicates are prohibited. For example, we might use a set to keep track of which students are enrolled in a class, or to track a collection of friends or followers in a social network. Here are the typical operations:</p>
+
+  <p>
+    <ul>
+      <li>
+        <p><c>add(element)</c> adds a new element to the set. If the element is already in the set, no change to the set is made.</p>
+      </li>
+      <li>
+        <p><c>contains(element)</c> returns <c>true</c> if the element is in the set, <c>false</c> otherwise.</p>
+      </li>
+      <li>
+        <p><c>remove(element)</c> deletes the element from the set. It returns true if the value was in the set; false otherwise.</p>
+      </li>
+      <li>
+        <p><c>size()</c> returns the number of elements stored in the map.</p>
+      </li>
+
+    </ul>
+  </p>
+
+  <p>
+    Here's the reason we're talking about sets at the same time as maps: they are nearly identical. If we have a map, we could in a clumsy fashion use it as a set. We would simply use the keys as the items in the set, and just ignore the values in the map entirely. Perhaps we would just store a null value for every key. A different way of looking at it is that the implementation of a set is identical to that of a map, with the sole exception that in a set, we don't bother with values. We just store the keys. A third way to think about is to notice that in a map, we don't allow duplicate key values, so a map is, conceptually, a set of keys (with associated values for each).
+  </p>
+
+  <p>Here is a Kotlin interface that represents a set. We can then implement this interface when we write code for our own set.</p>
+    <listing xml:id="lst-set-interface">
+      <title>Interface representing Set ADT</title>
+      <program label="prog-set-interface" language="kotlin">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/SetADT.kt"/>
+        </code>
+      </program>
+    </listing>
+  </subsection>
+
+</section>
