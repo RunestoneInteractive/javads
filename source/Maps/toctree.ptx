@@ -4,6 +4,8 @@
   <xi:include href="./Objectives.ptx"/>
   <xi:include href="./MapADT.ptx"/>
   <xi:include href="./ListMap.ptx"/>
+  <xi:include href="./Hashing.ptx"/>
+  <xi:include href="./HashImplementation.ptx"/>
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>
   <xi:include href="./Exercises.ptx"/> 

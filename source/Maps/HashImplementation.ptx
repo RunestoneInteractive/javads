@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<section xml:id="sort-search_hash-implementation" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Implementing Hashing</title>
+
+    <subsection xml:id="sort-search_implementing-the-map-abstract-data-type">
+        <title>Hashtable Map implementation</title>
+
+        <p>While Kotlin does provide the <c>MutableMap</c> class, we will learn more by implementing our own version of it. In <xref ref="sort-search_lst-hashtablecodeconstructor" /> we use a list to create a <c>HashTableMap</c> class that implements the map abstract data type. This list uses a data class named <c>Entry</c>, each of which holds a single key and value.</p>
+
+        <p>When we find the <c>Entry</c> for a key, that same <c>Entry</c> will hold the associated data value. The list of Entries, then will be treated as a hash table using the ideas presented earlier, where the key is used as the input for the hash function. Note that the initial size for the hash table has been chosen to be 11. Although this is arbitrary, it is important that the size be a prime number so that the collision resolution algorithm can be as efficient as possible.</p>
+
+        <listing xml:id="sort-search_lst-hashtablecodeconstructor">
+            <title>HashTableMap initializations</title>
+            <program xml:id="sort-search_prog-hashtablecodeconstructor" language="kotlin">
+                <code>
+class HashTableMap&lt;K, V&gt; : MapADT&lt;K, V&gt; {
+
+    // Each Entry contains a key and a value
+    data class Entry&lt;K, V&gt;(val key: K, var value: V)
+
+    // slots is a list consisting of Entry objects
+    val size = 11
+    var slots: MutableList&lt;Entry&lt;K, V&gt;?&gt; = MutableList(size) { null }
+
+    // more code here...
+}
+                </code>
+            </program>
+        </listing>
+
+
+        <p>Now we move on to the process of inserting an entry into the hash table.</p>
+
+
+        <p> In order to make implementation of data structures such as <c>HashMap</c> easier, every Kotlin object has a <c>hashCode</c> method that returns an integer value. When two objects are equal (as evaluated by the <c>equals</c> method), they are guaranteed to have the same value for their hash codes. There is no guarantee that two different objects will <em>not</em> hash to the same value, but, as the documentation says: <q>As far as is reasonably practical, the <c>hashCode</c> method defined by class <c>Object</c> returns distinct integers for distinct objects.</q>
+        </p>
+        
+        <p> For the <c>Int</c> class, <c>hashCode</c> returns the integer value. This guarantees distinct integers for distinct objects. For the <c>String</c> class, <c>hashCode</c> uses a formula based on the individual characters in the string. Since <c>hashCode</c> returns an integer, we will then need to use the usual remainder approach to turn it into an index for our list of slots.</p>
+    
+        <p>For most situations, using these built-in <c>hashCode</c> methods is sufficient for successfully hashing the data. For the rare situation where we believe our data is systematically skewed in such a way that the built-in approach is not appropriate, typically we would then create a new class (or subclass) representing the type for the key, and override <c>hashCode</c> with our own function.</p>
+        
+        
+
+        <aside>
+            <title>How to find out more information about the built-in hash functions</title>
+            <p> For most of the built-in basic types, Kotlin "maps" them from Java. In other words, the implementation underneath for these types is really done in Java. The documentation as to how some of those details work, such as <c>hashCode</c>, can be found in in the Java documentation for those classes. For example, to learn about how the <c>String</c> <c>hashCode</c> implementation works, you can look up the <url href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String class in Java</url>. The <c>hashCode</c> method is listed within as one of the methods, and it describes how it is implemented. </p>
+        </aside>
+
+        <p><xref ref="sort-search_lst-hashtablecodestore" />, shows an implementation of the <c>put</c> method. The collision resolution technique is linear probing with a <q>plus 1</q> rehash value. The <c>put</c> method assumes that there will eventually be an empty slot unless the key is already present in the <c>slots</c>. It computes the original hash value and if that slot is not empty, iterates the <c>rehash</c> function until an empty slot occurs (lines 6&#x2013;9). If a nonempty slot already contains the key, the old data value is replaced with the new data value.</p>
+        <listing xml:id="sort-search_lst-hashtablecodestore">
+            <title>The <c>put</c> method</title>
+            <program xml:id="sort-search_prog-hashtablecodestore" language="kotlin" line-numbers="yes">
+                <code>
+    // Assumes that a slot will eventually be found.
+    override fun put(key: K, value: V) {
+        var hashSlot = key.hashCode() % slots.count()
+        var currentEntry = slots[hashSlot]
+
+        while (currentEntry != null &amp;&amp; (currentEntry.key != key)) {
+            hashSlot = rehash(hashSlot, slots.count())
+            currentEntry = slots[hashSlot]
+        }
+
+        if (currentEntry == null) {
+            slots[hashSlot] = Entry(key, value)
+        } else {
+            currentEntry.value = value
+        }
+    }
+
+
+    private fun rehash(oldHash: Int, size: Int): Int {
+        return (oldHash + 1) % size
+    }
+    </code>
+            </program>
+        </listing>
+        <note>
+            <title>Kotlin Note</title>
+            <p>The <c>rehash</c> method has been declared <c>private</c>; nobody outside of <c>HashTableMap</c> should need to call it.</p>
+        </note>
+
+        <p>The <c>get</c> function (see <xref ref="sort-search_lst-hashtablecodesearch" />) begins by computing the initial hash value. If the value is not in the initial slot, <c>rehash</c> is used to locate the next possible position. Line&#xA0;12 guarantees that the search will terminate by checking to make sure that we have not returned to the initial slot. If that happens, we have exhausted all possible slots and the item must not be present.</p>
+
+        <listing xml:id="sort-search_lst-hashtablecodesearch">
+            <title>Retrieving a Value from a HashTableMap</title>
+            <program language="kotlin" line-numbers="yes">
+                <code>
+    override fun get(key: K): V? {
+        val startSlot = key.hashCode() % slots.count()
+        var position = startSlot
+        var currentEntry = slots[position]
+
+        while (currentEntry != null) {
+            if (currentEntry.key == key) {
+                return currentEntry.value
+            } else {
+                position = rehash(position, slots.count())
+                currentEntry = slots[position]
+                if (position == startSlot) {
+                    return null
+                }
+            }
+        }
+
+        return null
+    }
+                </code>
+            </program>
+        </listing>
+        <p><xref ref="sort-search_lst-hashtabletest" /> shows the <c>HashTableMap</c> class in action. First we will create a hash table and store some items with integer keys (US postal codes) and string data values (the city with that code), then access and modify values. For each postal code, we show the initial hash value.</p>
+        <listing xml:id="sort-search_lst-hashtabletest">
+            <title>Testing the <c>HashTableMap</c> Implementation</title>
+            <program language="kotlin"
+                interactive="activecode">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/MapADT.kt"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/HashTableMap.kt"/>
+^^^^
+<xi:include parse="text" href="samplecode/src/main/kotlin/HashTableMapTester.kt"/>
+                </code>
+            </program>
+        </listing>
+        <p>The complete hash table example can be found in <xref ref="sort-search_lst-hashtablecomplete" />.</p>
+        <listing xml:id="sort-search_lst-hashtablecomplete">
+            <title>Complete <c>HashTableMap</c> Code</title>
+            <program xml:id="sort-search_prog-hashtablecomplete" language="kotlin">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/HashTableMap.kt"/>
+                </code>
+            </program>
+        </listing>
+
+        <exercises>
+            <exercise label="HASH_REMAINING">
+                <statement>
+                    <!-- TODO: mention remove issues, empty slot -->
+                    <p>Implement the <c>remove</c> and <c>containsKey</c> methods as described at the beginning of <xref ref="sort-search_implementing-the-map-abstract-data-type" />. As you do this, you may notice that you are duplicating the code involved in finding a key's slot. Hint: implement a <c>findSlot(key)</c> method that returns a slot number for the key (or -1 if the key is not found), and then rewrite some of the existing code to make use of this new method. This is known as <em>refactoring</em> your code, and that's what we did when <em>we</em> implemented those methods. Also note that when removing, there's an added catch in that you need to leave behind some kind of indication that something had been there and was removed. Without doing so, rehashing might fail when looking up something.</p>
+                </statement>
+            </exercise>
+            <exercise label="HASH_PRIVATE">
+                <statement>
+                    <p>If you do implement the <c>findSlot</c> method, should it be <c>public</c> or <c>private</c>? It is possible to make valid arguments for either choice. Explain what motivated your choice and what factors you considered.</p>
+                </statement>
+            </exercise>
+            <exercise label="HASH_SET">
+                <statement>
+                    <p>Code a <c>HashTableSet</c> class, which implements the <c>SetADT</c> interface using a hash table. Use the <c>HashTableMap</c> as a starting point; the code should be very similar. You should be able to get rid of the <c>Entry</c> class completely, and instead make the slot array of the type of the elements being stored in the set.</p>
+                </statement>
+            </exercise>
+        </exercises>
+    </subsection>
+    
+
+</section>
