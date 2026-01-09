@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<section xml:id="listmap" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Implementing Sets and Maps: Lists</title>
+
+    <subsection xml:id="mapset">
+        <title>Implementing a Map with a List</title>
+
+        <p> One of the simplest way to implement a map is with a list. We can use one of our own custom-built list classes, or we can use the built-in Kotlin mutable list. We'll use a mutable list for simplicity, and store an <c>Entry</c> object, which will store a key and a value within. For each of our methods, we will loop over the list in order to perform the necessary action. Code for this is shown in <xref ref="lst-listset" />.</p>
+
+        <listing xml:id="lst-listmap">
+            <title>Map Implemented with a List</title>
+            <program label="prog-listmap" language="kotlin">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ListMap.kt"/>
+                </code>
+            </program>
+        </listing>
+
+        <p>This approach is notable for its simplicity, but let's consider it's efficiency. Every one of our methods (except for <c>size</c> performs a sequential search over the list to look for a key. In each case, this is <m>O(n)</m> in the worst case. We can do a lot better than that, which we will in the following sections.</p>
+
+    </subsection>
+
+
+    <subsection xml:id="listset">
+        <title>Implementing a Set with a List</title>
+
+        <p> We had indicated in <xref ref="mapset_mapADT" /> that the implementation of a map and a set are nearly identical. The only difference is that a map stores a pair of items: a key and a value. All of the map operations use the key in the same way that a set uses its element. Below, we provide a <c>ListSet</c> implementation. Notice how similar it is to <c>ListMap</c>; the only notable changes (apart from some method names) is that in the set version we don't need to bother with the value, only the key (referred to as an element). </p>
+
+        <listing xml:id="lst-listset">
+            <title>Set Implemented with a List</title>
+            <program label="prog-listset" language="kotlin">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ListSet.kt"/>
+                </code>
+            </program>
+        </listing>
+
+        <p>
+            This set implementation also has <m>O(n)</m> performance for all methods except for <c>size</c>. In the next sections, we'll explore how to improve that.
+        </p>
+
+
+    </subsection>
+
+</section>

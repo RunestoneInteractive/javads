@@ -3,6 +3,7 @@
   <title>Maps</title>
   <xi:include href="./Objectives.ptx"/>
   <xi:include href="./MapADT.ptx"/>
+  <xi:include href="./ListMap.ptx"/>
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>
   <xi:include href="./Exercises.ptx"/> 

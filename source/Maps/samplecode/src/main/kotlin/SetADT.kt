@@ -5,7 +5,7 @@ interface SetADT<E> {
     // Returns true if the element is in the set, false otherwise.
     fun contains(element: E): Boolean
 
-    // Removes the element from the map.
+    // Removes the element from the set.
     // Returns true if the element was in the set; false otherwise.
     fun remove(element: E): Boolean
 
