@@ -7,9 +7,9 @@
   <xi:include href="./Implementation.ptx"/>
   <!-- <xi:include href="./ListofListsRepresentation.ptx"/> -->
   <xi:include href="./NodesandReferences.ptx"/>
-  <!--
   <xi:include href="./ParseTree.ptx"/>
   <xi:include href="./TreeTraversals.ptx"/>
+  <!--
   <xi:include href="./PriorityQueueswithBinaryHeaps.ptx"/>
   <xi:include href="./BinaryHeapOperations.ptx"/>
   <xi:include href="./BinaryHeapImplementation.ptx"/>

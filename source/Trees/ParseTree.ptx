@@ -1,333 +1,139 @@
 <?xml version="1.0"?>
 <section xml:id="trees_parse-tree" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Parse Tree</title>
-  <p>With the implementation of our tree data structure
-            complete, we now look at an example of how a tree can be used to solve
-            some real problems. In this section we will look at <term>parse trees</term>. Parse
-            trees can be used to represent real-world constructions like sentences or mathematical expressions.</p>
+  <p>With the implementation of our tree data structure complete, we now look at an example of how a tree can be used to solve some real problems. In this section we will look at <term>parse trees</term>. Parse trees can be used to represent real-world constructions like sentences or mathematical expressions.</p>
   <figure align="center" xml:id="fig-nlparse">
     <caption>A Parse Tree for a Simple Sentence</caption>
-    <image source="Trees/Figures/nlParse.png" width="50%" alt="image"/>
+    <image source="Trees/Figures/nlParse.png" width="50%" alt="image" />
   </figure>
-  <p><xref ref="fig-nlparse"/> shows the hierarchical structure of a simple
-            sentence. Representing a sentence as a tree structure allows us to work
-            with the individual parts of the sentence by using subtrees.</p>
+  <p><xref ref="fig-nlparse" /> shows the hierarchical structure of a simple sentence. Representing a sentence as a tree structure allows us to work with the individual parts of the sentence by using subtrees.</p>
   <figure align="center" xml:id="fig-meparse">
     <caption>Parse Tree for <m>((7 + 3) \cdot (5 - 2))</m></caption>
-    <image source="Trees/Figures/meParse.png" width="50%" alt="image"/>
+    <image source="Trees/Figures/meParse.png" width="50%" alt="image" />
   </figure>
-  <p>We can also represent a mathematical expression such as
-            <m>((7 + 3) \cdot (5 - 2))</m> as a parse tree, as shown in
-            <xref ref="fig-meparse"/>. We have already looked at fully parenthesized
-            expressions, so what do we know about this expression? We know that
-            multiplication has a higher precedence than either addition or
-            subtraction. Because of the parentheses, we know that before we can do
-            the multiplication we must evaluate the parenthesized addition and
-            subtraction expressions. The hierarchy of the tree helps us understand
-            the order of evaluation for the whole expression. Before we can evaluate
-            the top-level multiplication, we must evaluate the addition and the
-            subtraction in the subtrees. The addition, which is the left subtree,
-            evaluates to 10. The subtraction, which is the right subtree, evaluates
-            to 3. Using the hierarchical structure of trees, we can simply replace
-            an entire subtree with one node once we have evaluated the expressions
-            in the children. Applying this replacement procedure gives us the
-            simplified tree shown in <xref ref="fig-mesimple"/>.</p>
+  <p>We can also represent a mathematical expression such as <m>((7 + 3) \cdot (5 - 2))</m> as a parse tree, as shown in <xref ref="fig-meparse" />. We have already looked at fully parenthesized expressions, so what do we know about this expression? We know that multiplication has a higher precedence than either addition or subtraction. Because of the parentheses, we know that before we can do the multiplication we must evaluate the parenthesized addition and subtraction expressions. The hierarchy of the tree helps us understand the order of evaluation for the whole expression. Before we can evaluate the top-level multiplication, we must evaluate the addition and the subtraction in the subtrees. The addition, which is the left subtree, evaluates to 10. The subtraction, which is the right subtree, evaluates to 3. Using the hierarchical structure of trees, we can simply replace an entire subtree with one node once we have evaluated the expressions in the children. Applying this replacement procedure gives us the simplified tree shown in <xref ref="fig-mesimple" />.</p>
   <figure align="center" xml:id="fig-mesimple">
     <caption>A Simplified Parse Tree for <m>((7 + 3) \cdot (5 - 2))</m></caption>
-    <image source="Trees/Figures/meSimple.png" width="50%" alt="image"/>
+    <image source="Trees/Figures/meSimple.png" width="50%" alt="image" />
   </figure>
   <p>In the rest of this section we are going to examine parse trees in more
-            detail. In particular we will look at</p>
+    detail. In particular we will look at</p>
   <p>
     <ul>
       <li>
         <p>How to build a parse tree from a fully parenthesized mathematical
-                    expression.</p>
+          expression.</p>
       </li>
       <li>
         <p>How to evaluate the expression stored in a parse tree.</p>
       </li>
       <li>
         <p>How to recover the original mathematical expression from a parse
-                    tree.</p>
+          tree.</p>
       </li>
     </ul>
   </p>
   <p>The first step in building a parse tree is to break up the expression
-            string into a list of tokens. There are four different kinds of tokens
-            to consider: left parentheses, right parentheses, operators, and
-            operands. We know that whenever we read a left parenthesis we are
-            starting a new expression, and hence we should create a new tree to
-            correspond to that expression. Conversely, whenever we read a right
-            parenthesis, we have finished an expression. We also know that operands
-            are going to be leaf nodes and children of their operators. Finally, we
-            know that every operator is going to have both a left and a right child.</p>
+    string into a list of tokens. There are four different kinds of tokens
+    to consider: left parentheses, right parentheses, operators, and
+    operands. We know that whenever we read a left parenthesis we are
+    starting a new expression, and hence we should create a new tree to
+    correspond to that expression. Conversely, whenever we read a right
+    parenthesis, we have finished an expression. We also know that operands
+    are going to be leaf nodes and children of their operators. Finally, we
+    know that every operator is going to have both a left and a right child.</p>
   <p>Using the information from above we can define four rules as follows:</p>
   <p>
     <ol marker="1">
       <li>
-        <p>If the current token is a <c>"("</c>, add a new node as the left child
-                    of the current node, and descend to the left child.</p>
+        <p>If the current token is a <c>"("</c>, add a new node as the left child of the current node, and descend to the left child.</p>
       </li>
       <li>
-        <p>If the current token is in the list <c>["+", "-", "/", "*"]</c>, set the
-                    root value of the current node to the operator represented by the
-                    current token. Add a new node as the right child of the current node
-                    and descend to the right child.</p>
+        <p>If the current token is one of <c>["+", "-", "/", "*"]</c>, set the key value of the current node to the operator represented by the current token. Add a new node as the right child of the current node and descend to the right child.</p>
       </li>
       <li>
-        <p>If the current token is a number, set the root value of the current
-                    node to the number and return to the parent.</p>
+        <p>If the current token is a number, set the key value of the current
+          node to the number and return to the parent.</p>
       </li>
       <li>
-        <p>If the current token is a <c>")"</c>, go to the parent of the current
-                    node.</p>
+        <p>If the current token is a <c>")"</c>, go to the parent of the current node.</p>
       </li>
     </ol>
   </p>
-  <p>Before writing the Java code, let's look at an example of the rules
-            outlined above in action. We will use the expression
-            <m>(3 + (4 * 5))</m>. We will parse this expression into the
-            following array of character tokens: <c>["(", "3", "+", "(", "4", "*", "5", ")", ")"]</c>.
-            Initially we will start out with a
-            parse tree that consists of an empty root node. <xref ref="fig-bldexpstep"/>
-            illustrates the structure and contents of the parse tree as each new
-            token is processed.</p>
- <figure align="center" xml:id="fig-bldexpstep">
-   <caption>Steps in Building the Parse Tree</caption>
-    <image source="Trees/Figures/buildExpAll.png" width="70%" alt="image"/>
+  <p>Before writing the Kotlin code, let's look at an example of the rules outlined above in action. We will use the expression <m>(3 + (4 * 5))</m>. We will parse this expression into the following array of character tokens: <c>["(", "3", "+", "(", "4", "*", "5", ")", ")"]</c>. Initially we will start out with a parse tree that consists of an empty root node. <xref ref="fig-bldexpstep" /> illustrates the structure and contents of the parse tree as each new token is processed.</p>
+  <figure align="center" xml:id="fig-bldexpstep">
+    <caption>Steps in Building the Parse Tree</caption>
+    <image source="Trees/Figures/buildExpAll.png" width="70%" alt="image" />
   </figure>
 
-  <p>Using <xref ref="fig-bldexpstep"/> and the example expression
-            from the previous paragraph, let's walk through the example step by
-            step:</p>
+  <p>Using <xref ref="fig-bldexpstep" /> and the example expression from the previous paragraph, let's walk through the example step by step:</p>
   <p>
     <ol marker="a">
       <li>
         <p>Create an empty tree.</p>
       </li>
       <li>
-        <p>Read <c>(</c> as the first token. By rule 1, create a new node as the left
-                    child of the root. Make the current node this new child.</p>
+        <p>Read <c>(</c> as the first token. By rule 1, create a new node as the left child of the root. Make the current node this new child.</p>
       </li>
       <li>
-        <p>Read <c>3</c> as the next token. By rule 3, set the root value of the
-                    current node to 3 and go back up the tree to the parent.</p>
+        <p>Read <c>3</c> as the next token. By rule 3, set the root value of the current node to 3 and go back up the tree to the parent.</p>
       </li>
       <li>
-        <p>Read <c>+</c> as the next token. By rule 2, set the root value of the
-                    current node to + and add a new node as the right child. The new
-                    right child becomes the current node.</p>
+        <p>Read <c>+</c> as the next token. By rule 2, set the root value of the current node to + and add a new node as the right child. The new right child becomes the current node.</p>
       </li>
       <li>
-        <p>Read <c>(</c> as the next token. By rule 1, create a new node as the left
-                    child of the current node. The new left child becomes the current
-                    node.</p>
+        <p>Read <c>(</c> as the next token. By rule 1, create a new node as the left child of the current node. The new left child becomes the current node.</p>
       </li>
       <li>
-        <p>Read <c>4</c> as the next token. By rule 3, set the value of the current
-                    node to 4. Make the parent of 4 the current node.</p>
+        <p>Read <c>4</c> as the next token. By rule 3, set the value of the current node to 4. Make the parent of 4 the current node.</p>
       </li>
       <li>
-        <p>Read <c>*</c> as the next token. By rule 2, set the root value of the
-                    current node to * and create a new right child. The new right child
-                    becomes the current node.</p>
+        <p>Read <c>*</c> as the next token. By rule 2, set the root value of the current node to * and create a new right child. The new right child becomes the current node.</p>
       </li>
       <li>
-        <p>Read <c>5</c> as the next token. By rule 3, set the root value of the
-                    current node to 5. Make the parent of 5 the current node.</p>
+        <p>Read <c>5</c> as the next token. By rule 3, set the root value of the current node to 5. Make the parent of 5 the current node.</p>
       </li>
       <li>
-        <p>Read <c>)</c> as the next token. By rule 4 we make the parent of * the
-                    current node.</p>
+        <p>Read <c>)</c> as the next token. By rule 4 we make the parent of * the current node.</p>
       </li>
       <li>
-        <p>Read <c>)</c> as the next token. By rule 4 we make the parent of + the
-                    current node. At this point there is no parent for +, so we are done.</p>
+        <p>Read <c>)</c> as the next token. By rule 4 we make the parent of + the current node. At this point there is no parent for +, so we are done.</p>
       </li>
     </ol>
   </p>
-  <p>From the example above, it is clear that we need to keep track of the
-            current node as well as the parent of the current node. The tree
-            interface provides us with a way to get children of a node, through the
-            <c>getLeftChild</c> and <c>getRightChild</c> methods, but how can we keep
-            track of the parent? A solution to keeping track of parents as we
-            traverse the tree is to use a stack. Whenever we want to descend to a
-            child of the current node, we first push the current node on the stack.
-            When we want to return to the parent of the current node, we pop the
-            parent off the stack.</p>
-  <p>Using the rules described above, along with the <c>Stack</c> and
-            <c>BinaryTree</c> operations, we are now ready to write a Java method
-            to create a parse tree. The code for our parse tree builder is presented
-            in <xref ref="lst-buildparse"/>.</p>
-<listing xml:id="lst-buildparse">
-<program label="prog-buildparse" language="java" line-numbers="yes">
-    <code>
-class ParseTreeBuilder {
-    /*
-     * Given a fully-parenthesized expression, return its
-     * parse tree.
-     */
-    public static BinaryTree&lt;String&gt; buildParseTree(String expr) {
-        String[] tokenList = expr.split(" ");
-        Stack&lt;BinaryTree&lt;String&gt;&gt; parentStack = new Stack&lt;&gt;();
-        BinaryTree&lt;String&gt; exprTree = new BinaryTree&lt;String&gt;("");
-
-        parentStack.push(exprTree);
-
-        BinaryTree&lt;String&gt; currentTree = exprTree;
-
-        for (String token: tokenList) {
-            if (token.equals("(")) {
-                currentTree.insertLeft("");
-                parentStack.push(currentTree);
-                currentTree = currentTree.leftChild;
-            }
-            else if ("+-*/".indexOf(token) &gt;= 0) {
-                currentTree.setRootValue(token);
-                currentTree.insertRight("");
-                parentStack.push(currentTree);
-                currentTree = currentTree.rightChild;
-            }
-            else if (isNumber(token)) {
-                currentTree.setRootValue(token);
-                BinaryTree&lt;String&gt; parent = parentStack.pop();
-                currentTree = parent;
-            }
-            else if (token.equals(")")) {
-                currentTree = parentStack.pop();
-            } else {
-                throw new IllegalArgumentException("Unknown token "
-                    + token);
-            }
-        }
-        return exprTree;
-    }
-
-    public static boolean isNumber(String token) {
-        try {
-            Integer.valueOf(token);
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
-    }
-}
+  <p>From the example above, it is clear that we need to keep track of the current node as well as the parent of the current node. The <c>BinaryTree</c> class provides us with a way to get children of a node through the <c>leftChild</c> and <c>rightChild</c> attributes, but how can we keep track of the parent? A solution to keeping track of parents as we traverse the tree is to use a stack. Whenever we want to descend to a child of the current node, we first push the current node on the stack. When we want to return to the parent of the current node, we pop the parent off the stack.</p>
+  <p>Using the rules described above, along with the <c>ListStack</c> and <c>BinaryTree</c> operations, we are now ready to write a Kotlin method to create a parse tree. The code for our parse tree builder is presented in <xref ref="lst-buildparse" />.</p>
+  <listing xml:id="lst-buildparse">
+    <title>Kotlin code for Parse Tree Builder</title>
+    
+    
+    <program label="prog-buildparse" language="kotlin" line-numbers="yes">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ParseTreeBuilder.kt"/>
 </code>
-  </program>
-</listing>
-  <p>The four rules for building a parse tree are coded as the first four
-            clauses of the <c>if..else if</c> statements on lines 16, 21,
-            27, and 32 of <xref ref="lst-buildparse"/>. In each case you
-            can see that the code implements the rule, as described above, with a
-            few calls to the <c>BinaryTree</c> or <c>Stack</c> methods. The only error
-            checking we do in this function is in the <c>else</c> clause where an
-            <c>IllegalArgumenteException</c> exception will be raised if we get a token from the list
-            that we do not recognize.</p>
-          <note>
-            <title>Java Note</title>
-            <p>In line 27, we ask if the token is numeric. To test this, we have the <c>isNumber</c> method in lines 42&#x2013;49. It works by attempting to convert the token to an integer (line 44) using the <c>valueOf</c> method. We don't retain the result<mdash/>we're only interested in whether it can be converted or not. If not, Java throws a <c>NumberFormatException</c> which we catch so we can return <c>false</c> instead of having the program crash.</p>
-          </note>
+    </program>
+  </listing>
+  <p>The four rules for building a parse tree are coded as the first four clauses of the <c>if..else if</c> statements on lines 12, 16, 21, and 25 of <xref ref="lst-buildparse" />. In each case you can see that the code implements the rule, as described above, with a few calls to the <c>BinaryTree</c> or <c>ListStack</c> methods. The only error checking we do in this function is in the <c>else</c> clause where an <c>IllegalArgumentException</c> exception will be raised if we get a token from the list that we do not recognize.</p>
 
-          <p>Now that we have built a parse tree, we would (a) like to look at the tree structure and (b) do something useful with it.  Let's put the first of these on hold until <xref ref="trees_tree-traversals"/>, where we'll find out how to print out the tree.
-            To do something useful with the tree, as a first
-            example, we will write a method to evaluate the parse tree and return
-            the numerical result. To write this method, we will make use of the
-            hierarchical nature of the tree. Look back at <xref ref="fig-meparse"/>.
-            Recall that we can replace the original tree with the simplified tree
-            shown in <xref ref="fig-mesimple"/>. This suggests that we can write an
-            algorithm that evaluates a parse tree by recursively evaluating each
-            subtree.</p>
-  <p>As we have done with past recursive algorithms, we will begin the design
-            for the recursive evaluation function by identifying the base case. A
-            natural base case for recursive algorithms that operate on trees is to
-            check for a leaf node. In a parse tree, the leaf nodes will always be
-            operands. Since a leaf node contains <c>String</c> values, the <c>evaluate</c> method will
-            convert the string to its numeric value and return it. The recursive step that moves
-            the method toward the base case is to call <c>evaluate</c> on both the
-            left and the right children of the current node. The recursive call
-            effectively moves us down the tree, toward a leaf node.</p>
-  <p>To put the results of the two recursive calls together, we can apply the operator stored in the parent node to the results returned from evaluating both children. In the example from <xref ref="fig-mesimple"/> we see that the two children of the root evaluate to themselves, namely 10 and 3. Applying the multiplication operator gives us a final result of 30.</p>
-  <p>The code for a recursive <c>evaluate</c> method is shown in
-            <xref ref="trees_lst-eval"/>. First, we obtain references to the left and the
-            right children of the current node. If both the left and right children
-            evaluate to <c>null</c>, then we know that the current node is really a
-            leaf node. This check is on line 5. If the current node is not
-            a leaf node, get the operator in the current node and apply it to
-            the results from recursively evaluating the left and right children (lines&#xA0;6&#x2013;9) We do this in the <c>apply</c> method (lines&#xA0;15&#x2013;30), which we have made into a separate method so that the flow of <c>evaluate</c>is easier to read.</p>
+  <p>Now that we have built a parse tree, we would (a) like to look at the tree structure and (b) do something useful with it. Let's put the first of these on hold until <xref ref="trees_tree-traversals" />, where we'll find out how to print out the tree. To do something useful with the tree, as a first example, we will write a method to evaluate the parse tree and return the numerical result. To write this method, we will make use of the hierarchical nature of the tree. Look back at <xref ref="fig-meparse" />. Recall that we can replace the original tree with the simplified tree shown in <xref ref="fig-mesimple" />. This suggests that we can write an algorithm that evaluates a parse tree by recursively evaluating each subtree.</p>
+  <p>As we have done with past recursive algorithms, we will begin the design for the recursive evaluation function by identifying the base case. A natural base case for recursive algorithms that operate on trees is to check for a leaf node. In a parse tree, the leaf nodes will always be operands. Since a leaf node contains <c>String</c> values, the <c>evaluate</c> method will convert the string to its numeric value and return it. The recursive step that moves the method toward the base case is to call <c>evaluate</c> on both the left and the right children of the current node. The recursive call effectively moves us down the tree, toward a leaf node.</p>
+  <p>To put the results of the two recursive calls together, we can apply the operator stored in the parent node to the results returned from evaluating both children. In the example from <xref ref="fig-mesimple" /> we see that the two children of the root evaluate to themselves, namely 10 and 3. Applying the multiplication operator gives us a final result of 30.</p>
+  <p>The code for a recursive <c>evaluate</c> function is shown in <xref ref="trees_lst-eval" />. First, we obtain references to the left and the right children of the current node. If both the left and right children evaluate to <c>null</c>, then we know that the current node is really a leaf node. This check is on line 5. If the current node is not a leaf node, get the operator in the current node and apply it to the results from recursively evaluating the left and right children (lines&#xA0;7&#x2013;8) We do this in the <c>apply</c> function (lines&#xA0;15&#x2013;32), which we have made into a separate function so that the flow of <c>evaluate</c>is easier to read.</p>
   <listing xml:id="trees_lst-eval">
-<program label="trees_prog-eval" language="java" line-numbers="yes" interactive="activecode">
-    <code>
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-<xi:include parse="text" href="./Stack.java"/>
-<xi:include parse="text" href="./BinaryTree.java"/>
-<xi:include parse="text" href="./ParseTreeBuilder.java"/>
+    <title>Parse Tree Evaluation and Testing Code</title>
+    <program label="trees_prog-eval" language="kotlin" line-numbers="yes" interactive="activecode">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/StackADT.kt"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ListStack.kt"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/BinaryTree.kt"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ParseTreeBuilder.kt"/>
 ^^^^
-public class ParseTreeExample {
-    public static Double evaluate(BinaryTree&lt;String&gt; parseTree) {
-        BinaryTree&lt;String&gt; leftChild = parseTree.getLeftChild();
-        BinaryTree&lt;String&gt; rightChild = parseTree.getRightChild();
-
-        if (leftChild != null &amp;&amp; rightChild != null) {
-            String operator = parseTree.getRootValue();
-            double leftOperand = evaluate(leftChild);
-            double rightOperand = evaluate(rightChild);
-            return apply(operator, leftOperand, rightOperand);
-        } else {
-            return Double.valueOf(parseTree.getRootValue());
-        }
-    }
-
-    private static Double apply(String operator, Double leftOperand,
-        Double rightOperand) {
-
-        Double result;
-
-        if (operator.equals("+")) {
-            result = leftOperand + rightOperand;
-        } else if (operator.equals("-")) {
-            result = leftOperand - rightOperand;
-        } else if (operator.equals("*")) {
-            result = leftOperand * rightOperand;
-        } else {
-            result = leftOperand / rightOperand;
-        }
-        return result;
-    }
-
-    public static void main(String[] args) {
-        BinaryTree&lt;String&gt; parseTree =
-          ParseTreeBuilder.buildParseTree("( 3 + ( 4 * 5 ) )");
-        System.out.println(evaluate(parseTree));
-    }
-}
+<xi:include parse="text" href="samplecode/src/main/kotlin/ParseTreeEvaluator.kt"/>
 </code>
-  </program>
+    </program>
   </listing>
 
-  <p>Let's finish this topic by tracing the <c>evaluate</c> function on the parse tree we
-            created in <xref ref="fig-bldexpstep"/>. When we first call <c>evaluate</c>, we
-            pass the root of the entire tree as the parameter <c>parseTree</c>. Then we
-            obtain references to the left and right children to make sure they
-            exist. We begin
-            by looking up the operator in the root of the tree (line 6), which is <c>"+"</c>.
-            We must now evaluate the operands for this operator, which we do with the
-            recursive calls in lines 8 and 9  As we are using left-to-right evaluation, the first recursive call to
-            <c>evaluate</c> function is given the left subtree. We find that the node
-            has no left or right children, so we are in a leaf node. When we are in
-            a leaf node, we return the value stored in the leaf node as the
-            result of the evaluation (line 12). In this case we return the value 3.</p>
+  <p>Let's finish this topic by tracing the <c>evaluate</c> function on the parse tree we created in <xref ref="fig-bldexpstep" />. When we first call <c>evaluate</c>, we pass the root of the entire tree as the parameter <c>parseTree</c>. Then we obtain references to the left and right children to make sure they exist. We begin by looking up the operator in the root of the tree (line 6), which is <c>"+"</c>. We must now evaluate the operands for this operator, which we do with the recursive calls in lines 7 and 8. As we are using left-to-right evaluation, the first recursive call to <c>evaluate</c> function is given the left subtree. We find that the node has no left or right children, so we are in a leaf node. When we are in a leaf node, we return the value stored in the leaf node as the result of the evaluation (line 11). In this case we return the value 3.</p>
 
-  <p>At this point we have one operand evaluated for the operation. But we are not done yet. Continuing the left-to-right
-            evaluation of the parameters, we now make a recursive call to evaluate
-            the right child of the root. We find that the node has both a left and a
-            right child, so we look up the operator stored in this node, <c>"*"</c>, and
-            evaluate <em>its</em> left and right children as the parameters.
-            At this point, you can see that both recursive calls will be to leaf
-            nodes, which will evaluate to the numbers 4 and 5 respectively.
-            With the two operands evaluated, we return the result of mutliplying them (lines 25&#x2013;26). At this point we have evaluated the operands for
-            the top level <c>"+"</c> operator, and all that is left to do is finish the
-            addition of the numbers (lines 21&#x2013;22). The result of the evaluation of the
-            entire expression tree for <m>(3 + (4 * 5))</m> is 23.</p>
+  <p>At this point we have one operand evaluated for the operation. But we are not done yet. Continuing the left-to-right evaluation of the parameters, we now make a recursive call to evaluate the right child of the root. We find that the node has both a left and a right child, so we look up the operator stored in this node, <c>"*"</c>, and evaluate <em>its</em> left and right children as the parameters. At this point, you can see that both recursive calls will be to leaf nodes, which will evaluate to the numbers 4 and 5 respectively. With the two operands evaluated, we return the result of mutliplying them (lines 25&#x2013;26). At this point we have evaluated the operands for the top level <c>"+"</c> operator, and all that is left to do is finish the addition of the numbers (lines 21&#x2013;22). The result of the evaluation of the entire expression tree for <m>(3 + (4 * 5))</m> is 23.</p>
 </section>

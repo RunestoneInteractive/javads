@@ -28,31 +28,38 @@ class BinaryTree&lt;T&gt;(var key: T) {
         <title>insertLeft code</title>
         <program language="kotlin" line-numbers="yes">
             <code>
-    fun insertLeft(newNode: T) {
+   fun insertLeft(newNode: T): BinaryTree&lt;T&gt; {
         if (leftChild == null) {
-            leftChild = BinaryTree(newNode)
+            val newChild = BinaryTree(newNode)
+            leftChild = newChild
+            return newChild
         } else {
             val newChild = BinaryTree(newNode)
             newChild.leftChild = leftChild
             leftChild = newChild
+            return newChild
         }
     }
 </code>
         </program>
     </listing>
-    <p>We must consider two cases for insertion. The first case is characterized by a node with no existing left child. When there is no left child, we add a node to the tree. The second case is characterized by a node with an existing left child. In the second case, we insert a node and push the existing child down one level in the tree. The second case is handled by the <c>else</c> statement on line 4 of <xref ref="trees_lst-insl" />.</p>
+    <p>We must consider two cases for insertion. The first case is characterized by a node with no existing left child. When there is no left child, we add a node to the tree. The second case is characterized by a node with an existing left child. In the second case, we insert a node and push the existing child down one level in the tree. The second case is handled by the <c>else</c> statement on line 6 of <xref ref="trees_lst-insl" />. In both cases, we then return the new node that has been created. For the test code in this section, we just ignore this return value, but it is helpful in future sections to be able to have easy access to the subtree that was just created and to know that it is not null.</p>
+
     <p>The code for <c>insertRight</c> must consider a symmetric set of cases. There will either be no right child, or we must insert the node between the root and an existing right child. The insertion code is shown in <xref ref="trees_lst-insr" />.</p>
     <listing xml:id="trees_lst-insr">
         <title>insertRight code</title>
         <program language="kotlin" line-numbers="yes">
             <code>
-    fun insertRight(newNode: T) {
+    fun insertRight(newNode: T): BinaryTree&lt;T&gt; {
         if (rightChild == null) {
-            rightChild = BinaryTree(newNode)
+            val newChild = BinaryTree(newNode)
+            rightChild = newChild
+            return newChild
         } else {
             val newChild = BinaryTree(newNode)
             newChild.rightChild = rightChild
             rightChild = newChild
+            return newChild
         }
     }
 </code>
