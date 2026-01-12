@@ -4,12 +4,12 @@
   <p>
     <ul>
       <li>
-        <p>To understand the map abstract data type.</p>
+        <p>To understand the map and set abstract data types.</p>
       </li>
       <li>
-        <p>To implement the map abstract data type using hashing.</p>
+        <p>To implement the map and set abstract data types using hashing.</p>
       </li>
-      <li>
+      <!-- <li>
         <p>To understand what a tree data structure is and how it is used.</p>
       </li>
       <li>
@@ -23,7 +23,7 @@
       </li>
       <li>
         <p>To implement trees as a recursive data structure.</p>
-      </li>
+      </li> -->
       <!-- <li>
         <p>To implement a priority queue using a heap.</p>
       </li> -->

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <section xml:id="sort-search_hash-implementation" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <title>Implementing Hashing</title>
+    <title>Implementing a Map and a Set with Hashing</title>
 
     <subsection xml:id="sort-search_implementing-the-map-abstract-data-type">
         <title>Hashtable Map implementation</title>

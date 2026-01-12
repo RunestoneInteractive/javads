@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en-US" xml:id="chapter-maps">
-  <title>Maps</title>
+  <title>Maps and Sets via Hash Tables</title>
   <xi:include href="./Objectives.ptx"/>
   <xi:include href="./MapADT.ptx"/>
   <xi:include href="./ListMap.ptx"/>

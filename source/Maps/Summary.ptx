@@ -4,7 +4,8 @@
   <p>
     <ul>
       <li>
-        <p>Hash tables can provide constant time searching.</p>
+        <p>Maps and sets implemented with lists and sequential search result in <m>O(n)</m> performance. They are not typically implemented this way as a result.</p>
+        <p>Maps and sets implemented with hash tables, under usual circumstances, can provide approximately constant time (<m>O(1)</m>) performance. Hash tables are a popular approach for implementing maps and sets.</p>
       </li>
     </ul>
   </p>
