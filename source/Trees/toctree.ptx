@@ -3,11 +3,11 @@
   <title>Trees and Tree Algorithms</title>
   <xi:include href="./Objectives.ptx"/>
   <xi:include href="./ExamplesofTrees.ptx"/>
-  <!--
   <xi:include href="./VocabularyandDefinitions.ptx"/>
   <xi:include href="./Implementation.ptx"/>
-  <xi:include href="./ListofListsRepresentation.ptx"/>
+  <!-- <xi:include href="./ListofListsRepresentation.ptx"/> -->
   <xi:include href="./NodesandReferences.ptx"/>
+  <!--
   <xi:include href="./ParseTree.ptx"/>
   <xi:include href="./TreeTraversals.ptx"/>
   <xi:include href="./PriorityQueueswithBinaryHeaps.ptx"/>

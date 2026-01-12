@@ -1,177 +1,85 @@
 <?xml version="1.0"?>
 <section xml:id="trees_nodes-and-references" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>Nodes and References</title>
-  <p>Our second method to represent a tree uses nodes and references. In this
-            case we will define a class that has attributes for the root value as
-            well as the left and right subtrees. Using nodes and references,
-            we might think of the tree as being structured like the one shown in <xref ref="i14_id1fig-treerec"/>.
-            Since this representation more
-            closely follows the object-oriented programming paradigm, we will
-            continue to use this representation for the remainder of the chapter.</p>
-  <figure align="center" xml:id="i14_id1fig-treerec">
-    <caption>A Simple Tree Using a Nodes and References Approach</caption>
-    <image source="Trees/Figures/treerecs2.png" width="50%" alt="tree showing left and right children"/>
-  </figure>
-  <p>We will start out with a simple class definition for the nodes and
-            references approach as shown in <xref ref="trees_lst-nar"/>. The important thing
-            to remember about this representation is that the attributes <c>leftChild</c>
-            and <c>rightChild</c> will become references to other instances of the
-            <c>BinaryTree</c> class. For example, when we insert a new left child into
-            the tree, we create another instance of <c>BinaryTree</c> and modify
-            <c>this.leftChild</c> in the root to reference the new tree.</p>
-  <listing xml:id="trees_lst-nar">
-    <caption>Binary Tree Constructor</caption>
-    <program language="java"><code>
-class BinaryTree&lt;T&gt; {
-    T key;
-    BinaryTree&lt;T&gt; leftChild;
-    BinaryTree&lt;T&gt; rightChild;
+    <title>Nodes and References</title>
+    <p>We will implement a binary search tree using nodes and references. Specifically, we will define a class that represents a single note in the binary tree. Because the term <em>root</em> often refers to the entire tree, we will refer to the value in a particular node as the <em>key</em>. A node therefore has attributes for the key value as well as the left and right subtrees. Using nodes and references, we might think of the tree as being structured like the one shown in <xref ref="i14_id1fig-treerec" />.</p>
+    <figure xml:id="i14_id1fig-treerec">
+        <caption>A Simple Tree Using a Nodes and References Approach</caption>
+        <image source="Trees/Figures/treerecs2.png" width="50%">
+            <shortdescription>tree showing left and right children></shortdescription>
+        </image>
+    </figure>
+    <p>We will start out with a simple class definition for the nodes and references approach as shown in <xref ref="trees_lst-nar" />. The important thing to remember about this representation is that the attributes <c>leftChild</c> and <c>rightChild</c> will become references to other instances of the <c>BinaryTree</c> class. For example, when we insert a new left child into the tree, we create another instance of <c>BinaryTree</c> and modify <c>leftChild</c> in the root to reference the new tree.</p>
+    <listing xml:id="trees_lst-nar">
+        <title>Binary Tree Class Setup</title>
+        <program language="kotlin">
+            <code>
+class BinaryTree&lt;T&gt;(var key: T) {
+    var leftChild: BinaryTree&lt;T&gt;? = null
+    var rightChild: BinaryTree&lt;T&gt;? = null
 
-    public BinaryTree(T rootObject) {
-        this.key = rootObject;
-        this.leftChild = null;
-        this.rightChild = null;
-    }
-    // more code here..
+    // more code here...
 }
-
-        </code></program></listing>
-  <p>Notice that in <xref ref="trees_lst-nar"/>, the constructor expects to
-            get some kind of object to store in the root. We will use generics so that
-            our trees are not restricted to holding values of only one particular type.
-            For our early examples, we will store the name
-            of the node as the root value. Using nodes and references to represent
-            the tree in <xref ref="i14_id1fig-treerec"/>, we would create six instances of the
-            <c>BinaryTree</c> class.</p>
-  <p>Next let's look at the methods we need to build the tree beyond the
-            root node. To add a left child to the tree, we will create a new binary
-            tree object and set the <c>leftChild</c> attribute of the root to refer to this
-            new object. The code for <c>insertLeft</c> is shown in
-            <xref ref="trees_lst-insl"/>.</p>
-  <listing xml:id="trees_lst-insl"><program language="java" line-numbers="yes">
-    <code>
-    public void insertLeft(T newNode) {
-        if (this.leftChild == null) {
-            this.leftChild = new BinaryTree&lt;T&gt;(newNode);
+        </code>
+        </program>
+    </listing>
+    <p>Notice that in <xref ref="trees_lst-nar" />, the constructor expects to get some kind of object to store as the key value for the node. We are using generics so that our trees are not restricted to holding values of only one particular type. For our early examples, we will store the name of the node as the key value. Using nodes and references to represent the tree in <xref ref="i14_id1fig-treerec" />, we would create six instances of the <c>BinaryTree</c> class.</p>
+    <p>Next let's look at the methods we need to build the tree beyond the root node. To add a left child to the tree, we will create a new binary tree object and set the <c>leftChild</c> attribute of the root to refer to this new object. The code for <c>insertLeft</c> is shown in <xref ref="trees_lst-insl" />.</p>
+    <listing xml:id="trees_lst-insl">
+        <title>insertLeft code</title>
+        <program language="kotlin" line-numbers="yes">
+            <code>
+    fun insertLeft(newNode: T) {
+        if (leftChild == null) {
+            leftChild = BinaryTree(newNode)
         } else {
-            BinaryTree&lt;T&gt; newChild = new BinaryTree&lt;T&gt;(newNode);
-            newChild.leftChild = this.leftChild;
-            this.leftChild = newChild;
+            val newChild = BinaryTree(newNode)
+            newChild.leftChild = leftChild
+            leftChild = newChild
         }
     }
 </code>
-  </program></listing>
-  <p>We must consider two cases for insertion. The first case is
-            characterized by a node with no existing left child. When there is no
-            left child, we add a node to the tree. The second case is
-            characterized by a node with an existing left child. In the second
-            case, we insert a node and push the existing child down one level in the
-            tree. The second case is handled by the <c>else</c> statement on line
-            4 of <xref ref="trees_lst-insl"/>.</p>
-  <p>The code for <c>insertRight</c> must consider a symmetric set of cases.
-            There will either be no right child, or we must insert the node between
-            the root and an existing right child. The insertion code is shown in
-            <xref ref="trees_lst-insr"/>.</p>
-  <listing xml:id="trees_lst-insr"><program language="java" line-numbers="yes">
-    <code>
-    public void insertRight(T newNode) {
-        if (this.rightChild == null) {
-            this.rightChild = new BinaryTree&lt;T&gt;(newNode);
+        </program>
+    </listing>
+    <p>We must consider two cases for insertion. The first case is characterized by a node with no existing left child. When there is no left child, we add a node to the tree. The second case is characterized by a node with an existing left child. In the second case, we insert a node and push the existing child down one level in the tree. The second case is handled by the <c>else</c> statement on line 4 of <xref ref="trees_lst-insl" />.</p>
+    <p>The code for <c>insertRight</c> must consider a symmetric set of cases. There will either be no right child, or we must insert the node between the root and an existing right child. The insertion code is shown in <xref ref="trees_lst-insr" />.</p>
+    <listing xml:id="trees_lst-insr">
+        <title>insertRight code</title>
+        <program language="kotlin" line-numbers="yes">
+            <code>
+    fun insertRight(newNode: T) {
+        if (rightChild == null) {
+            rightChild = BinaryTree(newNode)
         } else {
-            BinaryTree&lt;T&gt; newChild = new BinaryTree&lt;T&gt;(newNode);
-            newChild.rightChild = this.rightChild;
-            this.rightChild = newChild;
+            val newChild = BinaryTree(newNode)
+            newChild.rightChild = rightChild
+            rightChild = newChild
         }
     }
 </code>
-  </program></listing>
-  <p>To round out the definition for a simple binary tree data structure, we
-            will write accessor methods for the left and right children and for
-            the root values (see <xref ref="trees_lst-naracc"/>) .</p>
-  <listing xml:id="trees_lst-naracc"><program language="java">
-    <code>
-    public T getRootValue() {
-        return this.key;
-    }
+        </program>
+    </listing>
 
-    public void setRootValue(T value) {
-        this.key = value;
-    }
+    <p>Now that we have all the pieces to create and manipulate a binary tree, let's use them to check on the structure a bit more. Let's make a simple tree with node a as the root, and add nodes <q>b</q> and <q>c</q> as children. <xref ref="lst-comptest" /> creates the tree and looks at the some of the values stored in <c>key</c>, <c>leftChild</c>, and <c>rightChild</c>. Notice that both the left and right children of the root are themselves distinct instances of the <c>BinaryTree</c> class. As we said in our original recursive definition for a tree, this allows us to treat any child of a binary tree as a binary tree itself.</p>
 
-    public BinaryTree&lt;T&gt; getLeftChild() {
-        return this.leftChild;
-    }
+    <p>In this test code, we often use the <c>!!</c> operator to ignore null safety checks. We are choosing in this example to do so to keep the code brief, to make it easier to see what's happening.</p>
+    <listing xml:id="lst-comptest">
+        <title>Test Program for <c>BinaryTree</c> Class</title>
+        <program label="lst-comptest" language="kotlin" interactive="activecode">
+            <code>
 
-    public BinaryTree&lt;T&gt; getRightChild() {
-        return this.rightChild;
-    }
-</code>
-  </program></listing>
-
-  <p>Now that we have all the pieces to create and manipulate a binary tree,
-            let's use them to check on the structure a bit more. Let's make a simple
-            tree with node a as the root, and add nodes <q>b</q> and <q>c</q> as children. <xref ref="lst-comptest"/> creates the tree and looks at the some of the
-            values stored in <c>key</c>, <c>leftChild</c>, and <c>rightChild</c>. Notice that both the
-            left and right children of the root are themselves distinct instances of
-            the <c>BinaryTree</c> class. As we said in our original recursive
-            definition for a tree, this allows us to treat any child of a binary
-            tree as a binary tree itself.</p>
-<listing xml:id="lst-comptest">
-  <caption>Test Program for <c>BinaryTree</c> Class</caption>
-<program label="lst-comptest" language="java" interactive="activecode">
-  <code>
-
-<xi:include parse="text" href="./BinaryTree.java"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/BinaryTree.kt"/>
 ^^^^
-public class BinaryTreeTest {
-
-    public static void main(String[] args) {
-        BinaryTree&lt;String&gt; aTree = new BinaryTree&lt;&gt;("a");
-
-        System.out.println(aTree.getRootValue()); // "a"
-        System.out.println(aTree.getLeftChild()); // null
-
-        aTree.insertLeft("b");
-        System.out.println(aTree.getLeftChild()); // reference to BinaryTree
-        System.out.println(aTree.getLeftChild().getRootValue()); // "b"
-
-        aTree.insertRight("c");
-        System.out.println(aTree.getRightChild()); // reference to BinaryTree
-        System.out.println(aTree.getRightChild().getRootValue()); // "c"
-
-        aTree.getRightChild().setRootValue("d");
-        System.out.println(aTree.getRightChild().getRootValue()); // "d"
-    }
-}
+<xi:include parse="text" href="samplecode/src/main/kotlin/BinaryTreeTest.kt"/>
         </code>
-  </program>
-</listing>
-  <exercises>
-    <title>Self Check</title>
-    <exercise label="mctree_3">
-      <statement>
-        <p>Write a method named <c>buildTree</c> that returns a tree using the nodes and references implementation that looks like this:</p>
-        <image source="Trees/Figures/tree_ex.png" width="50%"/>
-      </statement>
-      <program xml:id="mctree_3_editor" language="java">
-        <code>
-public class TreeExercise {
-
-    public static BinaryTree&lt;String&gt; buildTree() {
-        // your code here...
-    }
-
-    public static void main(String[] args) {
-        BinaryTree&lt;String&gt; testTree = buildTree();
-        System.out.println(testTree.getRightChild().getRootValue()); // "c"
-        System.out.println(testTree.getLeftChild().getRightChild().
-            getRootValue()); // "d"
-        System.out.println(testTree.getRightChild().getLeftChild().
-            getRootValue()); // "e"
-    }
-}
-        </code>
-      </program>
-    </exercise>
-  </exercises>
+        </program>
+    </listing>
+    <exercises>
+        <title>Self Check</title>
+        <exercise label="mctree_3">
+            <statement>
+                <p>Write a function named <c>buildTree</c> that returns a tree using the nodes and references implementation that looks like this:</p>
+                <image source="Trees/Figures/tree_ex.png" width="50%" />
+            </statement>
+        </exercise>
+    </exercises>
 </section>

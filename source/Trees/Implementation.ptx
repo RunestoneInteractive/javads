@@ -1,13 +1,9 @@
 <?xml version="1.0"?>
 <section xml:id="trees_implementation">
   <title>Implementation</title>
-  <p>Keeping in mind the definitions from the previous section,
-            we can use the following functions to create and manipulate a binary tree:</p>
+  <p>Keeping in mind the definitions from the previous section, we will show how to implement a <c>BinaryTree</c> class with the following methods.</p>
   <p>
     <ul>
-      <li>
-        <p><c>BinaryTree()</c> creates a new instance of a binary tree.</p>
-      </li>
       <li>
         <p><c>getRootValue()</c> returns the object stored in the current node.</p>
       </li>
@@ -28,7 +24,6 @@
       </li>
     </ul>
   </p>
-  <p>The key decision in implementing a tree is choosing a good internal storage technique.
-            There are two very interesting possibilities, and we will examine both
-            before choosing the one that is more suited to use in Java.  We call them <em>array of arrays</em> and <em>nodes and references</em>.</p>
+  
+  <p>The key decision in implementing a tree is choosing a good internal storage technique. We will do so with an approach based on <em>nodes and references</em>.</p>
 </section>
