@@ -3,6 +3,7 @@
   <title>Trees and Tree Algorithms</title>
   <xi:include href="./Objectives.ptx"/>
   <xi:include href="./ExamplesofTrees.ptx"/>
+  <!--
   <xi:include href="./VocabularyandDefinitions.ptx"/>
   <xi:include href="./Implementation.ptx"/>
   <xi:include href="./ListofListsRepresentation.ptx"/>
@@ -23,4 +24,5 @@
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>
   <xi:include href="./Exercises.ptx"/>
+-->
 </chapter>

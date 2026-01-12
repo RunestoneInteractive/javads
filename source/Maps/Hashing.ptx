@@ -198,17 +198,35 @@
       use a searching technique to decide whether the item is present. The
       advantage is that on the average there are likely to be many fewer items
       in each slot, so the search is perhaps more efficient.</p>
-    </subsection>
+  </subsection>
 
 
-    <subsection xml:id="sort-search_analysis-of-hashing">
-        <title>Analysis of Hashing</title>
-        <p>We stated earlier that in the best case hashing would provide an <m>O(1)</m>, constant time search technique. However, due to collisions, the number of comparisons is typically not so simple. Even though a complete analysis of hashing is beyond the scope of this text, we can state some well-known results that approximate the number of comparisons necessary to search for an item.</p>
-        <p>The most important piece of information we need to analyze the use of a hash table is the load factor, <m>\lambda</m>. Conceptually, if <m>\lambda</m> is small, then there is a lower chance of collisions, meaning that items are more likely to be in the slots where they belong. If <m>\lambda</m> is large, meaning that the table is filling up, then there are more and more collisions. This means that collision resolution is more difficult, requiring more comparisons to find an empty slot. With chaining, increased collisions means an increased number of items on each chain.</p>
-        <p>For a successful search using open addressing with linear probing, the average number of comparisons is approximately <m>\frac{1}{2}\left(1+\frac{1}{1-\lambda}\right)</m> and an unsuccessful search gives <m>\frac{1}{2}\left(1+\left(\frac{1}{1-\lambda}\right)^2\right)</m>. If we are using chaining, the average number of comparisons is <m>1 + \frac {\lambda}{2}</m> for the successful case, and simply <m>\lambda</m> comparisons if the search is unsuccessful.</p>
-    </subsection>
+  <subsection xml:id="sort-search_analysis-of-hashing">
+    <title>Analysis of Hashing</title>
+    <p>We stated earlier that in the best case hashing would provide an <m>O(1)</m>, constant time search technique. However, due to collisions, the number of comparisons is typically not so simple. Even though a complete analysis of hashing is beyond the scope of this text, we can state some well-known results that approximate the number of comparisons necessary to search for an item.</p>
+    <p>The most important piece of information we need to analyze the use of a hash table is the load factor, <m>\lambda</m>. Conceptually, if <m>\lambda</m> is small, then there is a lower chance of collisions, meaning that items are more likely to be in the slots where they belong. If <m>\lambda</m> is large, meaning that the table is filling up, then there are more and more collisions. This means that collision resolution is more difficult, requiring more comparisons to find an empty slot. With chaining, increased collisions means an increased number of items on each chain.</p>
+    <p>For a successful search using open addressing with linear probing, the average number of comparisons is approximately <m>\frac{1}{2}\left(1+\frac{1}{1-\lambda}\right)</m> and an unsuccessful search gives <m>\frac{1}{2}\left(1+\left(\frac{1}{1-\lambda}\right)^2\right)</m>. If we are using chaining, the average number of comparisons is <m>1 + \frac {\lambda}{2}</m> for the successful case, and simply <m>\lambda</m> comparisons if the search is unsuccessful.</p>
+  </subsection>
 
-    <subsection xml:id="hashing-exercises">
+  <subsection xml:id="subsec-disadvantages-of-hashing">
+    <title>Disadvantages of Hashing</title>
+
+    <p>Hashing is a highly effective approach for implementing maps and sets, and is often done in practice. That said, there are some disadvantages associated with hashing. The two most notable are:</p>
+
+    <p>
+      <ul>
+        <li>
+          <p>To get the strong performance results described above for hashing, you need a hash function that does a good job distributing the data across the slots. In nearly all realistic situations default hash functions work fine. It is nonetheless theoretically possible to end up with a very high number of hash collisions for a given set of data, either because of some unusual patterns in the data, or just being deeply unlucky.</p>
+        </li>
+        <li>
+          <p>One common way that we might want to use a map or set is to do a <em>range query</em>. In other words, we want to retrieve all keys or elements within a range of values. If we use hashing, there is no efficient way to do this other than to do a linear search of all keys/elements, and to test each one individually to see if it fits the range that we want, which takes <m>O(n)</m> work. The problem is that hashing does not maintain any relative sense of ordering between keys. Therefore, if we wish to frequently use our map or set to do range queries, we might want to use a different implementation than hashing. </p>
+        </li>
+      </ul>
+    </p>
+
+  </subsection>
+
+  <subsection xml:id="hashing-exercises">
     <exercises>
       <title>Self Check</title>
       <exercise label="HASH_1">

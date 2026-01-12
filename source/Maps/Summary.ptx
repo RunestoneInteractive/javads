@@ -5,8 +5,15 @@
     <ul>
       <li>
         <p>Maps and sets implemented with lists and sequential search result in <m>O(n)</m> performance. They are not typically implemented this way as a result.</p>
+      </li>
+      <li>
         <p>Maps and sets implemented with hash tables, under usual circumstances, can provide approximately constant time (<m>O(1)</m>) performance. Hash tables are a popular approach for implementing maps and sets.</p>
+      </li>
+      <li>
+        <p>Hashing is not well suited for maps or sets where range queries are common, because such operations would typically require <m>O(n)</m> time. Trees can be a better implementation choice than hashing for situations where range queries are expected to be common. We will study trees in future chapters.</p>
       </li>
     </ul>
   </p>
+
+
 </section>
