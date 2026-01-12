@@ -27,4 +27,11 @@ class BinaryTree<T>(var key: T) {
             return newChild
         }
     }
+
+    fun preorder() {
+        println(this.key)
+        leftChild?.preorder()
+        rightChild?.preorder()
+    }
+
 }
