@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<section xml:id="trees_binary-search-trees">
+  <title>Binary Search Trees</title>
+  <p>We have already seen lists and hashing as approaches for implementing the <term>map</term> and <term>set</term> abstract data types. In this section we will study <term>binary
+                search trees</term> as yet another way to implement these abstract data types. For this application,  we are not interested in the exact placement of items in the tree as we were in the previous chapter,
+            but we are instead interested in using the binary tree structure to provide for
+            efficient searching.</p>
+</section>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en-US" xml:id="chapter-BSTs">
+  <title>Maps and Sets via BSTs</title>
+  <xi:include href="./Objectives.ptx"/>
+  <xi:include href="./BinarySearchTrees.ptx"/>
+  <xi:include href="./SearchTreeOperations.ptx"/>
+  <!--
+  <xi:include href="./SearchTreeImplementation.ptx"/>
+  <xi:include href="./SearchTreeAnalysis.ptx"/>
+  <xi:include href="./BalancedBinarySearchTrees.ptx"/>
+  <xi:include href="./AVLTreePerformance.ptx"/>
+  <xi:include href="./AVLTreeImplementation.ptx"/>
+  <xi:include href="./SummaryofMapADTImplementations.ptx"/>
+  <xi:include href="./Summary.ptx"/>
+  <xi:include href="./KeyTerms.ptx"/>
+  <xi:include href="./Exercises.ptx"/>
+-->
+</chapter>

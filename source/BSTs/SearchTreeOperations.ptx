@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<section xml:id="Bst_search-tree-operations" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Search Tree Operations</title>
+
+  <p>In <xref ref="map_ADT" />, we looked at the definition of the ADT for maps and for sets. As a reminder, here again is the interface we created to represent a map.</p>
+
+  <listing xml:id="bst-map-interface">
+    <title>Interface representing Map ADT</title>
+    <program label="prog-bst-map-interface" language="kotlin">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/MapADT.kt"/>
+        </code>
+    </program>
+  </listing>
+
+  <p>There's an important detail about <c>MapADT</c> that we didn't focus on earlier. The type of the key, which we refer to as <c>K</c> in the interface, is not a subclass of <c>Comparable</c>. In other words, in any of the code that we write in a class implementing <c>MapADT</c> (such as <c>HashTableMap</c>), we would be forbidden from doing less-than or greater-than comparisons between keys. This was reasonable to do in the chapter on hashing, because hashing doesn't require such comparisons. However, in this chapter, we want to be able to consider maps and sets where we can do such comparisons. Here are two main reasons: <ol>
+      <li>There are applications for maps and sets where we might want to do such comparisons. The most common use case is where we want to efficiently obtain all keys in a particular range.</li>
+      <li>In this chapter, we will be looking at binary search trees as an approach for implementing sets and maps. That approach is fundamentally based on organizing the data based on ordering between keys.</li>
+    </ol>
+  </p>
+
+  <p>Therefore, in this chapter we will define a slight modification to the map ADT, which requires the type of the key to be <c>Comparable</c>. While we're at it, we'll add one method to enable range queries, to help emphasize that this is an additional advantage that we get with this approach. Instead of redefining the whole map from scratch, we'll use inheritance to create a new subinterface that includes everything from the <c>MapADT</c> interface, but includes one more method that takes advantage of comparison operations. We also make sure to indicate that we can do comparison operations on the type <c>K</c>.</p>
+
+  <listing xml:id="bst-comparablemap-interface">
+    <title>Interface representing Comparable Map ADT</title>
+    <program label="prog-bst-comparablemap-interface" language="kotlin">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ComparableMapADT.kt"/>
+        </code>
+    </program>
+  </listing>
+
+  <p>We will likewise similar add a similar update to our set ADT.</p>
+
+  <listing xml:id="bst-comparableset-interface">
+    <title>Interface representing Comparable Set ADT</title>
+    <program label="prog-bst-comparableset-interface" language="kotlin">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ComparableSetADT.kt"/>
+        </code>
+    </program>
+  </listing>
+
+</section>
