@@ -4,8 +4,8 @@
   <xi:include href="./Objectives.ptx"/>
   <xi:include href="./BinarySearchTrees.ptx"/>
   <xi:include href="./SearchTreeOperations.ptx"/>
-  <!--
   <xi:include href="./SearchTreeImplementation.ptx"/>
+  <!--
   <xi:include href="./SearchTreeAnalysis.ptx"/>
   <xi:include href="./BalancedBinarySearchTrees.ptx"/>
   <xi:include href="./AVLTreePerformance.ptx"/>
