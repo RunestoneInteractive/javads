@@ -14,11 +14,14 @@
 
         <p>To implement the binary search tree, we will use the nodes and references approach similar to the one we used to implement the linked list and the expression tree. However, because we must be able create and work with a binary search tree that is empty, our implementation will use two classes. The first class we will call <c>BSTMap</c>, and the second class we will call <c>TreeNode</c>. The <c>BSTMap</c> class has a reference to the <c>TreeNode</c> that is the root of the binary search tree. Within the <c>BSTMap</c> class, there are a collection of both private and public methods. In most cases the public methods first check to see if the tree is empty. If there are nodes in the tree, the request is passed on to a private method that takes the root as a parameter. In the case where the tree is empty or we want to delete the key at the root of the tree, we must take special action. The code for the beginning of the <c>BSTMap</c> class is shown in <xref ref="trees_lst-bst1" />.</p>
         <listing xml:id="trees_lst-bst1">
+            <title>Start of <c>BSTMap</c> class</title>
+
+
             <program language="kotlin" line-numbers="yes">
                 <code>
 class BSTMap&lt;K : Comparable&lt;K&gt;, V&gt; : ComparableMapADT&lt;K, V&gt; {
 
-    var root: TreeNode&lt;K, V&gt;? = null
+    var root: TreeNode? = null
     var nodeCount = 0
 
     override fun size(): Int {
@@ -31,123 +34,64 @@ class BSTMap&lt;K : Comparable&lt;K&gt;, V&gt; : ComparableMapADT&lt;K, V&gt; {
             </program>
         </listing>
 
-        <p>The <c>TreeNode</c> class provides many helper methods that make the work done in the <c>BSTMap</c> class methods much easier. The start for the <c>TreeNode</c>, along with these helper methods, is shown in <xref ref="trees_lst-bst2" />. We will put this class definition <em>inside</em> the <c>BinarySearchTree</c> class. This will automatically give a <c>TreeNode</c> access to all the <c>BinarySearchTree</c> properties, including the generic types <c>K</c> and <c>V</c>. As you can see in the listing, many of these helper methods help to classify a node according to its own position as a child (left or right) and the kind of children the node has. The <c>TreeNode</c> class will also explicitly keep track of the parent as an attribute of each node. You will see why this is important when we discuss the implementation for the <c>remove</c> method in <xref ref="remove-key-binary-search-tree" />.</p>
+        <p>The <c>TreeNode</c> class provides many helper methods that make the work done in the <c>BSTMap</c> class methods much easier. The start for the <c>TreeNode</c> class, along with these helper methods, is shown in <xref ref="trees_lst-bst2" />. We will put this class definition <em>inside</em> the <c>BinarySearchTree</c> class, and declare it as an <em>inner class</em>. This will automatically give a <c>TreeNode</c> access to all the <c>BinarySearchTree</c> properties, including the generic types <c>K</c> and <c>V</c>. As you can see in the listing, many of these helper methods help to classify a node according to its own position as a child (left or right) and the kind of children the node has. The <c>TreeNode</c> class will also explicitly keep track of the parent as an attribute of each node. You will see why this is important when we discuss the implementation for the <c>remove</c> method in <xref ref="remove-key-binary-search-tree" />.</p>
 
-        <p>We have <term>overloaded</term> the constructor. In lines 16&#x2013;22, the constructor is given all the information a <c>TreeNode</c> needs. Sometimes, though, we want to construct a <c>TreeNode</c> without only some of the information. The constructors in lines 8&#x2013;14 call the 5-argument constructor to provide the <q>missing</q> arguments. (Using <c>this</c> as a method name calls the constructor.)</p>
+        <p>On lines 4 <ndash /> 6, we have added default values of null for each of the attributes shown. Sometimes, we want to construct a <c>TreeNode</c> without only some of the information, so the default values can fill in the remaining values for us.</p>
         <listing xml:id="trees_lst-bst2">
-            <program language="java" line-numbers="yes">
+            <title>Start of TreeNode class.</title>
+
+
+            <program language="kotlin" line-numbers="yes">
                 <code>
-    class TreeNode {
-        K key;
-        V value;
-        TreeNode leftChild;
-        TreeNode rightChild;
-        TreeNode parent;
-
-        TreeNode(K key, V value) {
-            this(key, value, null, null, null);
+ inner class TreeNode(
+        var key: K,
+        var value: V,
+        var parent: TreeNode? = null,
+        var leftChild: TreeNode? = null,
+        var rightChild: TreeNode? = null
+    ) {
+        
+        // Is this node a left child of a parent?
+        fun isLeftChild(): Boolean {
+            val parent = parent  // Local copy of parent for null safety
+            return parent != null &amp;&amp; parent.leftChild == this
         }
 
-        TreeNode(K key, V value, TreeNode parent) {
-            this(key, value, null, null, parent);
+        // Is this node a right child of a parent?
+        fun isRightChild(): Boolean {
+            val parent = parent   // Local copy of parent for null safety
+            return parent != null &amp;&amp; parent.rightChild == this
         }
 
-        TreeNode(K key, V value, TreeNode left, TreeNode right, TreeNode parent) {
-            this.key = key;
-            this.value = value;
-            this.leftChild = left;
-            this.rightChild = right;
-            this.parent = parent;
+        // Is this a leaf node? (Leaf nodes have no children)
+        fun isLeaf(): Boolean {
+            return (leftChild == null &amp;&amp; rightChild == null)
         }
 
-        /* Is this node a left child of a parent? */
-        boolean isLeftChild() {
-            return parent != null &amp;&amp; parent.leftChild == this;
+        fun replaceValue(key: K, value: V, left: TreeNode?, right: TreeNode?) {
+            this.key = key
+            this.value = value
+            this.leftChild = left
+            this.rightChild = right
+            this.leftChild?.parent = this
+            this.rightChild?.parent = this
         }
 
-        /* Is this node a right child of a parent? */
-        boolean isRightChild() {
-            return parent != null &amp;&amp; parent.rightChild == this;
-        }
-
-        /* Is this the root node? (The root node has no parent) */
-        boolean isRoot() {
-            return parent == null;
-        }
-
-        /* Is this a leaf node? (Leaf nodes have no children) */
-        boolean isLeaf() {
-            return (leftChild == null &amp;&amp; rightChild == null);
-        }
-
-        /* Does this node have any children? */
-        boolean hasAnyChild() {
-            return leftChild != null || rightChild != null;
-        }
-
-        /* Does this node have both left and right children? */
-        boolean hasChildren() {
-            return leftChild != null &amp;&amp; rightChild != null;
-        }
-
-        void replaceValue(K key, V value, TreeNode left, TreeNode right) {
-            this.key = key;
-            this.value = value;
-            this.leftChild = left;
-            this.rightChild = right;
-            if (this.leftChild != null) {
-                this.leftChild.parent = this;
-            }
-            if (this.rightChild != null) {
-                this.rightChild.parent = this;
-            }
-        }
-
-        public K getKey() {
-            return this.key;
-        }
-
-        public void setKey(K key) {
-            this.key = key;
-        }
-
-        public V getValue() {
-            return this.value;
-        }
-
-        public void setValue(V value) {
-            this.value = value;
-        }
-
-        public String toString() {
-            String keyStr = (key == null) ? "null" : key.toString();
-            String valStr = (value == null) ? "null" : value.toString();
+        override fun toString(): String {
             return "key: " + key + " value: " + value + "\n  " +
-                " left: " + leftChild + " right: " + rightChild +
-                "parent: " + parent;
+                    " left: " + leftChild + " right: " + rightChild +
+                    "parent: " + parent
         }
     }
     </code>
             </program>
         </listing>
 
-        <note>
-            <title>Java Note</title>
-            <p>Lines 84 and 85 introduce Java's <term>ternary operator</term>. Writing an expression of the form:</p>
-            <pre>variable = (condition) ? trueExpression : falseExpression;</pre>
-            <p>is a shortcut for the following <c>if</c> statement:</p>
-            <pre>
-if (condition) {
-    variable = trueExpression;
-} else {
-    variable = falseExpression;
-}</pre>
-        </note>
     </subsection>
 
     <subsection xml:id="put-binary-search-tree">
         <title>Inserting Keys and Values into a Binary Search Tree</title>
-        <p>Now that we have the <c>BinarySearchTree</c> shell and the <c>TreeNode</c>, it is time to write the <c>put</c> method that will allow us to build our binary search tree. The <c>put</c> method is a method of the <c>BinarySearchTree</c> class. This method will check to see if the tree already has a root. If there is not a root, then <c>put</c> will create a new <c>TreeNode</c> and install it as the root of the tree. If a root node is already in place, then <c>put</c> calls the private recursive helper method <c>put</c> (with four parameters) to search the tree according to the following algorithm:</p>
+        <p>Now that we have the <c>BSTMap</c> shell and the <c>TreeNode</c>, it is time to write the <c>put</c> method that will allow us to build our binary search tree. The <c>put</c> method is a method of the <c>BSTMap</c> class. This method will check to see if the tree already has a root. If there is not a root, then <c>put</c> will create a new <c>TreeNode</c> and install it as the root of the tree. If a root node is already in place, then <c>put</c> calls the private recursive helper method <c>put</c> (with three parameters) to search the tree according to the following algorithm:</p>
         <p>
             <ul>
                 <li>
@@ -162,47 +106,52 @@ if (condition) {
             </ul>
         </p>
 
-        <p><xref ref="trees_lst-put" /> shows the Java code for inserting a new node in the tree. The public <c>put</c> method with two arguments calls the he private <c>put</c> method, which is written recursively following the steps outlined above. Notice that when a new child is inserted into the tree, the <c>currentNode</c> is passed to the new tree as the parent.</p>
+        <p><xref ref="trees_lst-put" /> shows the code for inserting a new node in the tree. The public <c>put</c> method with two arguments calls the the private <c>put</c> method, which is written recursively following the steps outlined above. Notice that when a new child is inserted into the tree, the <c>currentNode</c> is passed to the new tree as the parent.</p>
 
         <p>One important problem with our implementation of insertion is that duplicate keys are not handled properly. As our tree is implemented, a duplicate key will create a new node with the same key value in the right subtree of the node having the original key. The result of this is that the node with the new key will never be found during a search. A better way to handle the insertion of a duplicate key is for the value associated with the new key to replace the old value. We leave fixing this bug as an exercise for you.</p>
 
         <listing xml:id="trees_lst-put">
-            <caption>The <c>put</c> Method</caption>
-            <program language="java">
+            <title>The <c>put</c> Method</title>
+            <program language="kotlin">
                 <code>
-   public void put(K key, V value) {
-        if (this.root != null) {
-            put(key, value, this.root);
+    override fun put(key: K, value: V) {
+        // Local copy for null safety
+        val root = this.root
+        if (root != null) {
+            put(key, value, root)
         } else {
-            this.root = new TreeNode(key, value);
+            this.root = TreeNode(key, value)
         }
-        this.size = this.size + 1;
+        this.nodeCount += 1
     }
 
-    void put(K key, V value, TreeNode currentNode) {
-        if (key.compareTo(currentNode.key) &lt; 1) {
-            if (currentNode.leftChild != null) {
-                put(key, value, currentNode.leftChild);
+    private fun put(key: K, value: V, currentNode: TreeNode) {
+        // Local copies for null safety
+        val currentLeftChild = currentNode.leftChild
+        val currentRightChild = currentNode.rightChild
+
+        if (key &lt; currentNode.key) {
+            if (currentLeftChild != null) {
+                put(key, value, currentLeftChild)
             } else {
-                currentNode.leftChild = new TreeNode(key, value,
-                    currentNode);
+                currentNode.leftChild = TreeNode(key, value, currentNode)
             }
         } else {
-            if (currentNode.rightChild != null) {
-                put(key, value, currentNode.rightChild);
+            if (currentRightChild != null) {
+                put(key, value, currentRightChild)
             } else {
-                currentNode.rightChild = new TreeNode(key, value,
-                    currentNode);
+                currentNode.rightChild = TreeNode(key, value, currentNode)
             }
         }
     }
+
   </code>
             </program>
         </listing>
 
         <note>
-            <title>Java Note</title>
-            <p>There are two methods named <c>put</c>, but Java does not have a problem with this because they have different <term>method signatures</term>: the method name, the number, and types of arguments. As long as these are different, there is no ambiguity when Java needs to figure out whch method to call. The return type and the access (<c>public</c> or <c>private</c>) are <em>not</em> part of the method signature.</p>
+            <title>Kotlin Note</title>
+            <p>There are two methods named <c>put</c>, but Kotlin does not have a problem with this because they have different <term>method signatures</term>: the method name, the number, and types of arguments. As long as these are different, there is no ambiguity when Kotlin needs to figure out whch method to call. The return type, the access (public or private), and whether or not <c>override</c> is present are <em>not</em> part of the method signature.</p>
         </note>
         <p><xref ref="i146_id2fig-bstput" /> illustrates the process for inserting a new node into a binary search tree. The lightly shaded nodes indicate the nodes that were visited during the insertion process.</p>
         <figure align="center" xml:id="i146_id2fig-bstput">
@@ -268,31 +217,31 @@ if (condition) {
         <title>Retrieving Values for a Key in a Binary Search Tree</title>
         <p>Once the tree is constructed, the next task is to implement the retrieval of a value for a given key. The <c>get</c> method is less complex than the <c>put</c> method because it searches the tree recursively until it gets to a non-matching leaf node or finds a matching key. When a matching key is found, the value stored in the payload of the node is returned.</p>
 
-        <p><xref ref="trees_lst-get" /> shows the code for <c>get</c> and the private <c>get</c> helper method. The search code in the helper method uses the same logic for choosing the left or right child as the <c>put</c> helper method. Notice that the <c>get</c> helper method returns a <c>TreeNode</c> to <c>get</c>, which allows the helper method to be used as a flexible method for other <c>BinarySearchTree</c> methods that may need to make use of other data from the <c>TreeNode</c> besides the payload.</p>
+        <p><xref ref="trees_lst-get" /> shows the code for <c>get</c> and the private <c>get</c> helper method. The search code in the helper method uses the same logic for choosing the left or right child as the <c>put</c> helper method. Notice that the <c>get</c> helper method returns a <c>TreeNode</c> to <c>get</c>, which allows the helper method to be used as a flexible method for other <c>BSTMap</c> methods that may need to make use of other data from the <c>TreeNode</c> besides the payload.</p>
         <listing xml:id="trees_lst-get">
-            <caption>The <c>get</c> Method</caption>
-            <program language="java">
+            <title>The <c>get</c> Method</title>
+            <program language="kotlin">
                 <code>
-    public V get(K key) {
+    override fun get(key: K): V? {
         if (this.root != null) {
-            TreeNode result = get(key, this.root);
+            val result = get(key, this.root)
             if (result != null) {
-                return result.value;
+                return result.value
             }
         }
-        return null;
+        return null
     }
 
-    TreeNode get(K key, TreeNode currentNode) {
+    fun get(key: K, currentNode: TreeNode?): TreeNode? {
         if (currentNode == null) {
-            return null;
+            return null
         }
-        if (key.compareTo(currentNode.key) == 0) {
-            return currentNode;
-        } else if (key.compareTo(currentNode.key) &lt; 0) {
-            return get(key, currentNode.leftChild);
+        if (key == currentNode.key) {
+            return currentNode
+        } else if (key &lt; currentNode.key) {
+            return get(key, currentNode.leftChild)
         } else {
-            return get(key, currentNode.rightChild);
+            return get(key, currentNode.rightChild)
         }
     }
 </code>
@@ -303,12 +252,12 @@ if (condition) {
 
 
         <listing xml:id="trees_lst-contains">
-            <caption>The <c>containsKey</c> Method</caption>
-            <program language="java">
+            <title>The <c>containsKey</c> Method</title>
+            <program language="kotlin">
                 <code>
-    public boolean containsKey(K key) {
-        TreeNode result = get(key, this.root);
-        return (result != null);
+    override fun containsKey(key: K): Boolean {
+        val result = get(key, this.root)
+        return (result != null)
     }
   </code>
             </program>
@@ -322,283 +271,113 @@ if (condition) {
         <p><xref ref="lst_tree-to-string" /> shows the <c>toString</c> method with its <c>stringify</c> helper method, which does an inorder traversal of the tree.</p>
 
         <listing xml:id="lst_tree-to-string">
-            <caption>Tree to String</caption>
-            <program language="java">
+            <title>Tree to String</title>
+            <program language="kotlin">
                 <code>
-    public String toString() {
-        return stringify(this.root);
+    override fun toString(): String {
+        return stringify(this.root)
     }
 
-    String stringify(TreeNode node) {
-        String result = "";
+    fun stringify(node: TreeNode?): String {
+        var result = ""
         if (node != null) {
             if (node.isLeaf()) {
-                result = " [" +  node.key + "]";
+                result = " [" + node.key + "]"
             } else {
                 result = " [" + node.key + stringify(node.leftChild) +
-                    stringify(node.rightChild) + "]";
+                        stringify(node.rightChild) + "]"
             }
         } else {
-            result = " []";
+            result = " []"
         }
-        return result;
+        return result
     }
+
     </code>
             </program>
         </listing>
         <p>At this point we have enough to implement a program to test our tree, shown in <xref ref="lst_bst-example1" />:</p>
         <listing xml:id="lst_bst-example1">
-            <caption>Sample Binary Search Tree Program</caption>
-            <program language="java" interactive="activecode">
+            <title>Sample Binary Search Tree Program</title>
+            <program language="kotlin" interactive="activecode">
                 <code>
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-                    <!-- <xi:include parse="text" href="./BinarySearchTree.java"/> -->
+<xi:include parse="text" href="samplecode/src/main/kotlin/ComparableMapADT.kt" />                 
+<xi:include parse="text" href="samplecode/src/main/kotlin/MapADT.kt" />                 
+<xi:include parse="text" href="samplecode/src/main/kotlin/BSTMapOriginal.kt" />                 
 ^^^^
-public class BinarySearchTreeExample {
+fun main() {
+    val tree = BSTMap&lt;String, String&gt;()
 
-    public static void main(String[] args) {
-        BinarySearchTree&lt;String, String&gt; tree = new BinarySearchTree&lt;&gt;();
+    tree.put("France", "Paris")
+    tree.put("Japan", "Tokyo")
+    tree.put("Albania", "Tirana")
+    tree.put("Madagascar", "Antananarivo")
+    tree.put("Zimbabwe", "Harare")
+    tree.put("South Korea", "Seoul")
 
-        tree.put("France", "Paris");
-        tree.put("Japan", "Tokyo");
-        tree.put("Albania", "Tirana");
-        tree.put("Madagascar", "Antananarivo");
-        tree.put("Zimbabwe", "Harare");
-        tree.put("South Korea", "Seoul");
-        System.out.println(tree); // show tree at its current state
+    println(tree)
 
-        System.out.println(tree.get("Japan"));  // "Tokyo"
-        System.out.println(tree.get("Brazil")); // null
-    }
+    println(tree.get("Japan")) // "Tokyo"
+    println(tree.get("Brazil")) // null
 }
-</code>
+                </code>
             </program>
         </listing>
 
         <p>Here is its output:</p>
-        <console>
-            <output>
+        <pre>
                 [France [Albania] [Japan [] [Madagascar [] [Zimbabwe [South Korea] []]]]]
                 Tokyo
                 null
-</output>
-        </console>
+        </pre>
 
-        <p>This is a good time to take a break before proceeding to the remainder of this section.</p>
-
-    </subsection>
-
-    <subsection xml:id="iterate-binary-search-tree">
-        <title>Iterating over a Binary Search Tree</title>
-
-        <p>Suppose that we would like to iterate over all the keys in the tree in order. You already know how to traverse a binary tree in order, using the <c>inorder</c> traversal algorithm. However, writing an iterator is a bit different since an iterator should return only one node each time it is called.</p>
-
-        <p>To make our iterator work, we will need two methods in the <c>TreeNode</c> class:</p>
-        <p>
-            <ul>
-                <li><c>findSuccessor(node)</c> takes a node as its argument and returns the next node with the next-largest key, called the <term>successor</term>. This will move us through the tree one node at a time.</li>
-                <li><c>findMinimumChild(node)</c> returns the minimum key in a subtree whose root is the given node. We need this to find the smallest key in the tree as our starting point for the iterator, and also when finding a succesor.</li>
-            </ul>
-        </p>
-
-        <p>Let's address <c>findSuccessor</c> first. There are three cases to consider when looking for the successor:</p>
-        <p>
-            <ol marker="1">
-                <li>
-                    <p>If the node has a right child, then the successor is the smallest key
-                        in the right subtree.</p>
-                </li>
-                <li>
-                    <p>If the node has no right child and is the left child of its parent, then the parent is the successor.</p>
-                </li>
-                <li>
-                    <p>If the node is the right child of its parent, and itself has no right child, then the successor to this node is the successor of its parent, excluding this node.</p>
-                </li>
-            </ol>
-        </p>
-
-        <p><xref ref="lst_find-successor" /> gives the code for finding a successor:</p>
-
-        <listing xml:id="lst_find-successor">
-            <caption>The <c>findSucessor</c> Method</caption>
-            <program language="java" line-numbers="yes">
-                <code>
-TreeNode findSuccessor() {
-    TreeNode successor = null;
-    if (rightChild != null) {
-        successor = rightChild.findMinimumChild();
-    } else {
-        if (parent != null) {
-            if (isLeftChild()) {
-                successor = parent;
-            } else {
-                parent.rightChild = null;
-                successor = parent.findSuccessor();
-                parent.rightChild = this;
-            }
-        }
-    }
-    return successor;
-  </code>
-            </program>
-        </listing>
-
-        <p>Lines 3 and 4 handle the first case (there is a right child) by calling <c>findMinimumChild</c>. Line 7 tests to see if this node is a left child of its parent (the second case). Otherwise, we have the third case and <c>this</c> is the right child of its parent. Line 10 temporarily excludes this node from the tree, and line 12 retores the <c>parent</c>'s right child.</p>
-
-        <p><xref ref="lst_find-minimum-child" /> shows the code for finding the minimum child. You should convince yourself that the minimum value key in any binary search tree is the leftmost child of the tree. Therefore the <c>findMinimumChild</c> method follows the <c>leftChild</c> references in each node of the subtree until it reaches a node that does not have a left child. The code uses a <c>while</c> loop rather than using recursion to follow the left children:</p>
-
-        <listing xml:id="lst_find-minimum-child">
-            <program language="java" line-numbers="yes">
-                <code>
-TreeNode findMinimumChild() {
-    TreeNode current = this;
-    while (current.leftChild != null) {
-        current = current.leftChild;
-    }
-    return current;
-}
-    </code>
-            </program>
-        </listing>
-
-        <p>Now that we have these methods, we have to modify the <c>BinarySearchTree</c> class. We change the first lines of the class to declare that this class is <c>Iterable</c>:</p>
-
-        <program language="java">
-            <code>
-import java.util.Iterator;
-
-public class BinarySearchTree&lt;K extends Comparable&lt;K&gt;, V extends Comparable&lt;V&gt;&gt;
-    implements Iterable&lt;BinarySearchTree&lt;K, V&gt;.TreeNode&gt; {
-</code>
-        </program>
-
-        <p>Our next step is to create an <c>Iterator</c> class that Java uses when it starts a <c>for</c> loop. (We can use it ourselves,too.) </p>
-
-        <listing xml:id="lst_iterator_class">
-            <caption>Initializing an <c>Iterator</c></caption>
-            <program language="java" line-numbers="yes">
-                <code>
-    class TreeIterator implements Iterator&lt;BinarySearchTree&lt;K, V&gt;.TreeNode&gt; {
-        TreeNode iteratorNode;
-
-        public TreeIterator() {
-            if (root.leftChild == null) {
-                iteratorNode = root;
-            } else {
-                iteratorNode = root.findMinimumChild();
-            }
-        }
-
-        public boolean hasNext() {
-            return iteratorNode != null;
-        }
-
-        public TreeNode next() {
-            TreeNode result = null;
-            if (iteratorNode != null) {
-                result = iteratorNode;
-                iteratorNode = iteratorNode.findSuccessor();
-            }
-            return result;
-        }
-    }
-    </code>
-            </program>
-        </listing>
-
-        <p>Line 2 creates a <c>TreeNode</c> that keeps track of where we are in the tree.</p>
-        <p>The constructor is in lines 4&#x2013;10. It sets the <c>iteratorNode</c> to the first (smallest) element in the tree. If the root doesn't have a left child, then the root must be the smallest element, as everything to the right of the root is larger than the root. Otherwise, if there is a left child, we must find its minimum child in line 8.</p>
-
-        <p>We now implement two methods used by the iterator. <c>hasNext</c> in lines&#xA0;12&#x2013;14 returns <c>true</c> if there is a next node; <c>false</c> otherwise<mdash />this is used to decide when to end a loop using the iterator. The <c>next</c> method in lines&#xA0;16&#x2013;23 moves the iterator to the successor node (or null if we have finished traversing the tree) and returns it.</p>
-
-        <p>At last! We can now write the program in <xref ref="lst_bst-example2" /> that tests insertion, accessing nodes, and traversal of a binary search tree. In lines&#xA0;18&#x2013;21 we iterate through the tree with a <c>for</c> loop; in lines&#xA0;25&#x2013;31 we set up an iterator of our own for use with a <c>while</c> loop.</p>
-
-        <listing xml:id="lst_bst-example2">
-            <caption>Using the Binary Search Tree</caption>
-            <program label="trees_bst_example" language="java" line-numbers="yes" interactive="activecode">
-                <code>
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-                    <!-- <xi:include parse="text" href="./BinarySearchTree.java"/> -->
-^^^^
-public class BinarySearchTreeExample {
-
-    public static void main(String[] args) {
-        BinarySearchTree&lt;String, String&gt; tree = new BinarySearchTree&lt;&gt;();
-
-        tree.put("France", "Paris");
-        tree.put("Japan", "Tokyo");
-        tree.put("Albania", "Tirana");
-        tree.put("Madagascar", "Antananarivo");
-        tree.put("Zimbabwe", "Harare");
-        tree.put("South Korea", "Seoul");
-
-        System.out.println(tree.get("Japan"));  // "Tokyo"
-        System.out.println(tree.get("Brazil")); // null
-
-        for (BinarySearchTree.TreeNode node: tree) {
-            System.out.println(node.getKey() + " -&gt; "
-                + node.getValue());
-        }
-
-        System.out.println("-----------------------------");
-
-        Iterator&lt;BinarySearchTree&lt;String, String&gt;.TreeNode&gt; iter =
-            tree.iterator();
-
-        while (iter.hasNext()) {
-            BinarySearchTree.TreeNode node = iter.next();
-            System.out.println(node.getKey() + " -&gt; " + node.getValue());
-        }
-
-    }
-}
-    </code>
-            </program>
-        </listing>
-
-        <p>In line 18, we must use the fully qualified class name <c>BinarySearchTree.TreeNode</c> because the <c>TreeNode</c> class is nested inside the <c>BinarySearchTree</c> class. In line 25, we must also add the data types for the key and value.</p>
     </subsection>
 
     <subsection xml:id="remove-key-binary-search-tree">
         <title>Removing a Key from a Binary Search Tree</title>
 
-  <p>Finally, we turn our attention to the most challenging operation on the binary search tree, the deletion of a key (see <xref ref="trees_lst-remove-key-1" />). The first task is to find the node to delete by searching the tree. If the tree has more than one node we search using the <c>get</c> method to find the <c>TreeNode</c> that needs to be removed. If the tree only has a single node, that means we are removing the root of the tree, but we still must check to make sure the key of the root matches the key that is to be deleted. In either case, if the key is not found the <c>remove</c> method raises an error.</p>
+        <p>We now turn our attention to the most challenging operation on the binary search tree, the deletion of a key (see <xref ref="trees_lst-remove-key-1" />). The first task is to find the node to delete by searching the tree. If the key is not found, there's nothing to remove, and so we simply return null. If the key is found and there's only one node in the tree, then this is a base case where we delete the root node. Otherwise, we call a helper function to remove the node from within the tree.</p>
 
-  <listing xml:id="trees_lst-remove-key-1">
-            <program language="java">
+        <listing xml:id="trees_lst-remove-key-1">
+            <title>Method to remove an entry from the map.</title>
+
+
+            <program language="kotlin">
                 <code>
-    public TreeNode removeKey(K key) {
-        if (size > 1) {
-            TreeNode nodeToRemove = get(key, root);
-            if (nodeToRemove != null) {
-                removeNode(nodeToRemove);
-                size = size - 1;
-                return nodeToRemove;
-            } else {
-                throw new NoSuchElementException(
-                    key.toString() + " not in tree.");
-            }
-        } else if (size == 1 &amp;&amp; root.key.equals(key)) {
-            root = null;
-            size = size - 1;
-            return null;
+    override fun remove(key: K): V? {
+        val nodeToRemove = get(key, root)
+
+        if (nodeToRemove == null) {
+            // Didn't find key; this handles empty tree case too
+            return null
+        } else if (nodeCount == 1) {
+            // Node to remove must be root
+            root = null
+            nodeCount -= 1
+            return nodeToRemove.value
         } else {
-            throw new NoSuchElementException(
-                    key.toString() + " not in tree.");
+            // Node to remove must be some other node
+            removeNode(nodeToRemove)
+            nodeCount -= 1
+            return nodeToRemove.value
         }
     }
 
     void removeNode(TreeNode currentNode) {
+        // Local copies for null safety
+        val currentParent = currentNode.parent
+        val currentLeft = currentNode.leftChild
+        val currentRight = currentNode.rightChild
+
         // to be determined...
     }
 </code>
             </program>
         </listing>
-  <p>Once we&#x2019;ve found the node containing the key we want to delete, there
+
+        <p>Once we have found the node containing the key we want to delete and we know that this isn't one of the above base cases, there
             are three cases that we must consider:</p>
-  <p>
+        <p>
             <ol marker="1">
                 <li>
                     <p>The node to be deleted has no children (see <xref ref="fig-bstdel1" />).</p>
@@ -611,37 +390,43 @@ public class BinarySearchTreeExample {
                 </li>
             </ol>
         </p>
-  <figure align="center" xml:id="fig-bstdel1">
+        <figure align="center" xml:id="fig-bstdel1">
             <caption>Deleting Node 16, a Node without Children</caption>
             <image source="Trees/Figures/bstdel1.png" width="50%" />
         </figure>
-  <figure align="center" xml:id="fig-bstdel2">
+        <figure align="center" xml:id="fig-bstdel2">
             <caption>Deleting Node 25, a Node That Has a Single Child</caption>
             <image source="Trees/Figures/bstdel2.png" width="50%" />
         </figure>
-  <figure align="center" xml:id="fig-bstdel3">
+        <figure align="center" xml:id="fig-bstdel3">
             <caption>Deleting Node 5, a Node with Two Children</caption>
             <image source="Trees/Figures/bstdel3.png" width="50%" />
         </figure>
 
-  <p>The first case is straightforward. If the current node has no children, all that has to happen is to delete the node and remove the reference to this node in the parent. The code for this case is shown in <xref ref="trees_lst-remove-case-1" />.</p>
-  <listing xml:id="trees_lst-remove-case-1">
-            <caption>Removing a Leaf Node</caption>
-            <program language="java">
+        <p>The first case is straightforward. If the current node has no children, all that has to happen is to delete the node and remove the reference to this node in the parent. The code for this case is shown in <xref ref="trees_lst-remove-case-1" />.</p>
+
+        <aside>
+            <title>Null safety regarding parent</title>
+            <p>In line 2, we confirm that <c>currentParent</c> (define in <xref ref="trees_lst-remove-key-1" /> as the parent of the current node) is not null. This must be the case, because the <c>removeNode</c> method is never called if there is only a single node in the tree. Therefore, this node cannot be a leaf and also have no parent. By using <c>checkNotNull</c>, Kotlin will allow us to proceed without further null checks on this variable.</p>
+        </aside>
+        <listing xml:id="trees_lst-remove-case-1">
+            <title>Removing a Leaf Node</title>
+            <program language="kotlin" line-numbers="yes">
                 <code>
-       if (currentNode.isLeaf() {
-            if (currentNode == currentNode.parent.leftChild) {
-                currentNode.parent.leftChild = null;
+        if (currentNode.isLeaf()) {
+            checkNotNull(currentParent)
+            if (currentNode == currentParent.leftChild) {
+                currentParent.leftChild = null
             } else {
-                currentNode.parent.rightChild = null;
+                currentParent.rightChild = null
             }
         }
   </code>
             </program>
         </listing>
 
-  <p>The second case is only slightly more complicated. If a node has only a single child, then we promote the child to take the place of its parent. The code for this case is shown in <xref ref="trees_lst-remove-case-2" />. As you look at this code, you will see that there are six cases to consider. Since the cases are symmetric with respect to either having a left or right child, we will just discuss the case where the current node has a left child. The decision proceeds as follows:</p>
-  <p>
+        <p>The second case is only slightly more complicated. If a node has only a single child, then we promote the child to take the place of its parent. The code for this case is shown in <xref ref="trees_lst-remove-case-2" />. As you look at this code, you will see that there are six cases to consider. Since the cases are symmetric with respect to either having a left or right child, we will just discuss the case where the current node has a left child. The decision proceeds as follows:</p>
+        <p>
             <ol marker="a">
                 <li>
                     <p>If the current node is a left child, then we need to update the
@@ -661,439 +446,283 @@ public class BinarySearchTreeExample {
             </ol>
         </p>
 
-  <p><xref ref="trees_fig-remove-case-2" /> shows before-and-after diagrams of these three situations.</p>
-    <figure align="center" xml:id="trees_fig-remove-case-2">
+        <p><xref ref="trees_fig-remove-case-2" /> shows before-and-after diagrams of these three situations.</p>
+        <figure xml:id="trees_fig-remove-case-2">
             <caption>Removing a Node with One Child</caption>
             <image source="Trees/Figures/oneChildDeletion.png" width="50%" />
         </figure>
 
-  <p>In <xref ref="trees_lst-adjust-parent" />, we have implemented a method named <c>adjustParent</c> to take care of the symmetric situations without having to duplicate code. It adjusts the relationships between the child of the node we want to remove and the parent of the node we want to remove.</p> Given the <listing xml:id="trees_lst-adjust-parent">
-            <caption>Adjusting Parent/Child References</caption>
-            <program language="java">
+        <p>In <xref ref="trees_lst-adjust-parent" />, we have implemented a method named <c>adjustParent</c> to take care of the symmetric situations without having to duplicate code. It adjusts the relationships between the child of the node we want to remove and the parent of the node we want to remove.</p>
+
+        <aside>
+            <title>Null safety regarding parent</title>
+            <p>In lines 6 and 10, we confirm that the parent of the node we are removing is not null. This must be the case, because at each of these two lines, we have just confirmed that the node is a left child or a right child of some other node. By using <c>checkNotNull</c>, Kotlin will allow us to proceed without further null checks on this variable.</p>
+        </aside>
+
+        <listing xml:id="trees_lst-adjust-parent">
+            <title>Adjusting Parent/Child References</title>
+            <program language="kotlin" line-numbers="yes">
                 <code>
-    void adjustParent(TreeNode nodeToRemove, TreeNode childOfRemoved) {
+    fun adjustParent(nodeToRemove: TreeNode, childOfRemoved: TreeNode) {
+        // Local copy for null safety
+        val nodeToRemoveParent = nodeToRemove.parent
+
         if (nodeToRemove.isLeftChild()) {
-            childOfRemoved.parent = nodeToRemove.parent;
-            nodeToRemove.parent.leftChild = childOfRemoved;
+            checkNotNull(nodeToRemoveParent)
+            childOfRemoved.parent = nodeToRemove.parent
+            nodeToRemoveParent.leftChild = childOfRemoved
         } else if (nodeToRemove.isRightChild()) {
-            childOfRemoved.parent = nodeToRemove.parent;
-            nodeToRemove.parent.rightChild = childOfRemoved;
+            checkNotNull(nodeToRemoveParent)
+            childOfRemoved.parent = nodeToRemove.parent
+            nodeToRemoveParent.rightChild = childOfRemoved
         } else {
             nodeToRemove.replaceValue(
-                childOfRemoved.key,
-                childOfRemoved.value,
-                childOfRemoved.leftChild,
-                childOfRemoved.rightChild);
+                childOfRemoved.key, childOfRemoved.value,
+                childOfRemoved.leftChild, childOfRemoved.rightChild
+            )
         }
     }
     </code>
             </program>
         </listing>
 
-    <p>We use this method in the portion of <c>removeKey</c> that handles nodes with one child. The code fragment is shown in <xref ref="trees_lst-remove-case-2" />.</p>
-  <listing xml:id="trees_lst-remove-case-2">
-            <caption>Removing a Node with One Child</caption>
-            <program language="java">
+        <p>We use this method in the portion of <c>removeNode</c> that handles nodes with one child. The code fragment is shown in <xref ref="trees_lst-remove-case-2" />.</p>
+        <listing xml:id="trees_lst-remove-case-2">
+            <title>Removing a Node with One Child</title>
+            <program language="kotlin">
                 <code>
-        else { // case 2: one child only
-            if (currentNode.leftChild != null) {
-                adjustParent(currentNode, currentNode.leftChild);
-            }
-            else {
-                adjustParent(currentNode, currentNode.rightChild);
-            }
+        } else if (currentLeft != null &amp;&amp; currentRight == null) {
+            // case 2a: one child only (left)
+            adjustParent(currentNode, currentLeft)
+        } else if (currentRight != null &amp;&amp; currentLeft == null) {
+            // case 2b: one child only (right)
+            adjustParent(currentNode, currentRight)
+  </code>
+            </program>
+        </listing>
+
+        <p>The third case is the most difficult case to handle. If a node has two children, then it is unlikely that we can simply promote one of them to take the node&#x2019;s place. We can, however, search the tree for a node that can be used to replace the one scheduled for deletion. What we need is a node that will preserve the binary search tree relationships for both of the existing left and right subtrees. The node that will do this is the node that has the next-largest key in the tree. We call this node the <term>successor</term>, and we will look at how to find the successor shortly. The successor is guaranteed to have no more than one child, so we know how to remove it using the two cases for deletion that we have already implemented. Once the successor has been removed, we put it in the tree in place of the node to be deleted. The code to handle the third case is shown in <xref ref="trees_lst-remove-key-3" />.</p>
+
+        <p>In <xref ref="trees_lst-remove-key-3" /> we make use of the helper methods <c>findSuccessor</c> and <c>spliceOut</c> to find and remove the successor. The reason we use <c>spliceOut</c> is that it goes directly to the node we want to splice out and makes the right changes. We could call <c>remove</c> recursively, but then we would waste time searching again for the key node. The code goes after the code for removing a node with no children.</p>
+
+        <listing xml:id="trees_lst-remove-key-3">
+            <title>Removing a node with two children</title>
+            <program language="kotlin">
+                <code>
+        } else {
+            // case 3: two children
+            val successor = currentNode.findSuccessor()
+            // Since two children, there must be a successor
+            checkNotNull(successor)
+            successor.spliceOut()
+            currentNode.key = successor.key
+            currentNode.value = successor.value
         }
   </code>
             </program>
         </listing>
 
-  <p>The third case is the most difficult case to handle. If a node has two children, then it is unlikely that we can simply promote one of them to take the node&#x2019;s place. We can, however, search the tree for a node that can be used to replace the one scheduled for deletion. What we need is a node that will preserve the binary search tree relationships for both of the existing left and right subtrees. The node that will do this is the node that has the next-largest key in the tree. This is the successor node, and we already know how to find the successor<mdash />we used it for our iterator in <xref ref="lst_find-successor" />. </p>
-            <p> The successor is guaranteed to have no more than one child, so we know how to remove it using the two cases for deletion that we have already implemented. Once the successor has been removed, we put it in the tree in place of the node to be deleted. The code to handle the third case is shown in <xref ref="trees_lst-remove-key-3" />.</p>
-  <p>In <xref ref="trees_lst-remove-key-3" /> we make use of the helper methods <c>findSuccessor</c> and <c>spliceOut</c> to find and remove the successor. The reason we use <c>spliceOut</c> is that it goes directly to the node we want to splice out and makes the right changes. We could call <c>remove</c> recursively, but then we would waste time searching again for the key node. The code goes after the code for removing a node with no children.</p>
-  <listing xml:id="trees_lst-remove-key-3">
-            <program language="java">
+        <p>The code to find the successor is shown below (see <xref ref="lst_find-successor" /> ) and as you can see is a method of the <c>TreeNode</c> class. THis code makes use of the same properties of binary search trees that cause an inorder traversal to print out the nodes in the tree from smallest to largest. There are three cases to consider when looking for the successor:</p>
+        <p>
+            <ol marker="1">
+                <li>
+                    <p>If the node has a right child, then the successor is the smallest key in the right subtree.</p>
+                </li>
+                <li>
+                    <p>If the node has no right child and is the left child of its parent, then the parent is the successor.</p>
+                </li>
+                <li>
+                    <p>If the node is the right child of its parent, and itself has no right child, then the successor to this node is the successor of its parent, excluding this node.</p>
+                </li>
+            </ol>
+        </p>
+
+        <p>The first condition is the only one that matters for us when deleting a node from a binary search tree. However, the <c>findSuccessor</c> method has other uses that we will explore in the exercises at the end of this chapter.</p>
+
+        <p>The <c>findMin</c> method is called to find the minimum key in a subtree. You should convince yourself that the minimum value key in any binary search tree is the leftmost child of the tree. Therefore the <c>findMin</c> method simply follows the left child references in each node of the subtree until it reaches a node that does not have a left child.</p>
+
+        <listing xml:id="lst_find-successor">
+            <title>The <c>findSucessor</c> Method and Helpers</title>
+            <program language="java" line-numbers="yes">
                 <code>
-        } else if (currentNode.hasChildren()) { // case 3: two chilren
-            TreeNode successor = currentNode.findSuccessor();
-            successor.spliceOut();
-            currentNode.key = successor.key;
-            currentNode.value = successor.value;
+        fun findSuccessor(): TreeNode? {
+            var successor: TreeNode? = null
+
+            // Local copies for null safety
+            val rightChild = this.rightChild
+            val parent = this.parent
+
+            if (rightChild != null) {
+                successor = rightChild.findMin()
+            } else {
+                if (parent != null) {
+                    if (isLeftChild()) {
+                        successor = parent
+                    } else {
+                        parent.rightChild = null
+                        successor = parent.findSuccessor()
+                        parent.rightChild = this
+                    }
+                }
+            }
+            return successor
+        }
+
+        fun findMin(): TreeNode {
+            var current = this
+            while (current.leftChild != null) {
+                current = current.leftChild!!
+            }
+            return current
+        }
+
+        // This function self-removes a node. It connects
+        fun spliceOut() {
+
+            // Local copies for null safety
+            val parent = this.parent
+            val leftChild = this.leftChild
+            val rightChild = this.rightChild
+
+            // spliceOut should only be legitimately be used called
+            // for a node which has a parent
+            checkNotNull(parent)
+
+            if (leftChild != null &amp;&amp; rightChild != null) {
+                // Two children
+                throw IllegalStateException(
+                    "spliceOut should never be called on a node with two children"
+                )
+            } else if (leftChild != null) {
+                // One child, which is left
+                if (this.isLeftChild()) {
+                    parent.leftChild = this.leftChild
+                } else {
+                    parent.rightChild = this.leftChild
+                }
+                leftChild.parent = parent
+            } else if (rightChild != null) {
+                // One child, which is right
+                if (this.isLeftChild()) {
+                    parent.leftChild = this.rightChild
+                } else {
+                    parent.rightChild = this.rightChild
+                }
+                rightChild.parent = this.parent
+            } else {
+                // No children
+                if (this.isLeftChild()) {
+                    parent.leftChild = null
+                } else {
+                    parent.rightChild = null
+                }
+            }
         }
   </code>
-            </program>
-        </listing>
-  <p>The code for splicing out shown below (see <xref ref="trees_lst-splice-out" />), and it is a method of the <c>TreeNode</c> class. This code makes use of the same properties of binary search trees that cause an inorder traversal to print out the nodes in the tree from smallest to largest.</p>
-
-  <listing xml:id="trees_lst-splice-out">
-            <caption>Splicing a Successor into the Correct Location</caption>
-            <program language="java">
-                <code>
-    void spliceOut() {
-        if (this.isLeaf()) {
-            if (this.isLeftChild()) {
-                this.parent.leftChild = null;
-            } else {
-                this.parent.rightChild = null;
-            }
-        } else if (this.hasAnyChild()) {
-            if (this.leftChild != null) {
-                if (this.isLeftChild()) {
-                    this.parent.leftChild = this.leftChild;
-                } else {
-                    this.parent.rightChild = this.leftChild;
-                }
-                this.leftChild.parent = this.parent;
-            } else {
-                if (this.isLeftChild()) {
-                    this.parent.leftChild = this.rightChild;
-                } else {
-                    this.parent.rightChild = this.rightChild;
-                }
-                this.rightChild.parent = this.parent;
-            }
-        }
-    }
-</code>
             </program>
         </listing>
 
     </subsection>
 
+    <subsection xml:id="iterate-binary-search-tree">
+        <title>Iterating over a Binary Search Tree</title>
 
-    <subsection xml:id="complete-binary-search-tree">
-        <title>The Complete BinarySearchTree and TreeNode Code</title>
-        <p>At this point you may want to download the entire file containing the full version of the <c>BinarySearchTree</c> and <c>TreeNode</c> classes.</p>
-        <program xml:id="completebstcode" language="java">
-            <code>
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+        <p>Suppose that we would like to iterate over all the keys in the tree in order. You already know how to traverse a binary tree in order, using the <c>inorder</c> traversal algorithm. However, writing an iterator is a bit different since an iterator should return only one node each time it is called.</p>
 
-public class BinarySearchTree&lt;K extends Comparable&lt;K&gt;, V extends Comparable&lt;V&gt;&gt;
-    implements Iterable&lt;BinarySearchTree&lt;K, V&gt;.TreeNode&gt; {
+        <p>Kotlin provides us with a very powerful function to use when creating an iterator. The function is called <c>yield</c>. <c>yield</c> is similar to <c>return</c> in that it returns a value to the caller. However, yield also takes the additional step of freezing the state of the function so that the next time the function is called it continues executing from the exact point it left off earlier.</p>
 
-    TreeNode root;
-    int size;
+        <p>We first need to notify Kotlin that a <c>TreeNode</c> is something we an iterate over. We do that in the header for the <c>TreeNode</c> class, indicating that it implements the <c>Iterable</c> interface:</p>
 
-    public BinarySearchTree() {
-        this.root = null;
-        size = 0;
+        <listing xml:id="lst_treenode-iter-header">
+            <title>Iterator for a Tree Node</title>
+            <program language="kotlin" line-numbers="no">
+                <code>
+    inner class TreeNode(...) : Iterable&lt;K&gt; {
+            // ...
     }
+                 </code>
+            </program>
+        </listing>
 
-    public int size() {
-        return size;
-    }
+        <p>We then need to write the code for an <c>inorder</c> iterator on a tree node, which we show in the next listing. Look at this code carefully; at first glance you might think that the code is not recursive. However, <c>for ... in</c> operation implicitly calls <c>iterator</c>, so it really is recursive! Because it is recursive over <c>TreeNode</c> instances, the <c>iterator</c> method is defined in the <c>TreeNode</c> class.</p>
 
-    public Iterator&lt;TreeNode&gt; iterator() {
-        return new TreeIterator();
-    }
+        <listing xml:id="lst_treenode-iter">
+            <title>Iterator for a Tree Node</title>
+            <program language="kotlin" line-numbers="no">
+                <code>
+        override fun iterator(): Iterator&lt;K&gt; {
+            // Local copies for null safety
+            val leftChild = this.leftChild
+            val rightChild = this.rightChild
 
-    public void put(K key, V value) {
-        if (this.root != null) {
-            put(key, value, this.root);
-        } else {
-            this.root = new TreeNode(key, value);
-        }
-        this.size = this.size + 1;
-    }
-
-    void put(K key, V value, TreeNode currentNode) {
-        if (key.compareTo(currentNode.key) &lt; 1) {
-            if (currentNode.leftChild != null) {
-                put(key, value, currentNode.leftChild);
-            } else {
-                currentNode.leftChild = new TreeNode(key, value,
-                    currentNode);
-            }
-        } else {
-            if (currentNode.rightChild != null) {
-                put(key, value, currentNode.rightChild);
-            } else {
-                currentNode.rightChild = new TreeNode(key, value,
-                    currentNode);
-            }
-        }
-    }
-
-    public V get(K key) {
-        if (this.root != null) {
-            TreeNode result = get(key, this.root);
-            if (result != null) {
-                return result.value;
-            }
-        }
-        return null;
-    }
-
-    TreeNode get(K key, TreeNode currentNode) {
-        if (currentNode == null) {
-            return null;
-        }
-        if (key.compareTo(currentNode.key) == 0) {
-            return currentNode;
-        } else if (key.compareTo(currentNode.key) &lt; 0) {
-            return get(key, currentNode.leftChild);
-        } else {
-            return get(key, currentNode.rightChild);
-        }
-    }
-
-    public boolean containsKey(K key) {
-        TreeNode result = get(key, this.root);
-        return (result != null);
-    }
-
-    public TreeNode removeKey(K key) {
-        if (size &gt; 1) {
-            TreeNode nodeToRemove = get(key, root);
-            if (nodeToRemove != null) {
-                removeNode(nodeToRemove);
-                size = size - 1;
-                return nodeToRemove;
-            } else {
-                throw new NoSuchElementException(
-                    key.toString() + " not in tree.");
-            }
-        } else if (size == 1 &amp;&amp; root.key.equals(key)) {
-            root = null;
-            size = size - 1;
-            return null;
-        } else {
-            throw new NoSuchElementException(
-                    key.toString() + " not in tree.");
-        }
-    }
-
-    void adjustParent(TreeNode nodeToRemove, TreeNode childOfRemoved) {
-        if (nodeToRemove.isLeftChild()) {
-            childOfRemoved.parent = nodeToRemove.parent;
-            nodeToRemove.parent.leftChild = childOfRemoved;
-        } else if (nodeToRemove.isRightChild()) {
-            childOfRemoved.parent = nodeToRemove.parent;
-            nodeToRemove.parent.rightChild = childOfRemoved;
-        } else {
-            nodeToRemove.replaceValue(
-                childOfRemoved.key,
-                childOfRemoved.value,
-                childOfRemoved.leftChild,
-                childOfRemoved.rightChild);
-        }
-    }
-
-    void removeNode(TreeNode currentNode) {
-        // case 1: the current node is a leaf node
-        if (currentNode.isLeaf()) {
-            if (currentNode == currentNode.parent.leftChild) {
-                currentNode.parent.leftChild = null;
-            } else {
-                currentNode.parent.rightChild = null;
-            }
-        } else if (currentNode.hasChildren()) { // case 3: two chilren
-            TreeNode successor = currentNode.findSuccessor();
-            successor.spliceOut();
-            currentNode.key = successor.key;
-            currentNode.value = successor.value;
-        }
-        else { // case 2: one child only
-            if (currentNode.leftChild != null) {
-                adjustParent(currentNode, currentNode.leftChild);
-            }
-            else {
-                adjustParent(currentNode, currentNode.rightChild);
-            }
-        }
-    }
-
-    /*
-     * Return nested list representation of tree
-     */
-    public String toString() {
-        return stringify(this.root);
-    }
-
-    String stringify(TreeNode node) {
-        String result = "";
-        if (node != null) {
-            if (node.isLeaf()) {
-                result = " [" +  node.key + "]";
-            } else {
-                result = " [" + node.key + stringify(node.leftChild) +
-                    stringify(node.rightChild) + "]";
-            }
-        } else {
-            result = " []";
-        }
-        return result;
-    }
-
-    class TreeNode {
-        K key;
-        V value;
-        TreeNode leftChild;
-        TreeNode rightChild;
-        TreeNode parent;
-
-        TreeNode(K key, V value) {
-            this(key, value, null, null, null);
-        }
-
-        TreeNode(K key, V value, TreeNode parent) {
-            this(key, value, null, null, parent);
-        }
-
-        TreeNode(K key, V value, TreeNode left, TreeNode right, TreeNode parent) {
-            this.key = key;
-            this.value = value;
-            this.leftChild = left;
-            this.rightChild = right;
-            this.parent = parent;
-        }
-
-        /* Is this node a left child of a parent? */
-        boolean isLeftChild() {
-            return parent != null &amp;&amp; parent.leftChild == this;
-        }
-
-        /* Is this node a right child of a parent? */
-        boolean isRightChild() {
-            return parent != null &amp;&amp; parent.rightChild == this;
-        }
-
-        /* Is this the root node? (The root node has no parent) */
-        boolean isRoot() {
-            return parent == null;
-        }
-
-        /* Is this a leaf node? (Leaf nodes have no children) */
-        boolean isLeaf() {
-            return (leftChild == null &amp;&amp; rightChild == null);
-        }
-
-        /* Does this node have any children? */
-        boolean hasAnyChild() {
-            return leftChild != null || rightChild != null;
-        }
-
-        /* Does this node have both left and right children? */
-        boolean hasChildren() {
-            return leftChild != null &amp;&amp; rightChild != null;
-        }
-
-        void replaceValue(K key, V value, TreeNode left, TreeNode right) {
-            this.key = key;
-            this.value = value;
-            this.leftChild = left;
-            this.rightChild = right;
-            if (this.leftChild != null) {
-                this.leftChild.parent = this;
-            }
-            if (this.rightChild != null) {
-                this.rightChild.parent = this;
-            }
-        }
-
-        public K getKey() {
-            return this.key;
-        }
-
-        public void setKey(K key) {
-            this.key = key;
-        }
-
-        public V getValue() {
-            return this.value;
-        }
-
-        public void setValue(V value) {
-            this.value = value;
-        }
-
-        public String toString() {
-            String keyStr = (key == null) ? "null" : key.toString();
-            String valStr = (value == null) ? "null" : value.toString();
-            return "key: " + key + " value: " + value + "\n  " +
-                " left: " + leftChild + " right: " + rightChild +
-                "parent: " + parent;
-        }
-
-        TreeNode findSuccessor() {
-            TreeNode successor = null;
-            if (rightChild != null) {
-                successor = rightChild.findMinimumChild();
-            } else {
-                if (parent != null) {
-                    if (isLeftChild()) {
-                        successor = parent;
-                    } else {
-                        parent.rightChild = null;
-                        successor = parent.findSuccessor();
-                        parent.rightChild = this;
+            return iterator {
+                if (leftChild != null) {
+                    for (elem in leftChild) {
+                        yield(elem)
+                    }
+                }
+                yield(key)
+                if (rightChild != null) {
+                    for (elem in rightChild) {
+                        yield(elem)
                     }
                 }
             }
-            return successor;
         }
+            </code>
+            </program>
+        </listing>
 
-        TreeNode findMinimumChild() {
-            TreeNode current = this;
-            while (current.leftChild != null) {
-                current = current.leftChild;
-            }
-            return current;
-        }
+        <p>The above works great for iterating over a tree rooted at a particular node. However, the typical user of our map will be working with the <c>BSTMap</c> class. We therefore need to declare that class as iterable, and include an <c>iterator</c> method there that will then call the <c>iterator</c> method on the root node.</p>
 
-        void spliceOut() {
-            if (this.isLeaf()) {
-                if (this.isLeftChild()) {
-                    this.parent.leftChild = null;
-                } else {
-                    this.parent.rightChild = null;
+
+        <p>The following shows the update we make to the header of the <c>BSTMap</c> class, showing that we implement the <c>Iterable</c> interface:</p>
+
+        <listing xml:id="lst_bstmap-iterable">
+            <title>Updated header for BSTMap class</title>
+            <program language="kotlin" line-numbers="no">
+                <code>
+                class BSTMap&lt;K : Comparable&lt;K&gt;, V&gt; : ComparableMapADT&lt;K, V&gt;, Iterable&lt;K&gt; {
+                ....
                 }
-            } else if (this.hasAnyChild()) {
-                if (this.leftChild != null) {
-                    if (this.isLeftChild()) {
-                        this.parent.leftChild = this.leftChild;
+            </code>
+            </program>
+        </listing>
+
+        <p>And then here is the code for the <c>iterator</c> method itself.</p>
+
+        <listing xml:id="lst_bstmap-iterator">
+            <title>Iterator method for BSTMap class</title>
+            <program language="kotlin" line-numbers="no">
+                <code>
+                override fun iterator(): Iterator&lt;K&gt; {
+                    val root = this.root
+                    if (root == null) {
+                        return iterator()
                     } else {
-                        this.parent.rightChild = this.leftChild;
+                        return root.iterator()
                     }
-                    this.leftChild.parent = this.parent;
-                } else {
-                    if (this.isLeftChild()) {
-                        this.parent.leftChild = this.rightChild;
-                    } else {
-                        this.parent.rightChild = this.rightChild;
-                    }
-                    this.rightChild.parent = this.parent;
                 }
-            }
-        }
-    }
+            </code>
+            </program>
+        </listing>
 
-    class TreeIterator implements Iterator&lt;BinarySearchTree&lt;K, V&gt;.TreeNode&gt; {
-        TreeNode iteratorNode;
 
-        public TreeIterator() {
-            if (root.leftChild == null) {
-                iteratorNode = root;
-            } else {
-                iteratorNode = root.findMinimumChild();
-            }
-        }
+        <p>Finally, here is the complete code we have written above, with tests at the end. We have left the <c>keyList</c> method for you to complete as an exercise.</p>
 
-        public boolean hasNext() {
-            return iteratorNode != null;
-        }
 
-        public TreeNode next() {
-            TreeNode result = null;
-            if (iteratorNode != null) {
-                result = iteratorNode;
-                iteratorNode = iteratorNode.findSuccessor();
-            }
-            return result;
-        }
-    }
-}
+        <listing xml:id="lst_bst-example2">
+            <title>Complete Binary Search Tree Code, with Tests</title>
+            <program label="trees_bst_example" language="kotlin" line-numbers="yes" interactive="activecode">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ComparableMapADT.kt" />                 
+<xi:include parse="text" href="samplecode/src/main/kotlin/MapADT.kt" />                 
+^^^^
+<xi:include parse="text" href="samplecode/src/main/kotlin/BSTMapOriginal.kt" />                 
+
+<xi:include parse="text" href="samplecode/src/main/kotlin/BinarySearchTreeExample.kt" />                 
         </code>
         </program>
+        </listing>  
     </subsection>
 </section>

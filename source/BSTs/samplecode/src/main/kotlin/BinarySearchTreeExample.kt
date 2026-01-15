@@ -13,15 +13,17 @@ fun main() {
     println(tree.get("Japan")) // "Tokyo"
     println(tree.get("Brazil")) // null
 
-    for (node in tree) {
-        println(node.key + " -> " + node.value)
+    for (key in tree) {
+        println(key + " -> " + tree.get(key))
     }
 
     println("-----------------------------")
+    println(tree.remove("France"))  // "Paris"
+    println(tree)
 
     println(tree.remove("Zimbabwe"))  // "Harare"
-    for (node in tree) {
-        println(node.key + " -> " + node.value)
+    for (key in tree) {
+        println(key + " -> " + tree.get(key))
     }
 
 }
