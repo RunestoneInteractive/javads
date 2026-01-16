@@ -6,10 +6,10 @@
   <xi:include href="./SearchTreeOperations.ptx"/>
   <xi:include href="./SearchTreeImplementation.ptx"/>
   <xi:include href="./SearchTreeAnalysis.ptx"/>
-  <!--
   <xi:include href="./BalancedBinarySearchTrees.ptx"/>
   <xi:include href="./AVLTreePerformance.ptx"/>
   <xi:include href="./AVLTreeImplementation.ptx"/>
+  <!--
   <xi:include href="./SummaryofMapADTImplementations.ptx"/>
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>

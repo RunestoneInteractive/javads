@@ -51,7 +51,7 @@
             <mrow>&amp; = \frac{\log{(N_h+1)} - 2 \log{\Phi} + \frac{1}{2} \log{5}}{\log{\Phi}}</mrow>
             <mrow>h &amp;  = 1.44 \log{N_h}</mrow>
           </md>
-  <p>This derivation shows us that at any time the height of our AVL tree is
+  <p>This derivation shows us that at any time the height of our AVL tree in the worst case is
             equal to a constant (1.44) times the log of the number of nodes in the tree. This
             is great news for searching our AVL tree because it limits the search to
             <m>O(\log{n})</m>.</p>
