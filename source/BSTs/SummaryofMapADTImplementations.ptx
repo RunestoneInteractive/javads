@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <section xml:id="trees_summary-of-map-adt-implementations">
   <title>Summary of Map ADT Implementations</title>
-  <p>Over the past two chapters we have looked at several data structures
-            that can be used to implement the map abstract data type: a binary
-            search on a list, a hash table, a binary search tree, and a balanced
+  <p>Over the past few chapters we have looked at several approaches
+            that can be used to implement the map abstract data type: 
+            a hash table, a binary search tree, and a balanced
             binary search tree. To conclude this section, let's summarize the
-            performance of each data structure for the key operations defined by the
-            map ADT (see <xref ref="trees_tbl-compare"/>).</p>
+            worst case performance of each data structure for the key operations defined by the
+            map ADT (see <xref ref="trees_tbl-compare"/>), and compare it with a baseline of just keeping the data in a sorted list, and using binary search to find what we're looking for.</p>
   <table xml:id="trees_tbl-compare">
       <title>
         Comparing the Performance of Different Map Implementations

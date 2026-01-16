@@ -9,8 +9,8 @@
   <xi:include href="./BalancedBinarySearchTrees.ptx"/>
   <xi:include href="./AVLTreePerformance.ptx"/>
   <xi:include href="./AVLTreeImplementation.ptx"/>
-  <!--
   <xi:include href="./SummaryofMapADTImplementations.ptx"/>
+  <!--
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>
   <xi:include href="./Exercises.ptx"/>
