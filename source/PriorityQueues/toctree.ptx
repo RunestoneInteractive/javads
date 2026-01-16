@@ -3,8 +3,8 @@
   <title>Priority Queues via Heaps</title>
   <xi:include href="./Objectives.ptx"/>
   <xi:include href="./PriorityQueueswithBinaryHeaps.ptx"/>
-<!--
   <xi:include href="./BinaryHeapOperations.ptx"/>
+<!--
   <xi:include href="./BinaryHeapImplementation.ptx"/>
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>

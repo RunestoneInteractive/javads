@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<section xml:id="trees_binary-heap-operations" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Priority Queue Operations</title>
+  <p>The basic operations we will implement for our priority queue are as
+    follows:</p>
+  <p>
+    <ul>
+      <li>
+        <p><c>PriorityQueue()</c> creates a new empty binary heap.</p>
+      </li>
+      <li>
+        <p><c>PriorityQueue(list)</c> builds a new heap from a list of keys.</p>
+      </li>
+      <li>
+        <p><c>insert(k)</c> adds a new item to the priority queue.</p>
+      </li>
+      <li>
+        <p><c>peek()</c> returns the item with the minimum key value, leaving the item in the priority queue.</p>
+      </li>
+      <li>
+        <p><c>delete()</c> returns the item with the minimum key value, removing the item from the priority queue.</p>
+      </li>
+      <li>
+        <p><c>isEmpty()</c> returns <c>True</c> if the heap is empty, <c>False</c> otherwise.</p>
+      </li>
+      <li>
+        <p><c>size()</c> returns the number of items in the priority queue.</p>
+      </li>
+    </ul>
+  </p>
+
+  <p>We have specified two different constructors in the operations list above. The first one is the usual one, which creates an empty priority queue. The second specifies that we can supply an initial list of items. We've chosen to highlight this constructor here because there's an interesting implementation for it when we look at the binary heap.</p>
+
+  <p>Here is an interface in Kotlin representing the above. One limitation of Kotlin is that we cannot specify a constructor in an interface. Therefore, we will document it with a comment.</p>
+
+  <listing xml:id="lst-PQADT">
+    <title>Interface for Priority Queue ADT</title>
+    <program label="lst-heap1" language="kotlin">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/PriorityQueueADT.kt" />
+    </code>
+    </program>
+  </listing>
+  
+  <!-- <p>We're doing that here because when we implement this priority queue with a heap, there <p><xref ref="lst-heap1" /> demonstrates the use of some of the binary heap methods. </p>
+  <listing xml:id="lst-heap1">
+    <program label="lst-heap1" language="java">
+      <code>
+public class BinaryHeapTest {
+    public static void main(String[] args) {
+        BinaryHeap&lt;Integer&gt; myHeap = new BinaryHeap&lt;&gt;();
+        myHeap.insert(5);
+        myHeap.insert(7);
+        myHeap.insert(3);
+        myHeap.insert(11);
+        System.out.println("Min value: " + myHeap.getMin());
+
+        System.out.println("Deleting items: ");
+        System.out.println(myHeap.delete());
+        System.out.println(myHeap.delete());
+        System.out.println(myHeap.delete());
+        System.out.println(myHeap.delete());
+    }
+}
+        </code>
+    </program>
+  </listing>
+
+  <p>Here is its output:</p>
+  <console>
+    <output>Min value: 3
+      Size: 4
+      Deleting items:
+      3
+      5
+      7
+      11
+</output>
+  </console>
+  <p> Notice that no matter what order we add items to the heap, the smallest
+    is removed each time.</p> -->
+</section>
