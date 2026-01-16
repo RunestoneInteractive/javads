@@ -1,26 +1,21 @@
 <?xml version="1.0"?>
-<section xml:id="trees_summary">
+<section xml:id="bst_summary">
   <title>Summary</title>
-  <p>In this chapter we have looked at the tree data structure,
-            which enables us to write many interesting algorithms.
-            We have looked at algorithms that use various kinds of trees to do the following:</p>
+  <p>In this chapter we have looked at binary search trees. More specifically, we examined:</p>
   <p>
     <ul>
       <li>
-        <p>A binary tree for parsing and evaluating expressions.</p>
+        <p>A binary search tree for implementing the map ADT.</p>
       </li>
       <li>
-        <p>A binary tree for implementing the map ADT.</p>
+        <p>A balanced binary search tree (AVL tree) for implementing the map ADT.</p>
       </li>
-      <li>
-        <p>A balanced binary tree (AVL tree) for implementing the map ADT.</p>
-      </li>
-      <li>
+      <!-- <li>
         <p>A binary tree to implement a min heap.</p>
       </li>
       <li>
         <p>A min heap used to implement a priority queue.</p>
-      </li>
+      </li> -->
     </ul>
   </p>
 </section>
