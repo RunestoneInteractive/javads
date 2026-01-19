@@ -3,7 +3,10 @@ class BinaryHeapPriorityQueue<E: Comparable<E>>() : PriorityQueueADT<E> {
     var heap = mutableListOf<E>()
 
     constructor(nonHeap: List<E>): this() {
+        heapify(nonHeap)
+    }
 
+    private fun heapify(nonHeap: List<E>) {
         if (nonHeap.count() > 0) {
             heap = nonHeap.toMutableList()  // copies list
 

@@ -170,7 +170,39 @@ class BinaryHeapPriorityQueue&lt;E: Comparable&lt;E&gt;&gt;() : PriorityQueueADT
             </program>
         </listing>
 
-        <p>To finish our discussion of binary heaps, we will return to our second constructor, which is to build an entire heap from a list of keys. The first approach you might think of may be like the following. Given a list of keys, you could build a heap by inserting each key one at a time. Since you are starting with an empy list, it is sorted and you could use binary search to find the right position to insert the next key at a cost of approximately <m>O(\log{n})</m> operations. However, remember that inserting an item in the middle of the list may require <m>O(n)</m> operations to shift the rest of the list over to make room for the new key. Therefore, to insert <m>n</m> keys into the heap would require a total of <m>O(n \log{n})</m> operations. However, if we start with an entire list then we can build the whole heap in <m>O(n)</m> operations. <xref ref="trees_lst-heap6" /> shows the code to build the entire heap.</p>
+        <p>To finish our discussion of binary heaps, we will return to our second constructor, which is to build an entire heap from a list of keys. The first approach you might think of may be like the following. Given a list of keys, you could build a heap by inserting each key one at a time. Since you are starting with an empty list, it is sorted and you could use binary search to find the right position to insert the next key at a cost of approximately <m>O(\log{n})</m> operations. However, remember that inserting an item in the middle of the list may require <m>O(n)</m> operations to shift the rest of the list over to make room for the new key. Therefore, to insert <m>n</m> keys into the heap would require a total of <m>O(n \log{n})</m> operations. However, if we start with an entire list then we can build the whole heap in <m>O(n)</m> operations. <xref ref="trees_lst-heap6" /> shows the code to build the entire heap from a list using an approach called <em>heapify</em>.</p>
+
+
+        <listing xml:id="pq-heapify">
+            <title>Heapify method for building a binary heap from a list.</title>
+            <program language="kotlin">
+                <code>
+    private fun heapify(nonHeap: List&lt;E>) {
+        if (nonHeap.count() > 0) {
+            heap = nonHeap.toMutableList()  // copies list
+
+            var currIndex = heap.count() / 2 - 1
+            while (currIndex >= 0) {
+                percolateDown(currIndex)
+                currIndex -= 1
+            }
+        }
+    }            
+                </code>
+            </program>
+        </listing>
+
+        <figure align="center" xml:id="fig-buildheap">
+            <caption>Building a Heap from the List [9, 6, 5, 2, 3]</caption>
+            <image source="Trees/Figures/buildheap.png" width="50%" alt="image" />
+        </figure>
+        <p><xref ref="fig-buildheap" /> shows the swaps that the <c>heapify</c> method makes as it moves the nodes in an initial tree of [9, 6, 5, 2, 3] into their proper positions. Although we start out in the middle of the tree and work our way back toward the root, the <c>percolateDown</c> method ensures that the largest child is always moved down the tree. Because the heap is a complete binary tree, any nodes past the halfway point will be leaves and therefore have no children. Notice that when <c>i = 0</c>, we are percolating down from the root of the tree, so this may require multiple swaps. As you can see in the rightmost two trees of <xref ref="fig-buildheap" />, first the 9 is moved out of the root position, but after 9 is moved down one level in the tree, <c>percolateDown</c> ensures that we check the next set of children farther down in the tree to ensure that it is pushed as low as it can go. In this case it results in a second swap with 3. Now that 9 has been moved to the lowest level of the tree, no further swapping can be done. It is useful to compare the list representation of this series of swaps with the tree representation shown in <xref ref="fig-buildheap" /></p>
+        <pre>start  [9, 6, 5, 2, 3]
+i = 1  [9, 2, 5, 6, 3]
+i = 0  [2, 3, 5, 6, 9]</pre>
+
+        <p>Now that the <c>heapify</c> method has been written, we need to create a second constructor for the class so that we can create a new binary heap using it.</p>
+
         <listing xml:id="trees_lst-heap6">
             <title>BinaryHeapPriorityQueue class header, showing new constructor.</title>
 
@@ -181,44 +213,28 @@ class BinaryHeapPriorityQueue&lt;E: Comparable&lt;E>>() : PriorityQueueADT&lt;E>
 
     var heap = mutableListOf&lt;E>()
 
-    // Construct a binary heap from a list using the 
-    // so-called "heapify" algorithm.
     constructor(nonHeap: List&lt;E>): this() {
-
-        if (nonHeap.count() > 0) {
-            heap = nonHeap.toMutableList()  // copies list
-
-            var currIndex = heap.count() / 2 - 1
-            while (currIndex >= 0) {
-                percolateDown(currIndex)
-                currIndex -= 1
-            }
-        }
+        heapify(nonHeap)
     }
+
             </code>
             </program>
         </listing>
 
-        <note>
-            <title>Kotlin note</title>
-            <p>In the above definition, we have created a secondary constructor. The idea is that instead of constructing an empty heap, via:</p>
+        <p>In the above definition, we have created a secondary constructor. The idea is that instead of constructing an empty heap, via:</p>
 
-            <program language="kotlin">val myPq = BinaryHeapPriorityQueue&lt;Int>()</program>
+        <program language="kotlin">val myPq = BinaryHeapPriorityQueue&lt;Int>()</program>
 
-            <p>we can instead create one from a list of values, such as:</p>
-            <program language="kotlin">val myPq = BinaryHeapPriorityQueue&lt;Int>(listOf(9, 6, 5, 2, 3))</program>
+        <p>we can instead create one from a list of values, such as:</p>
+        <program language="kotlin">val myPq = BinaryHeapPriorityQueue&lt;Int>(listOf(9, 6, 5, 2, 3))</program>
 
-            <p>The declaration <c>constructor</c> in line 7 means that we are creating a different constructor than the first. Every constructor that isn't the default constructor must call the default constructor first, which is why we include the call to <c>this</c> in line 7.</p>
-        </note>
+        <p>The declaration <c>constructor</c> in line 5 means that we are creating a different constructor than the first. Every constructor that isn't the default constructor must call the default constructor first, which is why we include the call to <c>this</c> in line 5.</p>
 
-        <figure align="center" xml:id="fig-buildheap">
-            <caption>Building a Heap from the List [9, 6, 5, 2, 3]</caption>
-            <image source="Trees/Figures/buildheap.png" width="50%" alt="image" />
-        </figure>
-        <p><xref ref="fig-buildheap" /> shows the swaps that the <c>heapify</c> method makes as it moves the nodes in an initial tree of [9, 6, 5, 2, 3] into their proper positions. Although we start out in the middle of the tree and work our way back toward the root, the <c>percolateDown</c> method ensures that the largest child is always moved down the tree. Because the heap is a complete binary tree, any nodes past the halfway point will be leaves and therefore have no children. Notice that when <c>i = 0</c>, we are percolating down from the root of the tree, so this may require multiple swaps. As you can see in the rightmost two trees of <xref ref="fig-buildheap" />, first the 9 is moved out of the root position, but after 9 is moved down one level in the tree, <c>percolateDown</c> ensures that we check the next set of children farther down in the tree to ensure that it is pushed as low as it can go. In this case it results in a second swap with 3. Now that 9 has been moved to the lowest level of the tree, no further swapping can be done. It is useful to compare the list representation of this series of swaps with the tree representation shown in <xref ref="fig-buildheap" /></p>
-        <pre>start  [9, 6, 5, 2, 3]
-i = 1  [9, 2, 5, 6, 3]
-i = 0  [2, 3, 5, 6, 9]</pre>
+    </subsection>
+
+    <subsection>
+        <title>Complete implementation</title>
+
 
         <p>The complete binary heap implementation can be seen in <xref ref="lst_completeheap" />.</p>
         <listing xml:id="lst_completeheap">
