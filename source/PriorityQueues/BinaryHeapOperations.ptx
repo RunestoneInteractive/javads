@@ -1,82 +1,138 @@
 <?xml version="1.0"?>
 <section xml:id="trees_binary-heap-operations" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>Priority Queue Operations</title>
-  <p>The basic operations we will implement for our priority queue are as
-    follows:</p>
-  <p>
-    <ul>
-      <li>
-        <p><c>PriorityQueue()</c> creates a new empty binary heap.</p>
-      </li>
-      <li>
-        <p><c>PriorityQueue(list)</c> builds a new heap from a list of keys.</p>
-      </li>
-      <li>
-        <p><c>insert(k)</c> adds a new item to the priority queue.</p>
-      </li>
-      <li>
-        <p><c>peek()</c> returns the item with the minimum key value, leaving the item in the priority queue.</p>
-      </li>
-      <li>
-        <p><c>delete()</c> returns the item with the minimum key value, removing the item from the priority queue.</p>
-      </li>
-      <li>
-        <p><c>isEmpty()</c> returns <c>True</c> if the heap is empty, <c>False</c> otherwise.</p>
-      </li>
-      <li>
-        <p><c>size()</c> returns the number of items in the priority queue.</p>
-      </li>
-    </ul>
-  </p>
+  <title>Priority Queue Operations and Usage</title>
+  <subsection xml:id="subsec-pq-ops">
+    <title>Priority Queue Operations</title>
+    <p>The basic operations we will implement for our priority queue are as
+      follows:</p>
+    <p>
+      <ul>
+        <li>
+          <p><c>PriorityQueue()</c> creates a new empty binary heap.</p>
+        </li>
+        <li>
+          <p><c>PriorityQueue(list)</c> builds a new heap from a list of items.</p>
+        </li>
+        <li>
+          <p><c>insert(k)</c> adds a new item to the priority queue.</p>
+        </li>
+        <li>
+          <p><c>peek()</c> returns the item with the minimum key value, leaving the item in the priority queue.</p>
+        </li>
+        <li>
+          <p><c>delete()</c> returns the item with the minimum key value, removing the item from the priority queue.</p>
+        </li>
+        <li>
+          <p><c>isEmpty()</c> returns <c>True</c> if the heap is empty, <c>False</c> otherwise.</p>
+        </li>
+        <li>
+          <p><c>size()</c> returns the number of items in the priority queue.</p>
+        </li>
+      </ul>
+    </p>
 
-  <p>We have specified two different constructors in the operations list above. The first one is the usual one, which creates an empty priority queue. The second specifies that we can supply an initial list of items. We've chosen to highlight this constructor here because there's an interesting implementation for it when we look at the binary heap.</p>
+    <p>We have specified two different constructors in the operations list above. The first one is the usual one, which creates an empty priority queue. The second specifies that we can supply an initial list of items. We've chosen to highlight this constructor here because there's an interesting implementation for it when we look at the binary heap.</p>
 
-  <p>Here is an interface in Kotlin representing the above. One limitation of Kotlin is that we cannot specify a constructor in an interface. Therefore, we will document it with a comment.</p>
+    <p>Here is an interface in Kotlin representing the above. One limitation of Kotlin is that we cannot specify a constructor in an interface. Therefore, we will document it with a comment.</p>
 
-  <listing xml:id="lst-PQADT">
-    <title>Interface for Priority Queue ADT</title>
-    <program label="lst-heap1" language="kotlin">
-      <code>
+    <listing xml:id="lst-PQADT">
+      <title>Interface for Priority Queue ADT</title>
+      <program label="lst-heap1" language="kotlin">
+        <code>
 <xi:include parse="text" href="samplecode/src/main/kotlin/PriorityQueueADT.kt" />
     </code>
-    </program>
-  </listing>
-  
-  <!-- <p>We're doing that here because when we implement this priority queue with a heap, there <p><xref ref="lst-heap1" /> demonstrates the use of some of the binary heap methods. </p>
-  <listing xml:id="lst-heap1">
-    <program label="lst-heap1" language="java">
-      <code>
-public class BinaryHeapTest {
-    public static void main(String[] args) {
-        BinaryHeap&lt;Integer&gt; myHeap = new BinaryHeap&lt;&gt;();
-        myHeap.insert(5);
-        myHeap.insert(7);
-        myHeap.insert(3);
-        myHeap.insert(11);
-        System.out.println("Min value: " + myHeap.getMin());
+      </program>
+    </listing>
 
-        System.out.println("Deleting items: ");
-        System.out.println(myHeap.delete());
-        System.out.println(myHeap.delete());
-        System.out.println(myHeap.delete());
-        System.out.println(myHeap.delete());
-    }
-}
+  </subsection>
+
+  <subsection xml:id="subsec-pq-usage">
+    <title>Priority Queue Usage: Single Values</title>
+
+
+    <p><xref ref="lst-pqdemo-int" /> demonstrates the use of a priority queue, in storing integers, using the implementation that we will build in the next section.</p>
+    <listing xml:id="lst-pqdemo-int">
+      <title>Sample usage of priority queue, with integers.</title>
+      <program label="lst-pq-int" language="kotlin" interactive="activecode">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/PriorityQueueADT.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/BinaryHeapPriorityQueue.kt" />
+^^^^
+<xi:include parse="text" href="samplecode/src/main/kotlin/PqIntTest.kt" />
+
         </code>
-    </program>
-  </listing>
+      </program>
+    </listing>
 
-  <p>Here is its output:</p>
-  <console>
-    <output>Min value: 3
-      Size: 4
-      Deleting items:
-      3
-      5
-      7
-      11
-</output>
-  </console>
-  <p> Notice that no matter what order we add items to the heap, the smallest
-    is removed each time.</p> -->
+    <p>Here is its output:</p>
+    <pre>
+Min value: 3
+Deleting items: 
+3
+5
+7
+11
+  </pre>
+    <p> Notice that no matter what order we add items to the heap, the smallest
+      is removed each time.</p>
+  </subsection>
+
+  <subsection xml:id="subsec-pq-composite-usage">
+    <title>Priority Queue Usage: Priority Values And Data</title>
+
+    <p>What if we want to use our priority queue where we want to store both a priority value, and data that goes with it? For example, suppose that we are at a zoo, and we are using a priority queue to track which animal is most important for us to see next. We can use an integer to represent the priority (lower is better), but we also need to also store the animal. We can store both of these in the priority queue if we store objects from a data class. Here is an initial attempt at that data class:</p>
+
+    <program language="kotlin">
+      <code>
+        data class Animal(val priority: Int, val name: String)
+      </code>
+    </program>
+
+    <p>The above definition of Animal is a good starting point, but Kotlin needs to be able to do ordering comparisons (i.e., less-than and greater-than comparisons) between Animal objects in order to determine which one has higher priority. Ordering comparisons don't work out-of-the-box for arbitrary objects. In order to make them work on this data class, we need to help Kotlin understand what it means for one animal to be "smaller" than another.</p>
+
+    <p>In order to give Kotlin information on relative ordering of Animal objects, we indicate that the Animal class implements the <c>Comparable</c> interface, which enables Kotlin to perform less-than and greater-than operations. Here then, is our next step at defining the Animal class:</p>
+
+    <program language="kotlin">
+      <code>
+        data class Animal(val priority: Int, val name: String): Comparable&lt;Animal&gt;
+      </code>
+    </program>
+
+    <p>The <c>Comparable</c> interface requires that when we create a class implementing it, we need to override one method, named <c>compareTo</c>, which provides information on how to compare two <c>Comparable</c> objects. Whenever a comparison like <c>x &lt; y</c> or <c>x &gt; y</c> is made, Kotlin translates that into a call that looks like <c>x.compareTo(y)</c>. Here is how the results are understood: <ul>
+        <li>
+          <p> If <c>x.compareTo(y)</c> returns a negative value, this means that x is less than y. </p>
+        </li>
+        <li>
+          <p> If <c>x.compareTo(y)</c> returns a positive value, this means that x is greater than y. </p>
+        </li>
+        <li>
+          <p> If <c>x.compareTo(y)</c> returns zero, this means that x is equal to y. </p>
+        </li>
+      </ul> Therefore, we create a method named <c>compareTo</c>, and obtain its value by subtracting the second value from the first. This results in <c>compareTo</c> returning negative and positive numbers as specified. The code below shows the final version of our data class, and how to use it with a priority queue.</p>
+
+    <listing xml:id="lst-pqdataclass-int">
+      <title>Sample usage of priority queue, with a data class.</title>
+      <program label="lst-pq-dataclass" language="kotlin" interactive="activecode">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/PriorityQueueADT.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/BinaryHeapPriorityQueue.kt" />
+^^^^
+<xi:include parse="text" href="samplecode/src/main/kotlin/PqCompositeTest.kt" />
+
+        </code>
+      </program>
+    </listing>
+
+
+  </subsection>
+
+
+  <subsection xml:id="sec-pq-max-vs-min">
+    <title>Maximum Value Vs Minimum Value</title>
+
+    <p>In defining the Priority Queue ADT, we've made a somewhat arbitrary choice: we've chosen to define it as one in the item with <em>minimum</em> value is the one which is retrieved next. We could have defined it the other way around. Regardless, a single priority queue definition is sufficient. In the example in the previous section, if we had wanted animals with highest value to be highest priority, we would have just defined our <c>compareTo</c> method in our data class to subtract in the opposite direction.</p>
+
+  </subsection>
+
+
 </section>

@@ -1,10 +1,10 @@
-class BinaryHeapPriorityQueue<E : Comparable<E>>() : PriorityQueueADT<E> {
+class BinaryHeapPriorityQueue<E: Comparable<E>>() : PriorityQueueADT<E> {
 
     var heap = mutableListOf<E>()
 
     constructor(nonHeap: List<E>): this() {
 
-        if (nonHeap.count() != 0) {
+        if (nonHeap.count() > 0) {
             heap = nonHeap.toMutableList()  // copies list
 
             var currIndex = heap.count() / 2 - 1
@@ -65,7 +65,7 @@ class BinaryHeapPriorityQueue<E : Comparable<E>>() : PriorityQueueADT<E> {
             return null
         }
 
-        val result = heap.get(0)
+        val result = heap[0]
         swapItemsAt(0, heap.count() - 1)
         heap.removeLast()
         percolateDown(0)

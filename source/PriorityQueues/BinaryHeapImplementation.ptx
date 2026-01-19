@@ -1,403 +1,249 @@
 <?xml version="1.0"?>
 <section xml:id="trees_binary-heap-implementation" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>Binary Heap Implementation</title>
-  <subsection xml:id="trees_the-structure-property">
-    <title>The Structure Property</title>
-    <p>In order to make our heap work efficiently, we will take advantage of
-                the logarithmic nature of the binary tree to represent our heap. In order to guarantee logarithmic
-                performance, we must keep our tree balanced. A balanced binary tree has
-                roughly the same number of nodes in the left and right subtrees of the
-                root. In our heap implementation we keep the tree balanced by creating a
-                <term>complete binary tree</term>. A complete binary tree is a tree in which each
-                level has all of its nodes. The exception to this is the bottom level of
-                the tree, which we fill in from left to right. <xref ref="i19_id1fig-comptree"/>
-                shows an example of a complete binary tree.</p>
-    <figure align="center" xml:id="i19_id1fig-comptree">
-      <caption>A Complete Binary Tree</caption>
-      <image source="Trees/Figures/compTree.png" width="50%" alt="image"/>
-    </figure>
+    <title>Priority Queue Implementation</title>
+    <introduction>
+        <p> We now will implement a priority queue, using a binary heap as our implementation approach. A binary heap is a binary tree, which we've looked at previously... but it's <em>not</em> a binary search tree. It is still the case that each node 0, 1, or 2 children, but there are some very significant differences from a binary search tree that we'll look at in the next sections.</p>
 
-    <p>Another interesting property of a complete tree is that we can represent
-                it using a single list. We do not need to use nodes and references or
-                even lists of lists. Because the tree is complete, the left child of a
-                parent (at position <m>p</m>) is the node that is found in position
-                <m>2p + 1</m> in the list. Similarly, the right child of the parent is at
-                position <m>2p + 2</m> in the list. To find the parent of any node in
-                the tree, we can use Java's integer division. Given that a node
-                is at position <m>n</m> in the list, the parent is at position
-                <m>(n - 1) / 2</m>. <xref ref="i19_id2fig-heaporder"/> shows a complete binary tree
-                and also gives the list representation of the tree.  Note the <m>2p + 1</m> and <m>2p + 2</m> relationship between
-                parent and children. The list
-                representation of the tree, along with the full structure property,
-                allows us to efficiently traverse a complete binary tree using only a
-                few simple mathematical operations. We will see that this also leads to
-                an efficient implementation of our binary heap.</p>
-  </subsection>
+    </introduction>
 
-  <subsection xml:id="trees_the-heap-order-property">
-    <title>The Heap Order Property</title>
-    <p>The method that we will use to store items in a heap relies on
-                maintaining the heap order property. The <term>heap order property</term> is as
-                follows: in a heap, for every node <m>x</m> with parent <m>p</m>,
-                the key in <m>p</m> is smaller than or equal to the key in
-                <m>x</m>. <xref ref="i19_id2fig-heaporder"/> also illustrates a complete binary
-                tree that has the heap order property.</p>
+    <subsection xml:id="trees_the-structure-property">
+        <title>The Structure Property</title>
+        <p>A binary heap is a particular kind of balanced binary tree. Specifically, it is a <term>complete binary tree</term>, which means that each level has all of its nodes. The exception to this is the bottom level of the tree, which we fill in from left to right. <xref ref="i19_id1fig-comptree" /> shows an example of a complete binary tree.</p>
+        <figure align="center" xml:id="i19_id1fig-comptree">
+            <caption>A Complete Binary Tree</caption>
+            <image source="Trees/Figures/compTree.png" width="50%" alt="image" />
+        </figure>
 
-    <figure align="center" xml:id="i19_id2fig-heaporder">
-      <caption>A Complete Binary Tree, along with Its List Representation</caption>
-      <image source="Trees/Figures/heapOrder.png" width="50%" alt="image"/>
-    </figure>
-  </subsection>
+        <p>An interesting property of a complete tree is that we can represent it using a single list. We do not need to use nodes and references. Because the tree is complete, the left child of a parent (at position <m>p</m>) is the node that is found in position <m>2p + 1</m> in the list. Similarly, the right child of the parent is at position <m>2p + 2</m> in the list. To find the parent of any node in the tree, we can use Kotlin's integer division. Given that a node is at position <m>n</m> in the list, the parent is at position <m>(n - 1) / 2</m>. <xref ref="i19_id2fig-heaporder" /> shows a complete binary tree and also gives the list representation of the tree. Note the <m>2p + 1</m> and <m>2p + 2</m> relationship between parent and children. The list representation of the tree, along with the full structure property, allows us to efficiently traverse a complete binary tree using only a few simple mathematical operations. We will see that this also leads to an efficient implementation of our binary heap.</p>
+    </subsection>
 
-  <subsection xml:id="trees_heap-operations">
-    <title>Heap Operations</title>
-    <p>We will begin our implementation of a binary heap with the constructor.
-                Since the entire binary heap can be represented by a single list, all
-                the constructor will do is initialize the list.
-                <xref ref="trees_lst-heap1a"/> shows the Java code for the constructor.</p>
-            <listing xml:id="trees_lst-heap1a"><program language="java"><code>
-import java.util.ArrayList;
+    <subsection xml:id="trees_the-heap-order-property">
+        <title>The Heap Order Property</title>
+        <p>The method that we will use to store items in a heap relies on maintaining the heap order property. The <term>heap order property</term> is as follows: in a heap, for every node <m>x</m> with parent <m>p</m>, the node <m>p</m> is smaller than or equal to the node <m>x</m>. <xref ref="i19_id2fig-heaporder" /> also illustrates a complete binary tree that has the heap order property.</p>
 
-class BinaryHeap&lt;T&gt; {
-    ArrayList&lt;T&gt; items;
+        <figure align="center" xml:id="i19_id2fig-heaporder">
+            <caption>A Complete Binary Tree, along with Its List Representation</caption>
+            <image source="Trees/Figures/heapOrder.png" width="50%" alt="image" />
+        </figure>
 
-    public BinaryHeap() {
-        this.items = new ArrayList&lt;T&gt;();
-    }
-    // more code here...
+        <aside>
+            <title>Min-heap vs max-heap</title>
+
+
+            <p>The above definition is for what is more precisely known as a <term>min-heap</term>. For a node in a <term>max-heap</term>, its parent node is larger than or equal to the node itself. The choice of a min-heap vs. a max-heap for a priority queue is arbitrary, so long as other changes are made consistently; this is discussed in <xref ref="sec-pq-max-vs-min" />.</p>
+        </aside>
+    </subsection>
+
+    <subsection xml:id="trees_heap-operations">
+        <title>Priority Queue Operations</title>
+        <p>We will begin our binary heap implementation of a priority queue with the constructor. For now, we will focus on the default constructor that constructs an empty heap. Since the entire binary heap can be represented by a single list, all we need to do is initialize the list. <xref ref="trees_lst-heap1a" /> shows the code for the class header.</p>
+        <listing xml:id="trees_lst-heap1a">
+            <title>Header for BinaryHeapPriorityQueue class.</title>
+            <program language="kotlin">
+                <code>
+class BinaryHeapPriorityQueue&lt;E: Comparable&lt;E&gt;&gt;() : PriorityQueueADT&lt;E&gt; {
+
+    var heap = mutableListOf&lt;E&gt;()
+
+    // more code to follow...
 }
-</code></program></listing>
+</code>
+            </program>
+        </listing>
 
-    <p>The next method we will implement is <c>insert</c>. The easiest, and most
-                efficient, way to add an item to a list is to append the item to
-                the end of the list. The good news about appending is that it guarantees
-                that we will maintain the complete tree property. The bad news about
-                appending is that we will very likely violate the heap structure
-                property. However, it is possible to write a method that will allow us
-                to regain the heap structure property by comparing the newly added item
-                with its parent. If the newly added item is less than its parent, then
-                we can swap the item with its parent. <xref ref="fig-percup"/> shows the
-                series of swaps needed to percolate the newly added item up to its
-                proper position in the tree.</p>
+        <p>The next method we will implement is <c>insert</c>. The easiest, and most efficient, way to add an item to a list is to append the item to the end of the list. The good news about appending is that it guarantees that we will maintain the complete tree property. The bad news about appending is that we will very likely violate the heap structure property. However, it is possible to write a method that will allow us to regain the heap structure property by comparing the newly added item with its parent. If the newly added item is less than its parent, then we can swap the item with its parent. <xref ref="fig-percup" /> shows the series of swaps needed to percolate the newly added item up to its proper position in the tree.</p>
 
-    <figure align="center" xml:id="fig-percup">
-      <caption>Percolate the New Node up to Its Proper Position</caption>
-      <image source="Trees/Figures/percUp.png" width="50%" alt="image"/>
-    </figure>
+        <figure align="center" xml:id="fig-percup">
+            <caption>Percolate the New Node up to Its Proper Position</caption>
+            <image source="Trees/Figures/percUp.png" width="50%" alt="image" />
+        </figure>
 
-    <p>Notice that when we percolate an item up, we are restoring the heap
-                property between the newly added item and the parent. We are also
-                preserving the heap property for any siblings. Of course, if the newly
-                added item is very small, we may still need to swap it up another level.
-                In fact, we may need to keep swapping until we get to the top of the
-                tree. <xref ref="trees_lst-heap-percolate-up"/> shows the <c>percolateUp</c> method, which
-                percolates a new item as far up in the tree as it needs to go to
-                maintain the heap property. This method is <c>private</c> as it is an internal operation.
-                The parent of the current node
-                can be computed by subtracting 1 from the index of the current node and dividing the result by 2.</p>
+        <p>Notice that when we percolate an item up, we are restoring the heap property between the newly added item and the parent. We are also preserving the heap property for any siblings. Of course, if the newly added item is very small, we may still need to swap it up another level. In fact, we may need to keep swapping until we get to the top of the tree. <xref ref="trees_lst-heap-percolate-up" /> shows the <c>percolateUp</c> method, which percolates a new item as far up in the tree as it needs to go to maintain the heap property. This method is <c>private</c> as it is an internal operation. The parent of the current node can be computed by subtracting 1 from the index of the current node and dividing the result by 2.</p>
 
-    <p>We are now ready to write the <c>insert</c> method (see <xref ref="trees_lst-heap-insert"/>). Most of the work in the
-                <c>insert</c> method is really done by <c>percolateUp</c>. Once a new item is
-                appended to the tree, <c>percolateUp</c> takes over and positions the new item
-                properly.</p>
+        <p>We are now ready to write the <c>insert</c> method (see <xref ref="trees_lst-heap-insert" />). Most of the work in the <c>insert</c> method is really done by <c>percolateUp</c>. Once a new item is appended to the tree, <c>percolateUp</c> takes over and positions the new item properly.</p>
 
-            <p>First, let's define a couple of convenience methods to make the code more readable, one that compares two items in the heap and another for swapping two items given their indexes:</p>
+        <p>First, let's define a convenience methods for swapping two items given their indexes:</p>
 
-            <listing xml:id="trees_lst-convenience"><caption>Convenience Methods</caption><program language="java"><code>
-    private int compareItemsAt(int index1, int index2) {
-        return heap.get(index1).compareTo(heap.get(index2));
+        <listing xml:id="trees_lst-convenience">
+            <title>Convenience Method for swapping items</title>
+            <program language="kotlin">
+                <code>
+    private fun swapItemsAt(index1: Int, index2: Int) {
+        val temporary = heap[index1]
+        heap[index1] = heap[index2]
+        heap[index2] = temporary
     }
+    </code>
+            </program>
+        </listing>
 
-    private void swapItemsAt(int index1, int index2) {
-        T temporary = heap.get(index1);
-        heap.set(index1, heap.get(index2));
-        heap.set(index2, temporary);
-    }
-    </code></program></listing>
+        <p>Now the methods for percolating up and inserting:</p>
 
-    <p>Now the methods for percolating up and inserting:</p>
-
-    <listing xml:id="trees_lst-heap-percolate-up">
-        <caption>The <c>percolateUp</c> Method</caption>
-        <program language="java" line-numbers="yes"><code>
-    private void percolateUp(int index) {
-        while ((index &gt; 0) &amp;&amp; (index - 1) / 2 >= 0) {
-            int parentIndex = (index - 1) / 2;
-            if (compareItemsAt(index, parentIndex) &lt; 0) {
-                swapItemsAt(index, parentIndex);
+        <listing xml:id="trees_lst-heap-percolate-up">
+            <title>The <c>percolateUp</c> Method</title>
+            <program language="kotlin" line-numbers="yes">
+                <code>
+    private fun percolateUp(index: Int) {
+        var index = index
+        while (index > 0) {
+            val parentIndex = (index - 1) / 2
+            if (heap[index] &lt; heap[parentIndex]) {
+                swapItemsAt(index, parentIndex)
             }
-            index = parentIndex;
+            index = parentIndex
         }
     }
-    </code></program></listing>
+    </code>
+            </program>
+        </listing>
+
+
+        <listing xml:id="trees_lst-heap-insert">
+            <title>The <c>insert</c> Method</title>
+            <program language="kotlin" line-numbers="yes">
+                <code>
+    override fun insert(element: E) {
+        heap.add(element)
+        percolateUp(heap.count() - 1)
+    }
+    </code>
+            </program>
+        </listing>
+
+
+        <p>With the <c>insert</c> method properly defined, we can now look at the <c>delete</c> method. Since the heap property requires that the root of the tree be the smallest item in the tree, finding the minimum item is easy. The hard part of <c>delete</c> is restoring full compliance with the heap structure and heap order properties after the root has been removed. We can restore our heap in two steps.</p>
+
+        <p>First, we will restore the root item by taking the last item in the list and moving it to the root position. Moving the last item maintains our heap structure property. However, we have probably destroyed the heap order property of our binary heap. Second, we will restore the heap order property by pushing the new root node down the tree to its proper position. <xref ref="fig-perc-down" /> shows the series of swaps needed to move the new root node to its proper position in the heap.</p>
+
+        <figure align="center" xml:id="fig-perc-down">
+            <caption>Percolating the Root Node down the Tree</caption>
+            <image source="Trees/Figures/percDown.png" width="50%" alt="image" />
+        </figure>
+
+        <p>In order to maintain the heap order property, we need to swap the root with its smaller child that is less than the root. After the initial swap, we may repeat the swapping process with a node and its children until the node is swapped into a position on the tree where it is already less than both children. The code for percolating a node down the tree is found in the <c>percolateDown</c> and <c>getSmallerChild</c> methods in <xref ref="trees_lst-heap4" />.</p>
+        <listing xml:id="trees_lst-heap4">
+            <title>The <c>percolateDown</c> and <c>getSmallerChild</c> Methods</title>
+            <program language="kotlin">
+                <code>
+    private fun percolateDown(index: Int) {
+        var index = index
+        while (2 * index + 1 &lt; heap.count()) {
+            val smallerChild = getSmallerChild(index)
+            if (heap[index] > heap[smallerChild]) {
+                swapItemsAt(index, smallerChild)
+            } else {
+                break
+            }
+            index = smallerChild
+        }
+    }
+
+    private fun getSmallerChild(index: Int): Int {
+        if (2 * index + 2 > heap.count() - 1) {
+            return 2 * index + 1
+        }
+        if (heap[2 * index + 1] &lt; heap[2 * index + 2]) {
+            return 2 * index + 1
+        }
+        return 2 * index + 2
+    }
+                </code>
+            </program>
+        </listing>
+        <p>The code for the <c>delete</c> operation is in <xref ref="trees_lst-delete" />. Note that once again the hard work is handled by a helper function, in this case <c>percolateDown</c>.</p>
+        <listing xml:id="trees_lst-delete">
+            <title>The <c>delete</c> Method</title>
+            <program language="kotlin">
+                <code>
+    override fun delete(): E? {
+        if (heap.count() == 0) {
+            return null
+        }
+
+        val result = heap[0]
+        swapItemsAt(0, heap.count() - 1)
+        heap.removeLast()
+        percolateDown(0)
+        return result
+    }
+           </code>
+            </program>
+        </listing>
+
+        <p>To finish our discussion of binary heaps, we will return to our second constructor, which is to build an entire heap from a list of keys. The first approach you might think of may be like the following. Given a list of keys, you could build a heap by inserting each key one at a time. Since you are starting with an empy list, it is sorted and you could use binary search to find the right position to insert the next key at a cost of approximately <m>O(\log{n})</m> operations. However, remember that inserting an item in the middle of the list may require <m>O(n)</m> operations to shift the rest of the list over to make room for the new key. Therefore, to insert <m>n</m> keys into the heap would require a total of <m>O(n \log{n})</m> operations. However, if we start with an entire list then we can build the whole heap in <m>O(n)</m> operations. <xref ref="trees_lst-heap6" /> shows the code to build the entire heap.</p>
+        <listing xml:id="trees_lst-heap6">
+            <title>BinaryHeapPriorityQueue class header, showing new constructor.</title>
+
+
+            <program language="kotlin" line-numbers="yes">
+                <code>
+class BinaryHeapPriorityQueue&lt;E: Comparable&lt;E>>() : PriorityQueueADT&lt;E> {
+
+    var heap = mutableListOf&lt;E>()
+
+    // Construct a binary heap from a list using the 
+    // so-called "heapify" algorithm.
+    constructor(nonHeap: List&lt;E>): this() {
+
+        if (nonHeap.count() > 0) {
+            heap = nonHeap.toMutableList()  // copies list
+
+            var currIndex = heap.count() / 2 - 1
+            while (currIndex >= 0) {
+                percolateDown(currIndex)
+                currIndex -= 1
+            }
+        }
+    }
+            </code>
+            </program>
+        </listing>
 
         <note>
-        <title>Java Note</title>
-        <p>The comparison for <c>index &gt; 0</c> in line 2 is required because when <c>index</c> is zero, <c>(index - 1) / 2</c> evaluates to zero in Java.</p>
-    </note>
+            <title>Kotlin note</title>
+            <p>In the above definition, we have created a secondary constructor. The idea is that instead of constructing an empty heap, via:</p>
 
-    <listing xml:id="trees_lst-heap-insert"><caption>The <c>insert</c> Method</caption>
-        <program language="java" line-numbers="yes"><code>
-    public void insert(T item) {
-        heap.add(item);
-        percolateUp(heap.size() - 1);
-    }
-    </code></program></listing>
+            <program language="kotlin">val myPq = BinaryHeapPriorityQueue&lt;Int>()</program>
 
+            <p>we can instead create one from a list of values, such as:</p>
+            <program language="kotlin">val myPq = BinaryHeapPriorityQueue&lt;Int>(listOf(9, 6, 5, 2, 3))</program>
 
-    <p>With the <c>insert</c> method properly defined, we can now look at the <c>delete</c> method. Since the heap property requires that the root of the tree be the smallest item in the tree, finding the minimum item is easy. The hard part of <c>delete</c> is restoring full compliance with the heap structure and heap order properties after the root has been removed. We can restore our heap in two steps.</p>
+            <p>The declaration <c>constructor</c> in line 7 means that we are creating a different constructor than the first. Every constructor that isn't the default constructor must call the default constructor first, which is why we include the call to <c>this</c> in line 7.</p>
+        </note>
 
-    <p>First, we will restore the root item by taking the last item in the list and moving it to the root position. Moving the last item maintains our heap structure property. However, we have probably destroyed the heap order property of our binary heap. Second, we will restore the heap order property by pushing the new root node down the tree to its proper position. <xref ref="fig-perc-down"/> shows the series of swaps needed to move the new root node to its proper position in the heap.</p>
-
-    <figure align="center" xml:id="fig-perc-down">
-      <caption>Percolating the Root Node down the Tree</caption>
-      <image source="Trees/Figures/percDown.png" width="50%" alt="image"/>
-    </figure>
-
-    <p>In order to maintain the heap order property, we need to swap
-                the root with its smaller child that is less than the root. After the initial
-                swap, we may repeat the swapping process with a node and its children
-                until the node is swapped into a position on the tree where it is
-                already less than both children. The code for percolating a node down
-                the tree is found in the <c>percolateDown</c> and <c>getSmallerChild</c> methods in
-                <xref ref="trees_lst-heap4"/>.</p>
-    <listing xml:id="trees_lst-heap4">
-        <caption>The <c>percolateDown</c> and <c>getSmallerChild</c> Methods</caption>
-        <program language="java"><code>
-    private void percolateDown(int index) {
-        while (2 * index + 1 &lt; heap.size()) {
-            int smallerChild = getSmallerChild(index);
-            if (compareItemsAt(index, smallerChild) > 0) {
-                swapItemsAt(index, smallerChild);
-            } else {
-                break;
-            }
-            index = smallerChild;
-        }
-    }
-
-    private int getSmallerChild(int index) {
-        if (2 * index + 2 &gt; heap.size() - 1) {
-            return 2 * index + 1;
-        }
-        if (compareItemsAt(2 * index + 1, 2 * index + 2) &lt; 0) {
-            return 2 * index + 1;
-        }
-        return 2 * index + 2;
-    }
-                </code></program></listing>
-    <p>The code for the <c>delete</c> operation is in <xref ref="trees_lst-delete"/>. Note
-                that once again the hard work is handled by a helper function, in this
-                case <c>percolateDown</c>.</p>
-            <listing xml:id="trees_lst-delete">
-                <caption>The <c>delete</c> Method</caption>
-            <program language="java"><code>
-    public T delete() {
-        T result = heap.get(0);
-        swapItemsAt(0, heap.size() - 1);
-        heap.remove(heap.size() - 1);
-        percolateDown(0);
-        return result;
-    }
-           </code></program></listing>
-
-    <p>To finish our discussion of binary heaps, we will look at a method to
-                build an entire heap from a list of keys. The first method you might
-                think of may be like the following. Given a list of keys, you could
-                build a heap by inserting each key one at a time. Since you are
-                starting with an empy list, it is sorted and you could use
-                binary search to find the right position to insert the next key at a
-                cost of approximately <m>O(\log{n})</m> operations. However, remember
-                that inserting an item in the middle of the list may require
-                <m>O(n)</m> operations to shift the rest of the list over to make
-                room for the new key. Therefore, to insert <m>n</m> keys into the
-                heap would require a total of <m>O(n \log{n})</m> operations.
-                However, if we start with an entire list then we can build the whole
-                heap in <m>O(n)</m> operations. <xref ref="trees_lst-heap6"/> shows the code
-                to build the entire heap.</p>
-            <listing xml:id="trees_lst-heap6"><program language="java"><code>
-    public void heapify(T[] nonHeap) {
-        heap = new ArrayList&gt;T&gt;(); // eliminate old data
-
-        if (nonHeap.length != 0) {
-            // copy non-heap into the new heap
-            for (int i = 0; i &gt; nonHeap.length; i++) {
-                heap.add(nonHeap[i]);
-            }
-
-            int currIndex = heap.size() / 2 - 1;
-            while (currIndex >= 0) {
-                percolateDown(currIndex);
-                currIndex = currIndex - 1;
-            }
-        }
-    }
-    </code></program></listing>
-    <figure align="center" xml:id="fig-buildheap">
-      <caption>Building a Heap from the List [9, 6, 5, 2, 3]</caption>
-      <image source="Trees/Figures/buildheap.png" width="50%" alt="image"/>
-    </figure>
-    <p><xref ref="fig-buildheap"/> shows the swaps that the <c>heapify</c> method
-                makes as it moves the nodes in an initial tree of [9, 6, 5, 2, 3] into
-                their proper positions. Although we start out in the middle of the tree
-                and work our way back toward the root, the <c>percolateDown</c> method ensures
-                that the largest child is always moved down the tree. Because the heap is a
-                complete binary tree, any nodes past the halfway point will be leaves
-                and therefore have no children. Notice that when <c>i = 0</c>, we are
-                percolating down from the root of the tree, so this may require multiple
-                swaps. As you can see in the rightmost two trees of
-                <xref ref="fig-buildheap"/>, first the 9 is moved out of the root position,
-                but after 9 is moved down one level in the tree, <c>percolateDown</c> ensures
-                that we check the next set of children farther down in the tree to
-                ensure that it is pushed as low as it can go. In this case it results in
-                a second swap with 3. Now that 9 has been moved to the lowest level of
-                the tree, no further swapping can be done. It is useful to compare the
-                list representation of this series of swaps with the tree representation
-                shown in <xref ref="fig-buildheap"/></p>
-    <pre>start  [9, 6, 5, 2, 3]
+        <figure align="center" xml:id="fig-buildheap">
+            <caption>Building a Heap from the List [9, 6, 5, 2, 3]</caption>
+            <image source="Trees/Figures/buildheap.png" width="50%" alt="image" />
+        </figure>
+        <p><xref ref="fig-buildheap" /> shows the swaps that the <c>heapify</c> method makes as it moves the nodes in an initial tree of [9, 6, 5, 2, 3] into their proper positions. Although we start out in the middle of the tree and work our way back toward the root, the <c>percolateDown</c> method ensures that the largest child is always moved down the tree. Because the heap is a complete binary tree, any nodes past the halfway point will be leaves and therefore have no children. Notice that when <c>i = 0</c>, we are percolating down from the root of the tree, so this may require multiple swaps. As you can see in the rightmost two trees of <xref ref="fig-buildheap" />, first the 9 is moved out of the root position, but after 9 is moved down one level in the tree, <c>percolateDown</c> ensures that we check the next set of children farther down in the tree to ensure that it is pushed as low as it can go. In this case it results in a second swap with 3. Now that 9 has been moved to the lowest level of the tree, no further swapping can be done. It is useful to compare the list representation of this series of swaps with the tree representation shown in <xref ref="fig-buildheap" /></p>
+        <pre>start  [9, 6, 5, 2, 3]
 i = 1  [9, 2, 5, 6, 3]
 i = 0  [2, 3, 5, 6, 9]</pre>
 
-<p>The complete binary heap implementation can be seen in <xref ref="lst_completeheap"/>.</p>
-<listing xml:id="lst_completeheap">
-    <caption>Complete <c>BinaryHeap</c> Class</caption>
-    <program xml:id="completeheap" language="java">
-      <code>
-import java.util.ArrayList;
-
-class BinaryHeap&lt;T extends Comparable&lt;T&gt;&gt; {
-    ArrayList&lt;T&gt; heap;
-
-    public BinaryHeap() {
-        this.heap = new ArrayList&lt;T&gt;();
-    }
-
-    private int compareItemsAt(int index1, int index2) {
-        return heap.get(index1).compareTo(heap.get(index2));
-    }
-
-    private void swapItemsAt(int index1, int index2) {
-        T temporary = heap.get(index1);
-        heap.set(index1, heap.get(index2));
-        heap.set(index2, temporary);
-    }
-
-    private void percolateUp(int index) {
-        while ((index &gt; 0) &amp;&amp; (index - 1) / 2 &gt;= 0) {
-            int parentIndex = (index - 1) / 2;
-            if (compareItemsAt(index, parentIndex) &lt; 0) {
-                swapItemsAt(index, parentIndex);
-            }
-            index = parentIndex;
-        }
-    }
-
-    public void insert(T item) {
-        heap.add(item);
-        percolateUp(heap.size() - 1);
-    }
-
-    private void percolateDown(int index) {
-        while (2 * index + 1 &lt; heap.size()) {
-            int smallerChild = getSmallerChild(index);
-            if (compareItemsAt(index, smallerChild) &gt; 0) {
-                swapItemsAt(index, smallerChild);
-            } else {
-                break;
-            }
-            index = smallerChild;
-        }
-    }
-
-    private int getSmallerChild(int index) {
-        if (2 * index + 2 &gt; heap.size() - 1) {
-            return 2 * index + 1;
-        }
-        if (compareItemsAt(2 * index + 1, 2 * index + 2) &lt; 0) {
-            return 2 * index + 1;
-        }
-        return 2 * index + 2;
-    }
-
-    public T delete() {
-        T result = heap.get(0);
-        swapItemsAt(0, heap.size() - 1);
-        heap.remove(heap.size() - 1);
-        percolateDown(0);
-        return result;
-    }
-
-    public void heapify(T[] nonHeap) {
-        heap = new ArrayList&lt;T&gt;(); // eliminate old data
-
-        if (nonHeap.length != 0) {
-            // copy non-heap into the new heap
-            for (int i = 0; i &lt; nonHeap.length; i++) {
-                heap.add(nonHeap[i]);
-            }
-
-            int currIndex = heap.size() / 2 - 1;
-            while (currIndex &gt;= 0) {
-                percolateDown(currIndex);
-                currIndex = currIndex - 1;
-            }
-        }
-    }
-
-    public T getMin() {
-        return heap.get(0);
-    }
-
-    public boolean isEmpty() {
-        return heap.siz;
-    }
-
-    public int size() {
-        return heap.size();
-    }
-
-    public String toString() {
-        return heap.toString();
-    }
-}
+        <p>The complete binary heap implementation can be seen in <xref ref="lst_completeheap" />.</p>
+        <listing xml:id="lst_completeheap">
+            <title>Complete <c>BinaryHeapPriorityQueue</c> Class</title>
+            <program xml:id="completeheap" language="kotlin">
+                <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/BinaryHeapPriorityQueue.kt" />
         </code>
-    </program>
-</listing>
+            </program>
+        </listing>
 
-<p>Here is the program we saw in <xref ref="trees_binary-heap-operations"/>:</p>
-<program label="lst-heapOps" language="java" interactive="activecode">
-    <code>
-import java.util.ArrayList;
-<xi:include parse="text" href="./BinaryHeap.java"/>
+        <p>Here is the program we saw in <xref ref="trees_binary-heap-operations" />:</p>
+        <program label="lst-heapOps" language="kotlin" interactive="activecode">
+            <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/PriorityQueueADT.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/BinaryHeapPriorityQueue.kt" />
 ^^^^
-public class BinaryHeapTest {
-    public static void main(String[] args) {
-        BinaryHeap&lt;Integer&gt; myHeap = new BinaryHeap&lt;&gt;();
-        myHeap.insert(5);
-        myHeap.insert(7);
-        myHeap.insert(3);
-        myHeap.insert(11);
-        System.out.println("Min value: " + myHeap.getMin());
-
-        System.out.println("Deleting items: ");
-        System.out.println(myHeap.delete());
-        System.out.println(myHeap.delete());
-        System.out.println(myHeap.delete());
-        System.out.println(myHeap.delete());
-    }
-}
+<xi:include parse="text" href="samplecode/src/main/kotlin/PqIntTest.kt" />
         </code>
-  </program>
-    <p>The assertion that we can build the heap in <m>O(n)</m> may seem a
-                bit mysterious at first, and a proof is beyond the scope of this book.
-                However, the key to understanding that you can build the heap in
-                <m>O(n)</m> is to remember that the <m>\log{n}</m> factor is
-                derived from the height of the tree. For most of the work in
-                <c>heapify</c>, the tree is shorter than <m>\log{n}</m>.</p>
+        </program>
 
-    <p>Using the fact that you can build a heap from a list in <m>O(n)</m>
-                time, you will construct a sorting algorithm that uses a heap and sorts
-                a list in <m>O(n\log{n})</m> as an exercise at the end of this
-                chapter.</p>
-  </subsection>
+        <!-- Add something with an object with both a priority and data to show we can do it -->
+
+        <p>The assertion that we can build the heap in <m>O(n)</m> may seem a bit mysterious at first, and a proof is beyond the scope of this book. However, the key to understanding that you can build the heap in <m>O(n)</m> is to remember that the <m>\log{n}</m> factor is derived from the height of the tree. For most of the work in the heapify algorithm, the tree is shorter than <m>\log{n}</m>.</p>
+
+        <p>Using the fact that you can build a heap from a list in <m>O(n)</m> time, you will construct a sorting algorithm that uses a heap and sorts a list in <m>O(n\log{n})</m> as an exercise at the end of this chapter.</p>
+    </subsection>
 </section>
