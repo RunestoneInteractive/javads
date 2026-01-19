@@ -2,8 +2,8 @@
 <chapter xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en-US" xml:id="chapter-graphs">
   <title>Graphs and Graphing Algorithms</title>
   <xi:include href="./Objectives.ptx"/>
-  <!---
   <xi:include href="./VocabularyandDefinitions.ptx"/>
+  <!---
   <xi:include href="./TheGraphAbstractDataType.ptx"/>
   <xi:include href="./AnAdjacencyMatrix.ptx"/>
   <xi:include href="./AnAdjacencyList.ptx"/>
