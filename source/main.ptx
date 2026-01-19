@@ -102,8 +102,8 @@
     <xi:include href="./Trees/toctree.ptx" />
     <xi:include href="./BSTs/toctree.ptx" />
     <xi:include href="./PriorityQueues/toctree.ptx" />
-    <!-- 
     <xi:include href="./Graphs/toctree.ptx" />
+    <!-- 
     <xi:include href="./Advanced/toctree.ptx" /> -->
     <backmatter>
       <!-- <xi:include href="./AppendixOOP/toctree.ptx" />
