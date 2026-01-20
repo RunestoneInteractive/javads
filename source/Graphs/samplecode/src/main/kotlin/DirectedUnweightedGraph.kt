@@ -1,4 +1,4 @@
-class UndirectedUnweightedGraph<T> {
+class DirectedUnweightedGraph<T> {
 
     // T represents the id, or key, for each vertex.
     // Each vertex maps to a set of vertices.
@@ -23,20 +23,17 @@ class UndirectedUnweightedGraph<T> {
         addVertex(begin)
         addVertex(end)
 
-        // Local copies for null safety. We just verified they are there,
-        // so not null.
+        // Local copy for null safety.
+        // We just verified vertex is there, so not null.
         val beginNeighbors = neighbors[begin]!!
-        val endNeighbors = neighbors[end]!!
 
-        // Check if already present. Graph is undirected,
-        // so checking one direction is sufficient
+        // Check if already present.
         if (end in beginNeighbors) {
             return false
         }
 
         // Add the edge.
         beginNeighbors.add(end)
-        endNeighbors.add(begin)
         return true
     }
 
@@ -54,6 +51,12 @@ class UndirectedUnweightedGraph<T> {
     // Returns a set of all vertex keys in the graph
     fun getVertices(): Set<T> {
         return neighbors.keys
+    }
+
+    // Returns a set of all neighbors to a vertex.
+    // Returns null if the vertex is not in the graph.
+    fun getNeighbors(key: T): Set<T>? {
+        return neighbors[key]
     }
 
 

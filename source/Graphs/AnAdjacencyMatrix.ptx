@@ -19,10 +19,10 @@
             However, notice that most of the cells in the matrix are empty;
             we can say that this matrix is <em>sparse</em>. A
             matrix is not a very efficient way to store sparse data. In fact, in
-            Python you must go out of your way to even create a matrix structure
+            Kotlin you must go out of your way to even create a matrix structure
             like the one in <xref ref="i197_id1fig-adjmat"/>.</p>
   <p>The adjacency matrix is a good implementation for a graph when the
-            number of edges is large. But what do we mean by large? How many edges
+            number of edges is large relative to the number of vertices. But what do we mean by large? How many edges
             would be needed to fill the matrix? Since there is one row and one
             column for every vertex in the graph, the number of edges required to
             fill the matrix is <m>|V|^2</m>. A matrix is full when every vertex
