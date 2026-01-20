@@ -5,8 +5,8 @@
   <xi:include href="./VocabularyandDefinitions.ptx"/>
   <xi:include href="./TheGraphAbstractDataType.ptx"/>
   <xi:include href="./AnAdjacencyMatrix.ptx"/>
-  <!---
   <xi:include href="./AnAdjacencyList.ptx"/>
+  <!---
   <xi:include href="./Implementation.ptx"/>
   <xi:include href="./TheWordLadderProblem.ptx"/>
   <xi:include href="./BuildingtheWordLadderGraph.ptx"/>
