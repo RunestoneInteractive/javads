@@ -1,45 +1,19 @@
 <?xml version="1.0"?>
-<section xml:id="graphs_the-graph-abstract-data-type">
+<section xml:id="graphs_the-graph-abstract-data-type" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The Graph Abstract Data Type</title>
   <p>The graph abstract data type is defined as a collection of vertices
-            and edges. Vertices may be either connected to each other or isolated. Edges join
-            two vertices and may be weighted.</p>
-  <p>
-    <ul>
-      <li>
-        <p><c>Graph()</c> creates a new empty graph.</p>
-      </li>
-      <li>
-        <p><c>addVertex(vert)</c> adds an instance of <c>Vertex</c> to the graph.</p>
-      </li>
-      <li>
-        <p><c>addEdge(fromVert, toVert)</c> adds a new directed edge to the graph
-                    that connects two vertices.</p>
-      </li>
-      <li>
-        <p><c>addEdge(fromVert, toVert, weight)</c> adds a new weighted directed
-                    edge to the graph that connects two vertices.</p>
-      </li>
-      <li>
-        <p><c>getVertex(vertKey)</c> finds the vertex in the graph named
-                    <c>vertKey</c>.</p>
-      </li>
-      <li>
-        <p><c>getVertexList()</c> returns the list of all vertices in the graph.</p>
-      </li>
-      <li>
-        <p><c>getVertexKeys()</c> returns a <c>Set</c> of all the vertex keys in the graph.</p>
-      </li>
-      <li>
-        <p><c>containsVertex(vertex)</c> returns <c>true</c>  if the given vertex is in the graph, <c>false</c>
-                    otherwise.</p>
-      </li>
-    </ul>
-  </p>
-  <p>Now that we have looked at the definition for the graph ADT,
-            there are several ways we can implement it in Java. We will see that there are
-            trade-offs in using different representations to implement the ADT
-            described above. There are two well-known implementations of a graph,
-            the <term>adjacency matrix</term> and the <term>adjacency list</term>. We will explain
-            both of these options, and then implement one as a Java class.</p>
+    and edges. Vertices may be either connected to each other or isolated. Edges join two vertices and may be weighted. Here is a Kotlin interface representing the ADT.</p>
+
+        <listing xml:id="graphs_ADT">
+        <title>Graph Abstract Data Type as an interface</title>
+        <program language="kotlin" line-numbers="yes">
+            <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/GraphADT.kt" />                 
+          </code>
+        </program>
+    </listing>
+
+    <p>This ADT is for a <em>weighted</em> graph. To keep things simple, we have not created a second ADT for an unweighted graph, though we could have. Instead, we'll just use this ADT for either case. If we wish to use this ADT for an unweighted graph, we'll just use <c>addEdge</c> and not specify a weight. Line 10 in the definition above puts in a default weight of zero, which we can ignore. Likewise, if we want to retrieve all neighbors for a particular vertex without concern about weights, we can use the <c>getNeighbors</c> method. Therefore, we can use this ADT for an unweighted graph by simply ignoring the weights.</p>
+
+    <p>Now that we have looked at the definition for the graph ADT, there are several ways we can implement it in Java. We will see that there are trade-offs in using different representations to implement the ADT described above. There are two well-known implementations of a graph, the <term>adjacency matrix</term> and the <term>adjacency list</term>. We will explain both of these options, and then implement one in Kotlin.</p>
 </section>
