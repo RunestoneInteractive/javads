@@ -7,9 +7,9 @@
   <xi:include href="./AnAdjacencyMatrix.ptx"/>
   <xi:include href="./AnAdjacencyList.ptx"/>
   <xi:include href="./Implementation.ptx"/>
-  <!---
   <xi:include href="./TheWordLadderProblem.ptx"/>
   <xi:include href="./BuildingtheWordLadderGraph.ptx"/>
+  <!---
   <xi:include href="./ImplementingBreadthFirstSearch.ptx"/>
   <xi:include href="./BreadthFirstSearchAnalysis.ptx"/>
   <xi:include href="./TheKnightsTourProblem.ptx"/>

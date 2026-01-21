@@ -107,3 +107,6 @@ codechat_config.yaml
 
 # Kotlin sometimes generates jar files
 *.jar
+
+# File of words used to test word letter code
+words.txt
