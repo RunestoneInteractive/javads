@@ -1,12 +1,12 @@
-class AdjacencyListGraph<T>: GraphADT<T> {
+class AdjacencyListGraph<V>: GraphADT<V> {
 
-    // T represents the id, or key, for each vertex.
-    // Each vertex maps to a set of vertices.
-    // Each set is an "adjacency set" of neighbors.
-    var neighbors = mutableMapOf<T, MutableMap<T, Double>>()
+    // V represents the type of the id for each vertex.
+    // Each vertex maps to a collection of neighbors.
+    // This collection maps each neighbor to the weight of the edge.
+    var neighbors = mutableMapOf<V, MutableMap<V, Double>>()
 
     // Returns true if vertex added, false if not (because it was already there)
-    override fun addVertex(id: T): Boolean {
+    override fun addVertex(id: V): Boolean {
         if (id !in neighbors) {
             neighbors[id] = mutableMapOf()
             return true
@@ -20,46 +20,40 @@ class AdjacencyListGraph<T>: GraphADT<T> {
     // A default weight of 0 is placed if the function
     // is called without specifying a weight; this is handled
     // via the interface.
-    override fun addEdge(begin: T, end: T, weight: Double) {
+    override fun addEdge(begin: V, end: V, weight: Double) {
         // Make sure vertices are in the graph. (addVertex will
         // just return false if already there.)
         addVertex(begin)
         addVertex(end)
-
-        // Local copy for null safety.
-        // We just verified vertex is there, so not null.
-        val beginNeighbors = neighbors[begin]!!
-
-        // Add or replace the edge.
-        beginNeighbors[end] = weight
+        neighbors[begin]!![end] = weight
     }
 
     // Returns true if vertex is present, false if not
-    override fun containsVertex(id: T): Boolean {
+    override fun containsVertex(id: V): Boolean {
         return id in neighbors
     }
 
     // Returns true if edge is present, false if not
-    override fun containsEdge(begin: T, end: T): Boolean {
+    override fun containsEdge(begin: V, end: V): Boolean {
         val beginNeighbors = neighbors[begin]
         return beginNeighbors != null && end in beginNeighbors
     }
 
     // Returns a set of all vertex keys in the graph
-    override fun getVertices(): Set<T> {
+    override fun getVertices(): Set<V> {
         return neighbors.keys
     }
 
     // Returns a set of all neighbors to a vertex.
     // Returns null if the vertex is not in the graph.
-    override fun getNeighbors(id: T): Set<T>? {
+    override fun getNeighbors(id: V): Set<V>? {
         return neighbors[id]?.keys
     }
 
     // Returns a map of all neighbors to a vertex,
     // and the weights of the edges.
     // Returns null if the vertex is not in the graph.
-    override fun getNeighborsAndWeights(id: T): Map<T, Double>? {
+    override fun getNeighborsAndWeights(id: V): Map<V, Double>? {
         return neighbors[id]
     }
 }
