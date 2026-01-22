@@ -10,8 +10,8 @@
   <xi:include href="./TheWordLadderProblem.ptx"/>
   <xi:include href="./BuildingtheWordLadderGraph.ptx"/>
   <xi:include href="./ImplementingBreadthFirstSearch.ptx"/>
-  <!---
   <xi:include href="./BreadthFirstSearchAnalysis.ptx"/>
+  <!---
   <xi:include href="./TheKnightsTourProblem.ptx"/>
   <xi:include href="./BuildingtheKnightsTourGraph.ptx"/>
   <xi:include href="./ImplementingKnightsTour.ptx"/>

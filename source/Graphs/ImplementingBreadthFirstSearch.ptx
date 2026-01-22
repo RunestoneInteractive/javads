@@ -5,9 +5,9 @@
 
   <p>Given a starting vertex <m>s</m> of a graph <m>G</m>, a breadth first search proceeds by exploring edges in the graph to find all the vertices in <m>G</m> for which there is a path from <m>s</m>. The remarkable thing about a breadth-first search is that it finds <em>all</em> the vertices that are a distance <m>k</m> from <m>s</m> before it finds <em>any</em> vertices that are a distance <m>k+1</m>. One good way to visualize what the breadth-first search algorithm does is to imagine that it is building a tree, one level of the tree at a time. A breadth first search adds all children of the starting vertex before it begins to discover any of the grandchildren.</p>
 
-  <p>The BFS algorithm creates two new maps. <c>distance</c> stores how far each vertex is from a starting point. <c>previous</c> stores, for each vertex, the previous vertex in the search).</p>
+  <p>The BFS algorithm creates two new maps. <c>distance</c> stores how far each vertex is from a starting point. The map <c>previous</c> stores, for each vertex, the previous vertex in the search).</p>
 
-  <p>BFS needs to keep track of its progress, in that it needs to know which vertices it has already visited. The <c>previous</c> is useful for this. It starts off empty, indicating that no vertices have yet been visited. As we visit vertices, we will add them to the <c>previous</c> map, storing within it which vertex we had previously been visiting.</p>
+  <p>BFS needs to keep track of its progress, in that it needs to know which vertices it has already visited. The map <c>previous</c> is useful for this. It starts off empty, indicating that no vertices have yet been visited. As we visit vertices, we will add them to the <c>previous</c> map, storing within it which vertex we had previously been visiting.</p>
 
 
   <p>The breadth-first search algorithm shown in <xref ref="graphs_lst-wordbucket-bfs" /> below uses the adjacency list graph representation we developed earlier. In addition it uses a queue, a crucial point as we will see, to decide which vertex to explore next.</p>

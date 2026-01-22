@@ -4,9 +4,9 @@
 //   distance: keys are the vertices, values are distance from start
 //       shortest path
 
-data class BfsResults<V>(
-    val previous: Map<V, V?>,
-    val distance: Map<V, Int>
+data class BfsResults<T>(
+    val previous: Map<T, T?>,
+    val distance: Map<T, Int>
 )
 
 fun <V> bfs(graph: GraphADT<V>, start: V): BfsResults<V> {
