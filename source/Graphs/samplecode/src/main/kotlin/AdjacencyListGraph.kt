@@ -56,4 +56,12 @@ class AdjacencyListGraph<T>: GraphADT<T> {
     override fun getNeighborsAndWeights(id: T): Map<T, Double>? {
         return neighbors[id]
     }
+
+    override fun toString(): String {
+        var result = ""
+        for (vertex in neighbors.keys) {
+            result += vertex.toString() + ": " + neighbors[vertex].toString() + "\n"
+        }
+        return result
+    }
 }
