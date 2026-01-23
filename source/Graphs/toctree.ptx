@@ -13,8 +13,8 @@
   <xi:include href="./BreadthFirstSearchAnalysis.ptx"/>
   <xi:include href="./TheKnightsTourProblem.ptx"/>
   <xi:include href="./BuildingtheKnightsTourGraph.ptx"/>
-  <!---
   <xi:include href="./ImplementingKnightsTour.ptx"/>
+  <!---
   <xi:include href="./KnightsTourAnalysis.ptx"/>
   <xi:include href="./GeneralDepthFirstSearch.ptx"/>
   <xi:include href="./DepthFirstSearchAnalysis.ptx"/>
