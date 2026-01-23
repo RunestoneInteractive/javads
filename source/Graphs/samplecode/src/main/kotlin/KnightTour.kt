@@ -23,7 +23,7 @@ fun <T> knightTour(
     // Try each neighbor
     val neighbors = graph.getNeighbors(newVertex)!!   // We know every node has a neighbor
     for (neighbor in neighbors) {
-        if (neighbor !in tourPath) {
+        if (neighbor !in tourVertices) {
             val completeTour = knightTour(graph, tourVertices, tourPath, neighbor, limit)
             if (completeTour != null) { // found one!
                 return completeTour
