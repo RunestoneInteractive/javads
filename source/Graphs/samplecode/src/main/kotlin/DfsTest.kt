@@ -1,0 +1,15 @@
+fun main() {
+    val g = AdjacencyListGraph<String>()
+    g.addEdge("A", "B")
+    g.addEdge("A", "D")
+    g.addEdge("B", "C")
+    g.addEdge("B", "D")
+    g.addEdge("D", "E")
+    g.addEdge("E", "B")
+    g.addEdge("E", "F")
+    g.addEdge("F", "C")
+    val dfsSolver = DfsSolver(g, "A")
+    println(dfsSolver.previous)
+    println(dfsSolver.distance)
+    println(dfsSolver.closingTime)
+}
