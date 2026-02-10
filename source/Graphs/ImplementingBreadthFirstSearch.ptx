@@ -9,6 +9,7 @@
 
   <p>BFS needs to keep track of its progress, in that it needs to know which vertices it has already visited. The map <c>previous</c> is useful for this. It starts off empty, indicating that no vertices have yet been visited. As we visit vertices, we will add them to the <c>previous</c> map, storing within it which vertex we had previously been visiting.</p>
 
+  <p>BFS needs to return both of these maps to the caller. There are multiple approaches for returning multiple values within Kotlin. We use an approach here where we create a new class named <c>BfsSolver</c>, which stores the maps as instance variables. The <c>init</c> method of the class initializes them, and then calls <c>bfs</c> which is implemented as a method. This approach will have further benefit later on this chapter.</p>
 
   <p>The breadth-first search algorithm shown in <xref ref="graphs_lst-wordbucket-bfs" /> below uses the adjacency list graph representation we developed earlier. In addition it uses a queue, a crucial point as we will see, to decide which vertex to explore next.</p>
 
@@ -22,8 +23,9 @@
   </listing>
 
 
-  <p>BFS begins at the starting vertex <c>start</c>. We add it to <c>previous</c> with a value of null to indicate that no other vertex came before it, and to record that we have visited this vertex. We also add it to the <c>distance</c> map with a value of 0. Finally, <c>start</c> is placed in a queue. (lines&#xA0;18&#x2013;19).</p>
-  <p>The next step is to begin to systematically explore vertices at the front of the queue. We explore each new node at the front of the queue by iterating over its neighbors. As each neighboring vertex is examined, we check to see if it had previously been visited. If it had not been visited previously, the following things happen:</p>
+  <p>BFS begins at the starting vertex <c>start</c>. In the <c>init</c> method, we add it to <c>previous</c> with a value of null to indicate that no other vertex came before it, and to record that we have visited this vertex. We then call the <c>bfs</c> method.</p>
+  
+  <p>Our first step in the <c>bfs</c> method is to add out starting vertex to a queue. (lines&#xA0;12&#x2013;13). The next step is to begin to systematically explore vertices at the front of the queue. We explore each new node at the front of the queue by iterating over its neighbors. As each neighboring vertex is examined, we check to see if it had previously been visited. If it had not been visited previously, the following things happen:</p>
   <p>
     <ol marker="1">
       <li>
@@ -61,7 +63,7 @@
   </figure>
   <p>You should continue to work through the algorithm on your own so that you are comfortable with how it works. <xref ref="fig-bfsdone" /> shows the final breadth-first search tree after all the vertices in <xref ref="graphs_buildingthe-word-ladder-graph" /> have been expanded. The amazing thing about the breadth-first search solution is that we have not only solved the FOOL&#x2013;SAGE problem we started out with, but we have solved many other problems along the way. We can start at any vertex in the breadth-first search tree and follow the predecessor arrows back to the root to find the shortest word ladder from any word back to FOOL.</p>
 
-  <p><xref ref="graphs_lst-word-ladder-driver" /> shows a <c>main</c> method for testing the preceding code. After calling <c>bfs</c> and getting the results, the code starts at the end vertex and follows the predecessor links to print out the word ladder, in reverse order.</p>
+  <p><xref ref="graphs_lst-word-ladder-driver" /> shows a <c>main</c> method for testing the preceding code. After generating a <c>BfsSolver</c> object (which internally calls <c>bfs</c>), the code starts at the end vertex and follows the predecessor links to print out the word ladder, in reverse order.</p>
   <listing xml:id="graphs_lst-word-ladder-driver">
     <title>BFS tester</title>
     <program language="kotlin">

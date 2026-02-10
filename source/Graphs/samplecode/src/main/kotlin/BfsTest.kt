@@ -4,12 +4,12 @@ fun main() {
     val startWord = "fool"
     val endWord = "sage"
 
-    val (previous, distance) = bfs(graph, startWord)
+    val bfsSolution = BfsSolver(graph, startWord)
 
     // Traverse backwards from end word
     var current: String? = endWord
     while (current != null) {
         println(current)
-        current = previous[current]
+        current = bfsSolution.previous[current]
     }
 }
