@@ -8,59 +8,62 @@
     the depth-first search algorithm finds a dead end (a place in the graph
     where there are no more moves possible) it backs up the tree to the next
     deepest vertex that allows it to make a legal move.</p>
-  <p>The <c>knightTour</c> function shown in <xref ref="graphs_lst-knight" /> takes five parameters: the graph; the set of vertices visited up to this point; the ordered list of vertices visied up to this point; the vertex in the graph we wish to explore; and <c>limit</c>, the number of nodes in the path we hope to find. The parameters <c>tourVertices</c> and <c>tourPath</c> redundantly contain the same data, but for efficiency purposes, we need both. We need the order that <c>tourPath</c> contains to see the actual sequence that the knight's path follows. But as the algorithm proceeds, we also need to know which vertices were seen previously. We could look those up in <c>tourPath</c>, but that would take <m>O(n)</m> time. By using a set to simultaneous store the same nodes, we can fast lookups and also store the order.</p>
 
-  <p>The <c>knightTour</c> function is recursive. When the <c>knightTour</c> function is called, it adds the new vertex, then checks the base case condition. If we have a path that contains the complete number of vertices, we return the complete <c>path</c>. If the path is not long enough, we continue to explore one level deeper by choosing a new vertex to explore and calling <c>knightTour</c> recursively for that vertex. If at any point a recursive call returns null, indicating that no tour could be found, the loop continues trying alternative neighbors. If all neighbors fail, then no tour can be found from the current path. The vertex most recently added is removed, and the function returns null.</p>
+  <p>As we did in <xref ref="graphs_implementing-breadth-first-search"/>, we will wrap our solution inside of a class so that we can keep track of some information in instance variables. The <c>KnightTourSolver</c> class maintains a single instance variable named <c>tourPath</c>, which tracks the tour in-progress as it is being constructed. The ordering of the items in the path is critical for our solution, so typically we would use a list for this purpose, but we also want to be able to look to see whether a vertex has already been visited. Looking up a vertex in a list would take <m>O(n)</m> time, so we instead use a set. This works great, but at the end of the algorithm, we need to have the items in the order that they were added to the set. For many set implementations this would be problematic. In Kotlin, however, when we iterate over a set in Kotlin via <c>mutableSetOf</c>, we are in fact guaranteed to visit items in the order that they were added.</p>
+
+  <p>The constructor for the <c>KnightTourSolver</c> class shown in <xref ref="graphs_lst-knight" /> takes three parameters: the graph, the vertex in the graph we wish to explore; and <c>limit</c>, the number of nodes in the path we hope to find. The instance variable <c>tourPath</c> is initialized, and then the <c>init</c> method starts the <c>knightTour</c> method.</p>
+
+  <p>The <c>knightTour</c> method is recursive. When the <c>knightTour</c> function is called, it adds the new vertex, then checks the base case condition. If we have a path that contains the complete number of vertices, we return <c>true</c>, indicating that we have found a successful tour. If the path is not long enough, we continue to explore one level deeper by choosing a new vertex to explore and calling <c>knightTour</c> recursively for that vertex. If at any point a recursive call returns <c>false</c>, indicating that no tour could be found, the loop continues trying alternative neighbors. If all neighbors fail, then no tour can be found from the current path. The vertex most recently added is removed, and the function returns <c>false</c>.</p>
   <listing xml:id="graphs_lst-knight">
-    <title>Knights tour</title>
+    <title>Knight's tour</title>
     
     
     <program language="kotlin" line-numbers="yes">
       <code>
-<xi:include parse="text" href="samplecode/src/main/kotlin/KnightTour.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/KnightTourSolver.kt" />
     </code>
     </program>
   </listing>
 
   <p>DFS <em>backtracks</em> if all neighbors of a particular vertex have been explored and we have not yet reached our goal limit. Specifrically, backtracking happens when we return from <c>knightTour</c> with a null path. In breadth-first search we used a queue to keep track of which vertex to visit next. Since depth-first search is recursive, we are implicitly using a stack to help us with our backtracking. When we return from a call to <c>knightTour</c> with null in line 28, we remain inside the <c>while</c> loop and look at the next vertex in <c>neighbors</c>.</p>
 
-    <p>Let's look at a simple example of <c>knightTour</c> (<xref ref="graphs_lst-knight" />) in action. You can refer to the figures below to follow the steps of the search. Unvisited vertices are colored white, and visited vertices are colored gray.   For this example we will assume that the call to the <c>getNeighbors</c> method on line 24 happens to order the nodes in alphabetical order, but there's no such guarantee in practice. We begin by calling <c>knightTour(0, tourVertices, tourPath, A, 6)</c> (where <c>tourVertices</c> and <c>tourPath</c> are both initially empty).</p>
-  <figure align="center" xml:id="fig-kta">
+    <p>Let's look at a simple example of <c>knightTour</c> (<xref ref="graphs_lst-knight" />) in action. You can refer to the figures below to follow the steps of the search. Unvisited vertices are colored white, and visited vertices are colored gray.   For this example we will assume that the call to the <c>getNeighbors</c> method on line 24 happens to order the nodes in alphabetical order, but there's no such guarantee in practice. We begin by calling <c>knightTour(A)</c> (in this visual example, nodes are letters, not numbers).</p>
+  <figure xml:id="fig-kta">
     <caption>Start with Node A</caption>
     <image source="Graphs/Figures/ktdfsa.png" width="50%" />
   </figure>
-  <figure align="center" xml:id="fig-ktb">
+  <figure xml:id="fig-ktb">
     <caption>Explore B</caption>
     <image source="Graphs/Figures/ktdfsb.png" width="50%" />
   </figure>
-  <figure align="center" xml:id="fig-ktc">
+  <figure xml:id="fig-ktc">
     <caption>Node C is a Dead End</caption>
     <image source="Graphs/Figures/ktdfsc.png" width="50%" />
   </figure>
-  <figure align="center" xml:id="fig-ktd">
+  <figure xml:id="fig-ktd">
     <caption>Backtrack to B</caption>
     <image source="Graphs/Figures/ktdfsd.png" width="50%" />
   </figure>
-  <figure align="center" xml:id="fig-kte">
+  <figure xml:id="fig-kte">
     <caption>Explore D</caption>
     <image source="Graphs/Figures/ktdfse.png" width="50%" />
   </figure>
-  <figure align="center" xml:id="fig-ktf">
+  <figure xml:id="fig-ktf">
     <caption>Explore E</caption>
     <image source="Graphs/Figures/ktdfsf.png" width="50%" />
   </figure>
-  <figure align="center" xml:id="fig-ktg">
+  <figure xml:id="fig-ktg">
     <caption>Explore F</caption>
     <image source="Graphs/Figures/ktdfsg.png" width="50%" />
   </figure>
-  <figure align="center" xml:id="fig-kth">
+  <figure xml:id="fig-kth">
     <caption>Finish</caption>
     <image source="Graphs/Figures/ktdfsh.png" width="50%" />
   </figure>
-  <p><c>knightTour</c> starts with node A in <xref ref="fig-kta" />. The nodes adjacent to A are B and D. Since B is before D alphabetically, DFS selects B to expand next as shown in <xref ref="fig-ktb" />. Exploring B happens when <c>knightTour</c> is called recursively. B is adjacent to C and D, so <c>knightTour</c> elects to explore C next. However, as you can see in <xref ref="fig-ktc" /> node C is a dead end with no adjacent white nodes. At this point we change the color of node C back to white. The call to <c>knightTour</c> returns a value of <c>False</c>. The return from the recursive call effectively backtracks the search to vertex B (see <xref ref="fig-ktd" />). The next vertex on the list to explore is vertex D, so <c>knightTour</c> makes a recursive call moving to node D (see <xref ref="fig-kte" />). From vertex D on, <c>knightTour</c> can continue to make recursive calls until we get to node C again (see <xref ref="fig-ktf" />, <xref ref="fig-ktg" />, and <xref ref="fig-kth" />). However, this time when we get to node C the test <c>n &lt; limit</c> fails so we know that we have exhausted all the nodes in the graph. At this point we can return <c>tourPath</c> to indicate that we have made a successful tour of the graph. It will have the <c>[A, B, D, E, F, C]</c>, which is the order we need to traverse the graph to visit each node exactly once.</p>
+  <p><c>knightTour</c> starts with node A in <xref ref="fig-kta" />. The nodes adjacent to A are B and D. Since B is before D alphabetically, DFS selects B to expand next as shown in <xref ref="fig-ktb" />. Exploring B happens when <c>knightTour</c> is called recursively. B is adjacent to C and D, so <c>knightTour</c> elects to explore C next. However, as you can see in <xref ref="fig-ktc" /> node C is a dead end with no adjacent white nodes. At this point we change the color of node C back to white. The call to <c>knightTour</c> returns a value of <c>false</c>. The return from the recursive call effectively backtracks the search to vertex B (see <xref ref="fig-ktd" />). The next vertex on the list to explore is vertex D, so <c>knightTour</c> makes a recursive call moving to node D (see <xref ref="fig-kte" />). From vertex D on, <c>knightTour</c> can continue to make recursive calls until we get to node C again (see <xref ref="fig-ktf" />, <xref ref="fig-ktg" />, and <xref ref="fig-kth" />). However, this time when we get to node C the test <c>tourPath.count() == limit</c> succeeds, so we know that we have exhausted all the nodes in the graph. At this point we can return <c>true</c> to indicate that we have made a successful tour of the graph. It will have the <c>[A, B, D, E, F, C]</c>, which is the order we need to traverse the graph to visit each node exactly once.</p>
   <p><xref ref="fig-tour" /> shows you what a complete tour around an <m>8 \times 8</m> board looks like. There are many possible tours; some are symmetric. With some modification you can make circular tours that start and end at the same square.</p>
-  <figure align="center" xml:id="fig-tour">
-    <caption>A Complete Tour of the Board Found by <literal>knightTour</literal></caption>
+  <figure xml:id="fig-tour">
+    <caption>A Complete Tour of the Board Found by knightTour</caption>
     <image source="Graphs/Figures/completeTour.png" width="50%" />
   </figure>
 
@@ -71,7 +74,7 @@
 <xi:include parse="text" href="samplecode/src/main/kotlin/AdjacencyListGraph.kt" />
 <xi:include parse="text" href="samplecode/src/main/kotlin/BuildKnightGraph.kt" />
 <xi:include parse="text" href="samplecode/src/main/kotlin/GenLegalMoves.kt" />
-<xi:include parse="text" href="samplecode/src/main/kotlin/KnightTour.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/KnightTourSolver.kt" />
 ^^^^
 <xi:include parse="text" href="samplecode/src/main/kotlin/KnightTourTest.kt" />
         </code>
