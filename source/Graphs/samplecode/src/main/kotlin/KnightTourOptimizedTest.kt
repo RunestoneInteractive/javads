@@ -1,7 +1,7 @@
 fun main() {
-    val size = 8
+    val size = 9
     val kg = buildKnightGraph(size)
-    val solution = KnightTourSolver(kg, 0, size*size)
+    val solution = KnightTourOptimizedSolver(kg, 0, size*size)
     println(solution.tourPath)
 
     // Print out a chessboard, so can look at locations

@@ -12,7 +12,7 @@
   </figure>
   <p>We have already seen that the number of nodes in a binary tree of height <m>N</m> is <m>2^{N+1}-1</m>. For a tree with nodes that may have up to eight children instead of two, the number of nodes is much larger. Because the branching factor of each node is variable, we could estimate the number of nodes using an average branching factor. The important thing to note is that this algorithm is exponential: <m>k^{N+1}-1</m>, where <m>k</m> is the average branching factor for the board. Let's look at how rapidly this grows! For a board that is <m>5 \times 5</m> the tree will be 25 levels deep, or <m>N = 24</m> counting the first level as level 0. The average branching factor is <m>k = 3.8</m> so the number of nodes in the search tree is <m>3.8^{25}-1</m> or <m>3.12 \times 10^{14}</m>. For a <m>6 \times 6</m> board, <m>k = 4.4</m>, there are <m>1.5 \times 10^{23}</m> nodes, and for a regular <m>8 \times 8</m> chess board, <m>k = 5.25</m>, there are <m>1.3 \times 10^{46}</m>. Of course, since there are multiple solutions to the problem we won't have to explore every single node, but the fractional part of the nodes we do have to explore is just a constant multiplier which does not change the exponential nature of the problem. We will leave it as an exercise for you to see if you can express <m>k</m> as a function of the board size.</p>
 
-  <p>The knight's tour code that we have written takes a very long time to run on a <m>9 \times 9</m> board. (We got bored waiting, and just stopped it before it finished.) Luckily there is a way to speed up the code further so that the <m>9 \times 9</m> case (and much bigger) run in under one second. In the <xref ref="graphs_lst-avail" /> we show the code that speeds up the <c>knightTour</c>. This function, called <c>orderByAvail</c>, will be used in place of the call to <c>graph.getNeighbors</c> at line 24 in <xref ref="graphs_implementing-knights-tour" />. The critical line in the <c>orderByAvail</c> method is line 28. This line ensures that we select the vertex that has the fewest available moves to go next. You might think this is really counterproductive; why not select the node that has the most available moves? You can try that approach easily by running the program yourself and changing <c>sortedBy</c> to <c>sortedByDescending</c>.</p>
+  <p>The knight's tour code that we have written takes a very long time to run on a <m>9 \times 9</m> board. (We got bored waiting, and just stopped it before it finished.) Luckily there is a way to speed up the code further so that the <m>9 \times 9</m> case (and much bigger) run in under one second. In the <xref ref="graphs_lst-avail" /> we show the code that speeds up the <c>knightTour</c>. This method, called <c>orderByAvail</c>, will be used in place of the call to <c>graph.getNeighbors</c> at line 16 in <xref ref="graphs_implementing-knights-tour" />. The critical line in the <c>orderByAvail</c> method is line 24. This line ensures that we select the vertex that has the fewest available moves to go next. You might think this is really counterproductive; why not select the node that has the most available moves? You can try that approach easily by running the program yourself and changing <c>sortedBy</c> to <c>sortedByDescending</c>.</p>
 
   <p>The problem with using the vertex with the most available moves as your
     next vertex on the path is that it tends to have the knight visit the
@@ -31,18 +31,45 @@
     <title>The <c>orderByAvail</c> Method</title>
     <program language="kotlin" line-numbers="yes">
       <code>
-<xi:include parse="text" href="samplecode/src/main/kotlin/OrderByAvail.kt" />                 
+    private fun orderByAvail(start: Int): List&lt;Int&gt; {
+        data class CountAndVertex(val count: Int, val vertex: Int)
+        val availCount = mutableListOf&lt;CountAndVertex&gt;()
+        val startNeighbors = graph.getNeighbors(start)
+        if (startNeighbors == null) { // no neighbors at all
+            return listOf()
+        }
+        for (v in startNeighbors) {
+            if (v !in tourPath) {   // v is not already visited
+                var count = 0
+                val vNeighbors = graph.getNeighbors(v)
+                if (vNeighbors != null) {
+                    for (w in vNeighbors) {
+                        if (w !in tourPath) {
+                            count += 1
+                        }
+                    }
+                }
+                availCount.add(CountAndVertex(count, v))
+            }
+        }
+
+        // Sort availCount by count
+        val sortedCount = availCount.sortedBy { countAndVertex -> countAndVertex.count }
+
+        // Return list consisting of just the vertices in the list
+        return sortedCount.map { countAndVertex -> countAndVertex.vertex }
+    }
       </code>
     </program>
   </listing>
 
-  <p>The preceding method has to keep track of a vertex and its count of unvisited neighbors as a pair of values. We used a data class to represent the pair, and then created a list of them. In line 28, we used the list method <c>sortedBy</c>, which sorts the list. The catch is that it is a list of <c>CountAndVertex</c> objects, which are not <c>Comparable</c>, so Kotlin doesn't know what it means for one item to be greater or less than another. We resolve that my supplying <c>sortedBy</c> with a brief inline function indicating how to sort the data. The syntax</p>
+  <p>The preceding method has to keep track of a vertex and its count of unvisited neighbors as a pair of values. We used a data class to represent the pair, and then created a list of them. In line 24, we used the list method <c>sortedBy</c>, which sorts the list. The catch is that it is a list of <c>CountAndVertex</c> objects, which are not <c>Comparable</c>, so Kotlin doesn't know what it means for one item to be greater or less than another. We resolve that my supplying <c>sortedBy</c> with a brief inline function indicating how to sort the data. The syntax</p>
   
   <program language="kotlin">{ countAndVertex -> countAndVertex.count }</program>
   
   <p>creates an unnamed function that <c>sortedBy</c> uses whenever it needs to know the value of a <c>countAndVertex</c> object for sorting purposes. This unnamed function takes one parameter, which is a <c>CountAndVertex</c> object, and it returns the value of the <c>count</c> variable within the object.</p>
 
-  <p>In line 31, we then wish to return just the list of vertices that have now been sorted; we don't need the counts anymore. The Kotlin method <c>map</c> returns a new list by applying a supplied function to each item in the starting list. In this case, we have another small inline function. This one again takes a <c>CountAndVertex</c> object, and returns the vertex.</p>
+  <p>In line 27, we then wish to return just the list of vertices that have now been sorted; we don't need the counts anymore. The Kotlin method <c>map</c> returns a new list by applying a supplied function to each item in the starting list. In this case, we have another small inline function. This one again takes a <c>CountAndVertex</c> object, and returns the vertex.</p>
 
   <p>These small inline functions are for historical reasons referred to as <term>lambda expressions</term>.</p>
 </section>

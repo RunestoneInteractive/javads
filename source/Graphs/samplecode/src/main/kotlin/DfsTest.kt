@@ -8,8 +8,8 @@ fun main() {
     g.addEdge("E", "B")
     g.addEdge("E", "F")
     g.addEdge("F", "C")
+    g.addEdge("G", "H")
     val dfsSolver = DfsSolver(g, "A")
     println(dfsSolver.previous)
-    println(dfsSolver.distance)
     println(dfsSolver.closingTime)
 }

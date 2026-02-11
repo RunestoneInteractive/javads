@@ -1,26 +1,35 @@
 class DfsSolver<V>(val graph: GraphADT<V>, val start: V) {
     val previous = mutableMapOf<V, V?>()
-    val distance = mutableMapOf<V, Int>()
-    var time = 0   // also referred to as "discovery time"
+    private val visited = mutableSetOf<V>()
+    private var time = 0   // also referred to as "discovery time"
     val closingTime = mutableMapOf<V, Int>()
 
     init {
-        previous[start] = null
-        distance[start] = 0
-        dfs(start)
+        dfsAll()
     }
 
-    fun dfs(vertex: V) {
+    private fun dfsAll() {
+        for (vertex in graph.getVertices()) {
+            previous[vertex] = null
+        }
+
+        for (start in graph.getVertices()) {
+            if (start !in visited) {
+                dfs(start)
+            }
+        }
+    }
+
+    private fun dfs(vertex: V) {
         time += 1
-        println("$vertex $time")
+        visited.add(vertex)
         val neighbors = graph.getNeighbors(vertex)
         if (neighbors == null) {
             return
         }
         for (neighbor in neighbors) {
-            if (neighbor !in previous) {
+            if (neighbor !in visited) {
                 previous[neighbor] = vertex
-                distance[neighbor] = distance[vertex]!! + 1
                 dfs(neighbor)
             }
         }
