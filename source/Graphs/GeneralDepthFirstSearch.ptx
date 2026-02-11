@@ -79,7 +79,7 @@
   <p>Since vertex C is the end of one branch, we now return to vertex B and continue exploring the nodes adjacent to B. The only additional vertex to explore from B is D, so we can now visit D (<xref ref="fig-gdfse" />) and continue our search from vertex D. Vertex D quickly leads us to vertex E (<xref ref="fig-gdfsf" />). Vertex E has two adjacent vertices, B and F. Normally we would explore these adjacent vertices alphabetically, but since B is already colored gray the algorithm recognizes that it should not visit B since doing so would put the algorithm in a loop! So exploration continues with the next vertex in the list, namely F (<xref ref="fig-gdfsg" />).</p>
   <p>Vertex F has only one adjacent vertex, C, but since C is colored black there is nothing else to explore, and the algorithm has reached the end of another branch. From here on, you will see in <xref ref="fig-gdfsh" /> through <xref ref="fig-dfstree" /> that the algorithm works its way back to the first node, setting closing times and coloring vertices black.</p>
   <p>The discovery and closing times for each node display a property called the <term>parenthesis property</term>. This property means that all the children of a particular node in the depth-first tree have a later discovery time and an earlier closing time than their parent. <xref ref="fig-dfstree" /> shows the tree constructed by the depth-first search algorithm.</p>
-  <figure align="center" xml:id="fig-dfstree">
+  <figure xml:id="fig-dfstree">
     <caption>The Resulting Depth-First Search Tree</caption>
     <image source="Graphs/Figures/dfstree.png" width="50%" />
   </figure>
