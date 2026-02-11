@@ -9,7 +9,7 @@ fun main() {
     g.addEdge("E", "F")
     g.addEdge("F", "C")
     g.addEdge("G", "H")
-    val dfsSolver = DfsSolver(g, "A")
+    val dfsSolver = DfsSolver(g)
     println(dfsSolver.previous)
     println(dfsSolver.closingTime)
 }

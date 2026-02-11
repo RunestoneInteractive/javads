@@ -1,42 +1,19 @@
 <?xml version="1.0"?>
 <section xml:id="graphs_topological-sorting" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Topological Sorting</title>
-  <p>To demonstrate that computer scientists can turn just about anything
-            into a graph problem, let's consider the difficult problem of stirring
-            up a batch of pancakes. The recipe is really quite simple: 1 egg, 1 cup
-            of pancake mix, 1 tablespoon oil, and <m>3 \over 4</m> cup of milk.
-            To make pancakes you must heat the griddle, mix all the ingredients
-            together, and spoon the mix onto a hot griddle. When the pancakes start
-            to bubble you turn them over and let them cook until they are golden
-            brown on the bottom. Before you eat your pancakes you are going to want
-            to heat up some syrup. <xref ref="i177_id1fig-pancakes"/> illustrates this process as
-            a dependency graph.</p>
-  <figure align="center" xml:id="i177_id1fig-pancakes">
+  <p>To demonstrate that computer scientists can turn just about anything into a graph problem, let's consider the difficult problem of stirring up a batch of pancakes. The recipe is really quite simple: 1 egg, 1 cup of pancake mix, 1 tablespoon oil, and <m>3 \over 4</m> cup of milk. To make pancakes you must heat the griddle, mix all the ingredients together, and spoon the mix onto a hot griddle. When the pancakes start to bubble you turn them over and let them cook until they are golden brown on the bottom. Before you eat your pancakes you are going to want to heat up some syrup. <xref ref="i177_id1fig-pancakes" /> illustrates this process as a dependency graph.</p>
+  <figure xml:id="i177_id1fig-pancakes">
     <caption>The Steps for Making Pancakes</caption>
-    <image source="Graphs/Figures/pancakes.png" width="50%"/>
+    <image source="Graphs/Figures/pancakes.png" width="50%" />
   </figure>
-  <p>The difficult thing about making pancakes is knowing what to do first.
-            As you can see from <xref ref="i177_id1fig-pancakes"/> you might start by heating the
-            griddle or by adding any of the ingredients to the pancake mix. To help
-            us decide the precise order in which we should do each of the steps
-            required to make our pancakes, we turn to a graph algorithm called the
-            <term>topological sort</term>.</p>
-  <p>A topological sort takes a directed acyclic graph and produces a linear
-            ordering of all its vertices such that if the graph <m>G</m> contains
-            an edge <m>(v, w)</m> then the vertex <m>v</m> comes before the
-            vertex <m>w</m> in the ordering. Directed acyclic graphs are used in
-            many applications to indicate the precedence of events. Making pancakes
-            is just one example; other examples include software project schedules,
-            precedence charts for optimizing database queries, and multiplying
-            matrices.</p>
+  <p>The difficult thing about making pancakes is knowing what to do first. As you can see from <xref ref="i177_id1fig-pancakes" /> you might start by heating the griddle or by adding any of the ingredients to the pancake mix. To help us decide the precise order in which we should do each of the steps required to make our pancakes, we turn to a graph algorithm called the <term>topological sort</term>.</p>
+  <p>A topological sort takes a directed acyclic graph and produces a linear ordering of all its vertices such that if the graph <m>G</m> contains an edge <m>(v, w)</m> then the vertex <m>v</m> comes before the vertex <m>w</m> in the ordering. Directed acyclic graphs are used in many applications to indicate the precedence of events. Making pancakes is just one example; other examples include software project schedules, precedence charts for optimizing database queries, and multiplying matrices.</p>
   <p>The topological sort is a simple but useful adaptation of a depth-first
-            search. The algorithm for the topological sort is as follows:</p>
+    search. The algorithm for the topological sort is as follows:</p>
   <p>
     <ol marker="1">
       <li>
-        <p>Call <c>dfs(g)</c> for some graph <c>g</c>. The main reason we want to call
-                    depth-first search is to compute the closing times for each of the
-                    vertices.</p>
+        <p>Run depth-first search for some graph <c>g</c>. The main reason we want to call depth-first search is to compute the closing times for each of the vertices.</p>
       </li>
       <li>
         <p>Store the vertices in a list in decreasing order of the closing time.</p>
@@ -46,85 +23,32 @@
       </li>
     </ol>
   </p>
-  <p><xref ref="i177_id2fig-pancakesdfs"/> shows the depth-first forest constructed by
-            <c>dfs</c> on the pancake-making graph shown in <xref ref="i177_id1fig-pancakes"/>.</p>
-  <figure align="center" xml:id="i177_id2fig-pancakesdfs">
+  <p><xref ref="i177_id2fig-pancakesdfs" /> shows the depth-first forest constructed by <c>dfs</c> on the pancake-making graph shown in <xref ref="i177_id1fig-pancakes" />.</p>
+  <figure xml:id="i177_id2fig-pancakesdfs">
     <caption>Result of Depth-First Search on the Pancake Graph</caption>
-    <image source="Graphs/Figures/pancakesDFS.png" width="50%"/>
+    <image source="Graphs/Figures/pancakesDFS.png" width="50%" />
   </figure>
-  <p>Finally, <xref ref="fig-pancakests"/> shows the results of applying the
-            topological sort algorithm to our graph. Now all the ambiguity has been
-            removed and we know exactly the order in which to perform the pancake-making steps.</p>
-  <figure align="center" xml:id="fig-pancakests">
+  <p>Finally, <xref ref="fig-pancakests" /> shows the results of applying the topological sort algorithm to our graph. Now all the ambiguity has been removed and we know exactly the order in which to perform the pancake-making steps.</p>
+  <figure xml:id="fig-pancakests">
     <caption>Result of Topological Sort on Directed Acyclic Graph</caption>
-    <image source="Graphs/Figures/pancakesTS.png" width="50%"/>
+    <image source="Graphs/Figures/pancakesTS.png" width="50%" />
   </figure>
 
-  <p><xref ref="lst_graph-pancakes"/> gives the corresponding code for this example:</p>
+  <p><xref ref="lst_graph-pancakes" /> gives the corresponding code for this example:</p>
   <listing xml:id="lst_graph-pancakes">
-    <program language="java" line-numbers="yes" interactive="activecode">
+    <title>Code for topological sort on pancake recipe</title>
+
+
+    <program language="kotlin" line-numbers="yes" interactive="activecode">
       <code>
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.NoSuchElementException;
-
-<xi:include parse="text" href="./Graph.java"/>
-<xi:include parse="text" href="./Vertex.java"/>
-<xi:include parse="text" href="./Queue.java"/>
-<xi:include parse="text" href="./VertexColor.java"/>
-<xi:include parse="text" href="./DFSGraph.java"/>
+<xi:include parse="text" href="samplecode/src/main/kotlin/GraphADT.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/AdjacencyListGraph.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/DepthFirst.kt" />
 ^^^^
-public class Pancakes {
-
-    public static void main(String[] args) {
-        DFSGraph&lt;String&gt; pancake = new DFSGraph&lt;String&gt;();
-        pancake.addEdge("3/4 cup milk", "1 cup mix");
-        pancake.addEdge("1 egg", "1 cup mix");
-        pancake.addEdge("1 Tbsp oil", "1 cup mix");
-        pancake.addEdge("1 cup mix", "pour 1/4 cup");
-        pancake.addEdge("1 cup mix", "heat syrup");
-        pancake.addEdge("heat griddle", "pour 1/4 cup");
-        pancake.addEdge("pour 1/4 cup", "turn when bubbly");
-        pancake.addEdge("turn when bubbly", "eat");
-        pancake.addEdge("heat syrup", "eat");
-        pancake.dfs();
-
-        ArrayList&lt;Vertex&lt;String&gt;&gt; sortList = pancake.getVertexList();
-        Collections.sort(sortList, new Vertex.ByClosingTime());
-        Collections.reverse(sortList);
-        for (Vertex&lt;String&gt; v: sortList) {
-            System.out.println(v.key + " (" + v.discoveryTime +
-                "/" + v.closingTime + ")");
-        }
-   }
-}
-</code></program></listing>
-
-<note>
-  <title>Java Note</title>
-  <p>In line 20 of <xref ref="lst_graph-pancakes"/>, we call the <code>sort</code> method with two parameters. The first is the collection to sort; the second is a <em>comparator</em>, a class that gives the criteria for determining sorting order. A comparator implements a <c>compare</c> method that compares its two parameters. It returns a negative value if the first object is <q>less than</q> the second, zero if they are equal, and positive if the first object is <q>greater than</q> the second. <xref ref="lst_comparators"/> shows the two comparators which we have added to the <c>Vertex.java</c> file. These are <em>nested classes</em>.</p>
-</note>
-
-<listing xml:id="lst_comparators">
-  <program language="java">
-    <code>
-static class ByDiscoveryTime implements Comparator&lt;Vertex&gt; {
-    public int compare(Vertex a, Vertex b) {
-        return a.discoveryTime - b.discoveryTime;
-    }
-}
-
-static class ByClosingTime implements Comparator&lt;Vertex&gt; {
-    public int compare(Vertex a, Vertex b) {
-        return a.closingTime - b.closingTime;
-    }
-}
-</code>
-</program>
-</listing>
+<xi:include parse="text" href="samplecode/src/main/kotlin/TopologicalSort.kt" />
+      </code>
+    </program>
+  </listing>
 
 
 </section>

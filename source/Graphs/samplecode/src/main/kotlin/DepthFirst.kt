@@ -1,4 +1,4 @@
-class DfsSolver<V>(val graph: GraphADT<V>, val start: V) {
+class DfsSolver<V>(val graph: GraphADT<V>) {
     val previous = mutableMapOf<V, V?>()
     private val visited = mutableSetOf<V>()
     private var time = 0   // also referred to as "discovery time"
