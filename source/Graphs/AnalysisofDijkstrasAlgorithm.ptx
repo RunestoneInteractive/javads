@@ -10,7 +10,7 @@
             <c>delete</c> takes <m>O(\log{|V|})</m> time. Taken together, that part of
             the loop and the calls to <c>delete</c> take <m>O(|V| \times \log{|V|})</m>. The
             <c>for</c> loop is executed once for each edge in the
-            graph, and within the <c>for</c> loop the call to <c>change_priority</c> takes
+            graph, and within the <c>for</c> loop the calls to <c>removeElement</c> and <c>insert</c> take
             <m>O(|E| \times \log{|V|})</m> time. So the combined running time is
             <m>O((|V|+|E|) \times \log{|V|}).</m></p>
 </section>
