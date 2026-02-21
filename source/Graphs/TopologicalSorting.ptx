@@ -42,7 +42,7 @@
     <program language="kotlin" line-numbers="yes" interactive="activecode">
       <code>
 <xi:include parse="text" href="samplecode/src/main/kotlin/GraphADT.kt" />
-<xi:include parse="text" href="samplecode/src/main/kotlin/AdjacencyListGraph.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/AdjListGraph.kt" />
 <xi:include parse="text" href="samplecode/src/main/kotlin/DepthFirst.kt" />
 ^^^^
 <xi:include parse="text" href="samplecode/src/main/kotlin/TopologicalSort.kt" />

@@ -5,7 +5,8 @@ class AdjListGraph<T>(val directed: Boolean): GraphADT<T> {
     // This collection maps each neighbor to the weight of the edge.
     var neighbors = mutableMapOf<T, MutableMap<T, Double>>()
 
-    // Returns true if vertex added, false if not (because it was already there)
+    // Returns true if vertex added,
+    // false if not (because it was already there)
     override fun addVertex(id: T): Boolean {
         if (id !in neighbors) {
             neighbors[id] = mutableMapOf()

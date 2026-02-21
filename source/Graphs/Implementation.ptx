@@ -1,47 +1,77 @@
 <?xml version="1.0"?>
 <section xml:id="graphs_implementation" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <title>Implementation</title>
-    <p>Using maps, we can implement the adjacency list in Kotlin. In our implementation of the graph abstract data type, we will use a mutable map named <c>neighbors</c>. Each vertex is represented in <c>neighbors</c> via a key, which typically is a string, but doesn't have to be. In <xref ref="graphs_an-adjacency-list" /> this map is represented by the shaded gray box. <c>neighbors</c> maps each vertex to another mutable map, which contains that vertex's neighbors as keys, and weights as values. </p>
+  <title>Implementation</title>
+  <p>Using maps, we can implement the adjacency list in Kotlin. In our implementation of the graph abstract data type, we will use a mutable map named <c>neighbors</c>. Each vertex is represented in <c>neighbors</c> via a key, which typically is a string, but doesn't have to be. In <xref ref="graphs_an-adjacency-list" /> this map is represented by the shaded gray box. <c>neighbors</c> maps each vertex to another mutable map, which contains that vertex's neighbors as keys, and weights as values. </p>
 
-    <p>Our implementation also provides methods for adding vertices to a graph and connecting one vertex to another. The <c>addVertex</c> method is used to add a new vertex to the graph, and the <c>addEdge</c> method is used to add a connection between to vertices. If <c>addEdge</c> is used with one or more vertices that are not already present in the graph, it will add them.</p>
+  <p>Our implementation also provides methods for adding vertices to a graph and connecting one vertex to another. The <c>addVertex</c> method is used to add a new vertex to the graph, and the <c>addEdge</c> method is used to add a connection between two vertices. If <c>addEdge</c> is used with one or more vertices that are not already present in the graph, it will add them.</p>
 
-    <aside>
-        <p>Q: Why do we need the <c>addVertex</c> method to be public, since <c>addEdge</c> will add a vertex anyway if it's not already there?</p>
+  <aside>
+    <p>Q: Why do we need the <c>addVertex</c> method to be public, since <c>addEdge</c> will add a vertex anyway if it's not already there?</p>
 
-        <p>A: We need it for the case where we want to add a vertex to the graph that has no neighbors. Most graphs that we show as examples are <em>connected</em>, meaning that any vertex is reachable from any other node,  but this is not always the case.</p>
-    </aside>
-        
-  <p>There are also methods for returning neighbors associated for a particular vertex. Specifically, the <c>getNeighbors</c> method returns a set of the vertices adjacent to a particular vertex, and the <c>getNeighborsAndWeights</c> method returns a map consisting of all neighbors and the weights of the corresponding edges. By using the results from these methods you can iterate over the vertices in a graph by ID, or by the objects themselves.</p>
+    <p>A: We need it for the case where we want to add a vertex to the graph that has no neighbors. Most graphs that we show as examples are <em>connected</em>, meaning that any vertex is reachable from any other node, but this is not always the case.</p>
+  </aside>
 
-    <listing xml:id="graphs_lst-graph">
-        <title>Graph implementation</title>
-        <program language="kotlin" line-numbers="yes">
-            <code>
-<xi:include parse="text" href="samplecode/src/main/kotlin/AdjacencyListGraph.kt" />                 
-          </code>
-        </program>
-    </listing>
+  <p>There are also methods for returning neighbors associated for a particular vertex. Specifically, the <c>getNeighbors</c> method returns a set of the vertices adjacent to a particular vertex. The <c>getWeight</c> method can then be used to get the weight associated with a particular edge.</p>
 
-    <p>Using the <c>AdjacencyListGraph</c> class just defined, the following program creates the graph in <xref ref="graphs_vocabularyand-definitions" />. First we add six vertices, with integers 0 through 5 as their IDs. Next, we add the edges that connect the vertices together. Finally, the loop displays each vertex, and its neighbors with their weights. You should check the output of the edge list at the end of this session against the graph shown in <xref ref="graphs_vocabularyand-definitions" />.</p>
-    <listing xml:id="lst_test-graph-class">
-        <title>Testing the <c>Graph</c> Class</title>
-        <program language="kotlin" interactive="activecode">
-            <code>
-<xi:include parse="text" href="samplecode/src/main/kotlin/GraphADT.kt" />                 
-<xi:include parse="text" href="samplecode/src/main/kotlin/AdjacencyListGraph.kt" />                 
+  <p>Our implementation can represent either a directed graph or an undirected graph. Since this is an adjacency list implementation, the code for the two are nearly identical. For an undirected graph, if we have an edge between A and B, we store it as two directed edges: one from A to B, and one from B to A. So the only difference in the two implementations is in the <c>addEdge</c> method, which adds both directions for an edge if the graph is undirected. We handle this with a boolean variable in the constructor for the graph indicating whether it should be handled as a directed or an undirected graph.</p>
+
+  <listing xml:id="graphs_lst-graph">
+    <title>Graph implementation</title>
+    <program language="kotlin" line-numbers="yes">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/AdjListGraph.kt" />
+            </code>
+    </program>
+  </listing>
+
+  <p>Using the <c>AdjListGraph</c> class just defined, the following program creates two graphs: a directed graph, and an undirected graph. For each, we add six vertices, with integers 0 through 5 as their IDs. Next, we add edges that connect the vertices together. Finally, we display the graph. You should check the output of the edge list against the edges that are inserted, and convince yourself that it is correct.</p>
+
+  <p>There's a small stylistic detail to notice. In lines 3 and 19, when we construct the <c>AdjListGraph</c>, we use a <em>named argument</em>. Instead of just supplying the value <c>true</c> to indicate that we are constructing a directed graph, as in the following:</p>
+
+  <p>  <program language="kotlin">
+    val g1 = AdjListGraph&lt;Int&gt;(true)
+  </program>
+  </p>
+
+  <p>we instead use the name of the argument as well:</p>
+
+
+  <p>
+    <program language="kotlin">
+    val g1 = AdjListGraph&lt;Int&gt;(directed=true)
+    </program>
+  </p>
+
+  <p>This is optional in Kotlin, but is useful for clarity. In this particular case, it makes the code considerably more readable to include the name of the argument.</p>
+  
+  <listing xml:id="lst_test-graph-class">
+    <title>Testing the <c>AdjListGraph</c> Class</title>
+    <program language="kotlin" interactive="activecode">
+      <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/GraphADT.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/AdjListGraph.kt" />
 ^^^^
-<xi:include parse="text" href="samplecode/src/main/kotlin/AdjacencyListGraphTest.kt" />                 
+<xi:include parse="text" href="samplecode/src/main/kotlin/AdjacencyListGraphTest.kt" />
 
-              </code>
-        </program>
-    </listing>
-    <p>Here is its output:</p>
-    <pre>
-0 connected to: {1=5.0, 5=2.0}
-1 connected to: {2=4.0}
-2 connected to: {3=9.0}
-3 connected to: {4=7.0, 5=3.0}
-4 connected to: {0=1.0}
-5 connected to: {4=8.0, 2=1.0}
+      </code>
+    </program>
+  </listing>
+  <p>Here is its output:</p>
+  <pre>
+Test 1: directed graph
+0: {1=5.0, 5=2.0}
+1: {2=4.0}
+2: {3=9.0}
+3: {4=7.0, 5=3.0}
+4: {0=1.0}
+5: {4=8.0, 2=1.0}
+
+Test 2: undirected graph
+0: {1=5.0, 5=2.0, 4=1.0}
+1: {0=5.0, 2=4.0}
+2: {1=4.0, 3=9.0, 5=1.0}
+3: {2=9.0, 4=7.0, 5=3.0}
+4: {3=7.0, 0=1.0, 5=8.0}
+5: {0=2.0, 3=3.0, 4=8.0, 2=1.0}
     </pre>
 </section>

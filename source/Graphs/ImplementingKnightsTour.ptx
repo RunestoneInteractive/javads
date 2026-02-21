@@ -71,7 +71,7 @@
           <program label="lst-tour-test" language="kotlin" interactive="activecode">
             <code>
 <xi:include parse="text" href="samplecode/src/main/kotlin/GraphADT.kt" />
-<xi:include parse="text" href="samplecode/src/main/kotlin/AdjacencyListGraph.kt" />
+<xi:include parse="text" href="samplecode/src/main/kotlin/AdjListGraph.kt" />
 <xi:include parse="text" href="samplecode/src/main/kotlin/BuildKnightGraph.kt" />
 <xi:include parse="text" href="samplecode/src/main/kotlin/GenLegalMoves.kt" />
 <xi:include parse="text" href="samplecode/src/main/kotlin/KnightTourSolver.kt" />
