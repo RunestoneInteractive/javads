@@ -15,7 +15,7 @@
     </code>
     </program>
   </listing>
-  <p>The <c>gen_legal_moves</c> function (<xref ref="graphs_lst-knighttour2" />) takes the position of the knight on the board and generates each of the eight possible moves, making sure those moves are still within the board. We use a data class to represent an x-y pairing.</p>
+  <p>The <c>genLegalMoves</c> function (<xref ref="graphs_lst-knighttour2" />) takes the position of the knight on the board and generates each of the eight possible moves, making sure those moves are still within the board. We use a data class to represent an x-y pairing.</p>
   <listing xml:id="graphs_lst-knighttour2">
     <title>Legal move generation</title>
     <program language="kotlin">
