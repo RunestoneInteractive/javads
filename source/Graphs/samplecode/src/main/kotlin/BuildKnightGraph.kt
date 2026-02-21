@@ -1,5 +1,5 @@
 fun buildKnightGraph(boardSize: Int): GraphADT<Int> {
-    val knightGraph = AdjacencyListGraph<Int>()
+    val knightGraph = AdjListGraph<Int>(directed = false)
 
     for (row in 0..<boardSize) {
         for (col in 0..<boardSize) {

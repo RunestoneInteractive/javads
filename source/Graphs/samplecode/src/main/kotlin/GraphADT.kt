@@ -11,10 +11,10 @@ interface GraphADT<T> {
     fun addEdge(begin: T, end: T, weight: Double = 0.0)
 
     // Returns true if vertex is present, false if not
-    fun containsVertex(id: T): Boolean
+    fun hasVertex(id: T): Boolean
 
     // Returns true if edge is present, false if not
-    fun containsEdge(begin: T, end: T): Boolean
+    fun hasEdge(begin: T, end: T): Boolean
 
     // Returns a set of all vertex keys in the graph
     fun getVertices(): Set<T>
@@ -23,8 +23,7 @@ interface GraphADT<T> {
     // Returns null if the vertex is not in the graph.
     fun getNeighbors(id: T): Set<T>?
 
-    // Returns a map of all neighbors to a vertex,
-    // and the weights of the edges.
-    // Returns null if the vertex is not in the graph.
-    fun getNeighborsAndWeights(id: T): Map<T, Double>?
+    // Returns the weight associated with an edge.
+    // Returns null if the edge is not in the graph.
+    fun getWeight(begin: T, end: T): Double?
 }

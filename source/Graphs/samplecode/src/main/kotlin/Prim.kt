@@ -1,26 +1,28 @@
-//class DijkstraSolver<V>(val graph: GraphADT<V>, val start: V) {
-//    val previous = mutableMapOf<V, V?>()
-//    val distance = mutableMapOf<V, Double>()
+//class PrimSolver<V>(val graph: GraphADT<V>, val start: V) {
+//    //    private val previous = mutableMapOf<V, V?>()
+//    private val distance = mutableMapOf<V, Double>()
+//
+//    val mst = AdjacencyListGraph<V>(directed = false)
 //
 //    init {
-//        dijsktra(start)
+//        prim(start)
 //    }
 //
-//    data class PqItem<V>(val vertex: V, val distance: Double):
-//            Comparable<PqItem<V>> {
+//    data class PqItem<V>(val vertex: V, val distance: Double) :
+//        Comparable<PqItem<V>> {
 //
 //        override fun compareTo(other: PqItem<V>): Int {
 //            return (this.distance - other.distance).toInt()
 //        }
 //    }
 //
-//    private fun dijsktra(start: V) {
+//    private fun prim(start: V) {
 //        // Initialize distances to all vertices
 //        for (vertex in graph.getVertices()) {
 //            distance[vertex] = Double.MAX_VALUE
 //        }
 //        distance[start] = 0.0
-//        previous[start] = null
+////        previous[start] = null
 //
 //        // Insert into priority queue
 //        val pqItems = mutableListOf<PqItem<V>>()
@@ -34,11 +36,15 @@
 //            val neighborsAndDistances =
 //                graph.getNeighborsAndWeights(curVertex)!!
 //            for ((neighborVertex, neighborDistance) in neighborsAndDistances) {
-//                val newDistance = curDistance + neighborDistance
-//                if (newDistance < distance[neighborVertex]!!) {
+//                val newDistance = neighborDistance
+//                if ((neighborVertex !in mst.getVertices()) &&
+//                    (newDistance < distance[neighborVertex]!!)
+//                ) {
+//                    mst.addEdge(curVertex, neighborVertex, neighborDistance)
+//                    mst.addEdge(neighborVertex, curVertex, neighborDistance)
 //                    val oldDistance = distance[neighborVertex]!!
 //                    distance[neighborVertex] = newDistance
-//                    previous[neighborVertex] = curVertex
+////                    previous[neighborVertex] = curVertex
 //
 //                    // update priority
 //                    pq.removeElement(PqItem(neighborVertex, oldDistance))

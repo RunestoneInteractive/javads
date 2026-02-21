@@ -1,6 +1,6 @@
-class AdjacencyListGraph<T>: GraphADT<T> {
+class AdjListGraph<T>(val directed: Boolean): GraphADT<T> {
 
-    // V represents the type of the id for each vertex.
+    // T represents the type of the id for each vertex.
     // Each vertex maps to a collection of neighbors.
     // This collection maps each neighbor to the weight of the edge.
     var neighbors = mutableMapOf<T, MutableMap<T, Double>>()
@@ -26,15 +26,18 @@ class AdjacencyListGraph<T>: GraphADT<T> {
         addVertex(begin)
         addVertex(end)
         neighbors[begin]!![end] = weight
+        if (!directed) {
+            neighbors[end]!![begin] = weight
+        }
     }
 
     // Returns true if vertex is present, false if not
-    override fun containsVertex(id: T): Boolean {
+    override fun hasVertex(id: T): Boolean {
         return id in neighbors
     }
 
     // Returns true if edge is present, false if not
-    override fun containsEdge(begin: T, end: T): Boolean {
+    override fun hasEdge(begin: T, end: T): Boolean {
         val beginNeighbors = neighbors[begin]
         return beginNeighbors != null && end in beginNeighbors
     }
@@ -50,11 +53,10 @@ class AdjacencyListGraph<T>: GraphADT<T> {
         return neighbors[id]?.keys
     }
 
-    // Returns a map of all neighbors to a vertex,
-    // and the weights of the edges.
-    // Returns null if the vertex is not in the graph.
-    override fun getNeighborsAndWeights(id: T): Map<T, Double>? {
-        return neighbors[id]
+    // Returns the weight associated with an edge.
+    // Returns null if the edge is not in the graph.
+    override fun getWeight(begin: T, end: T): Double? {
+        return neighbors[begin]!![end]
     }
 
     override fun toString(): String {

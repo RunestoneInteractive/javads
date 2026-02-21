@@ -1,6 +1,6 @@
 //fun main() {
-//    val graph = AdjacencyListGraph<String>(directed = false)
-//    graph.addEdge("u", "x", 1.0)
+//    val graph = AdjacencyListGraph<String>(directed=false)
+//    graph.addEdge("A", "u", 1.0)
 //    graph.addEdge("x", "u", 1.0)
 //
 //    graph.addEdge("u", "v", 2.0)
@@ -30,8 +30,7 @@
 //    graph.addEdge("w", "y", 1.0)
 //    graph.addEdge("y", "w", 1.0)
 //
-//    val dijstraSolution = DijkstraSolver(graph, "u")
-//    println(dijstraSolution.previous)
-//    println(dijstraSolution.distance)
+//    val primSolution = PrimSolver(graph, "u")
+//    println(primSolution.mst)
 //
 //}

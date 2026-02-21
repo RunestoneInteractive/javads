@@ -1,5 +1,5 @@
 fun main() {
-    val pancake = AdjacencyListGraph<String>()
+    val pancake = AdjListGraph<String>(directed=true)
     pancake.addEdge("3/4 cup milk", "1 cup mix")
     pancake.addEdge("pour 1/4 cup", "turn when bubbly")
     pancake.addEdge("heat syrup", "eat")

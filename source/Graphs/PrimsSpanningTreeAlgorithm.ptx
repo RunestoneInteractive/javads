@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- TODO: Clean up undirected graphs somehow so don't need to put in edges twice -->
 <section xml:id="graphs_prims-spanning-tree-algorithm">
   <title>Prim's Spanning Tree Algorithm</title>
   <p>For our last graph algorithm let's consider a problem that online game
@@ -9,7 +10,7 @@
             important for internet radio so that all the listeners that are tuned in
             are getting all the data they need to reconstruct the song they are
             listening to. <xref ref="i187_id1fig-bcast1"/> illustrates the broadcast problem.</p>
-  <figure align="center" xml:id="i187_id1fig-bcast1">
+  <figure xml:id="i187_id1fig-bcast1">
     <caption>The Broadcast Problem</caption>
     <image source="Graphs/Figures/bcast1.png" width="50%"/>
   </figure>
@@ -58,7 +59,7 @@
             the message to E, which forwards it to F, which forwards it to G. No
             router sees more than one copy of any message, and all the listeners
             that are interested see a copy of the message.</p>
-  <figure align="center" xml:id="i187_id2fig-mst1">
+  <figure xml:id="i187_id2fig-mst1">
     <caption>Minimum Spanning Tree for the Broadcast Graph</caption>
     <image source="Graphs/Figures/mst1.png" width="50%"/>
   </figure>
@@ -81,7 +82,7 @@
             in that they both use a priority queue to select the next vertex to add
             to the growing graph.</p>
 <listing xml:id="lst-prims">
-  <caption>Prim's Spanning Tree Algorithm</caption>
+  <title>Prim's Spanning Tree Algorithm</title>
   <program language="java">
     <code>
 import java.util.ArrayList;
@@ -127,31 +128,31 @@ public class PrimsAlgorithm&lt;T extends Comparable&lt;T&gt;&gt; {
             that we have not formally added B or C to the spanning tree yet. A node
             is not considered to be part of the spanning tree until it is removed
             from the priority queue.</p>
-  <figure align="center" xml:id="file_145_id3">
+  <figure xml:id="file_145_id3">
     <caption>Tracing Prim's Algorithm</caption>
     <image source="Graphs/Figures/prima.png" width="50%"/>
   </figure>
-  <figure align="center" xml:id="file_145_id4">
+  <figure xml:id="file_145_id4">
     <caption>Tracing Prim's Algorithm</caption>
     <image source="Graphs/Figures/primb.png" width="50%"/>
   </figure>
-  <figure align="center" xml:id="file_145_id5">
+  <figure xml:id="file_145_id5">
     <caption>Tracing Prim's Algorithm</caption>
     <image source="Graphs/Figures/primc.png" width="50%"/>
   </figure>
-  <figure align="center" xml:id="file_145_id6">
+  <figure xml:id="file_145_id6">
     <caption>Tracing Prim's Algorithm</caption>
     <image source="Graphs/Figures/primd.png" width="50%"/>
   </figure>
-  <figure align="center" xml:id="file_145_id7">
+  <figure xml:id="file_145_id7">
     <caption>Tracing Prim's Algorithm</caption>
     <image source="Graphs/Figures/prime.png" width="50%"/>
   </figure>
-  <figure align="center" xml:id="file_145_id8">
+  <figure xml:id="file_145_id8">
     <caption>Tracing Prim's Algorithm</caption>
     <image source="Graphs/Figures/primf.png" width="50%"/>
   </figure>
-  <figure align="center" xml:id="file_145_id9">
+  <figure xml:id="file_145_id9">
     <caption>Tracing Prim's Algorithm</caption>
     <image source="Graphs/Figures/primg.png" width="50%"/>
   </figure>

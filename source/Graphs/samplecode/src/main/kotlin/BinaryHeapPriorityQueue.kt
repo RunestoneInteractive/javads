@@ -106,4 +106,8 @@ class BinaryHeapPriorityQueue<E: Comparable<E>>() : PriorityQueueADT<E> {
         heap.removeLast()
         percolateDown(loc)
     }
+
+    fun contains(element: E): Boolean {
+        return heap.indexOf(element) != -1
+    }
 }

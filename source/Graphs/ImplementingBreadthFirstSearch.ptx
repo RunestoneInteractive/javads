@@ -24,7 +24,7 @@
 
 
   <p>BFS begins at the starting vertex <c>start</c>. In the <c>init</c> method, we add it to <c>previous</c> with a value of null to indicate that no other vertex came before it, and to record that we have visited this vertex. We then call the <c>bfs</c> method.</p>
-  
+
   <p>Our first step in the <c>bfs</c> method is to add out starting vertex to a queue. (lines&#xA0;12&#x2013;13). The next step is to begin to systematically explore vertices at the front of the queue. We explore each new node at the front of the queue by iterating over its neighbors. As each neighboring vertex is examined, we check to see if it had previously been visited. If it had not been visited previously, the following things happen:</p>
   <p>
     <ol marker="1">

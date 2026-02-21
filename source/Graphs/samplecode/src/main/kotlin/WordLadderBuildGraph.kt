@@ -1,7 +1,7 @@
 import java.io.File
 
 fun buildGraph(fileName: String): GraphADT<String> {
-    val wordGraph = AdjacencyListGraph<String>()
+    val wordGraph = AdjListGraph<String>(directed=true)
     val buckets = mutableMapOf<String, MutableSet<String>>()
 
     val lines = File(fileName).readLines()

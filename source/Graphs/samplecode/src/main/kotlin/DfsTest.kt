@@ -1,5 +1,5 @@
 fun main() {
-    val g = AdjacencyListGraph<String>()
+    val g = AdjListGraph<String>(directed=true)
     g.addEdge("A", "B")
     g.addEdge("A", "D")
     g.addEdge("B", "C")
