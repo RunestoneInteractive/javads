@@ -1,4 +1,4 @@
 fun main() {
-    val graph = buildGraph("src/main/resources/words.txt")
+    val graph = buildGraph("words.txt")
     println(graph.getNeighbors("base"))
 }

@@ -3,12 +3,12 @@ class BfsSolver<V>(val graph: GraphADT<V>, val start: V) {
     val distance = mutableMapOf<V, Int>()
 
     init {
-        previous[start] = null
-        distance[start] = 0
         bfs(start)
     }
 
     private fun bfs(start: V) {
+        previous[start] = null
+        distance[start] = 0
         val queue = ListQueue<V>()
         queue.enqueue(start)
         while (queue.size() > 0) {
