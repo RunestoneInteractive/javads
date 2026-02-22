@@ -1,4 +1,6 @@
-class KnightTourSolver(val graph: GraphADT<Int>, val startVertex: Int, val limit: Int) {
+class KnightTourSolver(val graph: GraphADT<Int>,
+                       val startVertex: Int,
+                       val limit: Int) {
     val tourPath = mutableSetOf<Int>()
 
     init {
