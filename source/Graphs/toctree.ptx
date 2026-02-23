@@ -23,8 +23,7 @@
   <xi:include href="./DijkstrasAlgorithm.ptx"/>
   <xi:include href="./AnalysisofDijkstrasAlgorithm.ptx"/>
   <xi:include href="./PrimsSpanningTreeAlgorithm.ptx"/>
-  <!---
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>
-  <xi:include href="./Exercises.ptx"/>-->
+  <xi:include href="./Exercises.ptx"/>
 </chapter>
