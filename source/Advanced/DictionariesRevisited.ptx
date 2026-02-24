@@ -1,512 +1,199 @@
 <?xml version="1.0"?>
-<section xml:id="advanced_dictionaries-revisited-skip-lists">
+<section xml:id="advanced_dictionaries-revisited-skip-lists" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Maps Revisited: Skip Lists</title>
   <introduction>
-  <p>One of the most versatile collections available in Java is the
-            <term>map</term>. Maps, often referred to as <term>dictionaries</term>, store a
-            collection of key-value pairs. The key, which must be unique, is
-            assigned an association with a particular data value. Given a key, it is
-            possible to ask the map for the corresponding associated data value.
-            The abilities to put a key-value pair into the map and then look up a
-            data value associated with a given key are the fundamental operations
-            that all maps must provide.</p>
-          <p>For example, <xref ref="fig-mappic"/> shows a map containing key-value
-            pairs. In this case, the keys are integers and the values are small,
-            two-character words. From a logical perspective, there is no inherent
-            order or organization within the pairs themselves. However, as the
-            example shows, if a key (93) is provided to the map, the associated
-            value (be) is returned.</p>
-  <figure align="" xml:id="fig-mappic">
-    <caption>An Example Map</caption>
-    <image source="Advanced/Figures/mappic.png" width="50%" alt="An Example Map"/>
-  </figure>
-</introduction>
-  <subsection xml:id="advanced_the-map-abstract-data-type">
-    <title>The Map Abstract Data Type</title>
-    <p>The map abstract data type is defined by the following structure and
-                operations. The structure of a map, as described above, is a collection
-                of key-value pairs where values can be accessed via their associated
-                key. The map operations are given below:</p>
-    <p>
-      <ul>
-        <li>
-          <p><c>Map()</c> creates a new map that is empty. It needs no parameters and
-                        returns an empty map.</p>
-        </li>
-        <li>
-          <p><c>put(key,value)</c> adds a new key-value pair to the map. It needs the
-                        key and the associated value and returns nothing. Assume the key is
-                        not already in the map.</p>
-        </li>
-        <li>
-          <p><c>get(key)</c> searches for the key in the map and returns the
-                        associated value. It needs the key and returns a value.</p>
-        </li>
-      </ul>
-    </p>
-    <p>It should be noted that there are a number of other possible operations
-                that we could add to the map abstract data type. We will explore these
-                in the exercises.</p>
-  </subsection>
+    <p>One of the most versatile collections available in Java is the <term>map</term>. Maps, often referred to as <term>dictionaries</term>, store a collection of key-value pairs. The key, which must be unique, is assigned an association with a particular data value. Given a key, it is possible to ask the map for the corresponding associated data value. The abilities to put a key-value pair into the map and then look up a data value associated with a given key are the fundamental operations that all maps must provide.</p>
+    <p>For example, <xref ref="fig-mappic" /> shows a map containing key-value pairs. In this case, the keys are integers and the values are small, two-character words. From a logical perspective, there is no inherent order or organization within the pairs themselves. However, as the example shows, if a key (93) is provided to the map, the associated value (be) is returned.</p>
+    <figure xml:id="fig-mappic">
+      <caption>An Example Map</caption>
+      <image source="Advanced/Figures/mappic.png" width="50%">
+        <shortdescription>An Example Map</shortdescription>
+      </image>
+    </figure>
+  </introduction>
   <subsection xml:id="advanced_implementing-a-dictionary-in-python">
     <title>Implementing a Map in Java</title>
     <introduction>
-    <p>We have already seen a number of interesting ways to implement the map
-      idea. In <xref ref="chapter-sort-search"/> we
-                considered the hash table as a means of providing map behavior. Given a
-                set of keys and a hash function, we could place the keys in a collection
-                that allowed us to search and retrieve the associated data value. Our
-                analysis showed that this technique could potentially yield an
-                <m>O(1)</m> search. However, performance degraded due to issues such as
-                table size, collisions, and collision resolution strategy.</p>
-    <p>In <xref ref="chapter-trees"/> we considered a binary search tree as a
-                way to store such a collection. In this case the keys were placed in the
-                tree such that searching could be done in <m>O(\log n)</m>. However,
-                this was only true if the tree was balanced; that is, the left and the
-                right subtrees were all of similar size. Unfortunately, depending on the
-                order of insertion, the keys could end up being skewed to the right or
-                to the left. In this case the search again degrades.</p>
-    <p>The problem we would like to address here is to come up with an
-                implementation that has the advantages of an efficient search without
-                the drawbacks described above. One such possibility is called a <term>skip
-                  list</term>. <xref ref="fig-initskiplist"/> shows a possible skip list for
-                the collection of key-value pairs shown in <xref ref="fig-mappic"/> (the reason for saying
-                <q>possible</q> will become apparent later). As you can see, a skip list is
-                basically a two-dimensional linked list where the links all go forward
-                (to the right) or down. The <em>head</em> of the list can be seen in the
-                upper left corner. Note that this is the only entry point into the skip
-                list structure.</p>
-    <figure align="" xml:id="fig-initskiplist">
-      <caption>An Example Skip List</caption>
-      <image source="Advanced/Figures/initskiplist.png" width="50%" alt="An Example Skip List"/>
-    </figure>
-    <p>Before moving on to the details of skip-list processing it will be
-      useful to explain some vocabulary. <xref ref="fig-vocab1"/> shows that
-                the majority of the skip list structure consists of a collection of data
-                nodes, each of which holds a key and an associated value. In addition,
-                there are two references from each data node. <xref ref="fig-skipdatanode"/>
-                shows a detailed view of a single data node.</p>
-    <figure align="" xml:id="fig-vocab1">
-      <caption>The Body of the Skip List Is Made Up of Data Nodes</caption>
-      <image source="Advanced/Figures/vocabskiplist1.png" width="50%" alt="The Body of the Skip List Is Made Up of Data Nodes"/>
-    </figure>
+      <p>We have already seen a number of interesting ways to implement a map. In <xref ref="chapter-maps" /> we considered the hash table as a means of providing map behavior. Given a set of keys and a hash function, we could place the keys in a collection that allowed us to search and retrieve the associated data value. Our analysis showed that this technique could potentially yield an <m>O(1)</m> search. However, performance degraded due to issues such as table size, collisions, and collision resolution strategy.</p>
+      <p>In <xref ref="chapter-trees" /> we considered a binary search tree as a way to store such a collection. In this case the keys were placed in the tree such that searching could be done in <m>O(\log n)</m>. However, this was only true if the tree was balanced; that is, the left and the right subtrees were all of similar size. Unfortunately, depending on the order of insertion, the keys could end up being skewed to the right or to the left. In this case the search again degrades.</p>
+      <p>The problem we would like to address here is to come up with an implementation that has the advantages of an efficient search without the drawbacks described above. One such possibility is called a <term>skip list</term>. <xref ref="fig-initskiplist" /> shows a possible skip list for the collection of key-value pairs shown in <xref ref="fig-mappic" /> (the reason for saying <q>possible</q> will become apparent later). As you can see, a skip list is basically a two-dimensional linked list where the links all go forward (to the right) or down. The <em>head</em> of the list can be seen in the upper left corner. Note that this is the only entry point into the skip list structure.</p>
+      <figure align="" xml:id="fig-initskiplist">
+        <caption>An Example Skip List</caption>
+        <image source="Advanced/Figures/initskiplist.png" width="50%" alt="An Example Skip List" />
+      </figure>
+      <p>Before moving on to the details of skip-list processing it will be useful to explain some vocabulary. <xref ref="fig-vocab1" /> shows that the majority of the skip list structure consists of a collection of data nodes, each of which holds a key and an associated value. In addition, there are two references from each data node. <xref ref="fig-skipdatanode" /> shows a detailed view of a single data node.</p>
+      <figure align="" xml:id="fig-vocab1">
+        <caption>The Body of the Skip List Is Made Up of Data Nodes</caption>
+        <image source="Advanced/Figures/vocabskiplist1.png" width="50%" alt="The Body of the Skip List Is Made Up of Data Nodes" />
+      </figure>
 
-    <figure align="" xml:id="fig-skipdatanode">
-      <caption>A Single Data Node</caption>
-      <image source="Advanced/Figures/datanode.png" width="50%" alt="A Single Data Node"/>
-    </figure>
-    <p><xref ref="fig-vocab2"/> shows two different vertical columns. The
-                leftmost column consists of a linked list of header nodes. Each header
-                node holds two references called <c>down</c> and <c>next</c>. The <c>next</c>
-                reference refers to a linked list of data nodes. The <c>down</c> reference
-                refers to the next lower header node. A detailed view of a header node
-                can be seen in <xref ref="fig-headernode"/>.</p>
-    <figure align="" xml:id="fig-vocab2">
-      <caption>Header Nodes and Towers</caption>
-      <image source="Advanced/Figures/vocabskiplist2.png" width="50%" alt="Header Nodes and Towers"/>
-    </figure>
-    <figure align="" xml:id="fig-headernode">
-      <caption>Each Header Node Holds Two References</caption>
-      <image source="Advanced/Figures/headernode.png" width="50%" alt="Each Header Node Holds Two References"/>
-    </figure>
-    <p>The columns of data nodes are known as <term>towers</term>. Towers are linked
-                together by the <c>down</c> reference in the data node. We can see that
-                each tower corresponds to a particular key-value pair, and towers can
-                have different heights. We will explain how the height of the tower is
-                determined later when we consider how to add data to the skip list.</p>
-    <p>Finally, <xref ref="fig-vocab3"/> shows a horizontal collection of
-                nodes. If you look closely, you will notice that each level is actually
-                an ordered linked list of data nodes where the order is maintained by
-                the key. Each linked list is given a name, commonly referred to as its
-                <term>level</term>. Levels are named starting with 0 at the lowest row. Level 0
-                consists of the entire collection of nodes. Every key-value pair must be
-                present in the level-0 linked list. However, as we move up to higher
-                levels, we see that the number of nodes decreases. This is one of the
-                important characteristics of a skip list and will lead to an efficient
-                search. Again, it can be seen that the number of nodes at each level is
-                directly related to the height of the towers.</p>
-    <figure align="" xml:id="fig-vocab3">
-      <caption>Each Horizontal Group of Data Nodes Is a Level</caption>
-      <image source="Advanced/Figures/vocabskiplist3.png" width="50%" alt="Each Horizontal Group of Data Nodes Is a Level"/>
-    </figure>
-    <p>While we could implement two different classes for <c>HeaderNode</c> and <c>DataNode</c>, we will take the more convenient (or rather, hack-ish) option of creating only a <q>Skip List Node</q> <c>SLNode</c>. This will avoid needing to define <c>DataNode</c> as a subclass of <c>HeaderNode</c> with all the interesting casts and compile-time checking that Java would enforce. When we create a <c>SLNode</c> as a header, its key and value fields will both be <c>null</c>.</p>
+      <figure align="" xml:id="fig-skipdatanode">
+        <caption>A Single Data Node</caption>
+        <image source="Advanced/Figures/datanode.png" width="50%" alt="A Single Data Node" />
+      </figure>
+      <p><xref ref="fig-vocab2" /> shows two different vertical columns. The leftmost column consists of a linked list of header nodes. Each header node holds two references called <c>down</c> and <c>next</c>. The <c>next</c> reference refers to a linked list of data nodes. The <c>down</c> reference refers to the next lower header node. A detailed view of a header node can be seen in <xref ref="fig-headernode" />.</p>
+      <figure align="" xml:id="fig-vocab2">
+        <caption>Header Nodes and Towers</caption>
+        <image source="Advanced/Figures/vocabskiplist2.png" width="50%" alt="Header Nodes and Towers" />
+      </figure>
+      <figure align="" xml:id="fig-headernode">
+        <caption>Each Header Node Holds Two References</caption>
+        <image source="Advanced/Figures/headernode.png" width="50%" alt="Each Header Node Holds Two References" />
+      </figure>
+      <p>The columns of data nodes are known as <term>towers</term>. Towers are linked together by the <c>down</c> reference in the data node. We can see that each tower corresponds to a particular key-value pair, and towers can have different heights. We will explain how the height of the tower is determined later when we consider how to add data to the skip list.</p>
+      <p>Finally, <xref ref="fig-vocab3" /> shows a horizontal collection of nodes. If you look closely, you will notice that each level is actually an ordered linked list of data nodes where the order is maintained by the key. Each linked list is given a name, commonly referred to as its <term>level</term>. Levels are named starting with 0 at the lowest row. Level 0 consists of the entire collection of nodes. Every key-value pair must be present in the level-0 linked list. However, as we move up to higher levels, we see that the number of nodes decreases. This is one of the important characteristics of a skip list and will lead to an efficient search. Again, it can be seen that the number of nodes at each level is directly related to the height of the towers.</p>
+      <figure align="" xml:id="fig-vocab3">
+        <caption>Each Horizontal Group of Data Nodes Is a Level</caption>
+        <image source="Advanced/Figures/vocabskiplist3.png" width="50%" alt="Each Horizontal Group of Data Nodes Is a Level" />
+      </figure>
+      <p>Classes for the two types of nodes described above can be constructed in a similar fashion as for simple linked lists, as in section <xref ref="basic-ds_implementing-an-unordered-list-linked-lists" />. A header node consists of two references, <c>next</c> and <c>down</c>, both of which are initialized to <c>null</c>. A data node consists of three references: the first two are for the key and value, and the third one is for another header node (which contains the references <c>next</c> and <c>down</c>). The diagrams above show a data node as containing the key, value, <c>next</c>, and <c>down</c> directly, but this nested structure is actually simpler. It means we can think of each row as a linked list of data nodes, and each column as a linked list of header nodes.</p>
 
-    <p>This class can be
-      constructed in the same fashion as for simple linked lists. An <c>SLNode</c> node consists of two references,
-                <c>next</c> and <c>down</c>, both of which are initialized to <c>null</c> in the
-                constructor (see <xref ref="lst_headnode"/>), and a <c>key</c> and <c>value</c> field, which are null. We also provide a constructor that lets you initialize the key and value:</p>
-              <listing xml:id="lst_headnode">
-                <caption>The <c>SLNode</c> Class</caption>
-                <program language="java"><code>
-class SLNode&lt;K extends Comparable&lt;K&gt;, V&gt; {
-    private SLNode&lt;K, V&gt; next;
-    private SLNode&lt;K, V&gt; down;
-    private K key;
-    private V value;
+      <listing xml:id="lst_headnode">
+        <title>The <c>HeaderNode</c> and <c>DataNode</c> Classes</title>
+        <program language="kotlin">
+          <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/SkipListNodes.kt" />
+          </code>
+        </program>
+      </listing>
 
-    public SLNode() {
-        this.next = null;
-        this.down = null;
-        this.key = null;
-        this.value = null;
-    }
+      <p>The beginning for the skip list class is shown in <xref ref="lst_constructor" />. When a skip list is created, there are no data and therefore no header nodes. The head of the skip list is set to <c>null</c>. As key-value pairs are added to the structure, the list head refers to the first header node which in turn provides access to a linked list of data nodes as well as access to lower levels.</p>
+      <listing xml:id="lst_constructor">
+        <program language="kotlin">
+          <code>
+class SkipListMap&lt;K: Comparable&lt;K&gt;, V> {
+    private var head: HeaderNode&lt;K, V&gt;? = null
 
-    public SLNode(K key, V value) {
-        this.next = null;
-        this.down = null;
-        this.key = key;
-        this.value = value;
-    }
-
-    public SLNode&lt;K, V&gt; getNext() {
-        return this.next;
-    }
-
-    public void setNext(SLNode&lt;K, V&gt; next) {
-        this.next = next;
-    }
-
-    public SLNode&lt;K, V&gt; getDown() {
-        return this.down;
-    }
-
-    public void setDown(SLNode&lt;K, V&gt; down) {
-        this.down = down;
-    }
-
-    public K getKey() {
-        return this.key;
-    }
-
-    public V getValue() {
-        return this.value;
-    }
+    ...
 }
-
-</code></program></listing>
-
-<p>The constructor for the entire skip list is shown in <xref ref="lst_constructor"/>, as well as the getters and setters for the <c>head</c> property. When a skip list is
-                created, there are no data and therefore no header nodes. The head of the
-                skip list is set to <c>null</c>. As key-value pairs are added to the
-                structure, the list head refers to the first header node which in turn
-                provides access to a linked list of data nodes as well as access to
-                lower levels.</p>
-              <listing xml:id="lst_constructor"><program language="java"><code>
-class SkipList&lt;K extends Comparable&lt;K&gt;, V&gt; {
-    private SLNode&lt;K, V&gt; head;
-
-    public SkipList() {
-        this.head = null;
-    }
-
-    public SLNode&lt;K, V&gt; getHead() {
-        return this.head;
-    }
-
-    public void setHead(SLNode&lt;K, V&gt; head) {
-        this.head = head;
-    }
-        </code></program></listing>
-</introduction>
+          </code>
+        </program>
+      </listing>
+    </introduction>
     <subsubsection xml:id="advanced_searching-a-skip-list">
       <title>Searching a Skip List</title>
-      <p>The search operation for a skip list will require a key. It will find a
-                    data node containing that key and return the corresponding value that is
-                    stored in the node. <xref ref="fig-searchskip"/> shows the search
-                    process as it proceeds through the skip list looking for the key 77. The
-                    nodes marked by stars represent those that are considered during the
-                    search process.</p>
+      <p>The get (search) operation for a skip list will require a key. It will find a data node containing that key and return the corresponding value that is stored in the node. <xref ref="fig-searchskip" /> shows the search process as it proceeds through the skip list looking for the key 77. The nodes marked by stars represent those that are considered during the search process.</p>
       <figure align="" xml:id="fig-searchskip">
         <caption>Searching for the Key 77</caption>
-        <image source="Advanced/Figures/searchskiplist.png" width="50%" alt="Searching for the Key 77"/>
+        <image source="Advanced/Figures/searchskiplist.png" width="50%" alt="Searching for the Key 77" />
       </figure>
-      <p>As we search for 77, we begin at the head of the skip list. The first
-                    header node refers to the data node holding 31. Since 31 is less than
-                    77, we move forward. Now since there is no next data node from 31 at
-                    that level (level 3), we must drop down to level 2. This time, when we
-                    look to the right, we see a data node with the key 77. Our search is
-                    successful and the word <em>of</em> is returned. It is important to note that
-                    our first comparison, data node 31, allowed us to skip over 17 and 26.
-                    Likewise, from 31 we were able to go directly to 77, bypassing 54.</p>
-                  <p>The following code block shows the
-                    Java implementation of the <c>search</c> method. The search starts at the
-                    head of the list and searches through nodes until either the key is
-                    found or there are no more nodes to check. The basic idea is to start at
-                    the header node of the highest level and begin to look to the right. If
-                    no data node is present, the search continues on the next lower level
-                    (lines 4-5).
-                    On the other hand, if a data node exists, we compare the keys. If there
-                    is a match, we have found a data node with the key we are looking for
-                    and we can return its value (lines 7-8).</p>
-                  <listing xml:id="lst_skiplistsearchcode">
-                    <caption>Searching a Skip List</caption>
-                    <program language="java" line-numbers="yes">
-                      <code>
-    public V search(K key) {
-        SLNode&lt;K, V&gt; current = this.head;
+      <p>As we search for 77, we begin at the head of the skip list. The first header node refers to the data node holding 31. Since 31 is less than 77, we move forward. Now since there is no next data node from 31 at that level (level 3), we must drop down to level 2. This time, when we look to the right, we see a data node with the key 77. Our search is successful and the word <em>of</em> is returned. It is important to note that our first comparison, data node 31, allowed us to skip over 17 and 26. Likewise, from 31 we were able to go directly to 77, bypassing 54.</p>
+      <p>The following code block shows the implementation of the <c>get</c> method. The search starts at the head of the list and searches through nodes until either the key is found or there are no more nodes to check. The basic idea is to start at the header node of the highest level and begin to look to the right. If no data node is present, the search continues on the next lower level (lines 5-6). On the other hand, if a data node exists, we compare the keys. If there is a match, we have found a data node with the key we are looking for and we can return its value (lines 9-10).</p>
+      <listing xml:id="lst_skiplistsearchcode">
+        <title>Searching a Skip List</title>
+        <program language="kotlin" line-numbers="yes">
+          <code>
+    fun get(key: K): V? {
+        var current = this.head
         while (current != null) {
-            if (current.getNext() == null) {
-                current = current.getDown();
+            val next = current.next
+            if (next == null) {
+                current = current.down
             } else {
-                K testKey = current.getNext().getKey();
-                if (testKey.equals(key)) {
-                    return current.getNext().getValue();
-                }
-                if (key.compareTo(testKey) &lt; 0) {
-                    current = current.getDown();
+                val testKey = next.key
+                if (key == testKey) {
+                    return next.value
+                } else if (key &lt; testKey) {
+                    current = current.down
                 } else {
-                    current = current.getNext();
+                    current = next.headerNode
                 }
             }
         }
-        return null;
+        return null
     }
-                      </code>
-                    </program>
-                  </listing>
+          </code>
+        </program>
+      </listing>
 
-      <p>Since each level is an ordered linked list, a key mismatch provides us
-                    with very useful information. If the key we are looking for is less than
-                    the key contained in the data node (line 11),
-                    we know that no other data node on that level can contain our key since
-                    everything to the right has to be greater. In that case, we drop down
-                    one level in that tower (line 12). If
-                    no such level exists (we drop to <c>null</c>), we have discovered that the
-                    key is not present in our skip list. We break out of the loop and return
-                    <c>null</c>. On the other hand, as long as there are data nodes on the
-                    current level with key values less than the key we are looking for, we
-                    continue moving to the next node (line 14).</p>
-      <p>Once we enter a lower level, we repeat the process of checking to see if
-                    there is a next node. Each level lower in the skip list has the
-                    potential to provide additional data nodes. If the key is present, it
-                    will have to be discovered no later than level 0 since level 0 is the
-                    complete ordered linked list. Our hope is that we will find it sooner.</p>
+      <p>Since each level is an ordered linked list, a key mismatch provides us with very useful information. If the key we are looking for is less than the key contained in the data node (line 11), we know that no other data node on that level can contain our key since everything to the right has to be greater. In that case, we drop down one level in that tower (line 12). If no such level exists (we drop to <c>null</c>), we have discovered that the key is not present in our skip list. We break out of the loop and return <c>null</c>. On the other hand, as long as there are data nodes on the current level with key values less than the key we are looking for, we continue moving to the next node (line 14).</p>
+      <p>Once we enter a lower level, we repeat the process of checking to see if there is a next node. Each level lower in the skip list has the potential to provide additional data nodes. If the key is present, it will have to be discovered no later than level 0 since level 0 is the complete ordered linked list. Our hope is that we will find it sooner.</p>
     </subsubsection>
     <subsubsection xml:id="advanced_adding-key-value-pairs-to-a-skip-list">
       <title>Adding Key-Value Pairs to a Skip List</title>
-      <p>If we are given a skip list, the <c>search</c> method is fairly easy to
-                    implement. Our task here is to understand how the skip list structure
-                    was built in the first place and how it is possible that the same set of
-                    keys, added in the same order, can give us different skip lists.</p>
-      <p>Adding a new key-value pair to the skip list is essentially a two-step
-                    process. First, we search the skip list looking for the position where
-                    the key should have been. Remember that we are assuming the key is not
-                    already present. <xref ref="fig-skiplistadd"/> shows this process as
-                    we look to add the key 65 (data value <q>hi</q>) to the collection. We have
-                    used the stars once again to show the path of the search process as it
-                    proceeds through the skip list.</p>
+      <p>If we are given a skip list, the <c>get</c> method is fairly easy to implement. Our task here is to understand how the skip list structure was built in the first place and how it is possible that the same set of keys, added in the same order, can give us different skip lists.</p>
+      <p>Adding a new key-value pair to the skip list is essentially a two-step process. First, we search the skip list looking for the position where the key should have been. Remember that we are assuming the key is not already present. <xref ref="fig-skiplistadd" /> shows this process as we look to add the key 65 (data value <q>hi</q>) to the collection. We have used the stars once again to show the path of the search process as it proceeds through the skip list.</p>
       <figure align="" xml:id="fig-skiplistadd">
         <caption>Searching for the Key 65</caption>
-        <image source="Advanced/Figures/addskiplist.png" width="50%" alt="Searching for the Key 65"/>
+        <image source="Advanced/Figures/addskiplist.png" width="50%">
+          <shortdescription>Searching for the Key 65</shortdescription>
+        </image>
       </figure>
-      <p>As we proceed using the same search strategy as in the previous
-                    section, we find that 65 is greater than 31. Since there are no more
-                    nodes on level 3, we drop to level 2. Here we find 77, which is greater
-                    than 65. Again, we drop, this time to level 1. Now the next node is 54,
-                    which is less than 65. Continuing to the right, we hit 77, which again
-                    causes us to drop down until eventually we hit the <c>null</c> at the base
-                    of the tower.</p>
-      <p>The second step in the process is to create a new data node and add it
-        to the level 0 linked list (<xref ref="fig-skiplistadd2"/>). However,
-                    if we stop at that point, the best we will ever have is a single linked
-                    list of key-value pairs. We also need to build a tower for the new
-                    entry, and this is where the skip list gets very interesting. How high
-                    should the tower be? The height of the tower for the new entry will not
-                    be predetermined but instead will be completely probabilistic. In
-                    essence, we will flip a coin to decide whether to add another level to
-                    the tower. Each time the coin comes up heads, we will add one more level
-                    to the current tower.</p>
-      <figure align="" xml:id="fig-skiplistadd2">
+      <p>As we proceed using the same search strategy as in the previous section, we find that 65 is greater than 31. Since there are no more nodes on level 3, we drop to level 2. Here we find 77, which is greater than 65. Again, we drop, this time to level 1. Now the next node is 54, which is less than 65. Continuing to the right, we hit 77, which again causes us to drop down until eventually we hit the <c>null</c> at the base of the tower.</p>
+      <p>The second step in the process is to create a new data node and add it to the level 0 linked list (<xref ref="fig-skiplistadd2" />). However, if we stop at that point, the best we will ever have is a single linked list of key-value pairs. We also need to build a tower for the new entry, and this is where the skip list gets very interesting. How high should the tower be? The height of the tower for the new entry will not be predetermined but instead will be completely probabilistic. In essence, we will flip a coin to decide whether to add another level to the tower. Each time the coin comes up heads, we will add one more level to the current tower.</p>
+      <figure xml:id="fig-skiplistadd2">
         <caption>Adding the Data Node and Tower for 65</caption>
-        <image source="Advanced/Figures/addskiplist2.png" width="50%" alt="Adding the Data Node and Tower for 65"/>
+        <image source="Advanced/Figures/addskiplist2.png" width="50%">
+          <shortdescription>Adding the Data Node and Tower for 65</shortdescription>
+        </image>
       </figure>
-      <p>We will use the <c>Math.random()</c> method to simulate coin flip, with 0 as tails and 1 as heads.</p>
+      <p>We will use the <c>Random.nextBoolean()</c> method to simulate a coin flip, with <c>true</c> as heads and <c>false</c> as tails.</p>
 
-      <p><xref ref="lst_insert"/> shows the
-                    <c>insert</c> method. Lines&#xA0;2&#x2013;4 define some variables we will need multiple times throughout the code. You will note immediately in line&#xA0;6 that we need to check
-                    to see if this is the first node being added to the skip list. This is
-                    the same question we asked for simple linked lists. If we are adding to
-                    the head of the list, a new header node as well as data node must be
-                    created. The iteration in lines&#xA0;11&#x2013;19
-                    continues as long as the <c>randrange</c> function returns a 1 (the coin toss
-                    returns heads). Each time a new level is added to the tower, a new data
-                    node and a new header node are created (lines&#xA0;12&#x2013;13).</p>
-      <p>In the case of a non-empty skip list
-                    (line&#xA0;20), we need to search for the insert
-                    position as described above. Since we have no way of knowing how many
-                    data nodes will be added to the tower, we need to save the insert points
-                    for every level that we enter as part of the search process. These
-                    insert points will be processed in reverse order, so a stack will work
-                    nicely to allow us to back up through the linked lists inserting tower
-                    data nodes as necessary. The stars in <xref ref="fig-skiplistadd2"/>
-                    show the insert points that would be stacked in the example. These
-                    points represent only those places where we dropped down during the
-                    search.</p>
-      <p>Starting at line&#xA0;43, we flip our coin
-                    to determine the number of levels for the tower. This time we pop the
-                    insert stack (line&#xA0;53) to get the next higher insertion point as the tower grows.
-                    Only after the stack becomes empty will we need to return to creating
-                    new header nodes. We leave the remaining details of the implementation
-                    for you to trace.</p>
+      <p><xref ref="lst_insert" /> shows the <c>put</c> method. You will note immediately in line&#xA0;2 that we need to check to see if this is the first node being added to the skip list. This is the same question we asked for simple linked lists. If we are adding to the head of the list, a new header node as well as data node must be created. The iteration in lines&#xA0;6&#x2013;10 continues as long as the <c>Random.nextBoolean()</c> function returns true (the coin toss returns heads). Each time a new level is added to the tower, a new data node and a new header node are created (lines&#xA0;7&#x2013;8).</p>
+      <p>In the case of a non-empty skip list (line&#xA0;11), we need to search for the insert position as described above. Since we have no way of knowing how many data nodes will be added to the tower, we need to save the insert points for every level that we enter as part of the search process. These insert points will be processed in reverse order, so a stack will work nicely to allow us to back up through the linked lists inserting tower data nodes as necessary. The stars in <xref ref="fig-skiplistadd2" /> show the insert points that would be stacked in the example. These points represent only those places where we dropped down during the search.</p>
+      <p>Starting at line&#xA0;32, we flip our coin to determine the number of levels for the tower. This time we pop the insert stack (line&#xA0;53) to get the next higher insertion point as the tower grows. Only after the stack becomes empty will we need to return to creating new header nodes. We leave the remaining details of the implementation for you to trace.</p>
 
-                  <listing xml:id="lst_insert">
-                    <caption>Inserting Keys and Values into a SkipList</caption>
-                    <program language="java" line-numbers="yes">
-                      <code>
-    public void insert(K key, V value) {
-        SLNode&lt;K, V&gt; temp;
-        SLNode&lt;K, V&gt; top;
-        SLNode&lt;K, V&gt; newHead;
-
+      <listing xml:id="lst_insert">
+        <title>Inserting Keys and Values into a SkipList</title>
+        <program language="kotlin" line-numbers="yes">
+          <code>
+    fun put(key: K, value: V) {
         if (head == null) {
-            this.head = new SLNode&lt;K, V&gt;();
-            temp = new SLNode&lt;K, V&gt;(key, value);
-            this.head.setNext(temp);
-            top = temp;
-            while ((int) (Math.random() * 2) == 1) {
-                newHead = new SLNode&lt;K, V&gt;();
-                temp = new SLNode&lt;K, V&gt;(key, value);
-                temp.setDown(top);
-                newHead.setNext(temp);
-                newHead.setDown(this.head);
-                this.head = newHead;
-                top = temp;
+            var temp = DataNode(key, value)
+            head = HeaderNode(next=temp, down=null)
+            var top = temp.headerNode
+            while (Random.nextBoolean()) {
+                temp = DataNode(key, value, HeaderNode(down=top))
+                head = HeaderNode(next=temp, down=head)
+                top = temp.headerNode
             }
         } else {
-            Stack&lt;SLNode&lt;K, V&gt;&gt; tower = new Stack&lt;&gt;();
-            SLNode&lt;K, V&gt; current = this.head;
+            val tower = ListStack&lt;HeaderNode&lt;K, V>>()
+            var current = head
             while (current != null) {
-                if (current.getNext() == null) {
-                    tower.push(current);
-                    current = current.getDown();
+                val next = current.next
+                if (next == null) {
+                    tower.push(current)
+                    current = current.down
+                } else if (next.key > key) {
+                        tower.push(current)
+                        current = current.down
                 } else {
-                    if (current.getNext().getKey().compareTo(key) &gt; 0) {
-                        tower.push(current);
-                        current = current.getDown();
-                    } else {
-                        current = current.getNext();
-                    }
+                    current = next.headerNode
                 }
             }
 
-            SLNode&lt;K, V&gt; lowestLevel = tower.pop();
-            temp = new SLNode&lt;&gt;(key, value);
-            temp.setNext(lowestLevel.getNext());
-            lowestLevel.setNext(temp);
-            top = temp;
+            val lowestLevel = tower.pop()
+            var temp = DataNode(key, value, HeaderNode(next=lowestLevel.next))
+            lowestLevel.next = temp
+            var top = temp.headerNode
 
-            while ((int) (Math.random() * 2) == 1) {
+            while (Random.nextBoolean()) {
                 if (tower.isEmpty()) {
-                    newHead = new SLNode&lt;K, V&gt;();
-                    temp = new SLNode&lt;K, V&gt;(key, value);
-                    temp.setDown(top);
-                    newHead.setNext(temp);
-                    newHead.setDown(this.head);
-                    this.setHead(newHead);
-                    top = temp;
+                    temp = DataNode(key, value, HeaderNode(down=top))
+                    head = HeaderNode(next=temp, down=head)
+                    top = temp.headerNode
                 } else {
-                    SLNode&lt;K, V&gt; nextLevel = tower.pop();
-                    temp = new SLNode&lt;K, V&gt;(key, value);
-                    temp.setDown(top);
-                    temp.setNext(nextLevel.getNext());
-                    nextLevel.setNext(temp);
-                    top = temp;
+                    val nextLevel = tower.pop()
+                    temp = DataNode(key, value, HeaderNode(down=top, next=nextLevel.next))
+                    nextLevel.next = temp
+                    top = temp.headerNode
                 }
             }
         }
     }
-                          </code>
-                      </program>
-                    </listing>
-      <p>We should make one final note about the structure of the skip list. We
-                    had mentioned earlier that there are many possible skip lists for a set
-                    of keys, even if they are inserted in the same order. Now we see why.
-                    Depending on the random nature of the coin flip, the height of the
-                    towers for any particular key is bound to change each time we build the
-                    skip list.</p>
+          </code>
+        </program>
+      </listing>
+      <p>We should make one final note about the structure of the skip list. We had mentioned earlier that there are many possible skip lists for a set of keys, even if they are inserted in the same order. Now we see why. Depending on the random nature of the coin flip, the height of the towers for any particular key is bound to change each time we build the skip list.</p>
+
+      <p>When we previously looked at the Map abstract data type, we had three additional methods: <c>remove</c>, <c>containsKey</c>, and <c>size</c>. We leave it as an exercise to complete these.</p>
     </subsubsection>
-    <subsubsection xml:id="advanced_building-the-map">
-      <title>Building the Map</title>
-      <p>Now that we have implemented the skip list behavior allowing us to add
-                    data to the list and search for data that is present, we are in a
-                    position to finally implement the map abstract data type. As we
-                    discussed above, maps must provide two operations, <c>put</c> and <c>get</c>.
-                    <xref ref="lst-mapclass"/> shows that these operations
-                    can be implemented by constructing an internal skip list
-                    collection and using
-                    the <c>insert</c> and <c>search</c> operations shown in the previous two
-                    sections.</p>
-                  <listing xml:id="lst-mapclass">
-                    <caption>The <c>Map</c> Class</caption>
-                    <program language="java"><code>
-class Map&lt;K extends Comparable&lt;K&gt;, V&gt; {
-    private SkipList&lt;K, V&gt; collection;
-
-    public Map() {
-        this.collection = new SkipList&lt;K, V&gt;();
-    }
-
-    public void put(K key, V value) {
-        this.collection.insert(key, value);
-    }
-
-    public V get(K key) {
-        return this.collection.search(key);
-    }
-
-    public SkipList&lt;K, V&gt; getCollection() {
-        return this.collection;
-    }
-}
-        </code></program></listing>
-
-  <p> Here is a diagram of the result of inserting the keys and values shown in <xref ref="fig-mappic"/>:</p>
-
-  <console>
-    <output>
-| --> 17/by --> 26/at --------------------------------> 93/be
-| --> 17/by --> 26/at --> 31/or ----------------------> 93/be
-| --> 17/by --> 26/at --> 31/or --> 54/it --> 77/of --> 93/be
-          </output>
-        </console>
-    </subsubsection>
-
     <subsubsection xml:id="advanced_analysis-of-a-skip-list">
       <title>Analysis of a Skip List</title>
-      <p>If we had simply stored the key-value pairs in an ordered linked list,
-                    we know that the search method would be <m>O(n)</m>. Can we expect
-                    better performance from the skip list? Recall that the skip list is a
-                    probabilistic data structure. This means that the analysis will be
-                    dependent upon the probability of some event, in this case, the flip of
-                    a coin. Although a rigorous analysis of this structure is beyond the
-                    scope of this text, we can make a strong informal argument.</p>
-      <p>Assume that we are building a skip list for <m>n</m> keys. We know that
-                    each tower starts off with a height of 1. As we add data nodes to the
-                    tower, assuming the probability of getting heads is
-                    <m>\frac{1}{2}</m>, we can say that <m>\frac{n}{2}</m> of the keys
-                    have towers of height 2. As we flip the coin again, <m>\frac{n}{4}</m>
-                    of the keys have a tower of height 3. This corresponds to the
-                    probability of flipping two heads in a row. Continuing this argument
-                    shows <m>\frac{n}{8}</m> keys have a tower of height 4 and so on. This
-                    means that we expect the height of the tallest tower to be
-                    <m>\log_{2}(n) + 1</m>. Using our Big-O notation, we would say that
-                    the height of the skip list is <m>O(\log (n))</m>.</p>
-      <p>To analyze the <c>search</c> method, recall that there are two scans that
-                    need to be considered as we look for a given key. The first is the down
-                    direction. The previous result suggests that in the worst case we will
-                    expect to consider <m>O(\log (n))</m> levels to find a key. In
-                    addition, we need to include the number of forward links that need to be
-                    scanned on each level. We drop down a level when one of two events
-                    occurs. Either we find a data node with a key that is greater than the
-                    key we are looking for or we find the end of a level. If we are
-                    currently looking at some data node, the probability that one of those
-                    two events will happen in the next link is <m>\frac{1}{2}</m>. This
-                    means that after looking at two links, we would expect to drop to the next
-                    lower level (we expect to get heads after two coin flips). In any case,
-                    the number of nodes that we need to look at on any given level is
-                    constant. The entire result then becomes <m>O(\log (n))</m>. Since
-                    inserting a new node is dominated by searching for its location, the
-                    <c>insert</c> operation will also have <m>O(\log(n))</m> performance.</p>
+      <p>If we had simply stored the key-value pairs in an ordered linked list, we know that the search method would be <m>O(n)</m>. Can we expect better performance from the skip list? Recall that the skip list is a probabilistic data structure. This means that the analysis will be dependent upon the probability of some event, in this case, the flip of a coin. Although a rigorous analysis of this structure is beyond the scope of this text, we can make a strong informal argument.</p>
+      <p>Assume that we are building a skip list for <m>n</m> keys. We know that each tower starts off with a height of 1. As we add data nodes to the tower, assuming the probability of getting heads is <m>\frac{1}{2}</m>, we can say that <m>\frac{n}{2}</m> of the keys have towers of height 2. As we flip the coin again, <m>\frac{n}{4}</m> of the keys have a tower of height 3. This corresponds to the probability of flipping two heads in a row. Continuing this argument shows <m>\frac{n}{8}</m> keys have a tower of height 4 and so on. This means that we expect the height of the tallest tower to be <m>\log_{2}(n) + 1</m>. Using our Big-O notation, we would say that the height of the skip list is <m>O(\log (n))</m>.</p>
+      <p>To analyze the <c>get</c> method, recall that there are two scans that need to be considered as we look for a given key. The first is the down direction. The previous result suggests that in the worst case we will expect to consider <m>O(\log (n))</m> levels to find a key. In addition, we need to include the number of forward links that need to be scanned on each level. We drop down a level when one of two events occurs. Either we find a data node with a key that is greater than the key we are looking for or we find the end of a level. If we are currently looking at some data node, the probability that one of those two events will happen in the next link is <m>\frac{1}{2}</m>. This means that after looking at two links, we would expect to drop to the next lower level (we expect to get heads after two coin flips). In any case, the number of nodes that we need to look at on any given level is constant. The entire result then becomes <m>O(\log (n))</m>. Since inserting a new node is dominated by searching for its location, the <c>put</c> operation will also have <m>O(\log(n))</m> performance.</p>
     </subsubsection>
   </subsection>
 </section>
