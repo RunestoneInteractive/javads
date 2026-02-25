@@ -40,27 +40,6 @@
         <p>Create a KMP graph for the pattern ATCCAT.</p>
       </exercise>
       <exercise>
-        <p>Implement the following methods for the <c>ArrayList</c> class and then
-                    analyze their performance.</p>
-        <p>
-          <ul>
-            <li>
-              <p><c>remove</c>: Delete the item at the given index from the list.</p>
-            </li>
-            <li>
-              <p><c>pop</c>: Implement the pop method with and without a positional
-                            parameter.</p>
-            </li>
-            <li>
-              <p><c>index</c>: Search for a given value in the <c>ArrayList</c>. Return
-                            its position in the list if it is found and -1 if the item is not
-                            present.</p>
-            </li>
-          </ul>
-        </p>
-      </exercise>
-
-      <exercise>
         <p>Modify <c>encrypt</c> method of the Caesar cipher (<xref ref="lst_enc"/>)
                     to accept a parameter that specifies the encryption key.</p>
       </exercise>
