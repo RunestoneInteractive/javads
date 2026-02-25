@@ -1,222 +1,66 @@
 <?xml version="1.0"?>
-<section xml:id="advanced_trees-revisited-quantizing-images">
+<section xml:id="advanced_trees-revisited-quantizing-images" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Trees Revisited: Quantizing Images</title>
   <introduction>
-  <p>Next to text, digital images are the most common element found on the
-            internet. However, the internet would feel much slower if every
-            advertisement-sized image required 196,560&#xA0;bytes of memory. Instead, a
-            banner ad image requires only 14,246&#xA0;bytes, just 7.2% of what it could take.
-            Where do these numbers come from? How is such a phenomenal savings
-            achieved? The answers to these questions are the topic of this section.</p>
-        </introduction>
+    <p>Next to text, digital images are the most common element found on the internet. However, the internet would feel much slower if every advertisement-sized image required 196,560&#xA0;bytes of memory. Instead, a banner ad image requires only 14,246&#xA0;bytes, just 7.2% of what it could take. Where do these numbers come from? How is such a phenomenal savings achieved? The answers to these questions are the topic of this section.</p>
+  </introduction>
   <subsection xml:id="advanced_a-quick-review-of-digital-images">
     <title>A Quick Review of Digital Images</title>
-    <p>A digital image is composed of thousands of individual components called
-                <term>pixels</term>. The pixels are arranged as a rectangle that forms the image.
-                Each pixel in an image represents a particular color in the image. On a
-                computer, the color of each pixel is determined by a mixture of three
-                primary colors: red, green, and blue. A simple example of how pixels are
-                arranged to form a picture is shown in <xref ref="fig_smallimage"/>.</p>
-    <figure align="" xml:id="fig_smallimage">
+    <p>A digital image is composed of thousands of individual components called <term>pixels</term>. The pixels are arranged as a rectangle that forms the image. Each pixel in an image represents a particular color in the image. On a computer, the color of each pixel is determined by a mixture of three primary colors: red, green, and blue. A simple example of how pixels are arranged to form a picture is shown in <xref ref="fig_smallimage" />.</p>
+    <figure xml:id="fig_smallimage">
       <caption>A Simple Image Composed of Pixels</caption>
-      <image source="Advanced/Figures/8by8image.png" width="50%" alt="A Simple Image"/>
+      <image source="Advanced/Figures/8by8image.png" width="50%" alt="A Simple Image" />
     </figure>
-    <p>In the physical world colors are not discrete quantities. The colors in
-                our physical world have an infinite amount of variation to them. Just as
-                computers must approximate floating point numbers, they also must
-                approximate the colors in an image. The human eye can distinguish
-                between 200 different levels in each of the three primary colors, or a
-                total of about 8 million individual colors. In practice we use one byte
-                (8 bits) of memory for each color component of a pixel. Eight bits gives
-                us 256 different levels for each of the red, green, and blue components,
-                for a total of 16.7 million different possible colors for each pixel.
-                While the huge number of colors allows artists and graphic designers to
-                create wonderfully detailed images, the downside of all of these color
-                possibilities is that image size grows very rapidly. For example, a
-                single image from a one-megapixel camera would take 3 megabytes of
-                memory.</p>
-    <p>In Python we might represent an image using a list of a list of tuples,
-                where the tuples consist of three numbers between 0 and 255, one for
-                each of the red, green, and blue components. In other languages, such as
-                C++ and Java, an image could be represented as a two-dimensional array.
-                The list of lists representation of the first two rows of the image in
-                <xref ref="fig_smallimage"/> is shown below:</p>
+    <p>In the physical world colors are not discrete quantities. The colors in our physical world have an infinite amount of variation to them. Just as computers must approximate floating point numbers, they also must approximate the colors in an image. The human eye can distinguish between 200 different levels in each of the three primary colors, or a total of about 8 million individual colors. In practice we use one byte (8 bits) of memory for each color component of a pixel. Eight bits gives us 256 different levels for each of the red, green, and blue components, for a total of 16.7 million different possible colors for each pixel. While the huge number of colors allows artists and graphic designers to create wonderfully detailed images, the downside of all of these color possibilities is that image size grows very rapidly. For example, a single image from a one-megapixel camera would take 3 megabytes of memory.</p>
+    <p>To represent this image, we might use a list of lists. The list of lists representation of the first two rows of the image in <xref ref="fig_smallimage" /> is shown below:</p>
     <pre>im = [[(255,255,255),(255,255,255),(255,255,255),(12,28,255),
       (12,28,255),(255,255,255),(255,255,255),(255,255,255),],
       [(255,255,255),(255,255,255),(12,28,255),(255,255,255),
        (255,255,255),(12,28,255),(255,255,255),(255,255,255)],
  ... ]</pre>
-    <p>The color white is represented by the tuple <m>(255, 255, 255)</m>. A bluish
-                color is represented by the tuple <m>(12, 28, 255)</m>. You can obtain the color
-                value for any pixel in the image by simply using list indices, for
-                example:</p>
-    <pre>&gt;&gt;&gt; im[3][2]
-(255, 18, 39)</pre>
-    <p>With this representation for an image in mind, you can imagine that it
-                would be easy to store an image to a file just by writing a tuple for
-                each pixel. You might start by writing the number of rows and columns in
-                the image and then by writing three integer values per line. In
-                practice, the Python package <c>Pillow</c> provides us with some
-                powerful classes. Using the <c>Image</c> class we can get and set pixels
-                using <c>getpixel((col, row))</c> and <c>putpixel((col, row), color)</c>. Note
-                that the parameters for the image methods are in the traditional
-                <m>x, y</m> order but many people forget and think in terms of row,
-                column order.</p>
+ <p>The color white is represented by <m>(255, 255, 255)</m>. A bluish color is represented by <m>(12, 28, 255)</m>.</p>
+ <p>With this representation for an image in mind, you can imagine that it could be stored in a file by perhaps writing a line for each pixel, and three integers on each line. In practice, many approaches exist, but they are all in general some kind of variaiton on this idea. The key point that is relevant here is that a basic approach for representing the image has to store three numbers for each pixel individually, which can take up a lot of space.</p>
   </subsection>
   <subsection xml:id="advanced_quantizing-an-image">
     <title>Quantizing an Image</title>
-    <p>There are many ways of reducing the storage requirements for an image.
-                One of the easiest ways is to use fewer colors. Fewer color
-                choices means fewer bits for each red, green, and blue component, which
-                means reduced memory requirements. In fact, one of the most popular
-                image formats used for images on the World Wide Web uses only 256 colors
-                for an image. Using 256 colors reduces the storage requirements from
-                three bytes per pixel to one byte per pixel.</p>
-    <p>Right now you are probably asking yourself how to take an image that
-                may have as many as 16 million colors and reduce it
-                to just 256? The answer is a process called <term>quantization</term>. To
-                understand the process of quantization, let's think about colors as a
-                three-dimensional space. Each color can be represented by a point in
-                space where the red component is the <em>x</em> axis, the green component is the
-                <em>y</em> axis, and the blue component is the <em>z</em> axis. We can think of the space
-                of all possible colors as a <m>256 \times 256 \times 256</m> cube. The
-                colors closest to the vertex at <m>(0, 0, 0)</m> are going to be black and dark
-                color shades. The colors closest to the vertex at <m>(255, 255, 255)</m> are
-                bright and close to white. The colors closest to <m>(255, 0, 0)</m> are red and
-                so forth.</p>
-    <p>The simplest way to think about quantizing an image is to imagine
-                taking the <m>256 \times 256 \times 256</m> cube and turning it into an
-                <m>8 \times 8 \times 8</m> cube. The overall size of the cube stays the
-                same, but now many colors in the old cube are represented by a single
-                color in the new cube. <xref ref="fig_colorcube"/> shows an example of
-                the quantization just described.</p>
+    <p>There are many ways of reducing the storage requirements for an image. One of the easiest ways is to use fewer colors. Fewer color choices means fewer bits for each red, green, and blue component, which means reduced memory requirements. In fact, one of the most popular image formats used for images on the World Wide Web uses only 256 colors for an image. Using 256 colors reduces the storage requirements from three bytes per pixel to one byte per pixel.</p>
+    <p>Right now you are probably asking yourself how to take an image that may have as many as 16 million colors and reduce it to just 256? The answer is a process called <term>quantization</term>. To understand the process of quantization, let's think about colors as a three-dimensional space. Each color can be represented by a point in space where the red component is the <em>x</em> axis, the green component is the <em>y</em> axis, and the blue component is the <em>z</em> axis. We can think of the space of all possible colors as a <m>256 \times 256 \times 256</m> cube. The colors closest to the vertex at <m>(0, 0, 0)</m> are going to be black and dark color shades. The colors closest to the vertex at <m>(255, 255, 255)</m> are bright and close to white. The colors closest to <m>(255, 0, 0)</m> are red and so forth.</p>
+    <p>The simplest way to think about quantizing an image is to imagine taking the <m>256 \times 256 \times 256</m> cube and turning it into an <m>8 \times 8 \times 8</m> cube. The overall size of the cube stays the same, but now many colors in the old cube are represented by a single color in the new cube. <xref ref="fig_colorcube" /> shows an example of the quantization just described.</p>
     <figure align="" xml:id="fig_colorcube">
       <caption>Color Quantization</caption>
-      <image source="Advanced/Figures/quantizeCube.png" width="50%" alt="Color Quantization"/>
+      <image source="Advanced/Figures/quantizeCube.png" width="50%" alt="Color Quantization" />
     </figure>
-    <p>We can turn this simple idea of color quantization into the Java
-                program shown in <xref ref="lst_simple_quant"/>. The
-                <c>simpleQuuant</c> algorithm works by mapping the color components for
-                each pixel represented by its full 256 bits to the color at the center
-                of the cube in its area. This is easy to do using integer division in
-                Java. In the <c>simpleQuant</c> algorithm there are seven distinct
-                values in the red dimension and six distinct values in the green and
-                blue dimensions.</p>
+    <p>We can turn this simple idea of color quantization into the program shown in <xref ref="lst_simple_quant" />. The <c>simpleQuant</c> algorithm works by mapping the color components for each pixel represented by its full 256 bits to the color at the center of the cube in its area. This is easy to do using integer division. In the <c>simpleQuant</c> algorithm there are seven distinct values in the red dimension and six distinct values in the green and blue dimensions.</p>
 
-              <listing xml:id="lst_simple_quant">
-              <caption>Simple Quantization</caption>
-              <program language="java">
-                <code>
-import java.awt.image.BufferedImage;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-import java.util.Scanner;
+    <listing xml:id="lst_simple_quant">
+      <title>Simple Quantization</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/SimpleQuantize.kt" />
+        </code>
+      </program>
+    </listing>
 
-public class SimpleQuantize {
+    <p>Lines 9&#x2013;11 use bit manipulation to extract the red, green, and blue values. The <c>shr</c> operator is the right shift operation. <c>and</c> and <c>or</c> are different from <c>&amp;&amp;</c> and <c>||</c> in that they are <em>bitwise</em> operators. Bitwise operations work just like the logical operations used in conditionals, except that they work on the individual bits of a number. The shift operation moves the bits <m>n</m> places to the right, filling in with zeros on the left and dropping the bits as they go off the right.</p>
 
-    public static void simpleQuant(BufferedImage img) {
-        int w = img.getWidth();
-        int h = img.getHeight();
+    <p> In line 15, <c>shl</c> shifts the revised values left. This fills in with zeros on the right an drops bits as they move go off the left. The bitwise <c>or</c> operator puts the new color value back together. </p>
 
-        for (int row = 0; row &lt; h; row++) {
-            for (int col = 0; col &lt; w; col++) {
-                int argb = img.getRGB(col,row);
-                int r = (argb &gt;&gt; 16) &amp; 0xff;
-                int g = (argb &gt;&gt; 8) &amp; 0xff;
-                int b = argb &amp; 0xff;
-                r = r / 36 * 36;
-                g = g / 42 * 42;
-                b = b / 42 * 42;
-                img.setRGB(col, row, (r &lt;&lt; 16 | g &lt;&lt; 8 | b));
-            }
-        }
-    }
+    <p>The <c>main</c> function prompts you for a file name. Line 25 then creates a new <c>ImageComponent</c>, given a file name. This is a class we have also written. It is listed in <xref ref="lst_image-component" /> for your reference:</p>
+    <listing xml:id="lst_image-component">
+      <title>The <c>ImageComponent</c> Class</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/ImageComponent.kt" />
+        </code>
+      </program>
+    </listing>
 
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        String filename = "";
-        do {
-            System.out.print("File name: ");
-            filename = input.nextLine();
-            if (!filename.equals("")) {
-                JFrame f = new JFrame("Simple Quantize");
+    <p>This class initializes an instance variable named <c>image</c> as a <c>BufferedImage</c> object. Lines&#xa0;11&#x2013;21 provide methods that the graphics system will call when it needs to display the component and find how large it is.</p>
 
-                f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                ImageComponent img = new ImageComponent(filename);
-                simpleQuant(img.getImage());
-                f.add(img);
-                f.pack();
-                f.setVisible(true);
-            }
-        } while (!filename.equals(""));
-    }
-}
-</code>
-</program>
-</listing>
-
-<p>Lines 14&#x2013;17 use bit manipulation to extract the red, green, and blue values. The <c>&gt;&gt;</c> operator is the right shift operation. The <c>&amp;</c> is bitwise <c>and</c>, and <c>|</c> is bitwise <c>or</c>. The bitwise <c>or</c> and bitwise <c>and</c> operations work just like the logical operations used in conditionals, except that they work on the individual bits of a number. The shift operation moves the bits <m>n</m> places to the right, filling in with zeros on the left and dropping the bits as they go off the right.</p>
-
-<p>
-    In line 21, <c>&lt;&lt;</c> shifts the revised values left. This fills in with zeros on the right an drops bits as they move go off the left. The bitwise <em>or</em> operator <c>|</c> puts the new color value back together.
-</p>
-
-<p>The <c>main</c> method prompts you for file names until you press ENTER without giving a file name. Line 36 creates a new <c>ImageComponent</c>, given a file name. This is a class we have also written. It is listed in <xref ref="lst_image-component"/> for your reference:</p>
-<listing xml:id="lst_image-component">
-  <caption>The <c>ImageComponent</c> Class</caption>
-  <program language="java" line-numbers="yes">
-    <code>
-import java.awt.Graphics;
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.JComponent;
-
-class ImageComponent extends JComponent {
-    BufferedImage image;
-
-    public ImageComponent(String filename) {
-        try {
-            this.image = ImageIO.read(new File(filename));
-        } catch (IOException e) {
-            System.out.println("Unable to open file.");
-            this.image = new BufferedImage(400, 100,
-                BufferedImage.TYPE_INT_ARGB);
-        }
-    }
-
-    public void paint(Graphics g) {
-        g.drawImage(image, 0, 0, null);
-    }
-
-    public Dimension getPreferredSize() {
-        if (image == null) {
-             return new Dimension(100,100);
-        } else {
-           return new Dimension(image.getWidth(null),
-            image.getHeight(null));
-       }
-    }
-
-    public BufferedImage getImage() {
-        return this.image;
-    }
-}
-    </code>
-  </program>
-</listing>
-
-<p>After numerous <c>import</c> statements, the constructor reads the file into a <c>BufferedImage</c> object. If the file cannot be read, we create a 400 by 100 empty image (lines&#xa0;12&#x2013;20). Lines&#xa0;22&#x2013;33 provide methods that the Java graphics system will call when it needs to display the component and find how large it is.</p>
-
-  <p><xref ref="fig_simple_compare"/> shows a before and
-                after comparison of original and quantized images of a crystal.
-                You can use any JPEG color image from your collection and run the program to see the differences.
-                Notice how much detail is lost in the quantized picture.</p>
-                  <figure align="" xml:id="fig_simple_compare">
+    <p><xref ref="fig_simple_compare" /> shows a before and after comparison of original and quantized images of a crystal. You can use any JPEG color image from your collection and run the program to see the differences. Notice how much detail is lost in the quantized picture.</p>
+    <figure align="" xml:id="fig_simple_compare">
       <caption>Comparison of Original and Quantized Image</caption>
-      <image source="Advanced/Figures/simple_comparison.png" width="70%" alt="reddish-brown crystal original at left, quantized at right"/>
+      <image source="Advanced/Figures/simple_comparison.png" width="70%" alt="reddish-brown crystal original at left, quantized at right" />
     </figure>
 
     <aside>
@@ -225,42 +69,25 @@ class ImageComponent extends JComponent {
   </subsection>
   <subsection xml:id="advanced_an-improved-quantization-algorithm-using-octrees">
     <title>An Improved Quantization Algorithm Using Octrees</title>
-    <p>The problem with the simple method of quantization just described is
-                that the colors in most pictures are not evenly distributed throughout
-                the color cube. Many colors may not appear in the image, so parts of
-                the cube may go completely unused. Allocating an unused color to the
-                quantized image is a waste. <xref ref="fig_colordist"/> shows the
-                distribution of the colors that are used in the example image. Notice
-                how little of the color cube space is actually used.</p>
+    <p>The problem with the simple method of quantization just described is that the colors in most pictures are not evenly distributed throughout the color cube. Many colors may not appear in the image, so parts of the cube may go completely unused. Allocating an unused color to the quantized image is a waste. <xref ref="fig_colordist" /> shows the distribution of the colors that are used in the example image. Notice how little of the color cube space is actually used.</p>
     <figure align="" xml:id="fig_colordist">
       <caption>Plot of Colors Used in Image as Points in Color Cube</caption>
-      <image source="Advanced/Figures/halite_distribution.png" width="70%" alt="Plot of Colors Used in Image as Points in Color Cube"/>
+      <image source="Advanced/Figures/halite_distribution.png" width="70%" alt="Plot of Colors Used in Image as Points in Color Cube" />
     </figure>
-    <p>To make a better quantized image we need to find a way to do a better
-                job of selecting the set of colors we want to use to represent our
-                image. There are several algorithms for dividing the color cube in
-                different ways to allow for the better use of colors. In this section we
-                are going to look at a tree-based solution. The tree solution we will
-                use makes use of an <term>octree</term>. An octree is similar to a binary
-                tree; however, each node in an octree has eight children. Here is the
-                interface we will implement for our octree abstract data type:</p>
+    <p>To make a better quantized image we need to find a way to do a better job of selecting the set of colors we want to use to represent our image. There are several algorithms for dividing the color cube in different ways to allow for the better use of colors. In this section we are going to look at a tree-based solution. The tree solution we will use makes use of an <term>octree</term>. An octree is similar to a binary tree; however, each node in an octree has eight children. Here is the interface we will implement for our octree abstract data type:</p>
     <p>
       <ul>
         <li>
           <p><c>Octree()</c> creates a new empty octree.</p>
         </li>
         <li>
-          <p><c>insert(r, g, b)</c> adds a new node to the octree using the red,
-                        green, and blue color values as the key.</p>
+          <p><c>insert(r, g, b)</c> adds a new node to the octree using the red, green, and blue color values as the key.</p>
         </li>
         <li>
-          <p><c>find(r, g, b)</c> finds an existing node, or the closest
-                        approximation, using the red, green, and blue color values as the
-                        search key.</p>
+          <p><c>find(r, g, b)</c> finds an existing node, or the closest approximation, using the red, green, and blue color values as the search key.</p>
         </li>
         <li>
-          <p><c>reduce(n)</c> reduces the size of the octree so that there are
-                        <m>n</m> or fewer leaf nodes.</p>
+          <p><c>reduce(n)</c> reduces the size of the octree so that there are <m>n</m> or fewer leaf nodes.</p>
         </li>
       </ul>
     </p>
@@ -271,32 +98,17 @@ class ImageComponent extends JComponent {
           <p>The root of the octree represents the entire cube.</p>
         </li>
         <li>
-          <p>The second level of the octree represents a single slice through
-                        each dimension (<m>x</m>, <m>y</m>, and <m>z</m>) that evenly divides the cube into eight
-                        pieces.</p>
+          <p>The second level of the octree represents a single slice through each dimension (<m>x</m>, <m>y</m>, and <m>z</m>) that evenly divides the cube into eight pieces.</p>
         </li>
         <li>
-          <p>The next level of the tree divides each of the eight sub-cubes into eight
-                        additional cubes for a total of 64 cubes. Notice that the cube
-                        represented by the parent node totally contains all of the sub-cubes
-                        represented by the children. As we follow any path down the tree we
-                        are staying within the boundary of the parent, but getting
-                        progressively more specific about the portion of the cube.</p>
+          <p>The next level of the tree divides each of the eight sub-cubes into eight additional cubes for a total of 64 cubes. Notice that the cube represented by the parent node totally contains all of the sub-cubes represented by the children. As we follow any path down the tree we are staying within the boundary of the parent, but getting progressively more specific about the portion of the cube.</p>
         </li>
         <li>
-          <p>The eighth level of the tree represents the full resolution of 16.7
-                        million colors in our color cube.</p>
+          <p>The eighth level of the tree represents the full resolution of 16.7 million colors in our color cube.</p>
         </li>
       </ul>
     </p>
-    <p>Now that you know how we can represent the color cube using an
-                octree, you may be thinking that the octree is just another
-                way to divide up the color cube into even parts. You are correct.
-                However, because the octree is hierarchical, we can take advantage
-                of the hierarchy to use larger cubes to represent unused portions of the
-                color cube and smaller cubes to represent the popular colors. Here is an
-                overview of how we will use an octree to do a better job of
-                selecting a subset of the colors in an image:</p>
+    <p>Now that you know how we can represent the color cube using an octree, you may be thinking that the octree is just another way to divide up the color cube into even parts. You are correct. However, because the octree is hierarchical, we can take advantage of the hierarchy to use larger cubes to represent unused portions of the color cube and smaller cubes to represent the popular colors. Here is an overview of how we will use an octree to do a better job of selecting a subset of the colors in an image:</p>
     <p>
       <ol marker="1">
         <li>
@@ -304,31 +116,26 @@ class ImageComponent extends JComponent {
           <p>
             <ol marker="a">
               <li>
-                <p>Search for the color of this pixel in the octree. The color
-                                will be a leaf node at the eighth level.</p>
+                <p>Search for the color of this pixel in the octree. The color will be a leaf node at the eighth level.</p>
               </li>
               <li>
-                <p>If the color is not found create a new leaf node at the eighth
-                                level (and possibly some internal nodes above the leaf).</p>
+                <p>If the color is not found create a new leaf node at the eighth level (and possibly some internal nodes above the leaf).</p>
               </li>
               <li>
-                <p>If the color is already present in the tree increment the counter
-                                in the leaf node to keep track of how many pixels are this color.</p>
+                <p>If the color is already present in the tree increment the counter in the leaf node to keep track of how many pixels are this color.</p>
               </li>
             </ol>
           </p>
         </li>
         <li>
-          <p>Repeat until the number of leaf nodes is less than or equal to the
-                        target number of colors.</p>
+          <p>Repeat until the number of leaf nodes is less than or equal to the target number of colors.</p>
           <p>
             <ol marker="a">
               <li>
                 <p>Find the deepest leaf node with the smallest number of uses.</p>
               </li>
               <li>
-                <p>Merge the leaf node and all of its siblings together to form a new
-                                leaf node.</p>
+                <p>Merge the leaf node and all of its siblings together to form a new leaf node.</p>
               </li>
             </ol>
           </p>
@@ -337,425 +144,194 @@ class ImageComponent extends JComponent {
           <p>The remaining leaf nodes form the color set for this image.</p>
         </li>
         <li>
-          <p>To map an original color to its quantized value, search down
-                        the tree until you get to a leaf node. Return the color values stored
-                        in the leaf.</p>
+          <p>To map an original color to its quantized value, search down the tree until you get to a leaf node. Return the color values stored in the leaf.</p>
         </li>
       </ol>
     </p>
-    <p>The ideas outlined above are encoded as a Java method to quantize an image <c>octreeQuant()</c>
-                in <xref ref="lst_octreeQuant"/>.</p>
+    <p>The ideas outlined above quantize an image are encoded in the Kotlin function <c>octreeQuant()</c>, shown in <xref ref="lst_octreeQuant" />.</p>
 
-              <listing xml:id="lst_octreeQuant">
-                <caption>Octree Quantizing</caption>
-                <program language="java" line-numbers="yes">
-                  <code>
-    public static void octreeQuant(BufferedImage img) {
-        int w = img.getWidth();
-        int h = img.getHeight();
-
-        Octree ot = new Octree();
-        for (int row = 0; row &lt; h; row++) {
-            for (int col = 0; col &lt; w; col++) {
-                int argb = img.getRGB(col,row);
-                int r = (argb &gt;&gt; 16) &amp; 0xff;
-                int g = (argb &gt;&gt; 8) &amp; 0xff;
-                int b = argb &amp; 0xff;
-                ot.insert(r, g, b);
-            }
-        }
-
-        ot.reduce(256);
-
-        for (int row = 0; row &lt; h; row++) {
-            for (int col = 0; col &lt; w; col++) {
-                int argb = img.getRGB(col,row);
-                int r = (argb &gt;&gt; 16) &amp; 0xff;
-                int g = (argb &gt;&gt; 8) &amp; 0xff;
-                int b = argb &amp; 0xff;
-
-                int[] newRgb = ot.find(r, g, b);
-
-                img.setRGB(col, row, (newRgb[0] &lt;&lt; 16 |
-                    newRgb[1] &lt;&lt; 8 | newRgb[2]));
-            }
-        }
-    }
-</code>
-</program>
-</listing>
-
-    <p>The <c>octreeQuant</c> method implements the basic process just described.
-      First, the loops in lines&#xA0;6&#x2013;14 <xref ref="lst_octreeQuant"/>
-                read each pixel and add it to the octree.
-                Second, the
-                number of leaf nodes is reduced by the <c>reduce</c> method on line&#xA0;16.
-                Finally, the image is updated by searching for a color, using <c>find</c>,
-                in the reduced octree on line&#xA0;25.</p>
-    <p>Let us  now turn our attention to the definition of the <c>Octree</c> class (<xref ref="lst_octreedef"/>), which is where all the magic happens.</p>
-
-              <listing xml:id="lst_octreedef">
-                <caption>The <c>Octree</c> Class</caption>
-                <program language="java" line-numbers="yes">
-                  <code>
-import java.util.ArrayList;
-
-public class Octree {
-    OTNode root;
-    int numLeaves;
-    int maxLevel;
-    ArrayList&lt;OTNode&gt; allLeaves;
-
-    public Octree() {
-        this.root = null;
-        this.maxLevel = 5;
-        this.numLeaves = 0;
-        this.allLeaves = new ArrayList&lt;OTNode&gt;();
-    }
-
-    public void insert(int r, int g, int b) {
-        if (this.root == null) {
-            this.root = new OTNode(null, 0, this);
-        }
-        this.root.insert(r, g, b, 0, this);
-    }
-
-    public int[] find(int r, int g, int b) {
-        if (this.root != null) {
-            return this.root.find(r, g, b, 0);
-        } else {
-            return null;
-        }
-    }
-
-    public void reduce(int maxCubes) {
-        System.err.printf("Reducing %d to %d%n",
-            this.allLeaves.size(), maxCubes);
-        while (this.allLeaves.size() &gt; maxCubes) {
-            OTNode smallest = this.findMinCube();
-            smallest.parent.merge();
-            this.allLeaves.add(smallest.parent);
-            this.numLeaves += 1;
-        }
-    }
-
-    public OTNode findMinCube() {
-        int minCount = Integer.MAX_VALUE;
-        int maxLevel = 0;
-        OTNode minCube = null;
-
-        for (OTNode node: allLeaves) {
-            if (node.count &lt;= minCount &amp;&amp; node.level &gt;= maxLevel) {
-                minCube = node;
-                minCount = node.count;
-                maxLevel = node.level;
-            }
-        }
-        return minCube;
-    }
-}
-</code>
+    <listing xml:id="lst_octreeQuant">
+      <title>Octree Quantizing</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/OctreeQuant.kt" />
+        </code>
       </program>
     </listing>
 
-    <p>First notice that the constructor for an <c>Octree</c> initializes the
-                root node to <c>null</c>. Then it sets up three important attributes that
-                all the nodes of an octree may need to access. Those attributes
-                are <c>maxLevel</c>, <c>numLeaves</c>, and <c>allLeaves</c>. The
-                <c>maxLevel</c> attribute limits the total depth of the tree. Notice that
-                in our implementation we have initialized <c>maxLevel</c> to five. This is
-                a small optimization that allows us to ignore the two least
-                significant bits of color information. It keeps the overall size of the
-                tree much smaller and doesn't hurt the quality of the final image at
-                all. The <c>numLeaves</c> and <c>allLeaves</c> attributes allow us to keep
-                track of the number of leaf nodes and allow us direct access to the
-                leaves without traversing all the way down the tree. We will see why
-                this is important shortly.</p>
-    <p>The <c>insert</c> and <c>find</c> methods behave exactly like their cousins in
-                chapter <xref ref="chapter-trees"/>. They each check to see if a root
-                node exists, and then call the corresponding method in the root node.
-                Notice that <c>insert</c> and <c>find</c> both use the red, green, and blue
-                components (<c>(r, g, b)</c>) to identify a node in the tree.</p>
-              <p>The <c>reduce</c> method is defined on line&#xa0;31 of <xref ref="lst_octreedef"/>. This method loops
-                until the number of leaves in the leaf list is less than the total
-                number of colors we want to have in the final image (defined by the
-                parameter <c>maxCubes</c>). <c>reduce</c> makes use of a helper method
-                <c>findMinCube</c> to find the node in the octree with the smallest
-                reference count. Once the node with the smallest reference count is
-                found, that node is merged into a single node with all of its siblings
-                (see line&#xa0;36 of <xref ref="lst_octreedef"/>).</p>
-    <p>The <c>findMinCube</c> method is implemented using the <c>allLeaves</c> and
-                a simple find minimum loop pattern. When the number of leaf nodes is
-                large, and it could be as large is 16.7 million, this approach is not
-                very efficient. In one of the exercises you are asked to modify the
-                <c>Octree</c> class and improve the efficiency of <c>findMinCube</c>.</p>
-    <p>One of the things to mention about the <c>Octree</c> class is that it uses an instance
-                of the class <c>OTNode</c> which is defined inside the the <c>Octree</c> class. A class
-                that is defined inside another class is called an <em>inner class</em>.
-                We define <c>OTNode</c> inside <c>Octree</c> because each node
-                of an octree needs to have access to some information that is
-                stored in an instance of the <c>Octree</c> class. Another reason for making
-                <c>OTNode</c> an inner class is that there is no reason for any code
-                outside of the <c>Octree</c> class to use it. The way that an octree node
-                is implemented is really a private detail that nobody
-                else needs to know about. This is a good software engineering practice
-                known as <em>information hiding</em>.</p>
-    <p>Now let's look at the class definition for the nodes in an octree
-                (<xref ref="lst_otnodedef"/>).
-                The constructor for the <c>OTNode</c> class has three parameters: <c>parent</c>,
-                <c>level</c>, and <c>outer</c>.
-                These parameters allow the <c>Octree</c> methods to construct new
-                nodes under a variety of circumstances. As we did with binary search
-                trees, we will keep track of the parent of a node explicitly. The level
-                of the node simply indicates its depth in the tree. The most interesting
-                of these three parameters is the <c>outer</c> parameter, which is a
-                reference to the instance of the <c>octree</c> class that created this
-                node. <c>outer</c> will function like <c>this</c> in that it will allow the
-                instances of <c>OTNode</c> to access attributes of an instance of
-                <c>Octree</c>.</p>
-    <p>The other attributes that we want to remember about each node in an
-                <c>octree</c> include the reference <c>count</c> and the red, green, and blue
-                components of the color represented by this tree. As you will note in
-                the <c>insert</c> method, only a leaf node of the tree will have values
-                for <c>red</c>, <c>green</c>, <c>blue</c>, and <c>count</c>. Also note that since
-                each node can have up to eight children we initialize a list of eight
-                references to keep track of them all. Rather than a left and right child
-                as in binary trees, an octree has 0&#x2013;7 children.</p>
-              <listing xml:id="lst_otnodedef">
-                <caption>Defining an OTNode</caption>
-                <program language="java">
-                  <code>
-    public class OTNode {
-        public int red;
-        public int green;
-        public int blue;
-        public int count;
-        public OTNode parent;
-        public int level;
-        public Octree oTree;
-        public OTNode[] children;
+    <p>The <c>octreeQuant</c> function implements the basic process just described. First, the loops in lines&#xA0;8&#x2013;16 <xref ref="lst_octreeQuant" /> read each pixel and add it to the octree. Second, the number of leaf nodes is reduced by the <c>reduce</c> method on line&#xA0;18. Finally, the image is updated by searching for a color, using <c>find</c>, in the reduced octree on line&#xA0;27.</p>
+    <p>Let us now turn our attention to the definition of the <c>Octree</c> class (<xref ref="lst_octreedef" />), which is where all the magic happens.</p>
 
-        public OTNode() {
-            this(null, 0, null);
-        }
-
-        public OTNode(OTNode parent, int level, Octree outer) {
-            this.red = 0;
-            this.green = 0;
-            this.blue = 0;
-            this.parent = parent;
-            this.level = level;
-            this.oTree = outer;
-            this.children = new OTNode[8];
-        }
-    </code>
-  </program>
+    <listing xml:id="lst_octreedef">
+      <title>The <c>Octree</c> Class</title>
+      <program language="java" line-numbers="yes">
+        <code>
+<xi:include parse="text" href="samplecode/src/main/kotlin/Octree.kt" />
+        </code>
+      </program>
     </listing>
 
-    <p>Now we get into the really interesting parts of the octree
-                implementation. The Java code for inserting a new node into an
-                octree is shown in <xref ref="lst_otninsert"/>.
-                The first problem we need to solve is how to figure out where to place a
-                new node in the tree. In a binary search tree we used the rule that a
-                new node with a key less than its parent went in the left subtree, and a
-                new node with a key greater than its parent went in the right subtree.
-                But with eight possible children for each node it is not that simple. In
-                addition, when indexing colors it is not obvious what the key for each
-                node should be. In an <c>octree</c> we will use the information from the
-                three color components. <xref ref="fig_otindex"/> shows how we can use
-                the red, green, and blue color values to compute an index for the
-                position of the new node at each level of the tree. The corresponding
-                Java code for computing the index is on lines&#xa0;20&#x2013;26 of <xref ref="lst_otninsert"/>.</p>
-              <listing xml:id="lst_otninsert">
-                <caption>Insert into OCtree</caption>
-                <program language="java" line-numbers="yes">
-                  <code>
-        public void insert(int r, int g, int b, int level, Octree outer) {
-            if (level &lt; oTree.maxLevel) {
-                int index = computeIndex(r, g, b, level);
-                if (this.children[index] == null) {
-                    this.children[index] = new OTNode(this, level + 1, outer);
-                }
-                this.children[index].insert(r, g, b, level + 1, outer);
-            } else {
-                if (this.count == 0) {
-                    this.oTree.numLeaves = this.oTree.numLeaves + 1;
-                    this.oTree.allLeaves.add(this);
-                }
-                this.red += r;
-                this.green += g;
-                this.blue += b;
-                this.count += 1;
+    <p>First notice that the constructor for an <c>Octree</c> initializes the root node to <c>null</c>. Then it sets up three important attributes that all the nodes of an octree may need to access. Those attributes are <c>maxLevel</c>, <c>numLeaves</c>, and <c>allLeaves</c>. The <c>maxLevel</c> attribute limits the total depth of the tree. Notice that in our implementation we have initialized <c>maxLevel</c> to five. This is a small optimization that allows us to ignore the two least significant bits of color information. It keeps the overall size of the tree much smaller and doesn't hurt the quality of the final image at all. The <c>numLeaves</c> and <c>allLeaves</c> attributes allow us to keep track of the number of leaf nodes and allow us direct access to the leaves without traversing all the way down the tree. We will see why this is important shortly.</p>
+    <p>The <c>insert</c> and <c>find</c> methods behave exactly like their cousins in chapter <xref ref="chapter-trees" />. They each check to see if a root node exists, and then call the corresponding method in the root node. Notice that <c>insert</c> and <c>find</c> both use the red, green, and blue components (<c>(r, g, b)</c>) to identify a node in the tree.</p>
+    <p>The <c>reduce</c> method is defined on line&#xa0;24 of <xref ref="lst_octreedef" />. This method loops until the number of leaves in the leaf list is less than the total number of colors we want to have in the final image (defined by the parameter <c>maxCubes</c>). <c>reduce</c> makes use of a helper method <c>findMinCube</c> to find the node in the octree with the smallest reference count. Once the node with the smallest reference count is found, that node is merged into a single node with all of its siblings (see line&#xa0;31 of <xref ref="lst_octreedef" />).</p>
+    <p>The <c>findMinCube</c> method is implemented using the <c>allLeaves</c> and a simple find minimum loop pattern. When the number of leaf nodes is large, and it could be as large is 16.7 million, this approach is not very efficient. In one of the exercises you are asked to modify the <c>Octree</c> class and improve the efficiency of <c>findMinCube</c>.</p>
+    <p>One of the things to mention about the <c>Octree</c> class is that it uses an instance of the class <c>OTNode</c> which is defined inside the the <c>Octree</c> class. A class that is defined inside another class is called an <em>inner class</em>. We define <c>OTNode</c> inside <c>Octree</c> because each node of an octree needs to have access to some information that is stored in an instance of the <c>Octree</c> class. Another reason for making <c>OTNode</c> an inner class is that there is no reason for any code outside of the <c>Octree</c> class to use it. The way that an octree node is implemented is really a private detail that nobody else needs to know about. This is a good software engineering practice known as <em>information hiding</em>.</p>
+    <p>Now let's look at the class definition for the nodes in an octree (<xref ref="lst_otnodedef" />). The constructor for the <c>OTNode</c> class has three parameters: <c>parent</c>, <c>level</c>, and <c>outer</c>. These parameters allow the <c>Octree</c> methods to construct new nodes under a variety of circumstances. As we did with binary search trees, we will keep track of the parent of a node explicitly. The level of the node simply indicates its depth in the tree. The most interesting of these three parameters is the <c>outer</c> parameter, which is a reference to the instance of the <c>octree</c> class that created this node. <c>outer</c> will function like <c>this</c> in that it will allow the instances of <c>OTNode</c> to access attributes of an instance of <c>Octree</c>.</p>
+    <p>The other attributes that we want to remember about each node in an <c>octree</c> include the reference <c>count</c> and the red, green, and blue components of the color represented by this tree. As you will note in the <c>insert</c> method, only a leaf node of the tree will have values for <c>red</c>, <c>green</c>, <c>blue</c>, and <c>count</c>. Also note that since each node can have up to eight children we initialize a list of eight references to keep track of them all. Rather than a left and right child as in binary trees, an octree has 0&#x2013;7 children.</p>
+    <listing xml:id="lst_otnodedef">
+      <title>Defining an OTNode</title>
+      <program language="kotlin">
+        <code>
+class OTNode(
+    val parent: OTNode? = null,
+    val level: Int = 0,
+    val outer: Octree? = null
+) {
+    var red = 0
+    var green = 0
+    var blue = 0
+    var count = 0
+    val children: MutableList&lt;OTNode?> = MutableList(8) { null }
+
+        </code>
+      </program>
+    </listing>
+
+    <p>Now we get into the really interesting parts of the octree implementation. The Java code for inserting a new node into an octree is shown in <xref ref="lst_otninsert" />. The first problem we need to solve is how to figure out where to place a new node in the tree. In a binary search tree we used the rule that a new node with a key less than its parent went in the left subtree, and a new node with a key greater than its parent went in the right subtree. But with eight possible children for each node it is not that simple. In addition, when indexing colors it is not obvious what the key for each node should be. In an <c>octree</c> we will use the information from the three color components. <xref ref="fig_otindex" /> shows how we can use the red, green, and blue color values to compute an index for the position of the new node at each level of the tree. The corresponding code for computing the index is on lines&#xa0;20&#x2013;26 of <xref ref="lst_otninsert" />.</p>
+    <listing xml:id="lst_otninsert">
+      <title>Insert into OCtree</title>
+      <program language="java" line-numbers="yes">
+        <code>
+    fun insert(r: Int, g: Int, b: Int, level: Int, outer: Octree) {
+        if (level  this.outer!!.maxLevel) {
+            val index = computeIndex(r, g, b, level)
+            if (this.children[index] == null) {
+                this.children[index] = OTNode(this, level + 1, outer)
             }
-        }
-
-        public int computeIndex(int r, int g, int b, int level) {
-            int nShift = 8 - level;
-            int rBits = (r &gt;&gt; (nShift - 2)) &amp; 0x04;
-            int gBits = (g &gt;&gt; (nShift - 1)) &amp; 0x02;
-            int bBits = (b &gt;&gt; nShift) &amp; 0x01;
-            return rBits | gBits | bBits;
-        }
-                  </code>
-                </program>
-              </listing>
-
-    <p>The computation of the index combines bits from each of the red, green,
-                and blue color components, starting at the top of the tree with the
-                highest order bits. <xref ref="fig_otindex"/> shows the binary
-                representation of the red, green, and blue components of 163, 98, 231.
-                At the root of the tree we start with the most significant bit from each
-                of the three color components; in this case the three bits are 1, 0, and
-                1. Putting these bits together we get binary 101 or decimal 5.</p>
-    <p>The operators used in the <c>compute_index</c> may be unfamiliar to you.
-                The <c>&gt;&gt;</c> operator is the right shift operation. The <c>&amp;</c> is bitwise
-                <c>and</c>, and <c>|</c> is logical <c>or</c>. The bitwise <c>or</c> and bitwise
-                <c>and</c> operations work just like the logical operations used in
-                conditionals, except that they work on the individual bits of a number.
-                The shift operation moves the bits <m>n</m> places to the right,
-                filling in with zeros on the left and dropping the bits as they go off
-                the right.</p>
-    <p>Once we have computed the index appropriate for the current level of the tree,
-      we traverse down into the subtree. In the example in <xref ref="fig_otindex"/>
-                we follow the link at position&#xA0;5 in the
-                <c>children</c> array. If there is no node at position&#xA0;5, we create one. We
-                keep traversing down the tree until we get to <c>maxLevel</c>. At
-                <c>maxLevel</c> we stop searching and store the data. Notice that we do
-                not overwrite the data in the leaf node, but rather we add the color
-                components to any existing components and increment the reference
-                counter. This allows us to compute the average of any color below the
-                current node in the color cube. In this way, a leaf node in the
-                <c>octree</c> may represent a number of similar colors in the color cube.</p>
-    <figure align="" xml:id="fig_otindex">
-      <caption>Computing an Index to Insert a Node in an octree</caption>
-      <image source="Advanced/Figures/OctTreeIndex.png" width="70%" alt="Computing an Index to Insert a Node in an octree"/>
-    </figure>
-    <p>The <c>find</c> method, shown in <xref ref="lst_otnfind"/>,
-                uses the same method of index computation as the <c>insert</c> method to
-                traverse the tree in search of a node matching the red, green, and blue
-                components.</p>
-
-              <listing xml:id="lst_otnfind">
-                <caption>The <c>find</c> Method</caption>
-                <program language="java" line-numbers="yes">
-                  <code>
-public int[] find(int r, int g, int b, int level) {
-    if (level &lt; this.oTree.maxLevel) {
-        int index = computeIndex(r, g, b, level);
-        if (this.children[index] != null) {
-            return this.children[index].find(r, g, b, level + 1);
-        } else if (this.count &gt; 0) {
-            return new int[] {this.red / this.count,
-                this.green / this.count, this.blue / this.count};
+            this.children[index]!!.insert(r, g, b, level + 1, outer)
         } else {
-            System.err.printf(
-                "No leaf node to represent RGB(%d, %d, %d)%n",
-                    r, g, b);
-            return null;
+            if (this.count == 0) {
+                this.outer.numLeaves = this.outer.numLeaves + 1
+                this.outer.allLeaves.add(this)
+            }
+            this.red += r
+            this.green += g
+            this.blue += b
+            this.count += 1
         }
-    } else {
-        return new int[] {this.red / this.count,
-            this.green / this.count, this.blue / this.count};
     }
-}
-                  </code>
-                </program>
+
+    fun computeIndex(r: Int, g: Int, b: Int, level: Int): Int {
+        val nShift = 8 - level
+        val rBits = (r shr (nShift - 2)) and 0x04
+        val gBits = (g shr (nShift - 1)) and 0x02
+        val bBits = (b shr nShift) and 0x01
+        return rBits or gBits or bBits
+    }
+
+        </code>
+      </program>
     </listing>
 
+    <p>The computation of the index combines bits from each of the red, green, and blue color components, starting at the top of the tree with the highest order bits. <xref ref="fig_otindex" /> shows the binary representation of the red, green, and blue components of 163, 98, 231. At the root of the tree we start with the most significant bit from each of the three color components; in this case the three bits are 1, 0, and 1. Putting these bits together we get binary 101 or decimal 5.</p>
+    <p>Once we have computed the index appropriate for the current level of the tree, we traverse down into the subtree. In the example in <xref ref="fig_otindex" /> we follow the link at position&#xA0;5 in the <c>children</c> list. If there is no node at position&#xA0;5, we create one. We keep traversing down the tree until we get to <c>maxLevel</c>. At <c>maxLevel</c> we stop searching and store the data. Notice that we do not overwrite the data in the leaf node, but rather we add the color components to any existing components and increment the reference counter. This allows us to compute the average of any color below the current node in the color cube. In this way, a leaf node in the <c>octree</c> may represent a number of similar colors in the color cube.</p>
+    <figure xml:id="fig_otindex">
+      <caption>Computing an Index to Insert a Node in an octree</caption>
+      <image source="Advanced/Figures/OctTreeIndex.png" width="70%">
+        <shortdescription>Computing an Index to Insert a Node in an octree</shortdescription>
+      </image>
+    </figure>
+    <p>The <c>find</c> method, shown in <xref ref="lst_otnfind" />, uses the same method of index computation as the <c>insert</c> method to traverse the tree in search of a node matching the red, green, and blue components.</p>
+
+    <listing xml:id="lst_otnfind">
+      <title>The <c>find</c> Method</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+    fun find(r: Int, g: Int, b: Int, level: Int): Pixel {
+        if (level &lt; this.outer!!.maxLevel) {
+            val index = computeIndex(r, g, b, level)
+            if (this.children[index] != null) {
+                return this.children[index]!!.find(r, g, b, level + 1)
+            } else if (this.count > 0) {
+                return Pixel(
+                    this.red / this.count,
+                    this.green / this.count, this.blue / this.count
+                )
+            } else {
+                throw Exception("No leaf node to represent RGB($r, $g, $b)")
+            }
+        } else {
+            return Pixel(
+                this.red / this.count,
+                this.green / this.count, this.blue / this.count
+            )
+        }
+    }
+
+        </code>
+      </program>
+    </listing>
+
+    <p><c>find</c> needs to return three values, so we use the <c>Pixel</c> data class that we defined above the <c>Octree</c> class.</p>
+    
     <p>The <c>find</c> method has three exit conditions:</p>
     <p>
       <ol marker="1">
         <li>
-          <p>We have reached the maximum level of the tree and so we return the
-                        average of the color information stored in this leaf node (see lines&#xA0;6&#x2013;0).</p>
+          <p>We have reached the maximum level of the tree and so we return the average of the color information stored in this leaf node (see lines&#xA0;7&#x2013;10).</p>
         </li>
         <li>
-          <p>We have found a leaf node at a height less than <c>maxLevel</c> (see lines&#xA0;4&#x2013;5).
-                        This is possible only after the tree has been reduced. See below.</p>
+          <p>We have found a leaf node at a height less than <c>maxLevel</c> (see lines&#xA0;4&#x2013;5). This is possible only after the tree has been reduced. See below.</p>
         </li>
         <li>
           <p>We try to follow a path into a nonexistent subtree, which is an error.</p>
         </li>
       </ol>
     </p>
-    <note><title>Java Note</title>
-      <p>We are writing the error to <c>System.err</c> instead of <c>System.out</c>. Doing this permits
-        users to direct the error output to a file separate from any normal console output when running the
-        program from the terminal.</p>
-    </note>
-    <p>The final aspect of the <c>OTNode</c> class is the <c>merge</c> method. It
-                allows a parent to subsume all of its children and become a leaf node
-                itself. If you remember back to the structure of the <c>octree</c> where
-                each parent cube fully encloses all the cubes represented by the
-                children, you will see why this makes sense. When we merge a group of
-                siblings we are effectively taking a weighted average of the colors
-                represented by each of those siblings. Since all the siblings are
-                relatively close to each other in color space, the average is a good
-                representation of all of them. <xref ref="fig_otmerge"/> illustrates
-                the merge process for some sibling nodes.</p>
-    <figure align="" xml:id="fig_otmerge">
-      <caption>Merging Four Leaf Nodes of an <literal>octree</literal></caption>
-      <image source="Advanced/Figures/otMerge.png" width="70%" alt="Merging Four Leaf Nodes of an ``octree``"/>
+    <p>The final aspect of the <c>OTNode</c> class is the <c>merge</c> method. It allows a parent to subsume all of its children and become a leaf node itself. If you remember back to the structure of the <c>octree</c> where each parent cube fully encloses all the cubes represented by the children, you will see why this makes sense. When we merge a group of siblings we are effectively taking a weighted average of the colors represented by each of those siblings. Since all the siblings are relatively close to each other in color space, the average is a good representation of all of them. <xref ref="fig_otmerge" /> illustrates the merge process for some sibling nodes.</p>
+    <figure xml:id="fig_otmerge">
+      <caption>Merging Four Leaf Nodes of an octree</caption>
+      <image source="Advanced/Figures/otMerge.png" width="70%">
+        <shortdescription>Merging Four Leaf Nodes of an "octree"</shortdescription>
+      </image>
     </figure>
-    <p><xref ref="fig_otmerge"/> shows the red, green, and blue components
-                represented by the four leaf nodes whose identifying color values are
-                (101, 122, 167), (100, 122, 183), (123, 108, 163), and (126, 113, 166).
-                As you can see in <xref ref="lst_otnfind"/>,
-                the identifying values are calculated by dividing the color values by the count.
-                Notice how close they are in the overall color space. The leaf node that gets
-                created from all of these has an ID of (112, 115, 168). This is close to
-                the average of the four, but weighted more towards the third color tuple
-                due to the fact that it had a reference count of 12.</p>
-        <listing xml:id="lst_otmerge">
-          <caption>The <c>merge</c> method</caption>
-          <program language="java" line-numbers="yes">
-            <code>
-        public void merge() {
-            for (OTNode child: this.children) {
-                if (child != null) {
-                    if (child.count &gt; 0) {
-                        boolean removed = this.oTree.allLeaves.remove(child);
-                        this.oTree.numLeaves -= 1;
-                    } else {
-                        System.err.println("Recursively merging non-leaf");
-                        System.exit(0);
-                        child.merge();
-                    }
-
-                    this.count += child.count;
-                    this.red += child.red;
-                    this.green += child.green;
-                    this.blue += child.blue;
+    <p><xref ref="fig_otmerge" /> shows the red, green, and blue components represented by the four leaf nodes whose identifying color values are (101, 122, 167), (100, 122, 183), (123, 108, 163), and (126, 113, 166). As you can see in <xref ref="lst_otnfind" />, the identifying values are calculated by dividing the color values by the count. Notice how close they are in the overall color space. The leaf node that gets created from all of these has an ID of (112, 115, 168). This is close to the average of the four, but weighted more towards the third color tuple due to the fact that it had a reference count of 12.</p>
+    <listing xml:id="lst_otmerge">
+      <title>The <c>merge</c> method</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+    fun merge() {
+        for (child in this.children) {
+            if (child != null) {
+                if (child.count > 0) {
+                    val removed = this.outer!!.allLeaves.remove(child)
+                    this.outer.numLeaves -= 1
+                } else {
+                    println("Recursively merging non-leaf")
+                    child.merge()
                 }
-            }
 
-            for (int i = 0; i &lt; 8; i++) {
-                this.children[i] = null;
+                this.count += child.count
+                this.red += child.red
+                this.green += child.green
+                this.blue += child.blue
             }
         }
-      </code>
-    </program>
-  </listing>
 
-    <p>Because the <c>octree</c> uses only colors that are really present in the
-                image and faithfully preserves colors that are often used, the final
-                quantized image from the <c>octree</c> is much higher quality than the
-                simple method we used to start this section. <xref ref="fig_octree_quant_compare"/> shows a comparison
-                of the original image with the quantized image.</p>
+        for (i in 0 ..&lt; 8) {
+            this.children[i] = null
+        }
+    }
+        </code>
+      </program>
+    </listing>
 
-               <figure align="" xml:id="fig_octree_quant_compare">
+    <p>Because the <c>octree</c> uses only colors that are really present in the image and faithfully preserves colors that are often used, the final quantized image from the <c>octree</c> is much higher quality than the simple method we used to start this section. <xref ref="fig_octree_quant_compare" /> shows a comparison of the original image with the quantized image.</p>
+
+    <figure align="" xml:id="fig_octree_quant_compare">
       <caption>Comparison of Original and Octree-Quantized Image</caption>
-      <image source="Advanced/Figures/octree_comparison.png" width="70%" alt="original reddish-brown crystal at left, quantized at right"/>
+      <image source="Advanced/Figures/octree_comparison.png" width="70%" alt="original reddish-brown crystal at left, quantized at right" />
     </figure>
-    <p>There are many additional ways to compress images using techniques such
-                as run-length encoding, discrete cosine transform, and Huffman coding.
-                Any of these algorithms are within your grasp, and we encourage you to
-                look them up and read about them. In addition, quantized images can be
-                improved by using a technique known as <term>dithering</term>. Dithering is a
-                process by which different colors are placed near each other so that
-                the eye blends the colors together, forming a more realistic image. This
-                is an old trick used by newspapers for doing color printing using just
-                black plus three different colors of ink. Again, you can research
-                dithering and try to apply it to some images on your own.</p>
+    <p>There are many additional ways to compress images using techniques such as run-length encoding, discrete cosine transform, and Huffman coding. Any of these algorithms are within your grasp, and we encourage you to look them up and read about them. In addition, quantized images can be improved by using a technique known as <term>dithering</term>. Dithering is a process by which different colors are placed near each other so that the eye blends the colors together, forming a more realistic image. This is an old trick used by newspapers for doing color printing using just black plus three different colors of ink. Again, you can research dithering and try to apply it to some images on your own.</p>
   </subsection>
 </section>
