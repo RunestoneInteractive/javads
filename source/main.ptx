@@ -26,9 +26,10 @@
           <institution>Carleton College</institution>
         </author>
         <copyright>
-          <year>2023</year>
-          <holder>Franklin Beedle &amp; Associates</holder>
-          <shortlicense> The online version of this work is made available under the Creative Commons Attribution, Share Alike, Non-Commercial license.<image source="by-nc-sa.png"
+          <year>2026</year>
+          <holder>Brad Miller, David Ranum, Roman Yasinovskyy, J. David Eisenberg, David R. Musicant</holder>
+          <shortlicense> This work is licensed under the <url href="https://creativecommons.org/licenses/by-nc-sa/4.0/\">Creative Commons Attribution-NonCommercial-Share Alike 4.0 International license</url>.
+          <image source="by-nc-sa.png"
               width="20%"
               description="CC-BY-NC_SA" />
           <p>The paper version of the Python version of this book is
