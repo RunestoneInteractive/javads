@@ -1,25 +1,30 @@
 <preface xml:id="front-back-matter_preface-to-the-kotlin-edition">
- <title>Preface to the Kotlin Edition</title>
- <!-- <paragraphs> -->
-   <!-- <title>Preface to the Kotlin Edition</title> -->
+  <title>Preface to the Kotlin Edition</title>
+  <!-- <paragraphs> -->
+  <!-- <title>Preface to the Kotlin Edition</title> -->
 
-   <p>
-      <alert>
-      This book is a work-in-progress and is under active development. It is currently incomplete, though more sections are being added regularly.
-      </alert>
-   </p>
-   
-    <p>This Kotlin translation was done with the initial goal of supporting the Data Structures course at Carleton College in Northfield, MN, but I hope that others find this content useful as well.</p>
-    
-    <p>I'm deeply grateful for the fantastic work done by all of the previous authors on the original Python version (Bradley N. Miller, David L. Ranum, Roman Yasinovskyy), and then on the Java version that followed it (J. David Eisenberg). In updating this book for Kotlin, I have mostly started with the Java version, as it is often a closer fit to Kotlin. Sometimes, however, the content from the Python version is more relevant, and so in some cases I have brought back some content from the Python version that was changed or removed for the Java version.</p>
+  <p>This Kotlin translation was done with the initial goal of supporting the Data Structures course at Carleton College in Northfield, MN, but I hope that others find this content useful as well.</p>
 
-    <p>The primary goal of this book is to teach data structures, and so my goal in translating and presenting code is to present that data structures content as clearly as possible. My assumption is that students reading this book and taking this course are those who have previous experience coding in another popular language, such as Java, Python, or C/C++. The style that I use for code in the data structures exercises largely reflects that. I hope that students learn Kotlin well as a secondary learning goal, but in general I don't emphasize highly Kotlin-specific idioms in the code samples that I provide. To the extent possible, I have attempted to make the Kotlin code I provide to be as close to executable pseudocode is as possible, while still being Kotlin.</p>
+  <p>I'm deeply grateful for the fantastic work done by all of the previous authors on the original Python version (Bradley N. Miller, David L. Ranum, Roman Yasinovskyy), and then on the Java version that followed it (J. David Eisenberg). In updating this book for Kotlin, I have mostly started with the Java version, as it is often a closer fit to Kotlin. Sometimes, however, the content from the Python version is more relevant, and so in some cases I have brought back some content from the Python version that was changed or removed for the Java version.</p>
 
-    <p>Kotlin does place a heavy emphasis on null safety. This is both welcome and unavoidable when programming in Kotlin. The sample code provided in this book, especially in the sections that use linked lists, make prominent use of nullable types.</p>
+  <p>The primary goal of this book is to teach data structures, and so my goal in translating and presenting code is to present that data structures content as clearly as possible. My assumption is that students reading this book and taking this course are those who have previous experience coding in another popular language, such as Java, Python, or C/C++. The style that I use for code in the data structures exercises largely reflects that. I hope that students learn Kotlin well as a secondary learning goal, but in general I don't emphasize highly Kotlin-specific idioms in the code samples that I provide. To the extent possible, I have attempted to make the Kotlin code I provide to be as close to executable pseudocode as possible, while still being Kotlin.</p>
 
-   <p>Kotlin offers a variety of programming styles. Most notably, it enables functional programming styles if desired for a variety of situations. Common Kotlin tutorials and books use these functional features much more frequently than one finds in content for other programming languages. These features, such as Kotlin scope functions (<c>let</c>, <c>with</c>, etc), lambda expressions, and more, are often combined with null safety and other operators in order to create elegant brief code in a style not commonly seen in Python, Java, or C/C++. In this book, I have chosen to generally not emphasize programming in these styles. As the primary goal of this book is to teach data structures, my goal has been to leverage as much as possible the programming experience that I assume students already have, while also taking advantage of some of the brevity and consistency that Kotlin offers.</p>
+  <p>Kotlin does place a heavy emphasis on null safety. This is both welcome and unavoidable when programming in Kotlin. The sample code provided in this book, especially in the sections that use linked lists, make prominent use of nullable types.</p>
 
-   <p><em>Dave Musicant, Professor of Computer Science, Carleton College</em></p>
+  <p>Kotlin offers a variety of programming styles. Most notably, it enables functional programming styles if desired for a variety of situations. Common Kotlin tutorials and books use these functional features much more frequently than one finds in content for other programming languages. These features, such as Kotlin scope functions (<c>let</c>, <c>with</c>, etc), lambda expressions, and more, are often combined with null safety and other operators in order to create elegant brief code in a style not commonly seen in Python, Java, or C/C++. In this book, I have chosen to generally not emphasize programming in these functional styles. As the primary goal of this book is to teach data structures, my goal has been to leverage as much as possible the programming experience that I assume students already have, while also taking advantage of some of the brevity and consistency that Kotlin offers. That said, there are occasions where I believe that a functional approach is still more clear than otherwise, even for students who are less familiar with that style of programming. In those circumstances, I do my best in surrounding text to help explain what is happening.</p>
 
-<!-- </paragraphs> -->
+  <p>In addition to translating all code to Kotlin and adjusting the text accordingly, I have made a number of other changes that I believe help to make the content more clear and accessible. Most of them are relatively minor, but one major change that I have made is to more carefully distinguish between an an abstract data type (ADT), and an implementation of that ADT. For example, a priority queue is an ADT, and a binary heap is a particular implementation for that ADT. Likewise, a map is an ADT, and a hash table as well as a binary search tree are each a different implementations of a map. This difference is an important part of the knowledge that I hope my students learn in a data structures course, and I want them to understand that multiple implementations can exist for the same ADT with potentially differing performance. This material is all present in the original book, but I have worked to bring that content more to the forefront. To do that, I have made a few specific changes.</p>
+
+  <p>One such change is that I have reorganized the ordering and organization of the content, which is most noticeable in the table of contents. For example, the priority queue ADT and its heap implementation have been pulled out as a chapter of their own, rather than being embedded in a longer chapter about trees in the original text. Organizing content on trees is tricky, because they are useful for multiple ADTs. I have chosen to keep the general tree content in its own chapter, and then subsequent chapters focus on ADTs that use trees for their implementations.</p>
+
+  <p>One of the fabulous language capabilities that Kotlin (and Java) provide is the <em>interface</em>, which ties very tightly to the idea of an ADT. An interface is arguably an ADT represented as code. In my experience, using an interface when introducing an ADT helps to make the idea significantly more concrete for students. Likewise, it enables the language to enforce that all implementations of that ADT must implement all methods. I have therefore introduced each ADT in code with a Kotlin interface, and adapted all code implementations to use Kotlin syntax for implementing that interface. I also follow the programming standard that the name of an implementation says something about how the implementation is done. (I also try to use different names than are built into the standard libraries, to avoid collisions.) For example, I use <c>MapADT</c> as an interface name, and use <c>HashTableMap</c> as a name for one of its implementations.</p>
+
+  <p>I hope that these updates are useful to other instructors, and I would appreciate communications regarding bug fixes and other improvements. The book is hosted on GitHub, and so issues posted to the <url href="https://github.com/Carleton-College-CS/kotlinds/issues">textbook issues page</url> are welcome.</p>
+
+
+
+  
+  <p><em>Dave Musicant, Professor of Computer Science, Carleton College</em></p>
+
+  <!-- </paragraphs> -->
 </preface>
