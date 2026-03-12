@@ -28,13 +28,12 @@
         <copyright>
           <year>2023</year>
           <holder>Franklin Beedle &amp; Associates</holder>
-          <shortlicense> The online version of this work is made available under the Creative
-            Commons Attribution, Share Alike, Non-Commercial license.<image source="by-nc-sa.png"
+          <shortlicense> The online version of this work is made available under the Creative Commons Attribution, Share Alike, Non-Commercial license.<image source="by-nc-sa.png"
               width="20%"
               description="CC-BY-NC_SA" />
           <p>The paper version of the Python version of this book is
-            available through Franklin Beedle &amp; Associates. We are grateful to them for their
-            vision in allowing us to publish an interactive edition online for free.</p>
+              available through Franklin Beedle &amp; Associates. We are grateful to them for their
+              vision in allowing us to publish an interactive edition online for free.</p>
           </shortlicense>
         </copyright>
       </bibinfo>
@@ -48,47 +47,52 @@
       <xi:include href="./FrontMatter/preface.ptx" />
       <xi:include href="./FrontMatter/older_preface.ptx" />
       <acknowledgement>
-      <paragraphs>
-        <title>For the Python version</title>
-        <p>
-          There are many people who have helped us to complete this book.
-          Thanks to our Computer Science colleague Steve Hubbard who provided
-          substantial feedback on the first edition and on the new material for
-          this edition. Thanks to our colleagues around the country who sent
-          helpful emails kindly pointing out mistakes in the first edition and
-          suggesting topics for this new edition.
-        </p><p>
-        Thanks to our friends Mary, Bob, and the rest of the crew at Java
-          John's in Decorah for allowing us to become ``authors in residence''
-          during Brad's sabbatical. Somehow David managed to make it through
-          all those months in the coffee shop without becoming a coffee drinker.
-          And yes, we acknowledge the irony of writing a Python book in
-          Java Johns.
-        </p>
-    <p>
-        Thanks to the staff at Franklin, Beedle, and Associates, especially
-          Jim Leisy and Tom Sumner. They were great to work with. And finally,
-          special thanks goes to our wives, Jane Miller, Brenda Ranum, and Nataliya Yasinovska.
-          Their
-          love and support helped make this book a reality.
-        </p>
-        <p>Bradley N. Miller,  David L. Ranum, Roman Yasinovskyy</p>
-      </paragraphs>
-      <paragraphs>
-        <title>For the Java version</title>
-        <p>The Java version of this book was
-        constructed by J. David Eisenberg for the Computer Science 76 course at
-          Evergreen Valley College in San Jose, CA. Any mistakes in the book are entirely his.</p>
-        
-      </paragraphs>
+        <paragraphs>
+          <title>For the Python version</title>
+          <p>
+            There are many people who have helped us to complete this book.
+            Thanks to our Computer Science colleague Steve Hubbard who provided
+            substantial feedback on the first edition and on the new material for
+            this edition. Thanks to our colleagues around the country who sent
+            helpful emails kindly pointing out mistakes in the first edition and
+            suggesting topics for this new edition.
+          </p>
+          <p>
+            Thanks to our friends Mary, Bob, and the rest of the crew at Java
+            John's in Decorah for allowing us to become ``authors in residence''
+            during Brad's sabbatical. Somehow David managed to make it through
+            all those months in the coffee shop without becoming a coffee drinker.
+            And yes, we acknowledge the irony of writing a Python book in
+            Java Johns.
+          </p>
+          <p>
+            Thanks to the staff at Franklin, Beedle, and Associates, especially
+            Jim Leisy and Tom Sumner. They were great to work with. And finally,
+            special thanks goes to our wives, Jane Miller, Brenda Ranum, and Nataliya Yasinovska.
+            Their
+            love and support helped make this book a reality.
+          </p>
+          <p>Bradley N. Miller, David L. Ranum, Roman Yasinovskyy</p>
+        </paragraphs>
+        <paragraphs>
+          <title>For the Java version</title>
+          <p>The Java version of this book was
+            constructed by J. David Eisenberg for the Computer Science 76 course at
+            Evergreen Valley College in San Jose, CA. Any mistakes in the book are entirely his.</p>
 
-      <paragraphs>
-        <title>For the Kotlin version</title>
-        <p>The Kotlin translation of this book was
-        constructed by Dave Musicant for the Data Structures course at
-          Carleton College in Northfield, MN. He is grateful that the previous authors prepared such detailed content for him to work with.</p>
-        
-      </paragraphs>
+        </paragraphs>
+
+        <paragraphs>
+          <title>For the Kotlin version</title>
+          <p>I produced the Kotlin version of this book for the Data Structures course at Carleton College in Northfield, MN. I'm grateful that the previous authors prepared such detailed content for me to work with.</p>
+
+          <p>Much of the work in producing this version of this book was in translating the code to Kotlin. For most code examples, I started with the excellent Java code produced by J. David Eisenberg (which was itself a port of the original Python code), and then I ran this Java code through the Java-to-Kotlin translator that is present inside of the IntelliJ development environment. At the point in time that I did this (late 2025 / early 2026) this tool was not using generative AI technology, but was instead a classic rules-based approach for converting code. After this initial conversion, I then made comprehensive changes. The bulk of these changes were to make the code better organized and easier for beginners to understand. It was also the case that sometimes the spirit of the original Python code was a better fit for Kotlin than the Java code at expressing the main intent, and so I sometimes rebuilt sections completely from scratch using the Python code as a reference. In either case I then typically reviewed the code from top to bottom, making further changes to make the code as clear as possible. Fairly little of the auto-translated code remains in this book, but it was faster to use as a starting point than completely from scratch. I do therefore claim translating the code as intellectual work that I have done and am responsible for, but I also acknowledge the help I received from this automatic translator in jumpstarting the effort.</p>
+
+          <p>None of the text that I have added to this text has been produced by generative AI. I have written all updates myself, though occasionally very small snippets may have been suggested by others. In some cases I engaged in conversations with large language models on conceptual content, most frequently regarding  how to best express a certain aspect of code idiomatically in Kotlin. Sometimes I then leveraged those concepts in code that I wrote, but the actual composition of that code was done entirely by me (apart from initial drafts of auto-translated code as explained above). I used various models from ChatGPT, Claude, and Google Gemini at different times while doing this brainstorming.</p>
+
+          <p>Dave Musicant, Professor of Computer Science, Carleton College</p>
+
+        </paragraphs>
 
       </acknowledgement>
 
@@ -98,7 +102,7 @@
     <xi:include href="./BasicDS/toctree.ptx" />
     <xi:include href="./Recursion/toctree.ptx" />
     <xi:include href="./SortSearch/toctree.ptx" />
-    <xi:include href="./Maps/toctree.ptx"/>
+    <xi:include href="./Maps/toctree.ptx" />
     <xi:include href="./Trees/toctree.ptx" />
     <xi:include href="./BSTs/toctree.ptx" />
     <xi:include href="./PriorityQueues/toctree.ptx" />
