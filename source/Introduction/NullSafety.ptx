@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<section xml:id="introduction_null-safety" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Null Safety</title>
+  <introduction>
+    <p>Kotlin introduces a relatively new feature into the language called <em>null safety</em>, which helps to prevent a significant source of bugs. Kotlin achieves this by causing an error while compiling if a program potentially has bugs in it relating to null safety. This requires the programmer to make sure that the program is safe from causing a null-safety-related bug before it starts running. Older languages such as Java, C++, and Python (sort of) are not null-safe, which means that if you have programmed in any of these languages, you might be in the habit of writing unsafe code that would not compile in Kotlin. We'll look in this section at the nature of the problem that Kotlin fixes, and how to write correct null-safe code in Kotlin.</p>
+  </introduction>
+  <subsection xml:id="introduction_null-problem" label="introduction_null-problem">
+    <title>The Null Safety Problem</title>
+    <p>In this section, we'll show some code that illustrates the problem that null safety solves. We'll focus on examples in Java, but even if you have only previously programmed in Python or some other language, the code will be short and straightforward enough that you can hopefully see the key principles. The goal here is just to motivate the problem that Kotlin fixes; in the next section, we'll go back to looking at Kotlin code.</p>
+
+    <p>This portion of a Java program tries to convert a string to upper case and print it, but the variable <c>text</c> has been assigned a value of <c>null</c>, which means that we do not wish to assign it to an actual string object. (In Python, <c>None</c> serves a similar purpose.) This program compiles without any problems at all, but when we run it, it results in the error messsage shown:</p>
+
+    <listing xml:id="lst-java-null-notok">
+      <title>Java snippet converting a string to upper case</title>
+      <program language="java">
+        <code>
+String text = null;
+System.out.println(text.toUpperCase());
+      </code>
+      </program>
+    </listing>
+    <pre>
+      Exception in thread "main" java.lang.NullPointerException:
+      Cannot invoke "String.toUpperCase()" because "&lt;local1>" is null
+    </pre>
+
+    <aside>
+      <title>Similar snippet in Python, with similar error</title>
+      <program language="python">
+        <code>
+text = None
+print(text.upper())
+      </code>
+      </program>
+      <pre>
+    print(text.upper())
+          ^^^^^^^^^^
+    AttributeError: 'NoneType' object has no attribute 'upper'
+    </pre>
+
+      <p>There are some important technical differences between Java's <c>null</c> and Python's <c>None</c> that go beyond the scope of our discussion here, but the broad principle is the same.</p>
+    </aside>
+
+    <p>This <c>NullPointerException</c> indicates that the variable <c>text</c> is a null pointer, meaning that it does not point to an actual string object. When we try to run the method <c>toUpperCase</c> on it, there is no string object to be found, so the method can't run.</p>
+
+    <p>Let's now modify the program so that the error only happens very rarely. This modification is designed to be brief and so it is somewhat silly, but let's go with it. This program only sets the variable <c>text</c> to null if a random number generated between 0 and 1 happens to be less than 0.001. In other words, this program would only cause an error, on average, once in a thousand runs.</p>
+
+
+    <listing xml:id="lst-java-null-rare">
+      <title>Java snippet converting a string to upper case, but is <c>null</c> only rarely</title>
+      <program language="java">
+        <code>
+String text = "hello";
+if (Math.random() &lt; 0.001) {
+    text = null;
+}
+System.out.println(text.toUpperCase());
+      </code>
+      </program>
+    </listing>
+
+    <aside>
+      <title>Similar snippet in Python</title>
+      <program language="python">
+        <code>
+text = "hello"
+if random.random() &lt; 0.001:
+    text = None
+print(text.upper())
+      </code>
+      </program>
+    </aside>
+
+
+    <p>This Java program compiles with no problems, and runs without error most of the time. It is quite possible that the programmer never sees the program crash. And yet, if a large number of people end up using this program, a small number of them will see this error. Though this example is silly, it is a proxy for real-world cases where null might happen <em>sometimes</em>, and the programmer forgot to handle it appropriately. These bugs are entirely avoidable if the programmer plans for the possiblity of a null value happening. For example, here is how the problem of the rare-but-possible null value could be fixed in our silly program:</p>
+
+    <listing xml:id="lst-java-null-fixed">
+      <title>Java snippet converting a string to upper case, but is <c>null</c> only rarely</title>
+      <program language="java">
+        <code>
+        String text = "hello";
+        if (Math.random() &lt; 0.001) {
+            text = null;
+        }
+
+        if (text != null) {
+            System.out.println(text.toUpperCase());
+        } else {
+            System.out.println("Text is null.");
+        }
+      </code>
+      </program>
+    </listing>
+
+    <aside>
+      <title>Similar fixed snippet in Python</title>
+      <program language="python">
+        <code>
+text = "hello"
+if random.random() &lt; 0.001:
+    text = None
+
+if text is not None:
+    print(text.upper())
+else:
+    print("Text is None.")
+      </code>
+      </program>
+    </aside>
+
+    <p>In this fixed version of the program, we first check that the variable <c>text</c> is not null before running the <c>upperCase</c> method. This is the trick to preventing NullPointerExceptions from happening: if a variable potentially might be null, a check should be made first before running code that depends on it not being null.</p>
+
+    <p>In languages such as Java, Python, C, and many others, the core language itself does not offer any built-in protection to help the programmer avoid this problem. Newer languages such as Kotlin (and some new libraries that are being added to old languages) offer support for this. In the following sections, we'll look at how Kotlin handles this issue.</p>
+  </subsection>
+
+  <subsection>
+    <title>How Kotlin Handles Null Values</title>
+
+    <p>Let's convert the first broken program above to Kotlin, and see what happens. Our first attempt might look like this:</p>
+
+    <listing xml:id="lst-kotlin-without-nullable">
+      <title>First attempt at converting program to Kotlin</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+fun main() {
+    var text: String = null
+    println(text.uppercase())
+}
+      </code>
+      </program>
+    </listing>
+
+
+    <p>In line 2 we specified the type of the variable <c>text</c> as <c>String</c>. Usually in Kotlin we leave the type information out because Kotlin is able to infer what that type is based on the value we assign it, but in this case, <c>null</c> isn't enough information for Kotlin to be able to guess the type. When we compile this code, however, we get this error message on line 2:</p>
+
+    <pre>
+      Null cannot be a value of a non-null type 'String'.
+    </pre>
+
+    <p>This illustrates an important difference in how Kotlin handles types compared to other languages you may have previously used. In order to solve the null safety problem, Kotlin needs to know when a variable <em>might</em> be null. We do this in Kotlin by placing a question mark after the name of the type. In other words, instead of indicating that the variable <c>text</c> is of type <c>String</c>, we indicate that it is of type <c>String?</c>. The question mark is used to indicate that this a different type that is almost the same as <c>String</c>, but null values are also allowed. <c>String?</c> is referred to as a <term>nullable type</term>.</p>
+
+    <p>So let's make that change to the above program:</p>
+
+
+    <listing xml:id="lst-kotlin-with-nullable">
+      <title>Kotlin program with nullable type</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+fun main() {
+    var text: String? = null
+    println(text.uppercase())
+}
+      </code>
+      </program>
+    </listing>
+
+    <p>This resolves the problem that we had on line 2, but now we get a compilation error on line 3. Kotlin has identified that we are calling the method <c>uppercase</c> on a variable that <em>might</em> be null.</p>
+
+
+    <aside>
+      <title>Deciphering the actual error message</title>
+      <p>The actual error message produced when compiling this program is somewhat cryptic. Here's what it looks like:</p>
+
+      <pre>
+        Only safe (?.) or non-null asserted (!!.) calls are allowed
+        on a nullable receiver of type 'String?'.
+      </pre>
+
+    <p>There's some additional terminology and notation in this error message that we don't want to go into at this point in time, but the error can be essentially paraphrased as</p>
+
+      <pre>
+        Only safe [method] calls are allowed on [variables] of type 'String?'.
+      </pre>
+
+    </aside>
+
+    <p>We can resolve the error we get by checking for null first:</p>
+
+    <listing xml:id="lst-kotlin-nullable-fixed">
+      <title>Kotlin program, fixed</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+fun main() {
+    var text: String? = null
+    if (text != null) {
+        println(text.uppercase())
+    } else {
+        println("Text is null.")
+    }
+}
+
+      </code>
+      </program>
+    </listing>
+
+    <p>The above program compiles without error.</p>
+
+    <p>Here are the important details you need to know about how Kotlin handles null values:
+
+    <ul>
+      <li>Kotlin will not compile a program that potentially assigns null to a variable unless the variable has a nullable type (i.e., has a question mark).</li>
+      <li>Kotlin will not compile a program that tries to call a method on a variable with a nullable type, unless the program has first safely checked that the type is not null.</li>
+    </ul>
+
+    </p>
+
+  </subsection>
+
+  <subsection xml:id="introduction_null-resolution" label="introduction_null-resolution">
+    <title>Approaches for Resolving Null Problems</title>
+
+    <p>As you write code in Kotlin, you will sometimes run into the problem that your code won't compile because you have not appropriately handled nulls. There are multiple ways of handling it. In this section, we'll consider some approaches.</p>
+
+    <p>The simplest way to resolve a null safety error is to use the approach that we used in the code above. Use an <c>if</c> to see if the value is null, and handle accordingly.</p>
+
+    <p>One place where this does not work is if the variable is an instance variable associated with an object. Here's a simple example:</p>
+
+    <listing xml:id="lst-kotlin-nullable-instance">
+      <title>Null issue with instance variable</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+class Wrapper(var text: String?) {
+    fun printUpperText() {
+        if (text != null) {
+            println(text.uppercase())
+        } else {
+            println("Text is null.")
+        }
+    }
+}
+      </code>
+      </program>
+    </listing>
+
+    <p>In the above program, the class <c>Wrapper</c> has an instance variable <c>text</c>, that is of type <c>String?</c>. <c>text</c> therefore potentially might have a value of null, and hence we need to check if it is null before calling methods on it, as we do in the code above. However, even with the <c>if</c> in our code, we still get an error on line 4 indicating that we are inappropriately calling a method on something that might be null. This seems strange; we're checking that it's not null. The problem is that <c>text</c> is an instance variable associated with an object in the class, and that means it's theoretically possible that in a parallel multithreaded program, some other thread in the program has access to this object and changes <c>text</c> to null while we are in between lines 3 and 4. In this textbook, we do no parallel coding at all, and so this is an impossibility with the kind of code we'll be writing. But this is a real possibility for Kotlin programs in general, so Kotlin insists that this is a problem.</p>
+
+    <p>So what are we to do? One recommended approach here is to make a copy of the instance variable to a local variable, and then check that:</p>
+    
+    <listing xml:id="lst-kotlin-nullable-instance-copy">
+      <title>Null issue resolved with instance variable copy</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+class Wrapper(var text: String?) {
+    fun printUpperText() {
+        val localText = text
+        if (localText != null) {
+            println(localText.uppercase())
+        } else {
+            println("Text is null.")
+        }
+    }
+}
+      </code>
+      </program>
+    </listing>
+
+    <p>The variable <c>localText</c> is defined locally to the method <c>printUpperText</c>, which means that no other part of the program can access it. There is therefore no risk of someone else accessing the variable in between the check on line 4 and its usage on line 5. We'll often use this approach in sample code within this book.</p>
+
+    <p>Another common problem that occurs is when we write code for which we know that a variable cannot be null due to specific program logic, but Kotlin is unable to see that this is the case. Here's an example:</p>
+
+        <listing xml:id="lst-kotlin-nullable-even-odd">
+      <title>Null issue due to complicated logic</title>
+      <program language="kotlin" line-numbers="yes">
+        <code>
+import kotlin.random.Random
+fun main() {
+    var text: String? = null
+    val number = Random.nextInt(100)
+    if (number % 2 == 0) {
+        text = "even"
+    }
+    if (number % 2 == 1) {
+        text = "odd"
+    }
+    println(text.uppercase())
+}      </code>
+      </program>
+    </listing>
+
+    <p>This program initializes a variable <c>text</c> to null, then picks a random integer. If the integer is even, then <c>text</c> is set to the string "even"; if the integer is odd, then <c>text</c> is set to the string "odd". All integers must be even or odd, so line 11 should be perfectly safe, but Kotlin still flags line 11 as an error. Kotlin can only observe that there are two <c>if</c> statements (lines 5-7, and lines 8-10), and the Kotlin null safety checker is not smart enough to determine that one of those two conditions is always true.</p>
+
+    <p>This program is contrived to illustrate a point and it is likely best fixed by changing the second <c>if</c> to an <c>else</c>. But in general, the problem remains that a programmer might write program logic that makes a null value impossible, but Kotlin may not be able to conclude that appropriately. A common fix for this situation is the <em>not-null assertion operator</em>, which appears as <c>!!</c>. This requires just a single fix to line 11, which would appear as:</p>
+
+    <listing xml:id="lst-kotlin-non-null-assertion">
+      <title>Not-null assertion operator</title>
+      <program language="kotlin" line-numbers="no">
+        <code>
+    println(text!!.uppercase())
+      </code>
+      </program>
+    </listing>
+
+    <p>The <c>!!</c> operator communicates to the Kotlin null safety checker that it should ignore the possibility of null for this method call when compiling the code. This means that if the variable really is null, then the program would result in a NullPointerException when it is executed. <c>!!</c> is a useful tool, but it is very easy to abuse it. You might find it tempting to drop in <c>!!</c> every time you get a null safety error. Don't do this! If you do, you will likely end up with NullPointerExceptions when your program runs, which are much harder to diagnose. The <c>!!</c> operator should be used sparingly, and only when you are 100% confident that your program logic is such that a null value is impossible. If the reason for that is not immediately obvious, you should likely document why in your code.</p>
+  </subsection>
+
+  <subsection xml:id="introduction_more-null-resolution" label="introduction_more-null-resolution">
+    <title>More Approaches for Resolving Null Problems</title>
+
+    <p>Kotlin has a wide variety of approaches for handling null problems, many of which lie outside the scope of this book. There is one in particular that we recommend Kotlin beginners avoid using, because it is likely more confusing than helpful and the other approaches above are just as effective. However, this approach is present in many online examples, so the reader should at least be aware of its existence.</p>
+
+    <p>This particular approach makes use of the "null safety" operator, which is represented by a question mark right before making a method call. For example, from our program in <xref ref="lst-kotlin-nullable-even-odd" />, Kotlin was unhappy with this code, because of the possibility that <c>text</c> might be null: </p>
+    <program language="kotlin" line-numbers="no">
+        println(text.uppercase())
+    </program>
+
+    <p>To fix this with the null safety operator, we would insert a question mark:</p>
+    <program language="kotlin" line-numbers="no">
+        println(text?.uppercase())
+    </program>
+    
+    <p>This code will compile, and run, without error. However, what this actually does is not obvious. The <c>?</c> operator checks to see if the variable before it is null. If it is not, then Kotlin continues and executes the method call that follows. On the other hand, if the variable is null, Kotlin aborts the rest of the expression entirely, and just returns null. So in the above example, if <c>text</c> actually were null, the program would simply print <c>null</c>. This is almost never what you want to actually happen.</p>
+
+    <p>There are ways of using the null safety operator in a smart way to avoid these problems. One of them is to use the <c>?:</c> operator, which is sometimes called the "Elvis operator" because when looked at sideways it perhaps resembles the singer Elvis Presley. Here is how it might be used in the above example:</p>
+
+    <program language="kotlin" line-numbers="no">
+        println(text?.uppercase() ?: "Text is null")
+    </program>
+
+    <p>The <c>?:</c> operator tests to see if the expression to its left is null, and if it is, it then returns the expression to the right. So here is how the above code would work in its entirety:
+
+    <ul>
+      <li>The null safety operator <c>?</c> checks to see if <c>text</c> is null.</li>
+      <li>If it is not null, the <c>uppercase</c> method is run, and the result of that is printed.</li>
+      <li>If <c>text</c> is null, then <c>text?.uppercase()</c> just returns null, which feeds into the Elvis operator.</li>
+      <li>The Elvis operator returns "Text is null", which is then printed.</li>
+    </ul>
+
+    This code is competely legitimate Kotlin, but for the types of programs we write in this book this aproach is generally more confusing than helpful. We tend to avoid it in this book.</p>
+  </subsection>
+</section>

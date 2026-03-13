@@ -16,6 +16,7 @@
   <xi:include href="./ExceptionHandling.ptx"/>
   <xi:include href="./DefiningFunctions.ptx"/>
   <xi:include href="./ObjectOrientedProgrammingDefiningClasses.ptx"/>
+  <xi:include href="./NullSafety.ptx"/>
   <xi:include href="./Summary.ptx"/>
   <xi:include href="./KeyTerms.ptx"/>
   <xi:include href="./Exercises.ptx"/> -->
