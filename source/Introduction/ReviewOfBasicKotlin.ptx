@@ -10,7 +10,7 @@
             the concepts that will be central to later chapters.</p>
   <p>Kotlin is an object-oriented programming language.
   It has a powerful set of built-in data types and control
-  constructs. One way to review small snippets of Python is through the <url href="https://play.kotlinlang.org" visual="https://play.kotlinlang.org">Kotlin playground</url>, which lets you try small programs interactively in your web browser.</p>
+  constructs. One way to review small snippets of Kotlin is through the <url href="https://play.kotlinlang.org" visual="https://play.kotlinlang.org">Kotlin playground</url>, which lets you try small programs interactively in your web browser.</p>
   
   <p>
     Here is an example Kotlin program. Every Kotlin program needs to have one <em>function</em> named <c>main</c>. This is where your program starts running.

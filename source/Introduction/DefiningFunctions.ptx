@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <section xml:id="introduction_defining-methods" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <title>Defining Methods</title>
-  <p>The earlier example of procedural abstraction called upon a Kotlin function called <c>sqrt</c> from the <c>kotlin.math</c> module to compute the square root. In general, we can hide the details of any computation by defining a function. A function definition requires a name, a group of parameters, and a body. It may also explicitly return a value. For example, the method defined below returns the square of the value you pass into it.</p>
+  <title>Defining Functions</title>
+  <p>The earlier example of procedural abstraction called upon a Kotlin function called <c>sqrt</c> from the <c>kotlin.math</c> module to compute the square root. In general, we can hide the details of any computation by defining a function. A function definition requires a name, a group of parameters, and a body. It may also explicitly return a value. For example, the function defined below returns the square of the value you pass into it.</p>
 
   <program language="kotlin">
     <code>
@@ -14,7 +14,7 @@
     81.0
   </pre>
 
-  <p>Let's look at the first line of the method one token at a time:</p>
+  <p>Let's look at the first line of the function one token at a time:</p>
   <p>
     <ul>
       <li>
@@ -31,7 +31,7 @@
       </li>
     </ul>
   </p>
-  <p>The details of how the function works are hidden <q>inside the box</q>; it returns the result of multiplying result of <c>n * n</c>.</p>
+  <p>The details of how the function works are hidden <q>inside the box</q>; it returns the result of multiplying <c>n * n</c>.</p>
 
   <p>We can invoke or <term>call</term> the function by giving its name and passing an actual parameter value, in this case, <c>3.0</c> to fill in the parameter. Note that the call to <c>square</c> returns a <c>Double</c> that can in turn be passed to another function invocation.</p>
 

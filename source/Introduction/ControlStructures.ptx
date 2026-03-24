@@ -78,7 +78,7 @@
                 </program>
             </listing>
 
-            <p>In this version, <c>if</c> is an expression that returns a value, which is then assigned to the variable <c>grade</c>. Again, this version if <c>if</c> is useful when every case assigns a value to the same variable. This form requires that there be an <c>else</c> case.</p>
+            <p>In this version, <c>if</c> is an expression that returns a value, which is then assigned to the variable <c>grade</c>. Again, this version of <c>if</c> is useful when every case assigns a value to the same variable. This form requires that there be an <c>else</c> case.</p>
 
         </subsubsection>
 
@@ -113,7 +113,7 @@
     <subsection>
         <title>Iteration</title>
 
-        <p>For iteration, Kotlin provides a standard <c>while</c> statement and a very powerful <c>for</c> statement. The <c>while</c> statement repeats a body of code as long as a condition evaluates to <c>true</c>. Generally, we use a <c>while</c> loop for <term>indeterminate loops</term>, where we do not know how many times the loop has to iterate. Consider this program, where we ask the user repeatedly enter numbers they want to sum, entering zero when they are finished. In this case, we have no idea how many times the user will enter numbers before finishing:</p>
+        <p>For iteration, Kotlin provides a standard <c>while</c> statement and a very powerful <c>for</c> statement. The <c>while</c> statement repeats a body of code as long as a condition evaluates to <c>true</c>. Generally, we use a <c>while</c> loop for <term>indeterminate loops</term>, where we do not know how many times the loop has to iterate. Consider this program, where we ask the user to repeatedly enter numbers they want to sum, entering zero when they are finished. In this case, we have no idea how many times the user will enter numbers before finishing:</p>
         <program language="kotlin">
             <code>
 <xi:include parse="text" href="samplecode/src/main/kotlin/WhileSum.kt"/>

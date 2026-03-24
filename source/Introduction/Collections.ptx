@@ -6,7 +6,7 @@
         </introduction>
   <subsection xml:id="introduction_arraylist" label="introduction_arraylist">
     <title>The <c>MutableList</c></title>
-    <p>The primary collection we'll be using is the <c>MutableList</c>. Kotlin distinguishes between the collection <c>List</c>, which is immutable (or unchangeable) after it has been created, and the collection <c>MutableList</c>, which enables you to make changes to it. Most of the time we are doing interesting coding, we want a <c>MutableList</c>. The immutable <c>List</c> is mostly useful if you want a short fixed list for a singular purpose.</p>
+    <p>The primary collection we'll be using is the <c>MutableList</c>. Kotlin distinguishes between the collection <c>List</c>, which is immutable (or unchangeable) after it has been created, and the collection <c>MutableList</c>, which enables you to make changes to it. Most of the time that we are doing interesting coding, we want a <c>MutableList</c>. The immutable <c>List</c> is mostly useful if you want a short fixed list for a singular purpose.</p>
 
     <p>Let's create a <c>MutableList</c> of <c>String</c> elements. The element data type is enclosed in angle brackets, and is a <term>generic</term>. All the elements in a <c>MutableList</c> must be of the same data type.</p>
 
@@ -37,7 +37,7 @@
         </row>
         <row>
             <cell><p><c>animals.count()</c></p></cell>
-            <cell><p>Returns number of elements in list</p></cell>
+            <cell><p>Returns the number of elements in list</p></cell>
         </row>
         <row>
             <cell><p><c>animals[index]</c></p></cell>
@@ -45,7 +45,7 @@
         </row>
         <row>
             <cell><p><c>animals[index] = element</c></p></cell>
-            <cell><p>Replaces item at given index with the given element.</p></cell>
+            <cell><p>Replaces the item at the given index with the given element.</p></cell>
         </row>
         <row>
             <cell><p><c>animals.removeAt(index)</c></p></cell>
@@ -53,7 +53,7 @@
         </row>
         <row>
             <cell><p><c>animals.indexOf(element)</c></p></cell>
-            <cell><p>Returns index of the first occurrence of the element in the list, or -1 if element is not in list.</p></cell>
+            <cell><p>Returns the index of the first occurrence of the element in the list, or -1 if the element is not in list.</p></cell>
         </row>
     </tabular>
 </table>
@@ -102,7 +102,7 @@
 
         <p>Line 2 creates the map, where we put the data types for the key and value inside angle brackets.</p>
 
-        <p>Lines 3-6 add keys and values to the map. If a key already is in the HashMap, the value given as the second argument will replace the current map value.</p>
+        <p>Lines 3-6 add keys and values to the map. If a key is already in the HashMap, the value given as the second argument will replace the current map value.</p>
 
         <aside>
             <p>You can put underscores anywhere in an integer literal such as 2_165_867 to make your source code more readable.</p>
@@ -135,7 +135,7 @@ Key Luanda has value 2,165,867.</pre>
         </row>
         <row>
             <cell><p><c>cityInfo.count()</c></p></cell>
-            <cell><p>Returns number of key/value pairs in the map</p></cell>
+            <cell><p>Returns the number of key/value pairs in the map</p></cell>
         </row>
         <row>
             <cell><p><c>cityInfo[key]</c></p></cell>
@@ -143,11 +143,11 @@ Key Luanda has value 2,165,867.</pre>
         </row>
         <row>
             <cell><p><c>cityInfo[key] = value</c></p></cell>
-            <cell><p>Replaces value for given key if it is in the map already; adds a new key and value if not. Returns the value previously associated with the key, or <c>null</c> if not previously in map.</p></cell>
+            <cell><p>Replaces the value for the given key if it is in the map already; adds a new key and value if not. Returns the value previously associated with the key, or <c>null</c> if not previously in map.</p></cell>
         </row>
         <row>
             <cell><p><c>cityInfo.remove(key)</c></p></cell>
-            <cell><p>Removes the specified key and its value. Returns the value for the given key, or <c>null</c> if key is not in the map.</p></cell>
+            <cell><p>Removes the specified key and its value. Returns the value for the given key, or <c>null</c> if the key is not in the map.</p></cell>
         </row>
         <row>
             <cell><p><c>cityInfo.keys</c></p></cell>
@@ -155,7 +155,7 @@ Key Luanda has value 2,165,867.</pre>
         </row>
         <row>
             <cell><p><c>key in cityInfo</c></p></cell>
-            <cell><p>Returns <c>true</c> if key is in the map, otherwise <c>false</c>.</p></cell>
+            <cell><p>Returns <c>true</c> if the key is in the map, otherwise <c>false</c>.</p></cell>
         </row>
     </tabular>
 </table>
